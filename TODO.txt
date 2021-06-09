@@ -1,0 +1,7 @@
+
+
+install 
+
+sudo pacman -Syu libnss-myhostname
+
+
