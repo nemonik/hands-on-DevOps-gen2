@@ -7,7 +7,7 @@
 # You should have received a copy of the license with
 # this file. If not, please email <mjwalsh@nemonik.com>
 
-source -e
+source -a
 . .env
 
 echo Uninstalling Drone CI... 
