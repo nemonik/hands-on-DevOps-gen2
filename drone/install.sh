@@ -29,7 +29,7 @@ notify "Creating a GitLab token to integrate Drone with GitLab through the follo
 
 token=`tr -dc A-Za-z0-9 </dev/urandom | head -c 20`
 
-gitlab_pod_name=`kubectl get pod -n gitlab -l "app.kubernetes.io/component=gitlab" -o json | jq -r '.items | .[] | .metadata.name'`
+gitlab_pod_name=`kubectl get pod -n ${gitlab_namespace} -l "app.kubernetes.io/component=gitlab" -o json | jq -r '.items | .[] | .metadata.name'`
 
 kubectl exec -it pod/${gitlab_pod_name} -n ${gitlab_namespace} -- /bin/bash -c "bundle exec rails runner -e production \"user = User.find_by_username('root'); token = user.personal_access_tokens.create(scopes: [:api], name: 'Automation_token'); token.set_token('${token}'); token.save\""
 

@@ -12,12 +12,12 @@ source -e
 
 echo Uninstalling Drone CI... 
 
-helm uninstall drone --namespace ${namespace}
+helm uninstall drone --namespace ${drone_namespace}
 
-helm uninstall drone-kubernetes-secrets --namespace ${namespace}
+helm uninstall drone-kubernetes-secrets --namespace ${drone_namespace}
 
-helm uninstall drone-runner-kube --namespace ${namespace}
+helm uninstall drone-runner-kube --namespace ${drone_namespace}
 
 kubectl delete -f drone-ingress.yaml
 
-kubectl delete namespace ${namespace}
+kubectl delete namespace ${drone_namespace}
