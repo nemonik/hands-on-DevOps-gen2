@@ -45,8 +45,8 @@ fi
 notify "Adding the Drone CI application integration to GitLab..."
 application_values=`curl --silent --request POST --header "PRIVATE-TOKEN: ${token}" --data "name=Drone&redirect_uri=${drone_protocol}://${drone_fdqn}:${drone_port}/login&scopes=api+read_user" "${gitlab_protocol}://${gitlab_fdqn}:${gitlab_port}/api/v4/applications"`
 
-drone_gitlab_client_id=`notify "${application_values}" | jq '.application_id'`
-drone_gitlab_client_secret=`notify "${application_values}" | jq ".secret"`
+drone_gitlab_client_id=`echo "${application_values}" | jq '.application_id'`
+drone_gitlab_client_secret=`echo "${application_values}" | jq ".secret"`
 
 notify "Revoking the token used to perform the prior automation..."
 
