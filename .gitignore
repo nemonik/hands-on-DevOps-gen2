@@ -1,2 +1,5 @@
 traefik/traefik-cert-secrets.yaml  
 traefik/traefik
+
+vault.backup
+vault_new
