@@ -43,8 +43,8 @@ fi
 notify "Adding the SonarQube application integration to GitLab..."
 application_values=`curl --silent --request POST --header "PRIVATE-TOKEN: ${token}" --data "name=SonarQube&redirect_uri=${sonarqube_protocol}://${sonarqube_fdqn}:${sonarqube_port}/oauth2/callback/gitlab&scopes=api+read_user" "${gitlab_protocol}://${gitlab_fdqn}:${gitlab_port}/api/v4/applications"`
 
-sonar_auth_gitlab_applicationid=`notify "${application_values}" | jq '.application_id'` 
-sonar_auth_gitlab_secret=`notify "${application_values}" | jq ".secret"`
+sonar_auth_gitlab_applicationid=`echo "${application_values}" | jq '.application_id'` 
+sonar_auth_gitlab_secret=`echo "${application_values}" | jq ".secret"`
 
 notify "Revoking the token used to perform the prior automation..."
 kubectl exec -it pod/gitlab-0 -n ${gitlab_namespace} -- /bin/bash -c "bundle exec rails runner -e production \"PersonalAccessToken.find_by_token('$token').revoke!\""
