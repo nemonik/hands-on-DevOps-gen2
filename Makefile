@@ -25,19 +25,19 @@ uninstall-traefik:
 install-gitlab:
 	cd gitlab && ./install.sh
 uninstall-gitlab:
-	cd gitlab &&./uninstall.sh
+	cd gitlab && ./uninstall.sh
 install-drone:
 	cd drone && ./install.sh
 uninstall-drone:
-	cd drone &&./uninstall.sh
+	cd drone && ./uninstall.sh
 install-taiga:
 	cd taiga && ./install.sh
 uninstall-taiga:
-	cd taiga &&./uninstall.sh
+	cd taiga && ./uninstall.sh
 install-sonarqube:
 	cd sonarqube && ./install.sh
 uninstall-sonarqube:
-	cd sonarqube &&./uninstall.sh
+	cd sonarqube && ./uninstall.sh
 decrypt-vault:
 	@if ! file vault | grep -q "openssl"; then \
 	  echo "Vault is not encrypted."; \
@@ -65,4 +65,3 @@ encrypt-vault:
 	fi
 	@openssl enc -base64 -e -aes-256-cbc -md sha512 -pbkdf2 -iter 100000 -salt -pass pass:${VAULT_PASSWORD} -in ./vault -out ./vault_new
 	@mv ./vault_new ./vault
-

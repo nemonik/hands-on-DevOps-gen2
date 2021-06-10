@@ -8,7 +8,7 @@
 # this file. If not, please email <mjwalsh@nemonik.com>
 
 source -a
-. .env
+. ../.env
 
 echo Uninstalling Drone CI... 
 

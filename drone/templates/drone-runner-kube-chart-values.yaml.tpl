@@ -3,7 +3,7 @@ image:
   tag: "${drone_runner_kube_image_tag}"
   pullPolicy: IfNotPresent
 
-resources: {}
+replicaCount: ${drone_runner_replica_count}
 
 rbac:
   buildNamespaces:
