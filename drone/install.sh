@@ -49,8 +49,8 @@ drone_gitlab_client_id=`notify "${application_values}" | jq '.application_id'`
 drone_gitlab_client_secret=`notify "${application_values}" | jq ".secret"`
 
 notify "Revoking the token used to perform the prior automation..."
-# TODO: pod name shouldn't be hardcoded
-kubectl exec -it pod/gitlab-0 -n ${gitlab_namespace} -- /bin/bash -c "bundle exec rails runner -e production \"PersonalAccessToken.find_by_token('$token').revoke!\""
+
+kubectl exec -it pod/${gitlab_pod_name} -n ${gitlab_namespace} -- /bin/bash -c "bundle exec rails runner -e production \"PersonalAccessToken.find_by_token('$token').revoke!\""
 
 template_file ./templates/drone-chart-values.yaml.tpl drone-chart-values.yaml
 
