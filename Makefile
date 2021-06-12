@@ -6,8 +6,13 @@
 # this file. If not, please email <mjwalsh@nemonik.com>
 
 SHELL := /bin/bash
+THIS_FILE := $(lastword $(MAKEFILE_LIST))
 
-all: start-cluster patch-coredns install-traefik install-gitlab install-drone install-taiga install-sonarqube 
+.PHONY: all install start-registry delete-registry start-cluster delete-cluster patch-coredns install-traefik uninstall-traefik install-gitlab uninstall-gitlab install-drone uninstall-drone install-taiga uninstall-taiga install-sonarqube uninstall-sonarqube decrypt-vault encrypt-vault
+
+all: start install
+start: start-registry start-cluster patch-coredns
+install: install-traefik install-gitlab install-drone install-taiga install-sonarqube 
 start-registry:
 	./start_registry.sh
 delete-registry:

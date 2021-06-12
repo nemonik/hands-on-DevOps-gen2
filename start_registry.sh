@@ -8,10 +8,16 @@
 # this file. If not, please email <mjwalsh@nemonik.com>
 
 set -a
-. ../.env
+. .env
 
 notify "Creating registry ${registry_name}:${registry_port}"
 
-k3d registry create ${registry_name} -p ${registry_port}
+k3d registry create ${registry_name/k3d-/} -p ${registry_port}
 
+notify "Waiting til ${registry_name}:${registry_port} is running..."
 
+until [ "`docker inspect -f {{.State.Running}} ${registry_name}`"=="true" ]; do
+    sleep 5;
+done;
+
+notify "Now running."
