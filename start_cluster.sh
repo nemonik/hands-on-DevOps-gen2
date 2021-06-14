@@ -32,6 +32,7 @@ if [ "$(echo $clusters_json | jq -r --arg k3d_cluster_name ${k3d_cluster_name} '
 
   k3d cluster create ${k3d_cluster_name} --image rancher/k3s:v1.21.1-k3s1 \
     --api-port 127.0.0.1:6443 -p 80:80@loadbalancer -p 443:443@loadbalancer \
+    -p 9000:9000@loadbalancer \
     -p 2022:2022@loadbalancer --k3s-server-arg "--no-deploy=traefik" \
     --registry-use ${registry_name}:${registry_port} \
     --servers ${k3d_server_count} --agents ${k3d_agent_count} 
