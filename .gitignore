@@ -1,5 +1,20 @@
-traefik/traefik-cert-secrets.yaml  
+.vagrant
+
 traefik/traefik
 
 vault.backup
 vault_new
+
+plantuml-server/plantuml-server-chart-values.yaml
+sonarqube/sonarqube-chart-values.yaml
+heimdall2/heimdall-chart-values.yaml
+traefik/traefik-tlsstore.yaml
+traefik/traefik-cert-secrets.yaml
+traefik/traefik-chart-values.yaml
+drone/drone-kubernetes-secrets-chart-values.yaml
+drone/drone-chart-values.yaml
+drone/drone-ingress.yaml
+drone/drone-runner-kube-chart-values.yaml
+gitlab/gitlab-chart-values.yaml
+gitlab/gitlab-IngressTcpRoute.yaml
+taiga/taiga-chart-values.yaml

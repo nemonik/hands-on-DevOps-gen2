@@ -4,4 +4,15 @@ install
 
 sudo pacman -Syu libnss-myhostname
 
+sudo pacman -Syu docker
 
+sudo usermod -a -G docker vagrant
+
+# vagrant reload
+
+
+#install pikaur
+
+sudo pikaur -Syu rancher-k3d-bin git-secrets
+
+sudo pikaur -Syu gitkraken --noconfirm

@@ -67,4 +67,4 @@ eval ./test_patch.sh
 
 cd ..
 
-notify "Remember to add any new entries to /etc/hosts!"
+warn "Remember to add any new entries to /etc/hosts!"

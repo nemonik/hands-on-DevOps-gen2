@@ -5,8 +5,8 @@
 Vagrant.configure("2") do |config|
   
   config.vm.provider :virtualbox do |virtualbox|
-    virtualbox.name = "Hands-on DevOps class"
-    virtualbox.gui = false
+    virtualbox.name = "Hands-on DevOps class Gen 2"
+     virtualbox.gui = false
 
     # disable audio
     virtualbox.customize ['modifyvm', :id, '--audio', 'none']
