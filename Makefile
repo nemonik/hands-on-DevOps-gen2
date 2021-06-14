@@ -54,7 +54,7 @@ decrypt-vault:
 	else \
 	  echo "Using VAULT_PASSWORD env variable to decrypt..."; \
 	fi
-	@openssl enc -base64 -d -aes-256-cbc -md sha512 -pbkdf2 -iter 100000 -salt -pass pass:${VAULT_PASSWORD} -in ./vault -out ./vault_new
+	@openssl enc -base64 -d -aes-256-cbc -salt -pass pass:${VAULT_PASSWORD} -in ./vault -out ./vault_new
 	@mv ./vault_new ./vault
 encrypt-vault:
 	@file_type=$(/bin/file ./vault)
@@ -68,5 +68,5 @@ encrypt-vault:
 	else \
 	  echo "Using VAULT_PASSWORD env variable to encrypt..."; \
 	fi
-	@openssl enc -base64 -e -aes-256-cbc -md sha512 -pbkdf2 -iter 100000 -salt -pass pass:${VAULT_PASSWORD} -in ./vault -out ./vault_new
+	@openssl enc -base64 -e -aes-256-cbc -salt -pass pass:${VAULT_PASSWORD} -in ./vault -out ./vault_new
 	@mv ./vault_new ./vault
