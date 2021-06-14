@@ -27,7 +27,7 @@ images_into_registry drone_images
 
 notify "Creating a GitLab token to integrate Drone with GitLab through the following automation..."
 
-token=`tr -dc A-Za-z0-9 </dev/urandom | head -c 20`
+token=`pwgen -Bsv1 20`
 
 gitlab_pod_name=`kubectl get pod -n ${gitlab_namespace} -l "app.kubernetes.io/component=gitlab" -o json | jq -r '.items | .[] | .metadata.name'`
 

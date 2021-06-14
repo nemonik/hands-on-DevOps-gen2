@@ -12,7 +12,7 @@ THIS_FILE := $(lastword $(MAKEFILE_LIST))
 
 all: start install
 start: start-registry start-cluster patch-coredns
-install: install-traefik install-gitlab install-drone install-taiga install-sonarqube 
+install: install-traefik install-gitlab install-drone install-taiga install-sonarqube
 start-registry:
 	./start_registry.sh
 delete-registry:
@@ -44,29 +44,6 @@ install-sonarqube:
 uninstall-sonarqube:
 	cd sonarqube && ./uninstall.sh
 decrypt-vault:
-	@if ! file vault | grep -q "openssl"; then \
-	  echo "Vault is not encrypted."; \
-	  exit 1; \
-	fi  
-	@if [[ ! -v VAULT_PASSWORD ]]; then \
-	  echo "Enter vault password to decrypt:"; \
-	  read VAULT_PASSWORD; \
-	else \
-	  echo "Using VAULT_PASSWORD env variable to decrypt..."; \
-	fi
-	@openssl enc -base64 -d -aes-256-cbc -salt -pass pass:${VAULT_PASSWORD} -in ./vault -out ./vault_new
-	@mv ./vault_new ./vault
+	./decrypt-vault.sh
 encrypt-vault:
-	@file_type=$(/bin/file ./vault)
-	@if file vault | grep -q "openssl"; then \
-	  echo "Vault is already encrypted."; \
-	  exit 1; \
-	fi
-	@if [[ ! -v VAULT_PASSWORD ]]; then \
-	  echo "Enter vault password to encrypt:"; \
-	  read VAULT_PASSWORD; \
-	else \
-	  echo "Using VAULT_PASSWORD env variable to encrypt..."; \
-	fi
-	@openssl enc -base64 -e -aes-256-cbc -salt -pass pass:${VAULT_PASSWORD} -in ./vault -out ./vault_new
-	@mv ./vault_new ./vault
+	./encrypt-vault.sh

@@ -21,9 +21,9 @@ else
     gitlab_https="false"
 fi
 
-db_key_base=`tr -dc A-Za-z0-9 </dev/urandom | head -c 65`
-secret_key_base=`tr -dc A-Za-z0-9 </dev/urandom | head -c 65`
-otp_key_base=`tr -dc A-Za-z0-9 </dev/urandom | head -c 65`
+db_key_base=`pwgen -Bsv1 64`
+secret_key_base=`pwgen -Bsv1 64`
+otp_key_base=`pwgen -Bsv1 64`
 
 images_into_registry gitlab_images
 
@@ -41,7 +41,7 @@ helm install gitlab nemonik/gitlab --namespace ${gitlab_namespace} --create-name
 
 kubectl apply -f gitlab-IngressTcpRoute.yaml
 
-gitlab_pod_name=`kubectl get pod -n gitlab -l "app.kubernetes.io/component=gitlab" -o json | jq -r '.items | .[] | .metadata.name'`
+gitlab_pod_name=`kubectl get pod -n ${gitlab_namespace} -l "app.kubernetes.io/component=gitlab" -o json | jq -r '.items | .[] | .metadata.name'`
 
 notify "Waiting for pod/${gitlab_pod_name} -n ${gitlab_namespace} to become ready..."
 
@@ -49,7 +49,7 @@ kubectl wait --for=condition=Ready pod/${gitlab_pod_name} -n ${gitlab_namespace}
 
 notify "Waiting til GitLab is responding to https requests..."
 
-token=`tr -dc A-Za-z0-9 </dev/urandom | head -c 20`
+token=`pwgen -Bsv1 20`
 
 loop=0
 while : ; do
