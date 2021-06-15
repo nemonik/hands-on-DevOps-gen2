@@ -55,11 +55,14 @@ notify "Forcing retart of coredns so that the tests can run immediately..."
 
 kubectl rollout restart deployment coredns -n kube-system
 
-kubectl rollout status deployment coredns -n kube-system 
+kubectl rollout status deployment coredns -n kube-system
 
 kube_dns_pod_name=`kubectl get pod -n kube-system -l "k8s-app=kube-dns" -o json | jq -r '.items | .[] | .metadata.name'`
 
 kubectl wait --for=condition=Ready pod/${kube_dns_pod_name} -n kube-system --timeout 360s
+
+## The test has a built in ping loop needed to block until coredns is responding.
+##
 
 cd tests
 
