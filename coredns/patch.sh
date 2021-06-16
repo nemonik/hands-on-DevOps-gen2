@@ -10,7 +10,30 @@
 set -a
 . ../.env
 
-notify "Patching DNS in the cluster to resolve application FDQNs..."
+
+output=`nslookup www.apple.com` && read -ra parts <<< "${output##*$'\n'}" && echo "${parts[1]}"
+
+images_into_registry traefik_images
+
+notify "Get host ip..."
+
+kubectl run get-host-ip --image=${registry_name}:${registry_port}/${traefik_image_name}:${traefik_image_tag} --restart=Never --command -- sh -c "while true; do sleep 15; done"
+
+kubectl wait --for=condition=Ready pod/get-host-ip --timeout 360s
+
+notify "Block waiting for CoreDNS to start responding... "
+
+kubectl exec pod/get-host-ip -- sh -c "loop=true && while \$loop; do if ping -c 1 host.k3d.internal; then loop=false; echo \"found\"; else sleep 5; fi; done"
+
+output=`kubectl exec pod/get-host-ip -- sh -c "nslookup host.k3d.internal"`
+
+read -ra parts <<< "${output##*$'\n'}" 
+
+host_ip="${parts[1]}"
+
+kubectl delete pod/get-host-ip --wait=false
+
+notify "Patching DNS in the cluster to resolve application FDQNs using ${host_ip} ip..."
 
 node_hosts=$(kubectl get cm coredns -n kube-system --template='{{.data.NodeHosts}}')
 
