@@ -10,9 +10,6 @@
 set -a
 . ../.env
 
-
-output=`nslookup www.apple.com` && read -ra parts <<< "${output##*$'\n'}" && echo "${parts[1]}"
-
 images_into_registry traefik_images
 
 notify "Get host ip..."
