@@ -13,6 +13,25 @@ sudo usermod -a -G docker vagrant
 
 #install pikaur
 
-sudo pikaur -Syu rancher-k3d-bin git-secrets
+sudo pikaur -Syu rancher-k3d-bin git-secrets bash-completion
+
+
+#Completions
+
+```
+echo "source <(kubectl completion bash)" >> ~/.bash_profile
+echo "source <(k3d completion bash)" >> ~/.bash_profile
+echo "source <(helm completion bash)" >> ~/.bash_profile
+
+mkdir -p ~/.config/fish/completions
+cd ~/.config/fish
+git clone https://github.com/evanlucas/fish-kubectl-completions
+ln -s ../fish-kubectl-completions/completions/kubectl.fish completions/
+```
+
+# add to 
 
 sudo pikaur -Syu gitkraken --noconfirm
+
+
+ kubectl get all --all-namespaces
