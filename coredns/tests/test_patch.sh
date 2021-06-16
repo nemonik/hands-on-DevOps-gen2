@@ -21,7 +21,7 @@ kubectl wait --for=condition=Ready pod/test-coredns --timeout 360s
 notify "Block waiting for CoreDNS to start responding... "
 warn "This may go forever."
 
-kubectl exec pod/test-coredns -- sh -c "loop=true && while \$loop; do if ping -c 1 www.google.com; then loop=false; echo \"found\"; else sleep 5; fi; done"
+kubectl exec pod/test-coredns -- sh -c "loop=true && while \$loop; do if ping -c 1 host.k3d.internal; then loop=false; echo \"found\"; else sleep 5; fi; done"
 
 notify "Query the DNS server for the FDQNs added..."
 

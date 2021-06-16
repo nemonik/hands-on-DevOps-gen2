@@ -8,12 +8,14 @@
 SHELL := /bin/bash
 THIS_FILE := $(lastword $(MAKEFILE_LIST))
 
-.PHONY: all install start-registry delete-registry start-cluster delete-cluster patch-coredns install-traefik uninstall-traefik install-gitlab uninstall-gitlab install-drone uninstall-drone install-taiga uninstall-taiga install-sonarqube uninstall-sonarqube install-heimdall uninstall-heimdall decrypt-vault encrypt-vault
+.PHONY: all depends? install start-registry delete-registry start-cluster delete-cluster patch-coredns install-traefik uninstall-traefik install-gitlab uninstall-gitlab install-drone uninstall-drone install-taiga uninstall-taiga install-sonarqube uninstall-sonarqube install-heimdall uninstall-heimdall decrypt-vault encrypt-vault
 
-all: start install
+all: depends? start install
 start: start-registry start-cluster patch-coredns
 install: install-traefik install-gitlab install-drone install-taiga install-sonarqube install-heimdall
 uninstall: delete-cluster
+depends?:
+	./has_depends.sh
 start-registry:
 	./start_registry.sh
 delete-registry:
