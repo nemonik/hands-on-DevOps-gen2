@@ -1,0 +1,28 @@
+---
+- name: Install factory dependencies 
+  hosts: factory
+  remote_user: root
+  vars:
+    default_delay: 10
+    default_retries: 60
+    
+  tasks:
+  - name: Echo ansible distribution
+    ansible.builtin.debug:
+      msg: "{{ inventory_hostname }} host is running {{ ansible_distribution }}:{{ ansible_distribution_release }} with an IP address if {{ ansible_default_ipv4.address }}"
+
+  - name: Fail if OS is not Arch or OSX
+    fail:
+      msg: "{{ ansible_distribution }} - {{ ansible_distribution_release }} is not Ubuntu-bionic or Alpine"
+    when: ( ansible_distribution != 'MacOSX' )
+
+  - name: Include MacOSX.yml, when MacOSX
+    include: MacOSX.yaml
+    when: 
+      - ansible_distribution == 'MacOSX'
+
+  - name: Enure Go is installed and configured
+    include: go.yaml
+
+  - name: Ensure sonar-scanner cli is installed and configured
+    include: sonar-scanner-cli.yaml

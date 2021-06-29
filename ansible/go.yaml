@@ -1,0 +1,85 @@
+---
+  # Install Go
+  - name: Ensure Go is installed 
+    community.general.homebrew:
+      name: "go"
+      state: latest
+    retries: "{{ default_retries }}"
+    delay: "{{ default_delay }}"
+    register: result
+    until: result is succeeded
+    when: ( ansible_distribution != 'MacOSX' )
+
+  - name: Set fact for $HOME
+    ansible.builtin.set_fact:
+      HOME:  "{{ lookup('env', 'HOME') }}"
+
+  - name: checking golang project folders
+    file:
+      path: "{{ HOME }}/go/{{ item }}"
+      state: directory
+      mode: 0775
+    with_items:
+      - bin
+      - pkg
+      - src
+
+  - name: Ensure {{ HOME }}/.bash_profile defines GOBIN and GOPATH environment variables
+    block:
+      - lineinfile:
+          dest: "{{ HOME }}/.bash_profile"
+          regexp: "{{ item.regexp }}"
+          state: absent
+        with_items:
+          - { regexp: "^export GOBIN" }
+          - { regexp: "^export GOPATH" }
+          - { regexp: '^export PATH="$GOBIN:$PATH"' }
+
+      - lineinfile:
+          dest: "{{ HOME }}/.bash_profile"
+          line: "{{ item.line }}"
+          insertafter: EOF
+        with_items:
+          - { line: 'export GOBIN="$HOME/go/bin"' }
+          - { line: 'export GOPATH="$HOME/go"' }
+          - { line: 'export PATH="$GOBIN:$PATH"' }
+
+  - name: Ensure {{ HOME }}/.zshrc defines GOBIN and GOPATH environment variables
+    block:
+      - lineinfile:
+          dest: "{{ HOME }}/.zshrc"
+          regexp: "{{ item.regexp }}"
+          state: absent
+        with_items:
+          - { regexp: "^export GOBIN" }
+          - { regexp: "^export GOPATH" }
+          - { regexp: '^export PATH="$GOBIN:$PATH"' }
+
+      - lineinfile:
+          dest: "{{ HOME }}/.zshrc"
+          line: "{{ item.line }}"
+          insertafter: EOF
+        with_items:
+           - { line: 'export GOBIN="$HOME/go/bin"' }
+           - { line: 'export GOPATH="$HOME/go"' }
+           - { line: 'export PATH="$GOBIN:$PATH"' }
+
+  - name: Ensure GOBIN and GOPATH environment variables exist for fish
+    block:
+      - lineinfile:
+          dest: "{{ HOME }}/.config/fish/config.fish"
+          regexp: "{{ item.regexp }}"
+          state: absent
+        with_items:
+          - { regexp: "^set -x GOBIN" }
+          - { regexp: "^set -x GOPATH" }
+          - { regexp: "^set -x PATH \\$PATH \\$GOBIN$" }
+
+      - lineinfile:
+          dest: "{{ HOME }}/.config/fish/config.fish"
+          line: "{{ item.line }}"
+          insertafter: EOF
+        with_items:
+           - { line: 'set -x GOBIN $HOME/go/bin' }
+           - { line: 'set -x GOPATH $HOME/go' }
+           - { line: 'set -x PATH $PATH $GOBIN' }

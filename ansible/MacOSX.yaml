@@ -1,0 +1,169 @@
+---
+  - name: Update homebrew and upgrade all packages
+    community.general.homebrew:
+      update_homebrew: yes
+      upgrade_all: yes
+
+  - name: Ensure Homebrew packages are installed
+    block:
+      - name: Ensure bash-completion is not installed, so bash-completion@2 can be installed
+        shell: brew unlink bash-completion
+
+      - name: Ensure HomeBrew packages are installed
+        community.general.homebrew:
+          name: "{{ packages }}"
+          state: latest
+        retries: "{{ default_retries }}"
+        delay: "{{ default_delay }}"
+        register: result
+        until: result is succeeded
+        vars:
+          packages:
+            - bash
+            - bash-completion@2
+            - zsh
+            - zsh-completion
+            - fish
+            - nvim
+            - nano
+            - pwgen
+            - openssl
+            - watch
+            - gettext
+            - k3d
+            - helm
+            - curl
+            - wget
+            - git-secrets
+            - tmux
+
+  - name: Get brew_prefix
+    block:
+      - name: Execute brew --prefix
+        shell: brew --prefix
+        register: brew_prefix
+      - name: Create brew_fact with stdout of of prior command
+        ansible.builtin.set_fact:
+          brew_prefix: "{{ brew_prefix.stdout }}"
+
+  - name: Install Oh My Zsh
+    block:
+      - name: Check if ~/.oh-my-zsh exists
+        ansible.builtin.stat:
+          path: ~/.oh-my-zsh
+        register: oh_my_zsh
+
+      - name: Install, only if ~/.oh-my-zsh doesn't exist
+        ansible.builtin.shell: sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+        when: not oh_my_zsh.stat.exists
+
+  # See: https://github.com/jorgebucaran/fisher
+
+  - name: Install Fisher
+    ansible.builtin.shell: 'fish -c "curl -sL https://git.io/fisher | source && fisher install jorgebucaran/fisher"'
+
+  # As per https://docs.docker.com/docker-for-mac/#bash
+  
+  - name: Ensure bash completions exist for Docker Desktop
+    block:
+      - name: Ensure bash completions for docker are configured
+        ansible.builtin.file:
+          src: /Applications/Docker.app/Contents/Resources/etc/docker.bash-completion
+          dest: "{{ brew_prefix }}/etc/bash_completion.d/docker"
+          state: link
+
+      - name: Ensure bash completions for docker-compose are configured
+        ansible.builtin.file:
+          src: /Applications/Docker.app/Contents/Resources/etc/docker-compose.bash-completion
+          dest: "{{ brew_prefix }}/etc/bash_completion.d/docker-compose"
+          state: link
+
+      - name: Ensure bash completion is activated for Bash shell
+        lineinfile:
+          path: ~/.bash_profile
+          state: present
+          regexp: '^if\s+\[\s+-f\s+\$\(brew\s+--prefix\)/etc/bash_completion\s+\];\s+then\s+\.\s+\$\(brew\s+--prefix\)/etc/bash_completion;\s+fi$'
+          line: 'if [ -f $(brew --prefix)/etc/bash_completion ]; then . $(brew --prefix)/etc/bash_completion; fi'
+
+  # As per https://docs.docker.com/docker-for-mac/#zsh
+
+  - name: Ensure zsh completions exist for Docker Desktop
+    block:
+      - name: Ensure zsh completions for docker is configured
+        ansible.builtin.file:
+          src: /Applications/Docker.app/Contents/Resources/etc/docker.zsh-completion 
+          dest: "{{ brew_prefix }}/share/zsh/site-functions/_docker"
+          state: link
+
+      - name: Ensure zsh completions for docker-compose is configured
+        ansible.builtin.file:
+          src: /Applications/Docker.app/Contents/Resources/etc/docker-compose.zsh-completion
+          dest: "{{ brew_prefix }}/share/zsh/site-functions/_docker-compose"
+          state: link
+
+  # As per https://docs.docker.com/docker-for-mac/#fish-shell
+
+  - name: Ensure fish completions for Docker Desktop exist
+    block:
+      - name: Ensure fish completions directory exists
+        ansible.builtin.file:
+          path: ~/.config/fish/completions
+          state: directory
+
+      - name: Ensure bash completions for docker is configured
+        ansible.builtin.file:
+          src: /Applications/Docker.app/Contents/Resources/etc/docker.fish-completion
+          dest: ~/.config/fish/completions/docker.fish
+          state: link
+
+      - name: Ensure bash completions for docker-compose is configured
+        ansible.builtin.file:
+          src: /Applications/Docker.app/Contents/Resources/etc/docker-compose.fish-completion
+          dest: ~/.config/fish/completions/docker-compose.fish
+          state: link
+
+  # As per https://k3d.io/usage/commands/k3d_completion/ (Sorta the docs are a bit weak)
+
+  - name: Ensure bash completions for k3d is configured
+    lineinfile:
+      path: ~/.bash_profile
+      state: present
+      regexp: '^source\s+-\(k3d\s+completion\s+bash\)$'
+      line: 'source <(k3d completion bash)'
+
+  - name: Ensure zsh completion for k3d is configured
+    lineinfile:
+      path: ~/.zshrc
+      state: present
+      regexp: '^source\s+-\(k3d\s+completion\s+zsh\)$'
+      line: 'source <(k3d completion zsh)'
+
+  - name: Ensure fish completions for k3d is configured
+    block:
+      - name: Ensure fish completions directory exists
+        ansible.builtin.file:
+          path: ~/.config/fish/completions
+          state: directory
+
+      - name: Ensure fish completions for k3d is configured
+        shell: k3d completion fish >> ~/.config/fish/completions/k3d.fish
+
+  # As per `kubectl completion --help`
+
+  - name: Ensure bash completions for kubectl is configured
+    shell: kubectl completion bash > $(brew --prefix)/etc/bash_completion.d/kubectl
+
+  # As per https://v1-20.docs.kubernetes.io/docs/tasks/tools/included/optional-kubectl-configs-zsh/
+
+  - name: Ensure zsh completion for kubectl is configured
+    lineinfile:
+      path: ~/.zshrc
+      state: present   
+      regexp: '^source\s+<\(kubectl\s+completion\s+zsh\)$'
+      line: 'source <(kubectl completion zsh)'
+   
+  # There are no batteries included fish completions for kubectl, but @evanlucas maintains a project in regards.  Thank you @evanlucas.
+
+  - name: Ensure fish completions for kubectl is configured
+    ansible.builtin.shell: 'fish -c "fisher install evanlucas/fish-kubectl-completions"'
+

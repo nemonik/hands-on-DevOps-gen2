@@ -1,0 +1,55 @@
+---
+  # Install sonar-scanner
+  - name: Ensure sonar-scanner is installed
+    community.general.homebrew:
+      name: "sonar-scanner"
+      state: latest
+    retries: "{{ default_retries }}"
+    delay: "{{ default_delay }}"
+    register: result
+    until: result is succeeded
+    when: ( ansible_distribution != 'MacOSX' )
+
+  - name: Set fact for $HOME
+    ansible.builtin.set_fact:
+      HOME:  "{{ lookup('env', 'HOME') }}"
+
+  - name: Set fact for $SONAR_HOST_URL
+    ansible.builtin.set_fact:
+      SONAR_HOST_URL:  "{{ lookup('env', 'sonarqube_protocol') }}://{{ lookup('env', 'sonarqube_fdqn') }}:{{ lookup('env', 'sonarqube_port') }}"
+
+  - name: Ensure {{ HOME }}/.bash_profile defines SONAR_HOST_URL environment variable
+    block:
+      - lineinfile:
+          dest: "{{ HOME }}/.bash_profile"
+          regexp: "^export SONAR_HOST_URL"
+          state: absent
+
+      - lineinfile:
+          dest: "{{ HOME }}/.bash_profile"
+          line: "export SONAR_HOST_URL={{ SONAR_HOST_URL }}"
+          insertafter: EOF
+
+  - name: Ensure {{ HOME }}/.zshrc defines SONAR_HOST_URL environment variable
+    block:
+      - lineinfile:
+          dest: "{{ HOME }}/.zshrc"
+          regexp: "^export SONAR_HOST_URL"
+          state: absent
+
+      - lineinfile:
+          dest: "{{ HOME }}/.zshrc"
+          line: "export SONAR_HOST_URL={{ SONAR_HOST_URL }}"
+          insertafter: EOF
+
+  - name: Ensure SONAR_HOST_URL environment variable exist for fish
+    block:
+      - lineinfile:
+          dest: "{{ HOME }}/.config/fish/config.fish"
+          regexp: "^set -x SONAR_HOST_URL"
+          state: absent
+
+      - lineinfile:
+          dest: "{{ HOME }}/.config/fish/config.fish"
+          line: "set -x SONAR_HOST_URL {{ SONAR_HOST_URL }}"
+          insertafter: EOF
