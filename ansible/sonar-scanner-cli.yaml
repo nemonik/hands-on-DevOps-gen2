@@ -1,11 +1,12 @@
 ---
   # Install sonar-scanner
+  #
   - name: Ensure sonar-scanner is installed
     community.general.homebrew:
-      name: "sonar-scanner"
+      name: 'sonar-scanner'
       state: latest
-    retries: "{{ default_retries }}"
-    delay: "{{ default_delay }}"
+    retries: '{{ default_retries }}'
+    delay: '{{ default_delay }}'
     register: result
     until: result is succeeded
     when: ( ansible_distribution != 'MacOSX' )
@@ -20,36 +21,36 @@
 
   - name: Ensure {{ HOME }}/.bash_profile defines SONAR_HOST_URL environment variable
     block:
-      - lineinfile:
-          dest: "{{ HOME }}/.bash_profile"
-          regexp: "^export SONAR_HOST_URL"
+      - ansible.builtin.lineinfile:
+          dest: '{{ HOME }}/.bash_profile'
+          regexp: '^export SONAR_HOST_URL'
           state: absent
 
-      - lineinfile:
-          dest: "{{ HOME }}/.bash_profile"
-          line: "export SONAR_HOST_URL={{ SONAR_HOST_URL }}"
+      - ansible.builtin.lineinfile:
+          dest: '{{ HOME }}/.bash_profile'
+          line: 'export SONAR_HOST_URL={{ SONAR_HOST_URL }}'
           insertafter: EOF
 
   - name: Ensure {{ HOME }}/.zshrc defines SONAR_HOST_URL environment variable
     block:
-      - lineinfile:
-          dest: "{{ HOME }}/.zshrc"
-          regexp: "^export SONAR_HOST_URL"
+      - ansible.builtin.lineinfile:
+          dest: '{{ HOME }}/.zshrc'
+          regexp: '^export SONAR_HOST_URL'
           state: absent
 
-      - lineinfile:
-          dest: "{{ HOME }}/.zshrc"
-          line: "export SONAR_HOST_URL={{ SONAR_HOST_URL }}"
+      - ansible.builtin.lineinfile:
+          dest: '{{ HOME }}/.zshrc'
+          line: 'export SONAR_HOST_URL={{ SONAR_HOST_URL }}'
           insertafter: EOF
 
   - name: Ensure SONAR_HOST_URL environment variable exist for fish
     block:
-      - lineinfile:
-          dest: "{{ HOME }}/.config/fish/config.fish"
-          regexp: "^set -x SONAR_HOST_URL"
+      - ansible.builtin.lineinfile:
+          dest: '{{ HOME }}/.config/fish/config.fish'
+          regexp: '^set -Ux SONAR_HOST_URL'
           state: absent
 
-      - lineinfile:
-          dest: "{{ HOME }}/.config/fish/config.fish"
-          line: "set -x SONAR_HOST_URL {{ SONAR_HOST_URL }}"
+      - ansible.builtin.lineinfile:
+          dest: '{{ HOME }}/.config/fish/config.fish'
+          line: 'set -Ux SONAR_HOST_URL {{ SONAR_HOST_URL }}'
           insertafter: EOF

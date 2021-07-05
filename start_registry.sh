@@ -8,6 +8,9 @@
 # this file. If not, please email <mjwalsh@nemonik.com>
 
 set -a
+
+skip_encrypted_variables=true
+
 . .env
 
 notify "Creating registry ${registry_name}:${registry_port}"

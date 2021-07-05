@@ -1,0 +1,188 @@
+---
+  # Install neovim and config for a vs code-like experience 
+  #
+  - name: Set fact for $HOME
+    ansible.builtin.set_fact:
+      HOME:  "{{ lookup('env', 'HOME') }}"
+
+  - name: Update homebrew and upgrade all packages
+    community.general.homebrew:
+      update_homebrew: yes
+      upgrade_all: yes
+  
+  - name: Ensure neovim (nvim) is installed
+    community.general.homebrew:
+      name:
+        - nvim
+        - node
+        - yarn
+        - fzf
+      state: latest
+    retries: '{{ default_retries }}'
+    delay: '{{ default_delay }}'
+    register: result
+    until: result is succeeded
+    when: ( ansible_distribution == 'MacOSX' )
+
+  - name: Ensure pynvim python module is installed for coc-pyright
+    ansible.builtin.shell: bash -c "python3 -m pip install --user --upgrade pynvim"
+
+  - name: Ensure neovim gem is installed for coc-solargraph
+    ansible.builtin.shell: bash -c "source ~/.bash_profile && gem install neovim" 
+
+  # See: https://prettier.io/docs/en/install.html
+  #
+  - name: Ensure prettier is installed
+    block:
+      - name: Ensure {{ HOME }}/.local/bin exist
+        ansible.builtin.file:
+          path: '{{ HOME}}/.local/bin'
+          state: directory
+
+      - name: Ensure package.json exists
+        ansible.builtin.shell: sh -c "npm init --yes" 
+
+      - name: Install "prettier" node.js package.
+        community.general.npm:
+          name: 'prettier'
+          path: '{{ HOME }}/.local/bin'
+          state: latest
+
+      - name: Install "neovim" node.js package
+        community.general.npm:
+          name: 'neovim'
+          global: yes
+          state: latest
+
+      - name: Does `{{ HOME }}/.prettierrc.json` file exist?
+        ansible.builtin.stat:
+          path: '{{ HOME }}/.prettierrc.json'
+        register: prettierrc
+
+      - name: Configure `{{ HOME }}/.prettierrc.json`, only if doesn't exist
+        ansible.builtin.shell: sh -c "echo {}> ~/.prettierrc.json"
+        when: not prettierrc.stat.exists
+
+      - name: Does `{{ HOME }}/.prettierignore` file exist?
+        ansible.builtin.stat:
+          path: '{{ HOME }}/.prettierignore' 
+        register: prettierignore
+
+      - name: Configure `{{ HOME }}/.prettierignore`, only if doesn't exist
+        ansible.builtin.shell: sh -c "echo '# Ignore artifacts:'> ~/.prettierignore"
+        when: not prettierignore.stat.exists
+
+  - name: Ensure then Minimalist Vim Plugin Manager is installed
+    ansible.builtin.shell: sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+
+  - name: Create {{ HOME }}/.config/nvim directory, if it does not exist
+    ansible.builtin.file:
+      path: '{{ HOME }}/.config/nvim'
+      state: directory
+
+  - name: Copy nvim configuration in place
+    ansible.builtin.copy:
+      src: init.vim
+      dest: '{{ HOME }}/.config/nvim/init.vim'
+
+  - name: Ensure Powerline fonts are installed for Vim Airline plugin
+    block:
+      - name: Ensure {{ HOME }}/.config path exists
+        ansible.builtin.file:
+          path: '{{ HOME }}/.config'
+          state: directory
+
+      - name: Shallow git clone Powerline fonts
+        ansible.builtin.git:
+          repo: 'https://github.com/powerline/fonts.git'
+          dest: '{{ HOME }}/.config/powerline'
+          depth: 1
+          force: yes
+
+      - name: Install Powerline fonts
+        ansible.builtin.shell: sh -c "cd $HOME/.config/powerline && ./install.sh"
+
+  - name: Ensure useful key bindings and fuzzy completion are installed
+    ansible.builtin.shell: sh -c "$(brew --prefix)/opt/fzf/install --all"
+    when: ( ansible_distribution != 'MacOSX' )
+
+  # Forces the use of neovim over vim and nano via aliases
+  #
+  - name: Configure default editor for Bash
+    block:
+      - ansible.builtin.lineinfile:
+          dest: '{{ HOME }}/.bash_profile'
+          regexp: '{{ item.regexp }}'
+          state: absent
+        with_items:
+          - { regexp: '^export EDITOR' }
+          - { regexp: '^export VISUAL' }
+          - { regexp: 'export FZF_DEFAULT_OPTS' }
+          - { regexp: '^alias vim="nvim"$' }
+          - { regexp: '^alias nano="nvim"$' }
+          - { regexp: '^export PATH="\\$HOME/.local/bin:\\$PATH"$' }
+
+      - ansible.builtin.lineinfile:
+          dest: "{{ HOME }}/.bash_profile"
+          line: "{{ item.line }}"
+          insertafter: EOF
+        with_items:
+          - { line: 'export EDITOR="nvim"' }
+          - { line: 'export VISUAL="nvim"' }
+          - { line: "export FZF_DEFAULT_OPTS='—height=40% —preview=\"cat {}\" —preview-window=right:60%:wrap'" }
+          - { line: 'alias vim="nvim"' }
+          - { line: 'alias nano="nvim"' }
+          - { line: 'export PATH="$HOME/.local/bin:$PATH"'}
+
+  - name: Configure default editor for Zsh
+    block:
+      - ansible.builtin.lineinfile:
+          dest: '{{ HOME }}/.zshrc'
+          regexp: '{{ item.regexp }}'
+          state: absent
+        with_items:
+          - { regexp: '^export EDITOR' }
+          - { regexp: '^export VISUAL' }
+          - { regexp: 'export FZF_DEFAULT_OPTS' }
+          - { regexp: '^alias vim="nvim"$' }
+          - { regexp: '^alias nano="nvim"$' }
+          - { regexp: '^export PATH="\\$HOME/.local/bin:\\$PATH"$' }
+
+      - ansible.builtin.lineinfile:
+          dest: '{{ HOME }}/.zshrc'
+          line: '{{ item.line }}'
+          insertafter: EOF
+        with_items:
+          - { line: 'export EDITOR="nvim"' }
+          - { line: 'export VISUAL="nvim"' }
+          - { line: "export FZF_DEFAULT_OPTS='—height=40% —preview=\"cat {}\" —preview-window=right:60%:wrap'" }
+          - { line: 'alias vim="nvim"' }
+          - { line: 'alias vim="nvim"' }
+          - { line: 'export PATH="$HOME/.local/bin:$PATH"'}
+
+  - name: Configure default editor for fish
+    block:
+      - ansible.builtin.lineinfile:
+          dest: '{{ HOME }}/.config/fish/config.fish'
+          regexp: '{{ item.regexp }}'
+          state: absent
+        with_items:
+          - { regexp: '^set -Ux EDITOR' }
+          - { regexp: '^set -Ux VISUAL' }
+          - { regexp: '^set -Ux FZF_DEFAULT_OPTS' }
+          - { regexp: '^alias vim="nvim"$' }
+          - { regexp: '^alias nano="nvim"$' }
+          - { regexp: '^set -U fish_user_paths \\$HOME/.local/bin \\$fish_user_paths$'}
+
+      - ansible.builtin.lineinfile:
+          dest: '{{ HOME }}/.config/fish/config.fish'
+          line: '{{ item.line }}'
+          insertafter: EOF
+        with_items:
+          - { line: 'set -Ux EDITOR nvim' }
+          - { line: 'set -Ux VISUAL nvim' }
+          - { line: "set -Ux FZF_DEFAULT_OPTS '—height=40% —preview=\"cat {}\" —preview-window=right:60%:wrap'" }
+          - { line: 'alias vim="nvim"' }
+          - { line: 'alias nano="nvim"' }
+          - { line: 'set -U fish_user_paths $HOME/.local/bin $fish_user_paths'}
+

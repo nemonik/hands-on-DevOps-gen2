@@ -1,0 +1,51 @@
+---
+  # Ensure rvm and latest Ruby is installed
+  #
+  - name: Set fact for $HOME
+    ansible.builtin.set_fact:
+      HOME:  "{{ lookup('env', 'HOME') }}"
+
+  - name: Ensure needed HomeBrew packages are installed to download and build Ruby via rvm
+    community.general.homebrew:
+      name: 
+        - curl
+        - automake
+        - coreutils
+        - libksba
+        - zlib
+      state: latest
+    when: ( ansible_distribution == 'MacOSX' )
+
+  - name: Ensure rvm is installed 
+    ansible.builtin.shell: bash -c 'curl -sSL https://get.rvm.io | bash -s stable'
+
+  - ansible.builtin.debug:
+      msg: Bash and Zsh shells will be configured by default by rvm.  
+    
+  - name: Download and install fish function for rvm, so that rvm will work in fish
+    ansible.builtin.shell: bash -c 'curl -s -L --create-dirs -o ~/.config/fish/functions/rvm.fish https://raw.github.com/lunks/fish-nuggets/master/functions/rvm.fish'
+
+  - ansible.builtin.debug:
+      msg: Building and installing the ruby {{ ruby_version }} will take some time...
+
+  - name: Installing ruby {{ ruby_version }}
+    ansible.builtin.shell: bash -c 'source ~/.bash_profile && rvm install ruby-{{ ruby_version }}'
+
+  - name: Set {{ ruby_version }} as the default for new shells. This will override the 'system' Ruby
+    ansible.builtin.shell: bash -c 'source ~/.bash_profile && rvm use {{ ruby_version }} --default'
+
+  - name: Ensure fish is configured to use rvm
+    block:
+      - ansible.builtin.lineinfile:
+          dest: '{{ HOME }}/.config/fish/config.fish'
+          regexp: '{{ item.regexp }}'
+          state: absent
+        with_items:
+          - { regexp: '^rvm default$' }
+
+      - ansible.builtin.lineinfile:
+          dest: '{{ HOME }}/.config/fish/config.fish'
+          line: '{{ item.line }}'
+          insertafter: EOF
+        with_items:
+          - { line: 'rvm default'}

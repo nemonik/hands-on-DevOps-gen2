@@ -15,7 +15,7 @@
       HOME:  "{{ lookup('env', 'HOME') }}"
 
   - name: checking golang project folders
-    file:
+    ansible.builtin.file:
       path: "{{ HOME }}/go/{{ item }}"
       state: directory
       mode: 0775
@@ -26,7 +26,7 @@
 
   - name: Ensure {{ HOME }}/.bash_profile defines GOBIN and GOPATH environment variables
     block:
-      - lineinfile:
+      - ansible.builtin.lineinfile:
           dest: "{{ HOME }}/.bash_profile"
           regexp: "{{ item.regexp }}"
           state: absent
@@ -35,7 +35,7 @@
           - { regexp: "^export GOPATH" }
           - { regexp: '^export PATH="$GOBIN:$PATH"' }
 
-      - lineinfile:
+      - ansible.builtin.lineinfile:
           dest: "{{ HOME }}/.bash_profile"
           line: "{{ item.line }}"
           insertafter: EOF
@@ -46,7 +46,7 @@
 
   - name: Ensure {{ HOME }}/.zshrc defines GOBIN and GOPATH environment variables
     block:
-      - lineinfile:
+      - ansible.builtin.lineinfile:
           dest: "{{ HOME }}/.zshrc"
           regexp: "{{ item.regexp }}"
           state: absent
@@ -55,7 +55,7 @@
           - { regexp: "^export GOPATH" }
           - { regexp: '^export PATH="$GOBIN:$PATH"' }
 
-      - lineinfile:
+      - ansible.builtin.lineinfile:
           dest: "{{ HOME }}/.zshrc"
           line: "{{ item.line }}"
           insertafter: EOF
@@ -66,20 +66,20 @@
 
   - name: Ensure GOBIN and GOPATH environment variables exist for fish
     block:
-      - lineinfile:
+      - ansible.builtin.lineinfile:
           dest: "{{ HOME }}/.config/fish/config.fish"
           regexp: "{{ item.regexp }}"
           state: absent
         with_items:
-          - { regexp: "^set -x GOBIN" }
-          - { regexp: "^set -x GOPATH" }
-          - { regexp: "^set -x PATH \\$PATH \\$GOBIN$" }
+          - { regexp: '^set -Ux GOBIN' }
+          - { regexp: '^set -Ux GOPATH' }
+          - { regexp: '^set -U fish_user_paths \\$GOBIN \\$fish_user_paths$' }
 
-      - lineinfile:
+      - ansible.builtin.lineinfile:
           dest: "{{ HOME }}/.config/fish/config.fish"
           line: "{{ item.line }}"
           insertafter: EOF
         with_items:
-           - { line: 'set -x GOBIN $HOME/go/bin' }
-           - { line: 'set -x GOPATH $HOME/go' }
-           - { line: 'set -x PATH $PATH $GOBIN' }
+           - { line: 'set -Ux GOBIN $HOME/go/bin' }
+           - { line: 'set -Ux GOPATH $HOME/go' }
+           - { line: 'set -U fish_user_paths $GOBIN $fish_user_paths' }

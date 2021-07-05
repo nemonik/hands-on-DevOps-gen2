@@ -98,7 +98,7 @@ Install Xcode Command Line tools
 1. In iTerm2 enter the following into the commmand line.
 
    ```bash
-   xcode-select —install
+   xcode-select --install   
    ```
 
    It is possible your host may already have the Xcode Command Line Tools installed and will be immediately told so if this is the case skip to the next section
@@ -158,6 +158,31 @@ No analytics data has been sent yet (or will be during this `install` run).
     https://docs.brew.sh
 ```
 
+### Add `/usr/local/bin` to your PATH
+
+First determine what shell you are using by performing the following in the
+command line
+
+```sh
+echo $SHELL
+```
+
+The default shell in OS X is now `zsh`, so it is likely you are using `zsh`.  If you are then perform the following in the shell
+
+```sh
+echo 'export PATH="/usr/local/bin:$PATH"' >> ~/.zshrc
+source ~/.zshrc
+```
+
+If your shell is `bash` perform the following
+
+```sh
+echo 'export PATH="/usr/local/bin:$PATH"' >> ~/.bash_profile
+source ~/.bash_profile
+```
+
+If you're using fish as I am, you already had `brew` installed.
+
 ### Installing pyenv
 
 The Ansible framework is based on Python. OSX comes with both Python 2 and Python 3 installed, but the ddefault is to run Python 2. Let's install the latest Python 3 in user space.  To do this we will use [pyenv](https://github.com/pyenv/pyenv).  Pyenv permits you to install and easily be able to switch between multiple version of Python.
@@ -187,23 +212,16 @@ One Windows 10 and Arch Linux  we'll use (TODO: complete.)
 
 You will need to configure your shell to use `pyenv`.
 
-First determine what shell you are using by performing the following in the
-command line
+If you are using `zsh` perform the following:
 
 ```sh
-echo $SHELL
+echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.zshrc
+echo 'export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.zshrc
+echo 'eval "$(pyenv init --path)"' >> ~/.zshrc
+source ~/.zshrc
 ```
 
-The default shell in OS X is now `zshell`, so it is likely you are using `zsh`.  If you are then perform the following in the shell
-
-```sh
-echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.zprofile
-echo 'export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.zprofile
-echo 'eval "$(pyenv init --path)"' >> ~/.zprofile
-source ~/.zprofile
-```
-
-If your shell ends in `bash` perform the following
+If your shell is `bash`:
 
 ```sh
 echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.bash_profile
@@ -212,7 +230,7 @@ echo 'eval "$(pyenv init --path)"' >> ~/.bash_profile
 source ~/.bash_profile
 ```
 
-If you're using `fish` like I am perform the following
+If you're using `fish`:
 
 ```sh
 set -Ux PYENV_ROOT $HOME/.pyenv
@@ -261,7 +279,6 @@ pyenv install 3.9.5
 Success on an OSX host resembles
 
 ```
-bash-5.1$ pyenv install $(pyenv install --list | grep -v - | grep -v b | tail -1)
 python-build: use openssl@1.1 from homebrew
 python-build: use readline from homebrew
 Downloading Python-3.9.5.tar.xz...
@@ -269,7 +286,7 @@ Downloading Python-3.9.5.tar.xz...
 Installing Python-3.9.5...
 python-build: use readline from homebrew
 python-build: use zlib from xcode sdk
-Installed Python-3.9.5 to /Users/nemonik/.pyenv/versions/3.9.5
+Installed Python-3.9.5 to /Users/mjwalsh/.pyenv/versions/3.9.5
 ```
 
 So, you've installed Python 3.9.5, but if you enter the following into the
@@ -292,6 +309,7 @@ change that by executing the following in the command line
 pyenv global 3.9.5
 pyenv versions
 python --version
+which python
 ```
 
 Output will resemble
@@ -383,7 +401,7 @@ Successfully installed MarkupSafe-2.0.1 PyYAML-5.4.1 ansible-4.1.0 ansible-core-
 
 In order to use the paramiko connection plugin or modules that require paramiko, install paramiko
 
-``` sh
+```sh
 pip install --user paramiko
 ```
 
@@ -406,6 +424,39 @@ Collecting six>=1.4.1
 Requirement already satisfied: pycparser in ./.local/lib/python3.9/site-packages (from cffi>=1.1->bcrypt>=3.1.3->paramiko) (2.20)
 Installing collected packages: six, pynacl, bcrypt, paramiko
 Successfully installed bcrypt-3.2.0 paramiko-2.7.2 pynacl-1.4.0 six-1.16.0
+```
+
+You will  need to add Ansible's installation directory to your path, if
+
+```sh
+which ansible-playbook
+```
+
+returns
+
+```
+ansible-playbook not found
+```
+
+If you are using `zsh` perform the following:
+
+```sh
+echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.zshrc
+source ~/.zshrc
+```
+
+If your shell is `bash`:
+
+```sh
+echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.bash_profile
+source ~/.bash_profile
+```
+
+If you're using `fish`:
+
+```sh
+echo 'set -U fish_user_paths $HOME/.local/bin $fish_user_paths' >> ~/.config/fish/config.fish
+source ~/.config/fish/config.fish
 ```
 
 We can then verify `ansible` has been installed via
@@ -780,5 +831,19 @@ PLAY RECAP *********************************************************************
 localhost                  : ok=24   changed=6    unreachable=0    failed=0    skipped=2    rescued=0    ignored=0
 
 ```
+
+### Enable nerd fonts in XTerm 2
+
+The Ansible automation wil configure your default shell to fish and configure it, but Bash and Zsh are also configured.  To complete the configuration for OS X hosts perform the following to use the installedm `Meslo Nerd Font`.  Optionally, you can install your own [Nerd font](https://www.nerdfonts.com/font-downloads).
+
+1. Open iTerm2's `Preferences`.
+2. In the `Preference` window that opens, select `Profile`.
+2. In the `Default` profile, select `Text`.
+3. In the `Text` profile, select `` from the `Font` pannel.
+4. Optionally, check off `Use ligatures`.
+5. In the `Preferences` window, select `Color`.
+6. Click `Color Preserts...` and select `Solarized Dark`.
+6. Close the `Preference` windows, and re-start your terminal window for your changes to take effect.
+
 
 TODO: the rest of the content...
