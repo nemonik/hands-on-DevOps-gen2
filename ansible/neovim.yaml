@@ -17,6 +17,7 @@
         - node
         - yarn
         - fzf
+        - watchman
       state: latest
     retries: '{{ default_retries }}'
     delay: '{{ default_delay }}'
