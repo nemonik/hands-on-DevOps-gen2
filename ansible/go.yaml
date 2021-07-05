@@ -2,13 +2,13 @@
   # Install Go
   - name: Ensure Go is installed 
     community.general.homebrew:
-      name: "go"
+      name: 'go'
       state: latest
-    retries: "{{ default_retries }}"
-    delay: "{{ default_delay }}"
+    retries: '{{ default_retries }}'
+    delay: '{{ default_delay }}'
     register: result
     until: result is succeeded
-    when: ( ansible_distribution != 'MacOSX' )
+    when: ( ansible_distribution == 'MacOSX' )
 
   - name: Set fact for $HOME
     ansible.builtin.set_fact:
@@ -24,20 +24,47 @@
       - pkg
       - src
 
+  - name: Ensure golint is installed
+    command: /bin/bash -c "source ~/.bash_profile && go get -u golang.org/x/lint/golint"
+
+  - name: Configure `:Lint` in Vim to run golint on the current file and populate the quickfix list
+    ansible.builtin.blockinfile:
+      path: '{{ HOME }}/.config/nvim/init.vim'
+      insertafter: EOF  
+      block: |
+        " -----------------------------------------------------------------------------
+        " Configure `:Lint` in Vim to run golint on the current file and populate the 
+        " quickfix list 
+        " -----------------------------------------------------------------------------
+        set rtp+=$GOPATH/src/github.com/golang/lint/misc/vim
+
+#    block:
+#      - ansible.builtin.lineinfile:
+#          dest: '{{ HOME }}/.config/nvim/init.vim'
+#          regexp: '^set rtp+=\$GOPATH/src/github.com/golang/lint/misc/vim$'
+#          state: absent
+#
+#      - ansible.builtin.ineinfile:
+#          dest: '{{ HOME }}/.config/nvim/init.vim'
+#          line: 'set rtp+=$GOPATH/src/github.com/golang/lint/misc/vim'
+#          insertafter: EOF
+
+
+
   - name: Ensure {{ HOME }}/.bash_profile defines GOBIN and GOPATH environment variables
     block:
       - ansible.builtin.lineinfile:
-          dest: "{{ HOME }}/.bash_profile"
-          regexp: "{{ item.regexp }}"
+          dest: '{{ HOME }}/.bash_profile'
+          regexp: '{{ item.regexp }}'
           state: absent
         with_items:
-          - { regexp: "^export GOBIN" }
-          - { regexp: "^export GOPATH" }
+          - { regexp: '^export GOBIN' }
+          - { regexp: '^export GOPATH' }
           - { regexp: '^export PATH="$GOBIN:$PATH"' }
 
       - ansible.builtin.lineinfile:
-          dest: "{{ HOME }}/.bash_profile"
-          line: "{{ item.line }}"
+          dest: '{{ HOME }}/.bash_profile'
+          line: '{{ item.line }}'
           insertafter: EOF
         with_items:
           - { line: 'export GOBIN="$HOME/go/bin"' }
@@ -47,17 +74,17 @@
   - name: Ensure {{ HOME }}/.zshrc defines GOBIN and GOPATH environment variables
     block:
       - ansible.builtin.lineinfile:
-          dest: "{{ HOME }}/.zshrc"
-          regexp: "{{ item.regexp }}"
+          dest: '{{ HOME }}/.zshrc'
+          regexp: '{{ item.regexp }}'
           state: absent
         with_items:
-          - { regexp: "^export GOBIN" }
-          - { regexp: "^export GOPATH" }
+          - { regexp: '^export GOBIN' }
+          - { regexp: '^export GOPATH' }
           - { regexp: '^export PATH="$GOBIN:$PATH"' }
 
       - ansible.builtin.lineinfile:
-          dest: "{{ HOME }}/.zshrc"
-          line: "{{ item.line }}"
+          dest: '{{ HOME }}/.zshrc'
+          line: '{{ item.line }}'
           insertafter: EOF
         with_items:
            - { line: 'export GOBIN="$HOME/go/bin"' }
@@ -67,8 +94,8 @@
   - name: Ensure GOBIN and GOPATH environment variables exist for fish
     block:
       - ansible.builtin.lineinfile:
-          dest: "{{ HOME }}/.config/fish/config.fish"
-          regexp: "{{ item.regexp }}"
+          dest: '{{ HOME }}/.config/fish/config.fish'
+          regexp: '{{ item.regexp }}'
           state: absent
         with_items:
           - { regexp: '^set -Ux GOBIN' }
@@ -76,8 +103,8 @@
           - { regexp: '^set -U fish_user_paths \\$GOBIN \\$fish_user_paths$' }
 
       - ansible.builtin.lineinfile:
-          dest: "{{ HOME }}/.config/fish/config.fish"
-          line: "{{ item.line }}"
+          dest: '{{ HOME }}/.config/fish/config.fish'
+          line: '{{ item.line }}'
           insertafter: EOF
         with_items:
            - { line: 'set -Ux GOBIN $HOME/go/bin' }

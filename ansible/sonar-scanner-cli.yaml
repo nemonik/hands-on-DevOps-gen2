@@ -9,7 +9,7 @@
     delay: '{{ default_delay }}'
     register: result
     until: result is succeeded
-    when: ( ansible_distribution != 'MacOSX' )
+    when: ( ansible_distribution == 'MacOSX' )
 
   - name: Set fact for $HOME
     ansible.builtin.set_fact:

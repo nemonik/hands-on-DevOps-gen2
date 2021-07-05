@@ -157,7 +157,7 @@
           - { line: 'export VISUAL="nvim"' }
           - { line: "export FZF_DEFAULT_OPTS='—height=40% —preview=\"cat {}\" —preview-window=right:60%:wrap'" }
           - { line: 'alias vim="nvim"' }
-          - { line: 'alias vim="nvim"' }
+          - { line: 'alias nano="nvim"' }
           - { line: 'export PATH="$HOME/.local/bin:$PATH"'}
 
   - name: Configure default editor for fish
