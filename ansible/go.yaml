@@ -1,6 +1,11 @@
 ---
-  # Install Go
-  - name: Ensure Go is installed 
+  # Ensure go lang is installed and configure correctly
+  #
+  - name: Set fact for $HOME
+    ansible.builtin.set_fact:
+      HOME:  "{{ lookup('env', 'HOME') }}"
+
+  - name: When MacOSX ensure Go is installed 
     community.general.homebrew:
       name: 'go'
       state: latest
@@ -10,11 +15,18 @@
     until: result is succeeded
     when: ( ansible_distribution == 'MacOSX' )
 
-  - name: Set fact for $HOME
-    ansible.builtin.set_fact:
-      HOME:  "{{ lookup('env', 'HOME') }}"
+  - name: When Archlinux ensure Go is installed
+    community.general.pacman:
+      name: 'go'
+      state: latest
+    retries: '{{ default_retries }}'
+    delay: '{{ default_delay }}'
+    register: result
+    until: result is succeeded
+    become: yes
+    when: ( ansible_distribution == 'Archlinux' )
 
-  - name: checking golang project folders
+  - name: Ensure {{ HOME }}/go folders exists
     ansible.builtin.file:
       path: "{{ HOME }}/go/{{ item }}"
       state: directory
@@ -26,10 +38,15 @@
 
   - name: Ensure golint is installed
     command: /bin/bash -c "source ~/.bash_profile && go get -u golang.org/x/lint/golint"
+    retries: '{{ default_retries }}'
+    delay: '{{ default_delay }}'
+    register: result
+    until: result is succeeded
 
   - name: Configure `:Lint` in Vim to run golint on the current file and populate the quickfix list
     ansible.builtin.blockinfile:
       path: '{{ HOME }}/.config/nvim/init.vim'
+      marker: '" {mark} ANSIBLE MANAGED BLOCK'
       insertafter: EOF  
       block: |
         " -----------------------------------------------------------------------------
@@ -37,19 +54,6 @@
         " quickfix list 
         " -----------------------------------------------------------------------------
         set rtp+=$GOPATH/src/github.com/golang/lint/misc/vim
-
-#    block:
-#      - ansible.builtin.lineinfile:
-#          dest: '{{ HOME }}/.config/nvim/init.vim'
-#          regexp: '^set rtp+=\$GOPATH/src/github.com/golang/lint/misc/vim$'
-#          state: absent
-#
-#      - ansible.builtin.ineinfile:
-#          dest: '{{ HOME }}/.config/nvim/init.vim'
-#          line: 'set rtp+=$GOPATH/src/github.com/golang/lint/misc/vim'
-#          insertafter: EOF
-
-
 
   - name: Ensure {{ HOME }}/.bash_profile defines GOBIN and GOPATH environment variables
     block:
@@ -60,7 +64,7 @@
         with_items:
           - { regexp: '^export GOBIN' }
           - { regexp: '^export GOPATH' }
-          - { regexp: '^export PATH="$GOBIN:$PATH"' }
+          - { regexp: '^export PATH="\$GOBIN:\$PATH"' }
 
       - ansible.builtin.lineinfile:
           dest: '{{ HOME }}/.bash_profile'
@@ -80,7 +84,7 @@
         with_items:
           - { regexp: '^export GOBIN' }
           - { regexp: '^export GOPATH' }
-          - { regexp: '^export PATH="$GOBIN:$PATH"' }
+          - { regexp: '^export PATH="\$GOBIN:\$PATH"' }
 
       - ansible.builtin.lineinfile:
           dest: '{{ HOME }}/.zshrc'
@@ -100,7 +104,7 @@
         with_items:
           - { regexp: '^set -Ux GOBIN' }
           - { regexp: '^set -Ux GOPATH' }
-          - { regexp: '^set -U fish_user_paths \\$GOBIN \\$fish_user_paths$' }
+          - { regexp: '^set -U fish_user_paths \$GOBIN \$fish_user_paths' }
 
       - ansible.builtin.lineinfile:
           dest: '{{ HOME }}/.config/fish/config.fish'

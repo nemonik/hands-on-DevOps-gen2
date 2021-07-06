@@ -1,7 +1,44 @@
 ---
+  - name: Set fact for $HOME
+    ansible.builtin.set_fact:
+      HOME:  "{{ lookup('env', 'HOME') }}"
+
+  - name: When MacOSX ensure pyenv Homebrew package is installed
+    block:
+      - name: Update homebrew and upgrade all packages
+        community.general.homebrew:
+          update_homebrew: yes
+          upgrade_all: yes
+
+      - name: Ensure pyenv HomeBrew packages are installed
+        community.general.homebrew:
+          name: pyenv
+          state: latest
+        retries: '{{ default_retries }}'
+        delay: '{{ default_delay }}'
+        register: result
+    when: ( ansible_distribution == 'MacOSX' )
+
+  - name: When Archlinux ensure pyenv pacman package is installed
+    block:
+      - name: Update pacman and upgrade all packages
+        community.general.pacman:
+          upgrade: yes
+
+      - name: Ensure pacman packages are installed
+        community.general.pacman:
+          name: pyenv
+          state: latest
+        retries: '{{ default_retries }}'
+        delay: '{{ default_delay }}'
+        register: result
+        until: result is succeeded
+        become: yes
+    when: ( ansible_distribution == 'Archlinux' )
+ 
   # Configure pyenv across Bash, Zsh and fish
   #
-  - name: Ensure Bash is configured to use pyenv 
+  - name: Ensure pyenv is configured in Bash
     block:
       - ansible.builtin.lineinfile:
           dest: '{{ HOME }}/.bash_profile'
@@ -25,7 +62,7 @@
           - { line: 'eval "$(pyenv init --path)"' }
           - { line: 'eval "$(pyenv init -)"' }
 
-  - name: Ensure Zsh is configured to used pyenv 
+  - name: Ensure pyenv is configured in Zsh 
     block:
       - ansible.builtin.lineinfile:
           dest: '{{ HOME }}/.zshrc'
@@ -49,7 +86,7 @@
           - { line: 'eval "$(pyenv init --path)"' }
           - { line: 'eval "$(pyenv init -)"' }
 
-  - name: Ensure fish is configured to used pyenv
+  - name: Ensure pyenv is configured in fish
     block:
       - ansible.builtin.lineinfile:
           dest: '{{ HOME }}/.config/fish/config.fish'
@@ -72,3 +109,6 @@
            - { line: 'set -U fish_user_paths $HOME/.local/bin $fish_user_paths' }
            - { line: 'status is-interactive; and pyenv init --path | source' }
            - { line: 'pyenv init - | source' }
+
+  - name: Install latest Python3 into user space
+    ansible.builtin.shell: bash -c "source ~/.bash_profile && pyenv install --force $(pyenv install --list | grep -v - | grep -v b | tail -1) && pyenv global $(pyenv install --list | grep -v - | grep -v b | tail -1)"

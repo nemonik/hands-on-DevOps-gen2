@@ -5,25 +5,56 @@
     ansible.builtin.set_fact:
       HOME:  "{{ lookup('env', 'HOME') }}"
 
-  - name: Update homebrew and upgrade all packages
-    community.general.homebrew:
-      update_homebrew: yes
-      upgrade_all: yes
+  - name: When MacOSX ensure Homebrew packages are installed
+    block:      
+      - name: Update homebrew and upgrade all packages
+        community.general.homebrew:
+          update_homebrew: yes
+          upgrade_all: yes
   
-  - name: Ensure neovim (nvim) is installed
-    community.general.homebrew:
-      name:
-        - nvim
-        - node
-        - yarn
-        - fzf
-        - watchman
-      state: latest
-    retries: '{{ default_retries }}'
-    delay: '{{ default_delay }}'
-    register: result
-    until: result is succeeded
+      - name: Ensure neovim (nvim) is installed
+        community.general.homebrew:
+          name:
+            - nvim
+            - node
+            - yarn
+            - fzf
+            - watchman
+          state: latest
+        retries: '{{ default_retries }}'
+        delay: '{{ default_delay }}'
+        register: result
+        until: result is succeeded
     when: ( ansible_distribution == 'MacOSX' )
+
+  - name: When Archlinux ensure pacman packages are installed
+    block:
+      - name: Update pacman and upgrade all packages
+        community.general.pacman:
+          upgrade: yes
+
+      - name: Ensure pacman packages are installed
+        community.general.pacman:
+          name:
+            - neovim
+            - nodejs-lts-fermium
+            - npm
+            - yarn
+          state: latest
+        retries: '{{ default_retries }}'
+        delay: '{{ default_delay }}'
+        register: result
+        until: result is succeeded
+        become: yes
+
+      - name: Install packages from AUR using a yay AUR helper
+        community.general.pacman:
+          name:
+            - fzf
+            - watchman-bin
+          state: latest
+          executable: yay
+    when: ( ansible_distribution == 'Archlinux' )
 
   - name: Ensure pynvim python module is installed for coc-pyright
     ansible.builtin.shell: bash -c "python3 -m pip install --user --upgrade pynvim"
@@ -49,11 +80,20 @@
           path: '{{ HOME }}/.local/bin'
           state: latest
 
-      - name: Install "neovim" node.js package
-        community.general.npm:
-          name: 'neovim'
-          global: yes
-          state: latest
+      - name: Install "neovim" node.js package globally
+        block:
+          - community.general.npm:
+              name: 'neovim'
+              global: yes
+              state: latest
+            when: ( ansible_distribution == 'MacOSX' )
+
+          - community.general.npm:
+              name: 'neovim'
+              global: yes
+              state: latest
+            become: yes
+            when: ( ansible_distribution == 'Archlinux' )
 
       - name: Does `{{ HOME }}/.prettierrc.json` file exist?
         ansible.builtin.stat:
@@ -103,10 +143,6 @@
       - name: Install Powerline fonts
         ansible.builtin.shell: sh -c "cd $HOME/.config/powerline && ./install.sh"
 
-  - name: Ensure useful key bindings and fuzzy completion are installed
-    ansible.builtin.shell: sh -c "$(brew --prefix)/opt/fzf/install --all"
-    when: ( ansible_distribution != 'MacOSX' )
-
   # Forces the use of neovim over vim and nano via aliases
   #
   - name: Configure default editor for Bash
@@ -119,9 +155,9 @@
           - { regexp: '^export EDITOR' }
           - { regexp: '^export VISUAL' }
           - { regexp: 'export FZF_DEFAULT_OPTS' }
-          - { regexp: '^alias vim="nvim"$' }
-          - { regexp: '^alias nano="nvim"$' }
-          - { regexp: '^export PATH="\\$HOME/.local/bin:\\$PATH"$' }
+          - { regexp: '^alias vim="nvim"' }
+          - { regexp: '^alias nano="nvim"' }
+          - { regexp: '^export PATH="\$HOME/.local/bin:\$PATH"' }
 
       - ansible.builtin.lineinfile:
           dest: "{{ HOME }}/.bash_profile"
@@ -145,9 +181,9 @@
           - { regexp: '^export EDITOR' }
           - { regexp: '^export VISUAL' }
           - { regexp: 'export FZF_DEFAULT_OPTS' }
-          - { regexp: '^alias vim="nvim"$' }
-          - { regexp: '^alias nano="nvim"$' }
-          - { regexp: '^export PATH="\\$HOME/.local/bin:\\$PATH"$' }
+          - { regexp: '^alias vim="nvim"' }
+          - { regexp: '^alias nano="nvim"' }
+          - { regexp: '^export PATH="\$HOME/.local/bin:\$PATH"' }
 
       - ansible.builtin.lineinfile:
           dest: '{{ HOME }}/.zshrc'
@@ -171,9 +207,9 @@
           - { regexp: '^set -Ux EDITOR' }
           - { regexp: '^set -Ux VISUAL' }
           - { regexp: '^set -Ux FZF_DEFAULT_OPTS' }
-          - { regexp: '^alias vim="nvim"$' }
-          - { regexp: '^alias nano="nvim"$' }
-          - { regexp: '^set -U fish_user_paths \\$HOME/.local/bin \\$fish_user_paths$'}
+          - { regexp: '^alias vim="nvim"' }
+          - { regexp: '^alias nano="nvim"' }
+          - { regexp: '^set -U fish_user_paths \$HOME/.local/bin \$fish_user_paths'}
 
       - ansible.builtin.lineinfile:
           dest: '{{ HOME }}/.config/fish/config.fish'
@@ -186,4 +222,3 @@
           - { line: 'alias vim="nvim"' }
           - { line: 'alias nano="nvim"' }
           - { line: 'set -U fish_user_paths $HOME/.local/bin $fish_user_paths'}
-

@@ -1,6 +1,10 @@
 ---
   # Install sonar-scanner
   #
+  - name: Set fact for $HOME
+    ansible.builtin.set_fact:
+      HOME:  "{{ lookup('env', 'HOME') }}"
+
   - name: Ensure sonar-scanner is installed
     community.general.homebrew:
       name: 'sonar-scanner'
@@ -11,9 +15,13 @@
     until: result is succeeded
     when: ( ansible_distribution == 'MacOSX' )
 
-  - name: Set fact for $HOME
-    ansible.builtin.set_fact:
-      HOME:  "{{ lookup('env', 'HOME') }}"
+  - name: Install packages from AUR using a yay AUR helper
+    community.general.pacman:
+      name: sonar-scanner
+      state: latest
+      executable: yay
+      #extra_args: --builddir /var/cache/yay
+    when: ( ansible_distribution == 'Archlinux' )
 
   - name: Set fact for $SONAR_HOST_URL
     ansible.builtin.set_fact:
@@ -28,7 +36,7 @@
 
       - ansible.builtin.lineinfile:
           dest: '{{ HOME }}/.bash_profile'
-          line: 'export SONAR_HOST_URL={{ SONAR_HOST_URL }}'
+          line: 'export SONAR_HOST_URL="{{ SONAR_HOST_URL }}"'
           insertafter: EOF
 
   - name: Ensure {{ HOME }}/.zshrc defines SONAR_HOST_URL environment variable
@@ -40,7 +48,7 @@
 
       - ansible.builtin.lineinfile:
           dest: '{{ HOME }}/.zshrc'
-          line: 'export SONAR_HOST_URL={{ SONAR_HOST_URL }}'
+          line: 'export SONAR_HOST_URL="{{ SONAR_HOST_URL }}"'
           insertafter: EOF
 
   - name: Ensure SONAR_HOST_URL environment variable exist for fish
@@ -52,5 +60,5 @@
 
       - ansible.builtin.lineinfile:
           dest: '{{ HOME }}/.config/fish/config.fish'
-          line: 'set -Ux SONAR_HOST_URL {{ SONAR_HOST_URL }}'
+          line: 'set -Ux SONAR_HOST_URL "{{ SONAR_HOST_URL }}"'
           insertafter: EOF

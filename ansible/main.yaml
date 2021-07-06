@@ -6,24 +6,25 @@
     default_delay: 10
     default_retries: 60
     ruby_version: 3.0.1
+    supported_host_os:
+      - MacOSX
+      - Archlinux
     
   tasks:
   - name: Echo ansible distribution
     ansible.builtin.debug:
       msg: '{{ inventory_hostname }} host is running {{ ansible_distribution }}:{{ ansible_distribution_release }} with an IP address if {{ ansible_default_ipv4.address }}'
 
-  - name: Fail if OS is not Arch or OSX
+  - name: Fail if OS is not MacOSX or ArchLinux
     fail:
-      msg: '{{ ansible_distribution }} - {{ ansible_distribution_release }} is not Ubuntu-bionic or Alpine'
-    when: ( ansible_distribution != 'MacOSX' )
+      msg: '{{ ansible_distribution }} - {{ ansible_distribution_release }} is not MacOSX or ArchLinux'
+    when:  ansible_distribution not in supported_host_os
 
-  - name: Include MacOSX.yml, when MacOSX
-    include: MacOSX.yaml
-    when: 
-      - ansible_distribution == 'MacOSX'
+  - name: Include common.yml
+    include: common.yaml
 
-  - name: Ensure pyenv is installed across the Bash, Zsh and fish
-    include: pyenv-init-shell.yaml
+  - name: Ensure pyenv is installed and configured
+    include: pyenv.yaml
 
   - name: Ensure Go is installed and configured
     include: go.yaml

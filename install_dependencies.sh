@@ -15,4 +15,4 @@ skip_encrypted_variables=true
 
 cd ansible
 
-ansible-playbook -vvv -i hosts main.yaml
+ansible-playbook -vvv -i hosts main.yaml --ask-become-pass

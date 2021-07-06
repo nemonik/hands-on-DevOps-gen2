@@ -5,18 +5,46 @@
     ansible.builtin.set_fact:
       HOME:  "{{ lookup('env', 'HOME') }}"
 
-  - name: Ensure needed HomeBrew packages are installed to download and build Ruby via rvm
-    community.general.homebrew:
-      name: 
-        - curl
-        - automake
-        - coreutils
-        - libksba
-        - zlib
-      state: latest
+  - name: When macOSX ensure needed HomeBrew packages are installed to download and build Ruby via rvm
+    block:
+      - name: Install rvm dependencies
+        community.general.homebrew:
+          name: 
+            - curl
+            - automake
+            - coreutils
+            - libksba
+            - zlibi
+            - gnupg
+          state: latest
+        retries: '{{ default_retries }}'
+        delay: '{{ default_delay }}'
+        register: result
+        until: result is succeeded
     when: ( ansible_distribution == 'MacOSX' )
 
-  - name: Ensure rvm is installed 
+  - name: When Archlinux ensure rvm dependencies are installed via pacman
+    community.general.pacman:
+      name:
+        - base-devel
+        - tar
+        - gzip 
+        - diffutils
+        - git
+        - curl
+        - gnupg
+      state: latest
+    retries: '{{ default_retries }}'
+    delay: '{{ default_delay }}'
+    register: result
+    until: result is succeeded
+    become: yes
+    when: ( ansible_distribution == 'Archlinux' )
+
+  - name: Install rvm's keys
+    ansible.builtin.shell: bash -c "curl -sSL https://rvm.io/mpapis.asc | gpg2 --import - && curl -sSL https://rvm.io/pkuczynski.asc | gpg2 --import -"
+
+  - name: Ensure rvm is installed
     ansible.builtin.shell: bash -c 'curl -sSL https://get.rvm.io | bash -s stable'
 
   - ansible.builtin.debug:
@@ -49,3 +77,4 @@
           insertafter: EOF
         with_items:
           - { line: 'rvm default'}
+

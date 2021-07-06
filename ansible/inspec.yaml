@@ -3,7 +3,7 @@
   # system (https://docs.chef.io/inspec/install/)
   #
   - ansible.builtin.debug:
-      msg: Installing InSpec requiring lots and lots of Ruby gems. This will take sometime...
+      msg: Installing InSpec requiring lots and lots of Ruby gems. This will take sometime... Go have some pie.
 
   - name: Ensure inspec-bin gem is installed
     ansible.builtin.shell: bash -c "source ~/.bash_profile && gem install inspec-bin"

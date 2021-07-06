@@ -1,4 +1,4 @@
-localhost ansible_host=localhost ansible_connection=local ansible_python_interpreter=$HOME/.pyenv/shims/python
+localhost ansible_host=localhost ansible_connection=local ansible_python_interpreter=/usr/bin/python3
 
 [factory]
 localhost
