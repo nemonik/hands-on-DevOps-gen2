@@ -65,7 +65,9 @@
     block:
       - name: Update pacman and upgrade all packages
         community.general.pacman:
+          update_cache: yes
           upgrade: yes
+        become: yes
 
       - name: Ensure pacman packages are installed
         community.general.pacman:

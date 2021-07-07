@@ -20,7 +20,6 @@
       name: sonar-scanner
       state: latest
       executable: yay
-      #extra_args: --builddir /var/cache/yay
     when: ( ansible_distribution == 'Archlinux' )
 
   - name: Set fact for $SONAR_HOST_URL

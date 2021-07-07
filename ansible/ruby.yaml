@@ -46,7 +46,7 @@
         become: yes
 
       - ansible.builtin.set_fact:
-          GBG_BINARY: 'gpg2'
+          GPG_BINARY: 'gpg2'
     when: ( ansible_distribution == 'Archlinux' )
 
   - name: Install rvm's keys

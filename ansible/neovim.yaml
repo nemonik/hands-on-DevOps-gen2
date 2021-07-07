@@ -12,7 +12,7 @@
           update_homebrew: yes
           upgrade_all: yes
   
-      - name: Ensure neovim (nvim) is installed
+      - name: When MacOSX ensure neovim (nvim) is installed
         community.general.homebrew:
           name:
             - nvim
@@ -34,7 +34,9 @@
     block:
       - name: Update pacman and upgrade all packages
         community.general.pacman:
+          update_cache: yes
           upgrade: yes
+        become: yes
 
       - name: Ensure pacman packages are installed
         community.general.pacman:
@@ -43,6 +45,9 @@
             - nodejs-lts-fermium
             - npm
             - yarn
+            - python-black
+            - mypy           
+            - python-pylint
           state: latest
         retries: '{{ default_retries }}'
         delay: '{{ default_delay }}'
