@@ -11,6 +11,11 @@ call plug#begin('~/.vim/plugged')
 " :PlugSnapshot[!] [output path]        Generate script for restoring the current snapshot of the plugins
 "
 
+" Comment stuff out
+" https://github.com/tpope/vim-commentary
+"
+Plug 'tpope/vim-commentary'
+
 " A simple, easy-to-use Vim alignment plugin 
 " https://github.com/junegunn/vim-easy-align
 "

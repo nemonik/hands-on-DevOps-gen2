@@ -1,0 +1,18 @@
+{
+  "python.linting.pylintEnabled": true,
+  "python.linting.mypyEnabled": true,
+  "python.linting.enabled": true,
+  "python.formatting.provider": "black",
+  "python.linting.lintOnSave": true,
+  "python.linting.pylintUseMinimalCheckers": false,
+
+  // as per https://github.com/neoclide/coc-yaml/issues/42
+  "yaml.schemaStore.url": "",
+  "yaml.format.enable": true,
+
+  "coc.preferences.formatOnSaveFiletypes": [
+    "markdown",
+    "Markdown"
+  ] 
+}
+

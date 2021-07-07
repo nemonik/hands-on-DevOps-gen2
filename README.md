@@ -6,7 +6,53 @@ The future home of the second edition of my hands-on DevOps course building upon
 
 The content of this course is presently under development.
 
-Since GitHub's mobile app doesn't permit access to the projact Kanban board I've moved to Todoist.
+This newest version of my Hands-on DevOps class is a replaitforming of sorts -- A sort of rewrite if you will. The prior version relied on multiple Vagrants and was a beast to maintain. Vagrants are virtual machines, when singular is abbreviated as "VM". Several Vagrants were created through automation to run a multi-node Kubernetes cluster as well asa development VM. The approach modeled how I preflighted my work on my laptop vice using [minikube](https://github.com/kubernetes/minikube). The Kubernetes cluster my class used made use of was [k3s](https://k3s.io/) and as it matured [k3d](https://k3d.io/) was introduced. K3d is a lightweight wrapper to run k3s in [Docker](https://docker.com) and provides a rather elegant solution to create and manage a single or multi-node k3s cluster for development vice standing up multi-VMs and the burden they impose on the host (in my case my laptop). Around this same time I was considerinf using k3d I gave [Docker Desktop's](https://www.docker.com/products/docker-desktop) means of providing a Kubernetes cluster a try, but I found it lacking, so I stuck with k3d. Around this same time I also moved fully off my MacBook for personal development moving to [Arch Linux](https://archlinux.org/) where I used [docker-ce](https://github.com/docker/docker-ce). This new version of my class infrastructure-as-code automation focuses instead of directly configuring the host or if need be a single Vagrant for the purpose of development.
+
+# 2. DevOps
+
+A hands-on DevOps course covering the culture, methods and repeated practices of modern software development involving Vagrant, VirtualBox, Ansible, Kubernetes, k3s, k3d, Traefik, Docker-Compose, Docker, Taiga, GitLab, Drone CI, SonarQube, Selenium, InSpec, Heimdall, Arch Linux...
+
+A reveal.js presentation written to accompany this course can found at [https://nemonik.github.io/hands-on-DevOps/](https://nemonik.github.io/hands-on-DevOps/).
+
+This course will
+
+1. Discuss DevOps,
+2. Have you spin up a DevOps toolchain and development environment, and then
+3. Author two applications and their accompanying pipelines, the first a continuous integration (CI) and the second a continuous delivery (CD) pipeline.
+
+After this course, you will
+
+1. Be able to describe and have hands-on experience DevOps methods and repeated practices (e.g., use of Agile methods, configuration management, build automation, test automation and deployment automation orchestrated under a CICD orchestrator), and why it matters;
+2. Address challenges transitioning to DevOps methods and repeated practices;
+3. Have had hands-on experience infrastructure-as-code to provision and configure an entire DevOps Factory (i.e. a toolchain and development environment) including Docker Registry, a Kubernetes cluster, Taiga, GitLab, Drone CI, SonarQube, Heimdall;
+4. Have had hands-on experience authoring code to include authoring and running automated tests in a CICD pipeline all under Configuration Management to ensure an application follows style, adheres to good coding practices, builds, identify security issues, and functions as expected;
+5. Have had hands-on experience with
+   1. using Infrastructure as Code (IaC) in Vagrant and Ansible;
+   2. creating and using Kanban board in Taiga;
+   3. code configuration in git and GitLab;
+   4. authoring code in Go;
+   5. using style checkers and linters;
+   6. authoring a Makefile;
+   7. various commands in Docker (e.g., building a container image, pushing a container into a registry, creating and running a container);
+   8. authoring a pipeline for Drone CI;
+   9. using Sonar Scanner CLI to perform static analysis;
+   10. authoring security test in InSpec;
+   11. author an automated functional test in Selenium;
+   12. authoring a dynamic security test in OWASP Zap; and
+   13. using container platform to author and scale services;
+6. Have had hands-on experience authoring code to include authoring and running automated tests in a CICD pipeline all under Configuration Management to ensure an application follows style, adheres to good coding practices, builds, identify security issues, and functions as expected.
+
+We will be spending most of the course hands-on working with the tools and in the Unix command line making methods and repeated practices of DevOps happen, so as to grow an understanding of how DevOps actually works. Although, not necessary I would encourage you to pick up a free PDF of [The Linux Command Line by William Shotts](http://linuxcommand.org/tlcl.php) if you are no familiar wit the Linux command line.
+
+Don't fixate on the tools used, nor the apps we develop in the course of learning how and why. How and why is far more important. This course like DevOps is not about tools although we'll be using them. You'll spend far more time writing code. (Or at the very least cutting-and-pasting code.)
+
+# Author
+
+- Michael Joseph Walsh [mjwalsh@mitre.org](mailto:mjwalsh@mitre.org), [walsh@nemonik.com](mailto:walsh@nemonik.com)
+
+# Copyright and license
+
+See the [License file](LICENCE) at the root of this project.
 
 # Prerequisites
 
@@ -29,6 +75,7 @@ cp ~/.bash_profile ~/.bash_profile.orig
 cp ~/.zshrc ~/.zshrc.orig
 cp ~/.config/fish/config.fish ~/.config/fish/config.fish.orig
 cp ~/.config/nvim/init.vim ~/.config/nvim/init.vim.orig
+cp ~/.config/nvim/coc-settings.json ~/.config/nvim/coc-settings.json.orig
 ```
 
 On or more of the above commands may fail if you don't have the files on your host. If you are sure you typed the command correctly you can ignore the error
@@ -40,6 +87,7 @@ rm ~/.bash_profile
 rm ~/.zshrc
 rm ~/.config/fish/config.fish
 rm ~/.config/nvim/init.vim
+rm ~/.config/nvim/coc-settings.json
 ```
 
 ## Installing upfront dependencies

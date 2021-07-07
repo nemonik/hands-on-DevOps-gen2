@@ -20,6 +20,9 @@
             - yarn
             - fzf
             - watchman
+            - pylint
+            - mypy
+            - black
           state: latest
         retries: '{{ default_retries }}'
         delay: '{{ default_delay }}'
@@ -121,10 +124,15 @@
       path: '{{ HOME }}/.config/nvim'
       state: directory
 
-  - name: Copy nvim configuration in place
+  - name: Copy nvim init.vim configuration file into place
     ansible.builtin.copy:
       src: init.vim
       dest: '{{ HOME }}/.config/nvim/init.vim'
+
+  - name: Copy coc-settings.json configuration file into place
+    ansible.builtin.copy:
+      src: coc-settings.json 
+      dest: '{{ HOME }}/.config/nvim/coc-settings.json'
 
   - name: Ensure Powerline fonts are installed for Vim Airline plugin
     block:

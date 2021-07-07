@@ -14,35 +14,43 @@
             - automake
             - coreutils
             - libksba
-            - zlibi
+            - zlib
             - gnupg
           state: latest
         retries: '{{ default_retries }}'
         delay: '{{ default_delay }}'
         register: result
         until: result is succeeded
+
+      - ansible.builtin.set_fact:
+          GPG_BINARY: 'gpg'
     when: ( ansible_distribution == 'MacOSX' )
 
   - name: When Archlinux ensure rvm dependencies are installed via pacman
-    community.general.pacman:
-      name:
-        - base-devel
-        - tar
-        - gzip 
-        - diffutils
-        - git
-        - curl
-        - gnupg
-      state: latest
-    retries: '{{ default_retries }}'
-    delay: '{{ default_delay }}'
-    register: result
-    until: result is succeeded
-    become: yes
+    block:
+      - name: Install rvm dependencies
+        community.general.pacman:
+          name:
+            - base-devel
+            - tar
+            - gzip 
+            - diffutils
+            - git
+            - curl
+            - gnupg
+          state: latest
+        retries: '{{ default_retries }}'
+        delay: '{{ default_delay }}'
+        register: result
+        until: result is succeeded
+        become: yes
+
+      - ansible.builtin.set_fact:
+          GBG_BINARY: 'gpg2'
     when: ( ansible_distribution == 'Archlinux' )
 
   - name: Install rvm's keys
-    ansible.builtin.shell: bash -c "curl -sSL https://rvm.io/mpapis.asc | gpg2 --import - && curl -sSL https://rvm.io/pkuczynski.asc | gpg2 --import -"
+    ansible.builtin.shell: bash -c "curl -sSL https://rvm.io/mpapis.asc | {{ GPG_BINARY }} --import - && curl -sSL https://rvm.io/pkuczynski.asc | {{ GPG_BINARY }} --import -"
 
   - name: Ensure rvm is installed
     ansible.builtin.shell: bash -c 'curl -sSL https://get.rvm.io | bash -s stable'
@@ -77,4 +85,3 @@
           insertafter: EOF
         with_items:
           - { line: 'rvm default'}
-
