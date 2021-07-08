@@ -1,536 +1,540 @@
 ---
-  - name: Set fact for $HOME
-    ansible.builtin.set_fact:
-      HOME:  "{{ lookup('env', 'HOME') }}"
-
-  - name: When MacOSX ensure Homebrew packages are installed
-    block:
-      - name: Update homebrew and upgrade all packages
-        community.general.homebrew:
-          update_homebrew: yes
-          upgrade_all: yes
-
-      - name: Check if /usr/local/Cellar/bash-completion exists
-        ansible.builtin.stat:
-          path: /usr/local/Cellar/bash-completion
-        register: bash_completion
-
-      - name: Ensure bash-completion is not installed, so bash-completion@2 can be installed
-        ansible.builtin.shell: brew unlink bash-completion
-        when: bash_completion.stat.exists
-
-      - name: Ensure HomeBrew packages are installed
-        community.general.homebrew:
-          name:
-            - bash
-            - bash-completion@2
-            - zsh
-            - zsh-completion
-            - fish
-            - vim
-            - nano
-            - pwgen
-            - openssl
-            - watch
-            - gettext
-            - k3d
-            - helm
-            - curl
-            - wget
-            - git-secrets
-            - tmux
-            - yamllint
-            - jq
-            - tree
-            - htop
-            - pyenv
-          state: latest
-        retries: '{{ default_retries }}'
-        delay: '{{ default_delay }}'
-        register: result
-        until: result is succeeded
-
-      - name: Get HOMEBREW_PREFIX
-        block:
-          - name: Execute brew --prefix
-            ansible.builtin.shell: brew --prefix
-            register: brew_prefix
-
-          - name: Create brew_fact with stdout of of prior command
-            ansible.builtin.set_fact:
-              HOMEBREW_PREFIX: '{{ brew_prefix.stdout }}'
-    when: ( ansible_distribution == 'MacOSX' )
-
-  - name: When Archlinux ensure pacman packages are installed
-    block:
-      - name: Update pacman and upgrade all packages
-        community.general.pacman:
-          update_cache: yes
-          upgrade: yes
-        become: yes
-
-      - name: Ensure pacman packages are installed
-        community.general.pacman:
-          name:
-            - bash
-            - bash-completion
-            - zsh
-            - zsh-completions
-            - fish
-            - vim
-            - nano
-            - pwgen
-            - openssl
-            - gettext
-            - helm
-            - curl
-            - wget
-            - tmux
-            - yamllint
-            - jq
-            - tree
-            - htop
-            - pyenv
-          state: latest
-        retries: '{{ default_retries }}'
-        delay: '{{ default_delay }}'
-        register: result
-        until: result is succeeded
-        become: yes
-
-      - name: Install packages from AUR using a yay AUR helper
-        community.general.pacman:
-          name:
-            - rancher-k3d-bin
-            - git-secrets
-          state: latest
-          executable: yay
-    when: ( ansible_distribution == 'Archlinux' )
-
-  - name: Ensure Oh My Zsh is installed and configured
-    block:
-      - name: Check if {{ HOME }}/.oh-my-zsh exists
-        ansible.builtin.stat:
-          path: '{{ HOME }}/.oh-my-zsh'
-        register: oh_my_zsh
-
-      - name: Git clone https://github.com/ohmyzsh/ohmyzsh.git to {{ HOME }}/.oh-my-zsh, if needed 
-        ansible.builtin.git:
-          repo: 'https://github.com/ohmyzsh/ohmyzsh.git'
-          dest: '{{ HOME }}/.oh-my-zsh'
-        when: not oh_my_zsh.stat.exists
-
-      - name: Configure path to your oh-my-zsh installation
-        block:
-          - ansible.builtin.lineinfile:
-              dest: '{{ HOME }}/.zshrc'
-              regexp: '^export ZSH'
-              state: absent
-
-          - ansible.builtin.lineinfile:
-              dest: '{{ HOME }}/.zshrc'
-              line: 'export ZSH="{{ HOME }}/.oh-my-zsh"'
-              insertafter: EOF
-
-      - name: When not MacOSX configure oh-my-zsh plugins to load
-        block:
-          - ansible.builtin.lineinfile:
-              dest: '{{ HOME }}/.zshrc'
-              regexp: '^plugins'
-              state: absent
-
-          # As per https://docs.docker.com/compose/completion/ when Zsh is with Oh My Zsh
-          - ansible.builtin.lineinfile:
-              dest: '{{ HOME }}/.zshrc'
-              line: 'plugins=(git golang docker docker-compose)'
-              insertafter: EOF
-        when: ansible_distribution != 'MacOSX'
-
-      - name: When MacOSX configure oh-my-zsh plugins to load    
-        block:
-          - ansible.builtin.lineinfile:
-              dest: '{{ HOME }}/.zshrc'
-              regexp: '^plugins'
-              state: absent
-
-          - ansible.builtin.lineinfile:
-              dest: '{{ HOME }}/.zshrc'
-              line: 'plugins=(git golang osx)'
-              insertafter: EOF
-        when: ansible_distribution == 'MacOSX'
-
-      - name: Source oh-my-zsh script
-        block:
-          - ansible.builtin.lineinfile:
-              dest: '{{ HOME }}/.zshrc'
-              regexp: '^source \$ZSH/oh-my-zsh.sh$'
-              state: absent
-
-          - ansible.builtin.lineinfile:
-              dest: '{{ HOME }}/.zshrc'
-              line: 'source $ZSH/oh-my-zsh.sh'
-              insertafter: EOF
-
-  # https://www.nerdfonts.com/font-downloads
-  #
-  - name: When MacOSX ensure Meslo Nerd Font is installed as it is used by both Powerlevel10k and Tide shell themes
-    block:
-      - name: Tap homebrew/cask-fonts
-        community.general.homebrew_tap:
-          name: homebrew/cask-fonts
-          state: present
-
-      - ansible.builtin.debug:
-          msg: Ingore error if the fonts have already been installed...
-
-      - name: Install font-hack-nerd-font
-        community.general.homebrew_cask:
-          name: font-meslo-lg-nerd-font
-          state: present
-        ignore_errors: yes
-    when: ansible_distribution == 'MacOSX'
- 
-  - name: When Archlinux ensure Meslo Nerd Font is installed as it is used by both Powerlevel10k and Tide shell themes
-    block:
-      - debug:
-          msg: "Installing nerd-fonts-complete to get all the fonts vice just nerd-fonts-meslo.  This may take a while..."
-
-      - name: Installing nerd-font-comlete via yay AUR helper
-        community.general.pacman:
-          name: nerd-fonts-complete 
-          state: latest
-          executable: yay
-    when: ansible_distribution == 'Archlinux'
-
-  - name: Ensure Powerlevel10k theme is installed for Zsh
-    block:
-      - name: Ensure {{ HOME }}/.config path exists
-        ansible.builtin.file:
-          path: '{{ HOME }}/.config'
-          state: directory 
-
-      - name: Shallow git clone https://github.com/romkatv/powerlevel10k.git
-        ansible.builtin.git:
-          repo: 'https://github.com/romkatv/powerlevel10k.git'
-          dest: '{{ HOME }}/.config/powerlevel10'
-          depth: 1
-          force: yes
-
-      - name: Ensure Powerlevel10k theme is installed      
-        block:
-          - ansible.builtin.lineinfile:
-              dest: '{{ HOME }}/.zshrc'
-              regexp: '^source \\$HOME/.config/powerlevel10/powerlevel10k.zsh-theme$'
-              state: absent
-
-          - ansible.builtin.lineinfile:
-              dest: '{{ HOME }}/.zshrc'
-              line: 'source $HOME/.config/powerlevel10/powerlevel10k.zsh-theme'
-              insertafter: EOF
-
-  # See: https://github.com/jorgebucaran/fisher 
-  #
-  - name: Ensure Fisher is installed
-    ansible.builtin.shell: 'fish -c "curl -fsSL https://git.io/fisher | source && fisher install jorgebucaran/fisher"'
-
-  # See: https://github.com/oh-my-fish/oh-my-fish
-  #
-  - name: Ensure Oh My Fish is installed
-    block:
-      - name: Check if Oh My Fish is installed
-        ansible.builtin.stat:
-          path: '{{ HOME }}/.local/share/omf'
-        register: omf
-
-      - name: Install Oh My Fish, if not installed
-        ansible.builtin.shell: sh -c "curl -fsSL https://get.oh-my.fish | fish"
-        when: not omf.stat.exists
-
-  - name: Ensure Tide theme for fish is installed
-    block:
-      - name: Ensure Tide theme for fish is installed
-        ansible.builtin.shell: 'fish -c "fisher install IlanCosman/tide"'
-
-      - name: Msg user
-        ansible.builtin.debug:
-          msg: If fish is your shell, run `tide configure` afterward to open Tide's config wizard in your terminal.
-
-  - name: Ensure fish is configured to use nerd_fonts
-    block:
-      - ansible.builtin.lineinfile:
-          dest: '{{ HOME }}/.config/fish/config.fish'
-          regexp: '^set -g theme_nerd_fonts yes$'
-          state: absent
-
-      - ansible.builtin.lineinfile:
-          dest: '{{ HOME }}/.config/fish/config.fish'
-          line: 'set -g theme_nerd_fonts yes'
-          insertafter: EOF
-
-  # As per https://docs.docker.com/docker-for-mac/#bash
-  # 
-  - name: When MacOSX ensure bash completions exist for Docker Desktop
-    block:
-      - name: Ensure bash completions for docker are configured
-        ansible.builtin.file:
-          src: /Applications/Docker.app/Contents/Resources/etc/docker.bash-completion
-          dest: '{{ HOMEBREW_PREFIX }}/etc/bash_completion.d/docker'
-          state: link
-
-      - name: Ensure bash completions for docker-compose are configured
-        ansible.builtin.file:
-          src: /Applications/Docker.app/Contents/Resources/etc/docker-compose.bash-completion
-          dest: '{{ HOMEBREW_PREFIX }}/etc/bash_completion.d/docker-compose'
-          state: link
-
-      - name: Ensure bash completion is activated for Bash shell
-        ansible.builtin.lineinfile:
-          path: ~/.bash_profile
-          state: present
-          regexp: '^if\s+\[\s+-f\s+\$\(brew\s+--prefix\)/etc/bash_completion\s+\];\s+then\s+\.\s+\$\(brew\s+--prefix\)/etc/bash_completion;\s+fi$'
-          line: 'if [ -f $(brew --prefix)/etc/bash_completion ]; then . $(brew --prefix)/etc/bash_completion; fi'
-    when: ( ansible_distribution == 'MacOSX' )
-
-  - name: When Archlinux ensure bash completions exist for Docker 
-    block:
-      - ansible.builtin.file:
-          path: /etc/bash_completion.d
-          state: directory
-        become: yes
-
-      - ansible.builtin.get_url:
-          url: https://raw.githubusercontent.com/docker/docker-ce/master/components/cli/contrib/completion/bash/docker
-          dest: /etc/bash_completion.d/docker
-        become: yes
-
-      - ansible.builtin.lineinfile:
-          dest: '{{ HOME }}/.bash_profile'
-          regexp: '^source /usr/share/bash-completion/bash_completion$'
-          state: absent
-
-      - ansible.builtin.lineinfile:
-          dest: '{{ HOME }}/.bash_profile'
-          line: 'source /usr/share/bash-completion/bash_completion'
-          insertafter: EOF
-    when: ( ansible_distribution == 'Archlinux' )
-
-  # As per https://docs.docker.com/docker-for-mac/#zsh
-  #
-  - name: When MacOSX ensure zsh completions exist for Docker Desktop
-    block:
-      - name: Ensure zsh completions for docker is configured
-        ansible.builtin.file:
-          src: /Applications/Docker.app/Contents/Resources/etc/docker.zsh-completion 
-          dest: '{{ HOMEBREW_PREFIX }}/share/zsh/site-functions/_docker'
-          state: link
-
-      - name: Ensure zsh completions for docker-compose is configured
-        ansible.builtin.file:
-          src: /Applications/Docker.app/Contents/Resources/etc/docker-compose.zsh-completion
-          dest: '{{ HOMEBREW_PREFIX }}/share/zsh/site-functions/_docker-compose'
-          state: link
-    when: ( ansible_distribution == 'MacOSX' )
-
-  # As per https://docs.docker.com/docker-for-mac/#fish-shell
-  #
-  - name: When MacOSX ensure fish completions for Docker Desktop exist
-    block:
-      - name: Ensure fish completions directory exists
-        ansible.builtin.file:
-          path: ~/.config/fish/completions
-          state: directory
-
-      - name: Ensure bash completions for docker is configured
-        ansible.builtin.file:
-          src: /Applications/Docker.app/Contents/Resources/etc/docker.fish-completion
-          dest: ~/.config/fish/completions/docker.fish
-          state: link
-
-      - name: Ensure bash completions for docker-compose is configured
-        ansible.builtin.file:
-          src: /Applications/Docker.app/Contents/Resources/etc/docker-compose.fish-completion
-          dest: ~/.config/fish/completions/docker-compose.fish
-          state: link
-    when: ( ansible_distribution == 'MacOSX' )
-
-  - name: When Archlinux ensure fish completions exist for Docker 
-    block:
-      - ansible.builtin.file:
-          path: '{{ HOME }}/.config/fish/completions' 
-          state: directory
-
-      - ansible.builtin.get_url:
-          url: https://raw.githubusercontent.com/docker/docker-ce/master/components/cli/contrib/completion/fish/docker.fish
-          dest: '{{ HOME }}/.config/fish/completions/docker.fish' 
-    when: ( ansible_distribution == 'Archlinux' )
-
-  # As per https://k3d.io/usage/commands/k3d_completion/ (Sorta the docs are a bit weak)
-  #
-  - name: Ensure bash completions for k3d is configured
-    ansible.builtin.lineinfile:
-      path: ~/.bash_profile
-      state: present
-      regexp: '^source\s+-\(k3d\s+completion\s+bash\)$'
-      line: 'source <(k3d completion bash)'
-
-  - name: 'To avoid getting `complete:13: command not found: compdef` error in Zsh'
-    block:
-      - ansible.builtin.lineinfile:
-          dest: '{{ HOME }}/.zshrc'
-          regexp: '^autoload -Uz compinit'
-          state: absent
-
-      - ansible.builtin.lineinfile:
-          dest: '{{ HOME }}/.zshrc'
-          line: 'autoload -Uz compinit'
-          insertafter: EOF
-
-      - ansible.builtin.lineinfile:
-          dest: '{{ HOME }}/.zshrc'
-          regexp: '^compinit$'
-          state: absent
-
-      - ansible.builtin.lineinfile:
-          dest: '{{ HOME }}/.zshrc'
-          line: 'compinit'
-          insertafter: EOF
-  
-  - name: Ensure zsh completion for k3d is configured
-    ansible.builtin.lineinfile:
-      path: ~/.zshrc
-      state: present
-      regexp: '^source\s+-\(k3d\s+completion\s+zsh\)'
-      line: 'source <(k3d completion zsh)'
-
-  - name: Ensure fish completions for k3d is configured
-    block:
-      - name: Ensure fish completions directory exists
-        ansible.builtin.file:
-          path: ~/.config/fish/completions
-          state: directory
-
-      - name: Ensure fish completions for k3d is configured
-        shell: k3d completion fish >> ~/.config/fish/completions/k3d.fish
-
-  # As per `kubectl completion --help`
-  #
-  - name: When MacOSX ensure bash completions for kubectl is configured
-    ansible.builtin.shell: bash -c "kubectl completion bash > {{ HOMEBREW_PREFIX }}/etc/bash_completion.d/kubectl"
-    when: ( ansible_distribution == 'MacOSX' )
-
-  - name: When Archlinux ensure bash completions for kubectl is configured
-    block:
-      - ansible.builtin.file:
-          path: /etc/bash_completion.d
-          state: directory
-        become: yes
-
-      - ansible.builtin.lineinfile:
-          dest: '{{ HOME }}/.bash_profile'
-          regexp: '^source /usr/share/bash-completion/bash_completion'
-          state: absent
-
-      - ansible.builtin.lineinfile:
-          dest: '{{ HOME }}/.bash_profile'
-          line: 'source /usr/share/bash-completion/bash_completion'
-          insertafter: EOF
-
-      - ansible.builtin.shell: bash -c "kubectl completion bash >/etc/bash_completion.d/kubectl"
-        become: yes
-    when: ( ansible_distribution == 'Archlinux' )
-    
-  # As per https://v1-20.docs.kubernetes.io/docs/tasks/tools/included/optional-kubectl-configs-zsh/
-  #
-  - name: Ensure zsh completion for kubectl is configured
-    ansible.builtin.lineinfile:
-      path: ~/.zshrc
-      state: present   
-      regexp: '^source\s+<\(kubectl\s+completion\s+zsh\)'
-      line: 'source <(kubectl completion zsh)'
-   
-  # There are no batteries included fish completions for kubectl, but @evanlucas maintains a project in regards.  Thank you @evanlucas.
-  #
-  - name: Ensure fish completions for kubectl is configured
-    block:
-      - name: Check if {{ HOME }}/.config/fish/completions/kubectl.fish exists
-        ansible.builtin.stat:
-          path: '{{ HOME }}/.config/fish/completions/kubectl.fish'
-        register: fish_completions_kubectl
-
-      - ansible.builtin.shell: 'fish -c "fisher install evanlucas/fish-kubectl-completions"'
-        when: not fish_completions_kubectl.stat.exists
-
-  - name: When MacOSX ensure {{ HOMEBREW_PREFIX }}/opt/openssl@1\.1/bin is placed in the front of the PATH in {{ HOME }}/.bash_profile
-    block:
-      - ansible.builtin.lineinfile:
-          dest: '{{ HOME }}/.bash_profile'
-          regexp: '^export PATH="{{ HOMEBREW_PREFIX }}/opt/openssl@1\.1/bin:\$PATH"'
-          state: absent
-
-      - ansible.builtin.lineinfile:
-          dest: '{{ HOME }}/.bash_profile'
-          line: 'export PATH="{{ HOMEBREW_PREFIX }}/opt/openssl@1\.1/bin:$PATH"'
-          insertafter: EOF
-    when: ( ansible_distribution == 'MacOSX' )
-
-  - name: When MacOSX ensure {{ HOMEBREW_PREFIX }}/opt/openssl@1\.1/bin is placed in the front of the PATH in {{ HOME }}/.zshrc
-    block:
-      - ansible.builtin.lineinfile:
-          dest: '{{ HOME }}/.zshrc'
-          regexp: '^export PATH="{{ HOMEBREW_PREFIX }}/opt/openssl@1\.1/bin:\$PATH"'
-          state: absent
-
-      - ansible.builtin.lineinfile:
-          dest: '{{ HOME }}/.zshrc'
-          line: 'export PATH="{{ HOMEBREW_PREFIX }}/opt/openssl@1\.1/bin:$PATH"'
-          insertafter: EOF
-    when: ( ansible_distribution == 'MacOSX' )
-
-  - name: When MacOSX ensure {{ HOMEBREW_PREFIX }}/opt/openssl@1\.1/bin is placed in the front of the PATH in {{ HOME }}/.config/fish/config.fish
-    block:
-      - ansible.builtin.lineinfile:
-          dest: '{{ HOME }}/.config/fish/config.fish'
-          regexp: '^set -U fish_user_paths {{ HOMEBREW_PREFIX }}/opt/openssl@1.1/bin \$fish_user_paths'
-          state: absent
-
-      - ansible.builtin.lineinfile:
-          dest: '{{ HOME }}/.config/fish/config.fish'
-          line: 'set -U fish_user_paths {{ HOMEBREW_PREFIX }}/openssl@1.1/bin $fish_user_paths'
-          insertafter: EOF
-    when: ( ansible_distribution == 'MacOSX' )
-
-  - name: Ensure /usr/local/bin is prepended to PATH in {{ HOME }}/.bash_profile
-    block:
-      - ansible.builtin.lineinfile:
-          dest: '{{ HOME }}/.bash_profile'
-          regexp: '^export PATH="/usr/local/bin:\$PATH"'
-          state: absent
-
-      - ansible.builtin.lineinfile:
-          dest: '{{ HOME }}/.bash_profile'
-          line: 'export PATH="/usr/local/bin:$PATH"'
-          insertafter: EOF
-
-  - name: Ensure /usr/local/bin is prepended to PATH in {{ HOME }}/.zshrc
-    block:
-      - ansible.builtin.lineinfile:
-          dest: '{{ HOME }}/.zshrc'
-          regexp: '^export PATH="/usr/local/bin:\$PATH"'
-          state: absent
-
-      - ansible.builtin.lineinfile:
-          dest: '{{ HOME }}/.zshrc'
-          line: 'export PATH="/usr/local/bin:$PATH"'
-          insertafter: EOF
-
-  - name: Ensure /usr/local/bin is prepended to PATH in {{ HOME }}/.config/fish/config.fish
-    block:
-      - ansible.builtin.lineinfile:
-          dest: '{{ HOME }}/.config/fish/config.fish'
-          regexp: '^set -U fish_user_paths /usr/local/bin \$fish_user_paths'
-          state: absent
-
-      - ansible.builtin.lineinfile:
-          dest: '{{ HOME }}/.config/fish/config.fish'
-          line: 'set -U fish_user_paths /usr/local/bin $fish_user_paths'
-          insertafter: EOF
+- name: Ensure common dependencies are installed
+  hosts: factory
+
+  tasks:
+    - name: Set fact for $HOME
+      ansible.builtin.set_fact:
+        HOME: "{{ lookup('env', 'HOME') }}"
+
+    - name: When MacOSX ensure Homebrew packages are installed
+      block:
+        - name: Update homebrew and upgrade all packages
+          community.general.homebrew:
+            update_homebrew: yes
+            upgrade_all: yes
+
+        - name: Check if /usr/local/Cellar/bash-completion exists
+          ansible.builtin.stat:
+            path: /usr/local/Cellar/bash-completion
+          register: bash_completion
+
+        - name: Ensure bash-completion is not installed, so bash-completion@2 can be installed
+          ansible.builtin.shell: brew unlink bash-completion
+          when: bash_completion.stat.exists
+
+        - name: Ensure HomeBrew packages are installed
+          community.general.homebrew:
+            name:
+              - bash
+              - bash-completion@2
+              - zsh
+              - zsh-completion
+              - fish
+              - vim
+              - nano
+              - pwgen
+              - openssl
+              - watch
+              - gettext
+              - k3d
+              - helm
+              - curl
+              - wget
+              - git-secrets
+              - tmux
+              - yamllint
+              - jq
+              - tree
+              - htop
+              - pyenv
+            state: latest
+          retries: "{{ default_retries }}"
+          delay: "{{ default_delay }}"
+          register: result
+          until: result is succeeded
+
+        - name: Get HOMEBREW_PREFIX
+          block:
+            - name: Execute brew --prefix
+              ansible.builtin.shell: brew --prefix
+              register: brew_prefix
+
+            - name: Create brew_fact with stdout of of prior command
+              ansible.builtin.set_fact:
+                HOMEBREW_PREFIX: "{{ brew_prefix.stdout }}"
+      when: ( ansible_distribution == 'MacOSX' )
+
+    - name: When Archlinux ensure pacman packages are installed
+      block:
+        - name: Update pacman and upgrade all packages
+          community.general.pacman:
+            update_cache: yes
+            upgrade: yes
+          become: yes
+
+        - name: Ensure pacman packages are installed
+          community.general.pacman:
+            name:
+              - bash
+              - bash-completion
+              - zsh
+              - zsh-completions
+              - fish
+              - vim
+              - nano
+              - pwgen
+              - openssl
+              - gettext
+              - helm
+              - curl
+              - wget
+              - tmux
+              - yamllint
+              - jq
+              - tree
+              - htop
+              - pyenv
+            state: latest
+          retries: "{{ default_retries }}"
+          delay: "{{ default_delay }}"
+          register: result
+          until: result is succeeded
+          become: yes
+
+        - name: Install packages from AUR using a yay AUR helper
+          community.general.pacman:
+            name:
+              - rancher-k3d-bin
+              - git-secrets
+            state: latest
+            executable: yay
+      when: ( ansible_distribution == 'Archlinux' )
+
+    - name: Ensure Oh My Zsh is installed and configured
+      block:
+        - name: Check if {{ HOME }}/.oh-my-zsh exists
+          ansible.builtin.stat:
+            path: "{{ HOME }}/.oh-my-zsh"
+          register: oh_my_zsh
+
+        - name: Git clone https://github.com/ohmyzsh/ohmyzsh.git to {{ HOME }}/.oh-my-zsh, if needed
+          ansible.builtin.git:
+            repo: "https://github.com/ohmyzsh/ohmyzsh.git"
+            dest: "{{ HOME }}/.oh-my-zsh"
+          when: not oh_my_zsh.stat.exists
+
+        - name: Configure path to your oh-my-zsh installation
+          block:
+            - ansible.builtin.lineinfile:
+                dest: "{{ HOME }}/.zshrc"
+                regexp: "^export ZSH"
+                state: absent
+
+            - ansible.builtin.lineinfile:
+                dest: "{{ HOME }}/.zshrc"
+                line: 'export ZSH="{{ HOME }}/.oh-my-zsh"'
+                insertafter: EOF
+
+        - name: When not MacOSX configure oh-my-zsh plugins to load
+          block:
+            - ansible.builtin.lineinfile:
+                dest: "{{ HOME }}/.zshrc"
+                regexp: "^plugins"
+                state: absent
+
+            # As per https://docs.docker.com/compose/completion/ when Zsh is with Oh My Zsh
+            - ansible.builtin.lineinfile:
+                dest: "{{ HOME }}/.zshrc"
+                line: "plugins=(git golang docker docker-compose)"
+                insertafter: EOF
+          when: ansible_distribution != 'MacOSX'
+
+        - name: When MacOSX configure oh-my-zsh plugins to load
+          block:
+            - ansible.builtin.lineinfile:
+                dest: "{{ HOME }}/.zshrc"
+                regexp: "^plugins"
+                state: absent
+
+            - ansible.builtin.lineinfile:
+                dest: "{{ HOME }}/.zshrc"
+                line: "plugins=(git golang osx)"
+                insertafter: EOF
+          when: ansible_distribution == 'MacOSX'
+
+        - name: Source oh-my-zsh script
+          block:
+            - ansible.builtin.lineinfile:
+                dest: "{{ HOME }}/.zshrc"
+                regexp: '^source \$ZSH/oh-my-zsh.sh$'
+                state: absent
+
+            - ansible.builtin.lineinfile:
+                dest: "{{ HOME }}/.zshrc"
+                line: "source $ZSH/oh-my-zsh.sh"
+                insertafter: EOF
+
+    # https://www.nerdfonts.com/font-downloads
+    #
+    - name: When MacOSX ensure Meslo Nerd Font is installed as it is used by both Powerlevel10k and Tide shell themes
+      block:
+        - name: Tap homebrew/cask-fonts
+          community.general.homebrew_tap:
+            name: homebrew/cask-fonts
+            state: present
+
+        - ansible.builtin.debug:
+            msg: Ingore error if the fonts have already been installed...
+
+        - name: Install font-hack-nerd-font
+          community.general.homebrew_cask:
+            name: font-meslo-lg-nerd-font
+            state: present
+          ignore_errors: yes
+      when: ansible_distribution == 'MacOSX'
+
+    - name: When Archlinux ensure Meslo Nerd Font is installed as it is used by both Powerlevel10k and Tide shell themes
+      block:
+        - debug:
+            msg: "Installing nerd-fonts-complete to get all the fonts vice just nerd-fonts-meslo.  This may take a while..."
+
+        - name: Installing nerd-font-comlete via yay AUR helper
+          community.general.pacman:
+            name: nerd-fonts-complete
+            state: latest
+            executable: yay
+      when: ansible_distribution == 'Archlinux'
+
+    - name: Ensure Powerlevel10k theme is installed for Zsh
+      block:
+        - name: Ensure {{ HOME }}/.config path exists
+          ansible.builtin.file:
+            path: "{{ HOME }}/.config"
+            state: directory
+
+        - name: Shallow git clone https://github.com/romkatv/powerlevel10k.git
+          ansible.builtin.git:
+            repo: "https://github.com/romkatv/powerlevel10k.git"
+            dest: "{{ HOME }}/.config/powerlevel10"
+            depth: 1
+            force: yes
+
+        - name: Ensure Powerlevel10k theme is installed
+          block:
+            - ansible.builtin.lineinfile:
+                dest: "{{ HOME }}/.zshrc"
+                regexp: '^source \\$HOME/.config/powerlevel10/powerlevel10k.zsh-theme$'
+                state: absent
+
+            - ansible.builtin.lineinfile:
+                dest: "{{ HOME }}/.zshrc"
+                line: "source $HOME/.config/powerlevel10/powerlevel10k.zsh-theme"
+                insertafter: EOF
+
+    # See: https://github.com/jorgebucaran/fisher
+    #
+    - name: Ensure Fisher is installed
+      ansible.builtin.shell: 'fish -c "curl -fsSL https://git.io/fisher | source && fisher install jorgebucaran/fisher"'
+
+    # See: https://github.com/oh-my-fish/oh-my-fish
+    #
+    - name: Ensure Oh My Fish is installed
+      block:
+        - name: Check if Oh My Fish is installed
+          ansible.builtin.stat:
+            path: "{{ HOME }}/.local/share/omf"
+          register: omf
+
+        - name: Install Oh My Fish, if not installed
+          ansible.builtin.shell: sh -c "curl -fsSL https://get.oh-my.fish | fish"
+          when: not omf.stat.exists
+
+    - name: Ensure Tide theme for fish is installed
+      block:
+        - name: Ensure Tide theme for fish is installed
+          ansible.builtin.shell: 'fish -c "fisher install IlanCosman/tide"'
+
+        - name: Msg user
+          ansible.builtin.debug:
+            msg: If fish is your shell, run `tide configure` afterward to open Tide's config wizard in your terminal.
+
+    - name: Ensure fish is configured to use nerd_fonts
+      block:
+        - ansible.builtin.lineinfile:
+            dest: "{{ HOME }}/.config/fish/config.fish"
+            regexp: "^set -g theme_nerd_fonts yes$"
+            state: absent
+
+        - ansible.builtin.lineinfile:
+            dest: "{{ HOME }}/.config/fish/config.fish"
+            line: "set -g theme_nerd_fonts yes"
+            insertafter: EOF
+
+    # As per https://docs.docker.com/docker-for-mac/#bash
+    #
+    - name: When MacOSX ensure bash completions exist for Docker Desktop
+      block:
+        - name: Ensure bash completions for docker are configured
+          ansible.builtin.file:
+            src: /Applications/Docker.app/Contents/Resources/etc/docker.bash-completion
+            dest: "{{ HOMEBREW_PREFIX }}/etc/bash_completion.d/docker"
+            state: link
+
+        - name: Ensure bash completions for docker-compose are configured
+          ansible.builtin.file:
+            src: /Applications/Docker.app/Contents/Resources/etc/docker-compose.bash-completion
+            dest: "{{ HOMEBREW_PREFIX }}/etc/bash_completion.d/docker-compose"
+            state: link
+
+        - name: Ensure bash completion is activated for Bash shell
+          ansible.builtin.lineinfile:
+            path: ~/.bash_profile
+            state: present
+            regexp: '^if\s+\[\s+-f\s+\$\(brew\s+--prefix\)/etc/bash_completion\s+\];\s+then\s+\.\s+\$\(brew\s+--prefix\)/etc/bash_completion;\s+fi$'
+            line: "if [ -f $(brew --prefix)/etc/bash_completion ]; then . $(brew --prefix)/etc/bash_completion; fi"
+      when: ( ansible_distribution == 'MacOSX' )
+
+    - name: When Archlinux ensure bash completions exist for Docker
+      block:
+        - ansible.builtin.file:
+            path: /etc/bash_completion.d
+            state: directory
+          become: yes
+
+        - ansible.builtin.get_url:
+            url: https://raw.githubusercontent.com/docker/docker-ce/master/components/cli/contrib/completion/bash/docker
+            dest: /etc/bash_completion.d/docker
+          become: yes
+
+        - ansible.builtin.lineinfile:
+            dest: "{{ HOME }}/.bash_profile"
+            regexp: "^source /usr/share/bash-completion/bash_completion$"
+            state: absent
+
+        - ansible.builtin.lineinfile:
+            dest: "{{ HOME }}/.bash_profile"
+            line: "source /usr/share/bash-completion/bash_completion"
+            insertafter: EOF
+      when: ( ansible_distribution == 'Archlinux' )
+
+    # As per https://docs.docker.com/docker-for-mac/#zsh
+    #
+    - name: When MacOSX ensure zsh completions exist for Docker Desktop
+      block:
+        - name: Ensure zsh completions for docker is configured
+          ansible.builtin.file:
+            src: /Applications/Docker.app/Contents/Resources/etc/docker.zsh-completion
+            dest: "{{ HOMEBREW_PREFIX }}/share/zsh/site-functions/_docker"
+            state: link
+
+        - name: Ensure zsh completions for docker-compose is configured
+          ansible.builtin.file:
+            src: /Applications/Docker.app/Contents/Resources/etc/docker-compose.zsh-completion
+            dest: "{{ HOMEBREW_PREFIX }}/share/zsh/site-functions/_docker-compose"
+            state: link
+      when: ( ansible_distribution == 'MacOSX' )
+
+    # As per https://docs.docker.com/docker-for-mac/#fish-shell
+    #
+    - name: When MacOSX ensure fish completions for Docker Desktop exist
+      block:
+        - name: Ensure fish completions directory exists
+          ansible.builtin.file:
+            path: ~/.config/fish/completions
+            state: directory
+
+        - name: Ensure bash completions for docker is configured
+          ansible.builtin.file:
+            src: /Applications/Docker.app/Contents/Resources/etc/docker.fish-completion
+            dest: ~/.config/fish/completions/docker.fish
+            state: link
+
+        - name: Ensure bash completions for docker-compose is configured
+          ansible.builtin.file:
+            src: /Applications/Docker.app/Contents/Resources/etc/docker-compose.fish-completion
+            dest: ~/.config/fish/completions/docker-compose.fish
+            state: link
+      when: ( ansible_distribution == 'MacOSX' )
+
+    - name: When Archlinux ensure fish completions exist for Docker
+      block:
+        - ansible.builtin.file:
+            path: "{{ HOME }}/.config/fish/completions"
+            state: directory
+
+        - ansible.builtin.get_url:
+            url: https://raw.githubusercontent.com/docker/docker-ce/master/components/cli/contrib/completion/fish/docker.fish
+            dest: "{{ HOME }}/.config/fish/completions/docker.fish"
+      when: ( ansible_distribution == 'Archlinux' )
+
+    # As per https://k3d.io/usage/commands/k3d_completion/ (Sorta the docs are a bit weak)
+    #
+    - name: Ensure bash completions for k3d is configured
+      ansible.builtin.lineinfile:
+        path: ~/.bash_profile
+        state: present
+        regexp: '^source\s+-\(k3d\s+completion\s+bash\)$'
+        line: "source <(k3d completion bash)"
+
+    - name: "To avoid getting `complete:13: command not found: compdef` error in Zsh"
+      block:
+        - ansible.builtin.lineinfile:
+            dest: "{{ HOME }}/.zshrc"
+            regexp: "^autoload -Uz compinit"
+            state: absent
+
+        - ansible.builtin.lineinfile:
+            dest: "{{ HOME }}/.zshrc"
+            line: "autoload -Uz compinit"
+            insertafter: EOF
+
+        - ansible.builtin.lineinfile:
+            dest: "{{ HOME }}/.zshrc"
+            regexp: "^compinit$"
+            state: absent
+
+        - ansible.builtin.lineinfile:
+            dest: "{{ HOME }}/.zshrc"
+            line: "compinit"
+            insertafter: EOF
+
+    - name: Ensure zsh completion for k3d is configured
+      ansible.builtin.lineinfile:
+        path: ~/.zshrc
+        state: present
+        regexp: '^source\s+-\(k3d\s+completion\s+zsh\)'
+        line: "source <(k3d completion zsh)"
+
+    - name: Ensure fish completions for k3d is configured
+      block:
+        - name: Ensure fish completions directory exists
+          ansible.builtin.file:
+            path: ~/.config/fish/completions
+            state: directory
+
+        - name: Ensure fish completions for k3d is configured
+          shell: k3d completion fish >> ~/.config/fish/completions/k3d.fish
+
+    # As per `kubectl completion --help`
+    #
+    - name: When MacOSX ensure bash completions for kubectl is configured
+      ansible.builtin.shell: bash -c "kubectl completion bash > {{ HOMEBREW_PREFIX }}/etc/bash_completion.d/kubectl"
+      when: ( ansible_distribution == 'MacOSX' )
+
+    - name: When Archlinux ensure bash completions for kubectl is configured
+      block:
+        - ansible.builtin.file:
+            path: /etc/bash_completion.d
+            state: directory
+          become: yes
+
+        - ansible.builtin.lineinfile:
+            dest: "{{ HOME }}/.bash_profile"
+            regexp: "^source /usr/share/bash-completion/bash_completion"
+            state: absent
+
+        - ansible.builtin.lineinfile:
+            dest: "{{ HOME }}/.bash_profile"
+            line: "source /usr/share/bash-completion/bash_completion"
+            insertafter: EOF
+
+        - ansible.builtin.shell: bash -c "kubectl completion bash >/etc/bash_completion.d/kubectl"
+          become: yes
+      when: ( ansible_distribution == 'Archlinux' )
+
+    # As per https://v1-20.docs.kubernetes.io/docs/tasks/tools/included/optional-kubectl-configs-zsh/
+    #
+    - name: Ensure zsh completion for kubectl is configured
+      ansible.builtin.lineinfile:
+        path: ~/.zshrc
+        state: present
+        regexp: '^source\s+<\(kubectl\s+completion\s+zsh\)'
+        line: "source <(kubectl completion zsh)"
+
+    # There are no batteries included fish completions for kubectl, but @evanlucas maintains a project in regards.  Thank you @evanlucas.
+    #
+    - name: Ensure fish completions for kubectl is configured
+      block:
+        - name: Check if {{ HOME }}/.config/fish/completions/kubectl.fish exists
+          ansible.builtin.stat:
+            path: "{{ HOME }}/.config/fish/completions/kubectl.fish"
+          register: fish_completions_kubectl
+
+        - ansible.builtin.shell: 'fish -c "fisher install evanlucas/fish-kubectl-completions"'
+          when: not fish_completions_kubectl.stat.exists
+
+    - name: When MacOSX ensure {{ HOMEBREW_PREFIX }}/opt/openssl@1\.1/bin is placed in the front of the PATH in {{ HOME }}/.bash_profile
+      block:
+        - ansible.builtin.lineinfile:
+            dest: "{{ HOME }}/.bash_profile"
+            regexp: '^export PATH="{{ HOMEBREW_PREFIX }}/opt/openssl@1\.1/bin:\$PATH"'
+            state: absent
+
+        - ansible.builtin.lineinfile:
+            dest: "{{ HOME }}/.bash_profile"
+            line: 'export PATH="{{ HOMEBREW_PREFIX }}/opt/openssl@1\.1/bin:$PATH"'
+            insertafter: EOF
+      when: ( ansible_distribution == 'MacOSX' )
+
+    - name: When MacOSX ensure {{ HOMEBREW_PREFIX }}/opt/openssl@1\.1/bin is placed in the front of the PATH in {{ HOME }}/.zshrc
+      block:
+        - ansible.builtin.lineinfile:
+            dest: "{{ HOME }}/.zshrc"
+            regexp: '^export PATH="{{ HOMEBREW_PREFIX }}/opt/openssl@1\.1/bin:\$PATH"'
+            state: absent
+
+        - ansible.builtin.lineinfile:
+            dest: "{{ HOME }}/.zshrc"
+            line: 'export PATH="{{ HOMEBREW_PREFIX }}/opt/openssl@1\.1/bin:$PATH"'
+            insertafter: EOF
+      when: ( ansible_distribution == 'MacOSX' )
+
+    - name: When MacOSX ensure {{ HOMEBREW_PREFIX }}/opt/openssl@1\.1/bin is placed in the front of the PATH in {{ HOME }}/.config/fish/config.fish
+      block:
+        - ansible.builtin.lineinfile:
+            dest: "{{ HOME }}/.config/fish/config.fish"
+            regexp: '^set -U fish_user_paths {{ HOMEBREW_PREFIX }}/opt/openssl@1.1/bin \$fish_user_paths'
+            state: absent
+
+        - ansible.builtin.lineinfile:
+            dest: "{{ HOME }}/.config/fish/config.fish"
+            line: "set -U fish_user_paths {{ HOMEBREW_PREFIX }}/openssl@1.1/bin $fish_user_paths"
+            insertafter: EOF
+      when: ( ansible_distribution == 'MacOSX' )
+
+    - name: Ensure /usr/local/bin is prepended to PATH in {{ HOME }}/.bash_profile
+      block:
+        - ansible.builtin.lineinfile:
+            dest: "{{ HOME }}/.bash_profile"
+            regexp: '^export PATH="/usr/local/bin:\$PATH"'
+            state: absent
+
+        - ansible.builtin.lineinfile:
+            dest: "{{ HOME }}/.bash_profile"
+            line: 'export PATH="/usr/local/bin:$PATH"'
+            insertafter: EOF
+
+    - name: Ensure /usr/local/bin is prepended to PATH in {{ HOME }}/.zshrc
+      block:
+        - ansible.builtin.lineinfile:
+            dest: "{{ HOME }}/.zshrc"
+            regexp: '^export PATH="/usr/local/bin:\$PATH"'
+            state: absent
+
+        - ansible.builtin.lineinfile:
+            dest: "{{ HOME }}/.zshrc"
+            line: 'export PATH="/usr/local/bin:$PATH"'
+            insertafter: EOF
+
+    - name: Ensure /usr/local/bin is prepended to PATH in {{ HOME }}/.config/fish/config.fish
+      block:
+        - ansible.builtin.lineinfile:
+            dest: "{{ HOME }}/.config/fish/config.fish"
+            regexp: '^set -U fish_user_paths /usr/local/bin \$fish_user_paths'
+            state: absent
+
+        - ansible.builtin.lineinfile:
+            dest: "{{ HOME }}/.config/fish/config.fish"
+            line: "set -U fish_user_paths /usr/local/bin $fish_user_paths"
+            insertafter: EOF

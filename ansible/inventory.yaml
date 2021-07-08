@@ -1,0 +1,16 @@
+all:
+  children:
+    factory:
+      hosts:
+        localhost:
+          ansible_connection: local
+          ansible_host: localhost
+          ansible_python_interpreter: /usr/bin/python3
+      vars:
+        default_delay: 10
+        default_retries: 60
+        ruby_version: 3.0.1
+        supported_host_os:
+          - MacOSX
+          - Archlinux
+    ungrouped: {}

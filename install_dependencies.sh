@@ -17,4 +17,4 @@ cd ansible
 
 warn "Ansible will not validate the password you enter, so be careful to enter your password correctly."
 
-ansible-playbook -vvv -i hosts main.yaml --ask-become-pass
+ansible-playbook -vvv -i inventory.yaml main.yaml --ask-become-pass

@@ -1,116 +1,118 @@
 ---
-  # Ensure go lang is installed and configure correctly
-  #
-  - name: Set fact for $HOME
-    ansible.builtin.set_fact:
-      HOME:  "{{ lookup('env', 'HOME') }}"
+- name: Ensure go lang is installed and configured correctly
+  hosts: factory
 
-  - name: When MacOSX ensure Go is installed 
-    community.general.homebrew:
-      name: 'go'
-      state: latest
-    retries: '{{ default_retries }}'
-    delay: '{{ default_delay }}'
-    register: result
-    until: result is succeeded
-    when: ( ansible_distribution == 'MacOSX' )
+  tasks:
+    - name: Set fact for $HOME
+      ansible.builtin.set_fact:
+        HOME: "{{ lookup('env', 'HOME') }}"
 
-  - name: When Archlinux ensure Go is installed
-    community.general.pacman:
-      name: 'go'
-      state: latest
-    retries: '{{ default_retries }}'
-    delay: '{{ default_delay }}'
-    register: result
-    until: result is succeeded
-    become: yes
-    when: ( ansible_distribution == 'Archlinux' )
+    - name: When MacOSX ensure Go is installed
+      community.general.homebrew:
+        name: "go"
+        state: latest
+      retries: "{{ default_retries }}"
+      delay: "{{ default_delay }}"
+      register: result
+      until: result is succeeded
+      when: ( ansible_distribution == 'MacOSX' )
 
-  - name: Ensure {{ HOME }}/go folders exists
-    ansible.builtin.file:
-      path: "{{ HOME }}/go/{{ item }}"
-      state: directory
-      mode: 0775
-    with_items:
-      - bin
-      - pkg
-      - src
+    - name: When Archlinux ensure Go is installed
+      community.general.pacman:
+        name: "go"
+        state: latest
+      retries: "{{ default_retries }}"
+      delay: "{{ default_delay }}"
+      register: result
+      until: result is succeeded
+      become: yes
+      when: ( ansible_distribution == 'Archlinux' )
 
-  - name: Ensure golint is installed
-    command: /bin/bash -c "source ~/.bash_profile && go get -u golang.org/x/lint/golint"
-    retries: '{{ default_retries }}'
-    delay: '{{ default_delay }}'
-    register: result
-    until: result is succeeded
+    - name: Ensure {{ HOME }}/go folders exists
+      ansible.builtin.file:
+        path: "{{ HOME }}/go/{{ item }}"
+        state: directory
+        mode: 0775
+      with_items:
+        - bin
+        - pkg
+        - src
 
-  - name: Configure `:Lint` in Vim to run golint on the current file and populate the quickfix list
-    ansible.builtin.blockinfile:
-      path: '{{ HOME }}/.config/nvim/init.vim'
-      marker: '" {mark} ANSIBLE MANAGED BLOCK'
-      insertafter: EOF  
-      block: |
-        " -----------------------------------------------------------------------------
-        " Configure `:Lint` in Vim to run golint on the current file and populate the 
-        " quickfix list 
-        " -----------------------------------------------------------------------------
-        set rtp+=$GOPATH/src/github.com/golang/lint/misc/vim
+    - name: Ensure golint is installed
+      command: /bin/bash -c "source ~/.bash_profile && go get -u golang.org/x/lint/golint"
+      retries: "{{ default_retries }}"
+      delay: "{{ default_delay }}"
+      register: result
+      until: result is succeeded
 
-  - name: Ensure {{ HOME }}/.bash_profile defines GOBIN and GOPATH environment variables
-    block:
-      - ansible.builtin.lineinfile:
-          dest: '{{ HOME }}/.bash_profile'
-          regexp: '{{ item.regexp }}'
-          state: absent
-        with_items:
-          - { regexp: '^export GOBIN' }
-          - { regexp: '^export GOPATH' }
-          - { regexp: '^export PATH="\$GOBIN:\$PATH"' }
+    - name: Configure `:Lint` in Vim to run golint on the current file and populate the quickfix list
+      ansible.builtin.blockinfile:
+        path: "{{ HOME }}/.config/nvim/init.vim"
+        marker: '" {mark} ANSIBLE MANAGED BLOCK'
+        insertafter: EOF
+        block: |
+          " -----------------------------------------------------------------------------
+          " Configure `:Lint` in Vim to run golint on the current file and populate the 
+          " quickfix list 
+          " -----------------------------------------------------------------------------
+          set rtp+=$GOPATH/src/github.com/golang/lint/misc/vim
 
-      - ansible.builtin.lineinfile:
-          dest: '{{ HOME }}/.bash_profile'
-          line: '{{ item.line }}'
-          insertafter: EOF
-        with_items:
-          - { line: 'export GOBIN="$HOME/go/bin"' }
-          - { line: 'export GOPATH="$HOME/go"' }
-          - { line: 'export PATH="$GOBIN:$PATH"' }
+    - name: Ensure {{ HOME }}/.bash_profile defines GOBIN and GOPATH environment variables
+      block:
+        - ansible.builtin.lineinfile:
+            dest: "{{ HOME }}/.bash_profile"
+            regexp: "{{ item.regexp }}"
+            state: absent
+          with_items:
+            - { regexp: "^export GOBIN" }
+            - { regexp: "^export GOPATH" }
+            - { regexp: '^export PATH="\$GOBIN:\$PATH"' }
 
-  - name: Ensure {{ HOME }}/.zshrc defines GOBIN and GOPATH environment variables
-    block:
-      - ansible.builtin.lineinfile:
-          dest: '{{ HOME }}/.zshrc'
-          regexp: '{{ item.regexp }}'
-          state: absent
-        with_items:
-          - { regexp: '^export GOBIN' }
-          - { regexp: '^export GOPATH' }
-          - { regexp: '^export PATH="\$GOBIN:\$PATH"' }
+        - ansible.builtin.lineinfile:
+            dest: "{{ HOME }}/.bash_profile"
+            line: "{{ item.line }}"
+            insertafter: EOF
+          with_items:
+            - { line: 'export GOBIN="$HOME/go/bin"' }
+            - { line: 'export GOPATH="$HOME/go"' }
+            - { line: 'export PATH="$GOBIN:$PATH"' }
 
-      - ansible.builtin.lineinfile:
-          dest: '{{ HOME }}/.zshrc'
-          line: '{{ item.line }}'
-          insertafter: EOF
-        with_items:
-           - { line: 'export GOBIN="$HOME/go/bin"' }
-           - { line: 'export GOPATH="$HOME/go"' }
-           - { line: 'export PATH="$GOBIN:$PATH"' }
+    - name: Ensure {{ HOME }}/.zshrc defines GOBIN and GOPATH environment variables
+      block:
+        - ansible.builtin.lineinfile:
+            dest: "{{ HOME }}/.zshrc"
+            regexp: "{{ item.regexp }}"
+            state: absent
+          with_items:
+            - { regexp: "^export GOBIN" }
+            - { regexp: "^export GOPATH" }
+            - { regexp: '^export PATH="\$GOBIN:\$PATH"' }
 
-  - name: Ensure GOBIN and GOPATH environment variables exist for fish
-    block:
-      - ansible.builtin.lineinfile:
-          dest: '{{ HOME }}/.config/fish/config.fish'
-          regexp: '{{ item.regexp }}'
-          state: absent
-        with_items:
-          - { regexp: '^set -Ux GOBIN' }
-          - { regexp: '^set -Ux GOPATH' }
-          - { regexp: '^set -U fish_user_paths \$GOBIN \$fish_user_paths' }
+        - ansible.builtin.lineinfile:
+            dest: "{{ HOME }}/.zshrc"
+            line: "{{ item.line }}"
+            insertafter: EOF
+          with_items:
+            - { line: 'export GOBIN="$HOME/go/bin"' }
+            - { line: 'export GOPATH="$HOME/go"' }
+            - { line: 'export PATH="$GOBIN:$PATH"' }
 
-      - ansible.builtin.lineinfile:
-          dest: '{{ HOME }}/.config/fish/config.fish'
-          line: '{{ item.line }}'
-          insertafter: EOF
-        with_items:
-           - { line: 'set -Ux GOBIN $HOME/go/bin' }
-           - { line: 'set -Ux GOPATH $HOME/go' }
-           - { line: 'set -U fish_user_paths $GOBIN $fish_user_paths' }
+    - name: Ensure GOBIN and GOPATH environment variables exist for fish
+      block:
+        - ansible.builtin.lineinfile:
+            dest: "{{ HOME }}/.config/fish/config.fish"
+            regexp: "{{ item.regexp }}"
+            state: absent
+          with_items:
+            - { regexp: "^set -Ux GOBIN" }
+            - { regexp: "^set -Ux GOPATH" }
+            - { regexp: '^set -U fish_user_paths \$GOBIN \$fish_user_paths' }
+
+        - ansible.builtin.lineinfile:
+            dest: "{{ HOME }}/.config/fish/config.fish"
+            line: "{{ item.line }}"
+            insertafter: EOF
+          with_items:
+            - { line: "set -Ux GOBIN $HOME/go/bin" }
+            - { line: "set -Ux GOPATH $HOME/go" }
+            - { line: "set -U fish_user_paths $GOBIN $fish_user_paths" }

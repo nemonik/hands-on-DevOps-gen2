@@ -1,87 +1,89 @@
 ---
-  # Ensure rvm and latest Ruby is installed
-  #
-  - name: Set fact for $HOME
-    ansible.builtin.set_fact:
-      HOME:  "{{ lookup('env', 'HOME') }}"
+- name: Ensure rvm and latest Ruby is installed
+  hosts: factory
 
-  - name: When macOSX ensure needed HomeBrew packages are installed to download and build Ruby via rvm
-    block:
-      - name: Install rvm dependencies
-        community.general.homebrew:
-          name: 
-            - curl
-            - automake
-            - coreutils
-            - libksba
-            - zlib
-            - gnupg
-          state: latest
-        retries: '{{ default_retries }}'
-        delay: '{{ default_delay }}'
-        register: result
-        until: result is succeeded
+  tasks:
+    - name: Set fact for $HOME
+      ansible.builtin.set_fact:
+        HOME: "{{ lookup('env', 'HOME') }}"
 
-      - ansible.builtin.set_fact:
-          GPG_BINARY: 'gpg'
-    when: ( ansible_distribution == 'MacOSX' )
+    - name: When macOSX ensure needed HomeBrew packages are installed to download and build Ruby via rvm
+      block:
+        - name: Install rvm dependencies
+          community.general.homebrew:
+            name:
+              - curl
+              - automake
+              - coreutils
+              - libksba
+              - zlib
+              - gnupg
+            state: latest
+          retries: "{{ default_retries }}"
+          delay: "{{ default_delay }}"
+          register: result
+          until: result is succeeded
 
-  - name: When Archlinux ensure rvm dependencies are installed via pacman
-    block:
-      - name: Install rvm dependencies
-        community.general.pacman:
-          name:
-            - base-devel
-            - tar
-            - gzip 
-            - diffutils
-            - git
-            - curl
-            - gnupg
-          state: latest
-        retries: '{{ default_retries }}'
-        delay: '{{ default_delay }}'
-        register: result
-        until: result is succeeded
-        become: yes
+        - ansible.builtin.set_fact:
+            GPG_BINARY: "gpg"
+      when: ( ansible_distribution == 'MacOSX' )
 
-      - ansible.builtin.set_fact:
-          GPG_BINARY: 'gpg2'
-    when: ( ansible_distribution == 'Archlinux' )
+    - name: When Archlinux ensure rvm dependencies are installed via pacman
+      block:
+        - name: Install rvm dependencies
+          community.general.pacman:
+            name:
+              - base-devel
+              - tar
+              - gzip
+              - diffutils
+              - git
+              - curl
+              - gnupg
+            state: latest
+          retries: "{{ default_retries }}"
+          delay: "{{ default_delay }}"
+          register: result
+          until: result is succeeded
+          become: yes
 
-  - name: Install rvm's keys
-    ansible.builtin.shell: bash -c "curl -sSL https://rvm.io/mpapis.asc | {{ GPG_BINARY }} --import - && curl -sSL https://rvm.io/pkuczynski.asc | {{ GPG_BINARY }} --import -"
+        - ansible.builtin.set_fact:
+            GPG_BINARY: "gpg2"
+      when: ( ansible_distribution == 'Archlinux' )
 
-  - name: Ensure rvm is installed
-    ansible.builtin.shell: bash -c 'curl -sSL https://get.rvm.io | bash -s stable'
+    - name: Install rvm's keys
+      ansible.builtin.shell: bash -c "curl -sSL https://rvm.io/mpapis.asc | {{ GPG_BINARY }} --import - && curl -sSL https://rvm.io/pkuczynski.asc | {{ GPG_BINARY }} --import -"
 
-  - ansible.builtin.debug:
-      msg: Bash and Zsh shells will be configured by default by rvm.  
-    
-  - name: Download and install fish function for rvm, so that rvm will work in fish
-    ansible.builtin.shell: bash -c 'curl -s -L --create-dirs -o ~/.config/fish/functions/rvm.fish https://raw.github.com/lunks/fish-nuggets/master/functions/rvm.fish'
+    - name: Ensure rvm is installed
+      ansible.builtin.shell: bash -c 'curl -sSL https://get.rvm.io | bash -s stable'
 
-  - ansible.builtin.debug:
-      msg: Building and installing the ruby {{ ruby_version }} will take some time...
+    - ansible.builtin.debug:
+        msg: Bash and Zsh shells will be configured by default by rvm.
 
-  - name: Installing ruby {{ ruby_version }}
-    ansible.builtin.shell: bash -c 'source ~/.bash_profile && rvm install ruby-{{ ruby_version }}'
+    - name: Download and install fish function for rvm, so that rvm will work in fish
+      ansible.builtin.shell: bash -c 'curl -s -L --create-dirs -o ~/.config/fish/functions/rvm.fish https://raw.github.com/lunks/fish-nuggets/master/functions/rvm.fish'
 
-  - name: Set {{ ruby_version }} as the default for new shells. This will override the 'system' Ruby
-    ansible.builtin.shell: bash -c 'source ~/.bash_profile && rvm use {{ ruby_version }} --default'
+    - ansible.builtin.debug:
+        msg: Building and installing the ruby {{ ruby_version }} will take some time...
 
-  - name: Ensure fish is configured to use rvm
-    block:
-      - ansible.builtin.lineinfile:
-          dest: '{{ HOME }}/.config/fish/config.fish'
-          regexp: '{{ item.regexp }}'
-          state: absent
-        with_items:
-          - { regexp: '^rvm default$' }
+    - name: Installing ruby {{ ruby_version }}
+      ansible.builtin.shell: bash -c 'source ~/.bash_profile && rvm install ruby-{{ ruby_version }}'
 
-      - ansible.builtin.lineinfile:
-          dest: '{{ HOME }}/.config/fish/config.fish'
-          line: '{{ item.line }}'
-          insertafter: EOF
-        with_items:
-          - { line: 'rvm default'}
+    - name: Set {{ ruby_version }} as the default for new shells. This will override the 'system' Ruby
+      ansible.builtin.shell: bash -c 'source ~/.bash_profile && rvm use {{ ruby_version }} --default'
+
+    - name: Ensure fish is configured to use rvm
+      block:
+        - ansible.builtin.lineinfile:
+            dest: "{{ HOME }}/.config/fish/config.fish"
+            regexp: "{{ item.regexp }}"
+            state: absent
+          with_items:
+            - { regexp: "^rvm default$" }
+
+        - ansible.builtin.lineinfile:
+            dest: "{{ HOME }}/.config/fish/config.fish"
+            line: "{{ item.line }}"
+            insertafter: EOF
+          with_items:
+            - { line: "rvm default" }
