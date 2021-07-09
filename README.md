@@ -112,16 +112,11 @@ If you're on an OSX host perform the following:
 1. Download https://www.docker.com/products/docker-desktop
 2. Drag the Docker app to your Application folder.
 3. Find the Docker app in your applications folder and click to start the application.
-4. You will need to verify that you want to trust the application by clicking
-   `Open`.
+4. You will need to verify that you want to trust the application by clicking `Open`.
 5. The Docker Engine, actually a virtual machine (VM), will take sometime to start. You will then be asked to deny or accept `com.docker.backend` from accepting incoming network connections. Click `Allow`.
-6. Find docker icon on the right side of your Apple menu bar and click and then
-   select `preferences` from the menu.
-7. In the `docker` window that opens, select the gear icon in the upper-right
-   portion of the window.
-8. Under `General` make sure `Start Docker Desktop when you log in` is checked
-   off otherwise you will need to start docker everytime you restart your
-   host.
+6. Find docker icon on the right side of your Apple menu bar and click and then select `preferences` from the menu.
+7. In the `docker` window that opens, select the gear icon in the upper-right portion of the window.
+8. Under `General` make sure `Start Docker Desktop when you log in` is checked off otherwise you will need to start docker everytime you restart your host.
 9. Then select `Resources` on the left-hand side of the window.
 10. As Docker runs its containers in a virtual machine, you will need to give this VM more processing power and host memory to run heavier container load. What you give the Docker Desktop VM is dependent on two factors the resources your host can spare and the load the class containers will place on your host. I'd advise trying 8 CPUs and 12 GBs of memory and scale as you see fit.
 11. Click `Apply and Restart` to restart the Docker Desktop VM. The VM will take some amount of time to restart. The containers on the back of the whale icon (Moby Dock) will cycle the Apple Menu Bar will cycle until Docker is ready.
@@ -144,7 +139,7 @@ Perform the following tasks:
 
 1. Download the latest release from
 
-   [https://iterm2.com/downloads/stable/latest](https://iterm2.com/downloads/stable/latest)
+   https://iterm2.com/downloads/stable/latest
 
 2. Find the iTerm release zip file in your Downloads folder and double click.
 3. Drag the iTerm app to your Application folder to install.
@@ -479,7 +474,7 @@ Enter the project's [ansible/](./ansible) sub-folder
 cd ansible
 ```
 
-### Review the class Ansible playbook
+### Review the Ansible playbook
 
 If you haven't reviewed the playbook, now is a good time to do so.
 
@@ -749,13 +744,13 @@ The [ansible/common.yaml](./ansible/common.yaml) playbook continues until comple
 
 If your on LinkedIn or search many of the job boards you'll find many employers equate infrastructure-as-code as DevOps. Infrastructure-as-code is a DevOps methodology but not the entirety of DevOps.
 
-Now that we've reviewed the playbook lets execute it via the `ansible-playbook` command
+Now that we've reviewed the playbook lets execute it via the Make target `install-dependencies` in the root of the project in our shell
 
 ```sh
-ansible-playbook -vvv -i hosts main.yaml
+make install-dependencies
 ```
 
-The `-vvv` optional argument will output verbose output. You can strip off this argument and the output will be succinct. As is the output is a bit to large to capture here, so I've only capture the last few lines of the output below. I will resemble
+I'll explained what Make and a target is in subsequent section. As is the output is a bit to large to capture here, so I've only capture the last few lines of the output below. I will resemble
 
 ```
 <localhost> EXEC /bin/sh -c '( umask 77 && mkdir -p "` echo /Users/mjwalsh/.ansible/tmp `"&& mkdir "` echo /Users/mjwalsh/.ansible/tmp/ansible-tmp-1625702462.673148-73856-255765969896439 `" && echo ansible-tmp-1625702462.673148-73856-255765969896439="` echo /Users/mjwalsh/.ansible/tmp/ansible-tmp-1625702462.673148-73856-255765969896439 `" ) && sleep 0'
@@ -833,4 +828,118 @@ To complete the configuration for OS X hosts configure XTerm2 to use `Meslo Nerd
 7. Click `Color Preserts...` and select `Solarized Dark`.
 8. Close the `Preference` windows, and re-start your terminal window for your changes to take effect.
 
-TODO: the rest of the content...
+## Spin up the Factory
+
+So, now that you have the prerequisite dependencies, it is time to move on to spinning up the factory.
+
+The factory tools are entirely execute on a containerized [Kubernetes](https://github.com/kubernetes/kubernetes) cluster hosted on [k3s](https://github.com/k3s-io/k3s) (Rancher Lab’s minimal Kubernetes distribution) on Docker created by [k3d](https://github.com/rancher/k3d/). Kubernetes is used to orchestrate the life cycles the long-running tools (e.g., Taiga, GitLab, Docker CI, SonarQube, Heimdall2.) Kubernetes is an open-source system for automating deployment, scaling, and management of containerized applications. Essentially, Kubernetes serves as an operating system for a cluster of computing resource (in the cases of k3d these computing resources themselves are containers) and manages the life cycle and discovery of the applications running upon the cluster.
+
+Initially, K3s was billed as a light-weight, CNCF certified Kubernetes distribution designed for resource-constrained environments, where one doesn't need the added steps and dependencies a full Kubernetes cluster would require. As k3s has matured it has become just a darn good Kubernetes distrobution.
+
+It's canonical source can be found at
+
+https://github.com/rancher/k3s/
+
+It's landing page can be found here
+
+https://k3s.io/
+
+The official documentation can be found here
+
+https://rancher.com/docs/k3s/latest/en/
+
+### The Makefile
+
+I've chosen to author the automation for spinning up the factory in [GNU Make](https://www.gnu.org/software/make/). GNU Make bills itself as "a tool which controls the generation of executables and other non-source files of a program from the program's source files." Created by, [Stuart Feldman](https://en.wikipedia.org/wiki/Stuart_Feldman) Make introduced in PWB/UNIX has been around since 1976. Yep, over 45 years ago. Initially, its purpose was to automate software builds. Yeah, automation one of the core methods of DevOps has been around quite a long time. I've chosen to use Make since the inception of my class to drive this point home. There's alway a few "grey beards" in my class that perk up and smile after hearing it mentioned. Make lends itself well to the task of spinning up the cluster, the tools, etc as a makefile is essentially a collection of rules. An idividual rule in the makefile tells Make how to execute a series of commands. The [Makefile](Makefile) is found at the root of the repository. As I stated earlier, typically Make is utilized for building code, but because of its ubiquity across Linux and OSX it is often used for a wide variety of tasks. We're going to use it stand up a Kubernetes cluster and a top that entire DevOps factory.
+
+First let's inspect the [Makefile](./Makefile) in piecemeal
+
+```
+# Copyright (C) 2021 Michael Joseph Walsh - All Rights Reserved
+# You may use, distribute and modify this code under the
+# terms of the the license.
+#
+# You should have received a copy of the license with
+# this file. If not, please email <mjwalsh@nemonik.com>
+```
+
+The above is the copyright.
+
+```
+.PHONY: all install-dependencies start install start-registry delete-registry start-cluster delete-cluster patch-coredns install-traefik uninstall-traefik install-gitlab uninstall-gitlab install-drone uninstall-drone install-taiga uninstall-taiga install-sonarqube uninstall-sonarqube install-heimdall uninstall-heimdall decrypt-vault encrypt-vault
+```
+
+Generally, a makefile is comprised of rules that look like this
+
+```
+target [optionally, additional targets...] : prerequisite [optionally, additional prerequisite]
+        recipe
+        ...
+```
+
+Each rule begins with a line that defines usually one sometimes more than one target followed by a colon and optionally a number of files or targets on which the target depends. Followed by a tab indented recipe comprised of one or more tab indented lines. When building source code, the target is a file, but in the instance where you want your makefile to run a series of commands that do not represent physical files on the file system you are executing what make considers a "phony" target. Phony targets are the name of the recipe. GNU Make provides a built-in target named `.PHONY` where you can explicitly declare your target to be phony by making it a prerequisite of it. This is what I've done above. The line could be skipped and the makefile will still work, but it does make the makefile more readable once you know what phony target is.
+
+What follows next are the makefile's rules
+
+```
+all: start install
+start: start-registry start-cluster patch-coredns
+install: install-traefik install-gitlab install-drone install-taiga install-sonarqube install-heimdall
+uninstall: delete-cluster
+install-dependencies:
+	./install_dependencies.sh
+start-registry:
+	./start_registry.sh
+delete-registry:
+	./delete_registry.sh
+start-cluster:
+	./start_cluster.sh
+delete-cluster:
+	./delete_cluster.sh
+patch-coredns:
+	cd coredns && ./patch.sh
+install-traefik:
+	cd traefik && ./install.sh
+uninstall-traefik:
+	cd traefik && ./uninstall.sh
+install-gitlab:
+	cd gitlab && ./install.sh
+uninstall-gitlab:
+	cd gitlab && ./uninstall.sh
+install-drone:
+	cd drone && ./install.sh
+uninstall-drone:
+	cd drone && ./uninstall.sh
+install-taiga:
+	cd taiga && ./install.sh
+uninstall-taiga:
+	cd taiga && ./uninstall.sh
+install-sonarqube:
+	cd sonarqube && ./install.sh
+uninstall-sonarqube:
+	cd sonarqube && ./uninstall.sh
+install-heimdall:
+	cd heimdall2 && ./install.sh
+uninstall-heimdall:
+	cd heimdall2 && ./uninstall.sh
+decrypt-vault:
+	./decrypt-vault.sh
+encrypt-vault:
+	./encrypt-vault.sh
+```
+
+Earlier we entered `make install-dependencies` in our shell to install all the dependencies via Ansible. Well, we can see above the `install-dependencies` target executes a [./install_dependencies.sh](install_dependencies.sh) shell script.
+
+In the shell, if you were to enter `make all` make would execute the `all` target, who will in turn
+
+- execute the `start` target, who in turn will call
+  - the `start-registry` target, who will execute the [./start_registry.sh](start_registry.sh) bash script
+  - then the `start-cluster` target will be called execute the [./start_cluster.sh](start_cluster.sh) script
+  - then the `patch-coredns` target will be called, descend into the [coredns](cordns) sub-folder and execute the [patch.sh](coredns/patch.sh) script
+- then execute the `install` target, who will call
+  - the `install-traefik` target, descend into the [traefik](traefik) sub-folder and execute the [install.sh](traefik/install.sh) script
+  - then the `install-gitlab` target to descend into the [gitlab](gitlab) sub-folder and execute the [install.sh](gitlab/install.sh) script
+  - then the `install-drone` target to descend into the [drone](drone) sub-folder and execute the [install.sh](drone/install.sh) script
+  - then the `install-taiga` target to descend into the [taiga](taiga) sub-folder and execute the [install.sh](taiga/install.sh) script
+  - then the `install-sonarqube` target to descend into the [sonarqube](sonarqube) sub-folder and execute the [install.sh](sonarqube/install.sh) script
+  - and finally, the `install-heimdall` target to descend into the [heimdall](heimdall) sub-folder and execute the [install.sh](heimdall/install.sh) script
