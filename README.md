@@ -1,6 +1,9 @@
-# hands-on-devops-gen2
+[![GitHub license](https://img.shields.io/github/license/nemonik/hands-on-DevOps-gen2)](./LICENSE)
+[![GitHub Forks](https://img.shields.io/github/forks/nemonik/hands-on-DevOps-gen2?style=social)](https://github.com/nemonik/hands-on-DevOps-gen2/network/members)
+[![Github Stars](https://img.shields.io/github/stars/nemonik/hands-on-DevOps-gen2?style=social)](https://github.com/nemonik/hands-on-DevOps-gen2/stargazers)
+[![Twitter](https://img.shields.io/twitter/url?style=social&url=https%3A%2F%2Fgithub.com%2Fnemonik%2Fhands-on-DevOps-gen2)](https://twitter.com/intent/tweet?text=I%27ve%20found%20a%20nifty%20hands-on%20DevOps%20course%20developed%20by%20%40nemonik%20at%20https%3A%2F%2Fgithub.com%2Fnemonik%2Fhands-on-DevOps-gen2)
 
-## Preface
+# 1. Preface
 
 The future home of the second edition of my hands-on DevOps course building upon [nemonik/hands-on-DevOps](https://github.com/nemonik/hands-on-DevOps).
 
@@ -8,7 +11,7 @@ The content of this course is presently under development.
 
 This newest version of my Hands-on DevOps class is a replaitforming of sorts -- A sort of rewrite if you will. The prior version relied on multiple Vagrants and was a beast to maintain. Vagrants are virtual machines, when singular is abbreviated as "VM". Several Vagrants were created through automation to run a multi-node Kubernetes cluster as well asa development VM. The approach modeled how I preflighted my work on my laptop vice using [minikube](https://github.com/kubernetes/minikube). The Kubernetes cluster my class used made use of was [k3s](https://k3s.io/) and as it matured [k3d](https://k3d.io/) was introduced. K3d is a lightweight wrapper to run k3s in [Docker](https://docker.com) and provides a rather elegant solution to create and manage a single or multi-node k3s cluster for development vice standing up multi-VMs and the burden they impose on the host (in my case my laptop). Around this same time I was considerinf using k3d I gave [Docker Desktop's](https://www.docker.com/products/docker-desktop) means of providing a Kubernetes cluster a try, but I found it lacking, so I stuck with k3d. Around this same time I also moved fully off my MacBook for personal development moving to [Arch Linux](https://archlinux.org/) where I used [docker-ce](https://github.com/docker/docker-ce). This new version of my class infrastructure-as-code automation focuses instead of directly configuring the host or if need be a single Vagrant for the purpose of development.
 
-# DevOps
+# 2. DevOps
 
 A hands-on DevOps course covering the culture, methods and repeated practices of modern software development involving Vagrant, VirtualBox, Ansible, Kubernetes, k3s, k3d, Traefik, Docker-Compose, Docker, Taiga, GitLab, Drone CI, SonarQube, Selenium, InSpec, Heimdall, Arch Linux...
 
@@ -46,17 +49,110 @@ We will be spending most of the course hands-on working with the tools and in th
 
 Don't fixate on the tools used, nor the apps we develop in the course of learning how and why. How and why is far more important. This course like DevOps is not about tools although we'll be using them. You'll spend far more time writing code. (Or at the very least cutting-and-pasting code.)
 
-# Author
+# 3. Author
 
 - Michael Joseph Walsh [mjwalsh@mitre.org](mailto:mjwalsh@mitre.org), [walsh@nemonik.com](mailto:walsh@nemonik.com)
 
-# Copyright and license
+# 4. Copyright and license
 
 See the [License file](LICENCE) at the root of this project.
 
-# DevOps unpacked
+# 5. What you should bring
 
-## What is DevOps?
+The following skills would be useful in following along but aren't strictly necessary.
+
+What you should bring:
+
+- Managing Linux or Unix-like systems would be tremendously helpful, but not necessary, as we will be living largely within the terminal.
+- A basic understanding of Vagrant, Docker, and Ansible would also be helpful, but not necessary.
+
+# 6. Table of Contents
+
+<!-- TOC -->
+
+- [1. Preface](#1-preface)
+- [2. DevOps](#2-devops)
+- [3. Author](#3-author)
+- [4. Copyright and license](#4-copyright-and-license)
+- [5. What you should bring](#5-what-you-should-bring)
+- [6. Table of Contents](#6-table-of-contents)
+- [7. DevOps unpacked](#7-devops-unpacked)
+  - [7.1. What is DevOps?](#71-what-is-devops)
+  - [7.2. What DevOps is not](#72-what-devops-is-not)
+  - [7.3. To succeed at DevOps you must](#73-to-succeed-at-devops-you-must)
+  - [7.4. If your effort doesn't](#74-if-your-effort-doesnt)
+  - [7.5. Conway's Law states](#75-conways-law-states)
+  - [7.6. DevOps is really about](#76-devops-is-really-about)
+  - [7.7. What is DevOps culture?](#77-what-is-devops-culture)
+    - [7.7.1. We were taught the requisite skills as children](#771-we-were-taught-the-requisite-skills-as-children)
+    - [7.7.2. Maintaining relationships is your most important skill](#772-maintaining-relationships-is-your-most-important-skill)
+    - [7.7.3. Be quick... Be slow to...](#773-be-quick-be-slow-to)
+    - [7.7.4. The pressures of social media](#774-the-pressures-of-social-media)
+  - [7.8. How is DevOps related to the Agile?](#78-how-is-devops-related-to-the-agile)
+  - [7.9. How do they differ?](#79-how-do-they-differ)
+  - [7.10. Why?](#710-why)
+  - [7.11. What are the principles of DevOps?](#711-what-are-the-principles-of-devops)
+  - [7.12. Much of this is achieved](#712-much-of-this-is-achieved)
+  - [7.13. What is Continuous Integration (CI)?](#713-what-is-continuous-integration-ci)
+  - [7.14. How?](#714-how)
+  - [7.15. CI best practices](#715-ci-best-practices)
+    - [7.15.1. Utilize a Configuration Management System](#7151-utilize-a-configuration-management-system)
+    - [7.15.2. Automate the build](#7152-automate-the-build)
+    - [7.15.3. Employ one or more CI services/orchestrators](#7153-employ-one-or-more-ci-servicesorchestrators)
+    - [7.15.4. Make builds self-testing](#7154-make-builds-self-testing)
+    - [7.15.5. Never commit broken](#7155-never-commit-broken)
+    - [7.15.6. Stakeholders are expected to pre-flight new code](#7156-stakeholders-are-expected-to-pre-flight-new-code)
+    - [7.15.7. The CI service/orchestrator provides feedback](#7157-the-ci-serviceorchestrator-provides-feedback)
+  - [7.16. What is Continuous Delivery?](#716-what-is-continuous-delivery)
+    - [7.16.1. Extending Continuous Integration (CI)](#7161-extending-continuous-integration-ci)
+    - [7.16.2. Consistency](#7162-consistency)
+  - [7.17. But wait. What's a pipeline?](#717-but-wait-whats-a-pipeline)
+  - [7.18. How is a pipeline manifested?](#718-how-is-a-pipeline-manifested)
+  - [7.19. What underlines all of this?](#719-what-underlines-all-of-this)
+  - [7.20. But really why do we automate err. code?](#720-but-really-why-do-we-automate-err-code)
+    - [7.20.1. Why do I mention Larry Wall?](#7201-why-do-i-mention-larry-wall)
+    - [7.20.2. Laziness](#7202-laziness)
+    - [7.20.3. Impatience](#7203-impatience)
+    - [7.20.4. Hubris](#7204-hubris)
+    - [7.20.5. We automate for](#7205-we-automate-for)
+  - [7.21. Monitoring](#721-monitoring)
+    - [7.21.1. The _primary_ metric](#7211-the-_primary_-metric)
+    - [7.21.2. An understanding of performance](#7212-an-understanding-of-performance)
+    - [7.21.3. Establish a baseline performance](#7213-establish-a-baseline-performance)
+    - [7.21.4. Set reaction thresholds](#7214-set-reaction-thresholds)
+    - [7.21.5. Reacting](#7215-reacting)
+    - [7.21.6. Gaps in CICD](#7216-gaps-in-cicd)
+    - [7.21.7. Eliminating waste](#7217-eliminating-waste)
+  - [7.22. Crawl, walk, run](#722-crawl-walk-run)
+    - [7.22.1. Ultimately, DevOps is Goal](#7221-ultimately-devops-is-goal)
+- [8. Reading list](#8-reading-list)
+- [9. Now the hands-on part](#9-now-the-hands-on-part)
+  - [9.1. Prerequisites](#91-prerequisites)
+  - [9.2. Manual inspection](#92-manual-inspection)
+  - [9.3. Shell configuration](#93-shell-configuration)
+  - [9.4. Installing upfront dependencies](#94-installing-upfront-dependencies)
+  - [9.5. OS X or Windows 11, install Docker Desktop](#95-os-x-or-windows-11-install-docker-desktop)
+    - [9.5.1. On OSX install Docker Desktop](#951-on-osx-install-docker-desktop)
+    - [9.5.2. On Windows install Docker Desktop](#952-on-windows-install-docker-desktop)
+    - [9.5.3. On Arch Linux](#953-on-arch-linux)
+  - [9.6. On OSX install iTerm2](#96-on-osx-install-iterm2)
+- [10. Installing the software factory](#10-installing-the-software-factory)
+  - [10.1. Ansible](#101-ansible)
+    - [10.1.1. Installing Ansible](#1011-installing-ansible)
+    - [10.1.2. On OSX, install the Xcode Command Line tools](#1012-on-osx-install-the-xcode-command-line-tools)
+    - [10.1.3. On OSX, install HomeBrew](#1013-on-osx-install-homebrew)
+    - [10.1.4. Install Ansible](#1014-install-ansible)
+  - [10.2. Run the Ansible playbook](#102-run-the-ansible-playbook)
+    - [10.2.1. Review the Ansible playbook](#1021-review-the-ansible-playbook)
+    - [10.2.2. On OSX, enable nerd fonts in XTerm2](#1022-on-osx-enable-nerd-fonts-in-xterm2)
+  - [10.3. Spin up the Factory](#103-spin-up-the-factory)
+    - [10.3.1. The Makefile](#1031-the-makefile)
+
+<!-- /TOC -->
+
+# 7. DevOps unpacked
+
+## 7.1. What is DevOps?
 
 DevOps (a clipped compound of the words _development_ and _operations_) is a software development methodology with an emphasis on a reliable release pipeline, automation, and stronger collaboration across all stakeholders with the goal of delivery of value in close alignment with business objectives into the hands of users (i.e., production) more efficiently and effectively.
 
@@ -74,7 +170,7 @@ The point I'm after is everyone is in it to collectively deliver dependable soft
 
 Also, there is no need to overload the _DevOps_ term -- To _Dev wildcard (i.e., \*) Ops_ to include your pet interest(s), such as, _security_, _test_, _whatever_... to form _DevSecOps_, _DevTestOps_, _DevWhateverOps_... _DevOps_ has you covered.
 
-## What DevOps is not
+## 7.2. What DevOps is not
 
 About the tools.
 
@@ -82,19 +178,19 @@ About the tools.
 
 <sub>There are countless vendors out there, who want to sell you their crummy tool.</sub>
 
-## To succeed at DevOps you must
+## 7.3. To succeed at DevOps you must
 
 **Combine software development and information technology operations in the systems development life cycle** with **a focus on collaboration across the life cycle to deliver features, fixes, and updates frequently in close alignment with business objectives**.
 
 If the effort cannot combine both Dev and Ops in collaboration with this focus the effort will most certainly fail.
 
-## If your effort doesn't
+## 7.4. If your effort doesn't
 
 **grok (i.e, Understand intuitively) what DevOps is in practice** and have performed the **necessary analysis of the existing culture and a strategy for how to affect a change** the effort again will likely fail.
 
 I say this because the culture is the largest influencer over the success of both Agile and DevOps and ultimately the path taken (i.e., plans made.)
 
-## Conway's Law states
+## 7.5. Conway's Law states
 
 > Any organization that designs a system (defined broadly) will produce a design whose structure is a copy of the organization's communication structure.
 
@@ -108,11 +204,11 @@ This was written over 50 years ago.
 
 If your communication structure is broke, so shall your systems be.
 
-## DevOps is really about
+## 7.6. DevOps is really about
 
 Providing the culture, methods and repeated practices to permit stakeholders to collaborate.
 
-## What is DevOps culture?
+## 7.7. What is DevOps culture?
 
 > **culture** noun \ _ˈkəl-chər_ \
 > the set of shared attitudes, values, goals, and practices that characterizes an institution or organization
@@ -121,23 +217,23 @@ I love when a word means precisely what you need it to mean.
 
 With the stakeholders sharing the same attitudes, values, goals, using the same tools, methods and repeated practices for their particular discipline you have **_DevOps Culture_**.
 
-### We were taught the requisite skills as children
+### 7.7.1. We were taught the requisite skills as children
 
 ![Paw Patrol](./images/paw_patrol.png)
 
-### Maintaining relationships is your most important skill
+### 7.7.2. Maintaining relationships is your most important skill
 
 ![Maintaining Relationships](./images/maintaining_relationships.png)
 
-### Be quick... Be slow to...
+### 7.7.3. Be quick... Be slow to...
 
 ![Quick to slow](./images/quick_to_slow_to.png)
 
-### The pressures of social media
+### 7.7.4. The pressures of social media
 
 ![Social Media](./images/social_media.png)
 
-## How is DevOps related to the Agile?
+## 7.8. How is DevOps related to the Agile?
 
 Agile Software Development is an umbrella term for a set of methods and practices based on the [values](http://www.agilealliance.org/agile101/the-agile-manifesto/) and [principles](http://www.agilealliance.org/agile101/12-principles-behind-the-agile-manifesto/) expressed in the Agile Manifesto.
 
@@ -145,7 +241,7 @@ For Agile, solutions evolve through collaboration between self-organizing, cross
 
 DevOps builds on this.
 
-## How do they differ?
+## 7.9. How do they differ?
 
 While DevOps extends Agile methods and practices by adding communication and collaboration between
 
@@ -156,11 +252,11 @@ While DevOps extends Agile methods and practices by adding communication and col
 
 functionaries as stakeholders into the broader effort to ensure software systems are delivered in a reliable, low-risk manner.
 
-## Why?
+## 7.10. Why?
 
 In Agile Software Development, there is rarely an integration of these individuals outside the immediate application development team with members of technology operations (e.g., network engineers, administrators, testers, security engineers.)
 
-## What are the principles of DevOps?
+## 7.11. What are the principles of DevOps?
 
 As DevOps matures, several principles have emerged, namely the necessity for product teams to:
 
@@ -171,77 +267,77 @@ As DevOps matures, several principles have emerged, namely the necessity for pro
 - Validate and monitor operational quality, and
 - Provide rapid, automated feedback to the stakeholders
 
-## Much of this is achieved
+## 7.12. Much of this is achieved
 
 Through the repeated practices of Continuous Integration (CI) and Continuous Delivery (CD) often conflated into simply "CI/CD" or "CICD".
 
 WARNING: After tools, CICD is the next (**albeit mistakenly**) thing thought to be the totality of DevOps.
 
-## What is Continuous Integration (CI)?
+## 7.13. What is Continuous Integration (CI)?
 
 It is a repeated Agile software development practice lifted specifically from Extreme programming, where members of a development team frequently integrate their work to detect integration issues as quickly as possible thereby shifting discovery of issues "left" (i.e., early) in the software release.
 
-## How?
+## 7.14. How?
 
 Each integration is orchestrated through a CI service/orchestrator (e.g., Jenkins CI, Drone CI, GitLab Runners, Concourse CI) that essentially assembles a build, runs unit and integration tests every time a predetermined trigger has been met; and then reports with immediate feedback.
 
-## CI best practices
+## 7.15. CI best practices
 
-### Utilize a Configuration Management System
+### 7.15.1. Utilize a Configuration Management System
 
 For the software's source code, where the mainline (i.e., master branch) is the most recent working version, past releases held in branches, and new features not yet merged into the mainline branch worked in their own branches.
 
-### Automate the build
+### 7.15.2. Automate the build
 
 By accompanying build automation (e.g., Gradle, Apache Maven, Make) alongside the source code.
 
-### Employ one or more CI services/orchestrators
+### 7.15.3. Employ one or more CI services/orchestrators
 
 To perform source code analysis via automating formal code inspection and assessment.
 
-### Make builds self-testing
+### 7.15.4. Make builds self-testing
 
 In other words, ingrain testing by including unit and integration tests (e.g., Spock, JUnit, Mockito, SOAPUI, go package _Testing_) with the source code to be executed by the build automation to be executed by the CI service.
 
-### Never commit broken
+### 7.15.5. Never commit broken
 
 Or untested source code to the CMS mainline or otherwise risk breaking a build.
 
-### Stakeholders are expected to pre-flight new code
+### 7.15.6. Stakeholders are expected to pre-flight new code
 
 Prior to committing source code in their own workspace.
 
-### The CI service/orchestrator provides feedback
+### 7.15.7. The CI service/orchestrator provides feedback
 
 On the success or fail of a build integration to all its stakeholders.
 
-## What is Continuous Delivery?
+## 7.16. What is Continuous Delivery?
 
 It is a repeated software development practice of providing a rapid, reliable, low-risk product delivery achieved through automating all facets of building, testing, and deploying software.
 
-### Extending Continuous Integration (CI)
+### 7.16.1. Extending Continuous Integration (CI)
 
 With additional stages/steps aimed to provide ongoing validation that a newly assembled software build meets all desired requirements and thereby is releasable.
 
-### Consistency
+### 7.16.2. Consistency
 
 Is achieved through delivering applications into production via individual repeatable pipelines of ingrained system configuration management and testing
 
-## But wait. What's a pipeline?
+## 7.17. But wait. What's a pipeline?
 
 A pipeline automates the various stages/steps (e.g., Static Application Security Testing (SAST), build, unit testing, Dynamic Application Security Testing (DAST), secure configuration acceptance compliance, integration, function and non-functional testing, delivery, and deployment) to enforce quality conformance.
 
-## How is a pipeline manifested?
+## 7.18. How is a pipeline manifested?
 
 Each delivery pipeline is manifested as **Pipeline as Code** (i.e., software automation) accompanying the application's source code in its version control repository.
 
-## What underlines all of this?
+## 7.19. What underlines all of this?
 
 I and the community of practice argue DevOps will struggle without ubiquitous access to shared pools of software configurable system resources and higher-level services that can be rapidly provisioned (i.e., cloud).
 
 Although, it is actually possible to [DevOps on mainframes](https://www.youtube.com/watch?v=eMS97X5ZTGc) The video is in the contect of continuous delivery, but read between the lines.
 
-## But really why do we automate err. code?
+## 7.20. But really why do we automate err. code?
 
 In 2001, I think Larry Wall in his 1st edition of _Programming Perl_ book put it best with "We will encourage you to develop the three great virtues of a programmer:
 
@@ -253,25 +349,25 @@ hubris."
 
 The second edition of the same book provided definitions for these terms
 
-### Why do I mention Larry Wall?
+### 7.20.1. Why do I mention Larry Wall?
 
 Well...
 
 Let me explain.
 
-### Laziness
+### 7.20.2. Laziness
 
 > The quality that makes you go to great effort to reduce overall energy expenditure. It makes you write labor-saving programs that other people will find useful, and document what you wrote so you don't have to answer so many questions about it. Hence, the first great virtue of a programmer.\_ (p.609)
 
-### Impatience
+### 7.20.3. Impatience
 
 > The anger you feel when the computer is being lazy. This makes you write programs that don't just react to your needs, but actually anticipate them. Or at least pretend to. Hence, the second great virtue of a programmer.\_ (p.608)
 
-### Hubris
+### 7.20.4. Hubris
 
 > Excessive pride, the sort of thing Zeus zaps you for. Also, the quality that makes you write (and maintain) programs that other people won't want to say bad things about. Hence, the third great virtue of a programmer.\_ (p.607)
 
-### We automate for
+### 7.20.5. We automate for
 
 - Faster, coordinated, repeatable, and therefore more reliable deployments.
 - Discover bugs sooner. Shifting their discovery left in the process.
@@ -279,51 +375,51 @@ Let me explain.
 - Reduce tribal knowledge, where one group or person holds the keys to how things get done. Yep, this is about making us all replaceable.
 - Reduce shadow IT (i.e., hardware or software within an enterprise that is not supported by IT. Just waiting for its day to explode.)
 
-## Monitoring
+## 7.21. Monitoring
 
 Once deployed, the work is done, right?
 
 So, that improvements can be gauged and anomalies detected.A development team's work is not complete once a product leaves CICD and enters production; especially, under DevOps where the development team includes members of ops (e.g., security and technology operations).
 
-### The _primary_ metric
+### 7.21.1. The _primary_ metric
 
 Is working software, but this is not the only, measurement. The key to successful DevOps is knowing how well the methodology and the software it produces are performing. Is the software truely dependable?
 
-### An understanding of performance
+### 7.21.2. An understanding of performance
 
 Is achieved by collecting and analyzing data produced by environments used for CICD and production.
 
-### Establish a baseline performance
+### 7.21.3. Establish a baseline performance
 
 So, that improvements can be gauged and anomalies detected.
 
-### Set reaction thresholds
+### 7.21.4. Set reaction thresholds
 
 To formulate and prioritize reactions weighting factors, such as, the frequency at which an anomaly arises and who is impacted.
 
-### Reacting
+### 7.21.5. Reacting
 
 Could be as simple as operations instructing users through training to not do something that triggers the anomaly, or more ideally, result in an issue being entered into the product's backlog culminating in the development team delivering a fix into production.
 
-### Gaps in CICD
+### 7.21.6. Gaps in CICD
 
 Are surfaces through monitoring resulting in for example additional testing for an issue discovered in prodcuction.
 
 Yep. News flash. DevOps will not entirely stop all bugs or vulnerabilities from making it into production, but this was never the point.
 
-### Eliminating waste
+### 7.21.7. Eliminating waste
 
 Through re-scoping of requirements, re-prioritizing of a backlog, or the deprecation of unused features. Again, all surfaced through monitoring.
 
-## Crawl, walk, run
+## 7.22. Crawl, walk, run
 
-### Ultimately, DevOps is Goal
+### 7.22.1. Ultimately, DevOps is Goal
 
 - With DevOps one does not simply hit the ground running.
 - One must first crawl, walk and then ultimately run as you embrace the necessary culture change, methods, and repeated practices.
 - Collaboration and automation are expected to continually improve so to achieve more frequent and more reliable releases.
 
-# Reading list
+# 8. Reading list
 
 **AntiPatterns: Refactoring Software, Architectures, and Projects in Crisis**
 William J. Brown, Raphael C. Malveau, Hays W. "Skip" McCormick, and Thomas J. Mowbray
@@ -392,17 +488,17 @@ David Thomas and Andrew Hunt
 ISBN-13: 978-0135957059
 September 23, 2019
 
-# Now the hands-on part
+# 9. Now the hands-on part
 
-## Prerequisites
+## 9.1. Prerequisites
 
 The supported host operating systems for this class are OSX, Windows 11 and Arch Linux. By "host operating system", I mean the computer you will use to work the class.
 
-## Manual inspection
+## 9.2. Manual inspection
 
 It's a good idea to inspect the install scripts from projects you don't yet know. You can do that now by tromping around the projet on GitHub. The project makes use of a Makefile, several Bash scripts, Vagrant and Ansible code. Looking through everything before you run it. If you dork up your host this was never my intention, but I've made every effort to prevent this from happening.
 
-## Shell configuration
+## 9.3. Shell configuration
 
 The class automation will configure Bash, Zsh and [fish](https://github.com/neovim/neovim) shells, as well as [neovim](https://github.com/neovim/neovim) (nvim). A Unix shell is a command-line iterpreter, a command-line interface for the Unix or Unix-like operating systems, such as Linux. The shell exists in a terminal emulator. In this course we will either be [iTerm2](https://iterm2.com/) for OSX or Arch Linux' terminal interface.
 
@@ -435,17 +531,17 @@ Now, we're going to to reset our configuration by performing the following
 rm ~/.bash_profile ~/.zshrc ~/.zshenv ~/.zprofile ~/.zlogin ~/.config/fish/config.fish ~/.config/nvim/init.vim ~/.config/nvim/coc-settings.json
 ```
 
-## Installing upfront dependencies
+## 9.4. Installing upfront dependencies
 
 You will need to install a number of upfront dependencies.
 
-## OS X or Windows 11, install Docker Desktop
+## 9.5. OS X or Windows 11, install Docker Desktop
 
 If your host (e.g., your laptop, personal computer) is running Windows 10 or OSX you will need to install Docker Desktop. If you're using Arch Linux, the Ansible automation will take care of installing Docker for you and you can skip ahead to installing Ansible. If you are using a version of Linux other than Arch then what's wrong with you? I'm kidding. You can use the Vagrant to execute the factory.
 
 This class will use Docker and so Docker Desktop must be installed and configured.
 
-### On OSX install Docker Desktop
+### 9.5.1. On OSX install Docker Desktop
 
 If you're on an OSX host perform the following:
 
@@ -461,17 +557,17 @@ If you're on an OSX host perform the following:
 10. As Docker runs its containers in a virtual machine, you will need to give this VM more processing power and host memory to run heavier container load. What you give the Docker Desktop VM is dependent on two factors the resources your host can spare and the load the class containers will place on your host. I'd advise trying 8 CPUs and 12 GBs of memory and scale as you see fit.
 11. Click `Apply and Restart` to restart the Docker Desktop VM. The VM will take some amount of time to restart. The containers on the back of the whale icon (Moby Dock) will cycle the Apple Menu Bar will cycle until Docker is ready.
 
-### On Windows install Docker Desktop
+### 9.5.2. On Windows install Docker Desktop
 
 To be completed, but until such time make sure to select the default option to install the WSL2 components is selected.
 
 Skip ahead to installing the software factory.
 
-### On Arch Linux
+### 9.5.3. On Arch Linux
 
 Docker will be installed for you via the Ansible automation. More on Ansible later.
 
-## On OSX install iTerm2
+## 9.6. On OSX install iTerm2
 
 If your using an OSX host, you can use Apple's default Terminal app for command line terminal, but I'd advise you to install the superior iTerm2.
 
@@ -486,11 +582,11 @@ Perform the following tasks:
 4. You will need to verify that you want to trust the application by clicking `Open`.
 5. Use iTerm2 to perform the remaining command line tasks for this class.
 
-# Installing the software factory
+# 10. Installing the software factory
 
 This class uses a software factory hosted on a Kubernetes cluster. To spin up the k8s cluster you will need to perform the following tasks in the command line.
 
-## Ansible
+## 10.1. Ansible
 
 The class uses [Ansible](https://github.com/ansible/ansible) to install operating systems dependencies necessary for the class.
 
@@ -535,7 +631,7 @@ Each playbook is responsible for a unit of configuration. [ansible/files/](./ans
 
 It also possible to collect these tasks into a collection referred to as a `role`. This class presently doesn't make use of roles.
 
-### Installing Ansible
+### 10.1.1. Installing Ansible
 
 The following sub-sections detail how to install Ansible. Skip to the section that applies to your host.
 
@@ -545,7 +641,7 @@ If your host is running
 - Windows drop to (TODO: complete.)
 - Linux drop to (TODO: complete.)
 
-### On OSX, install the Xcode Command Line tools
+### 10.1.2. On OSX, install the Xcode Command Line tools
 
 I prefer to install the Xcode Command Line tools myself, but you could skip this step and have HomeBrew install it for you.
 
@@ -561,7 +657,7 @@ I prefer to install the Xcode Command Line tools myself, but you could skip this
 3. You will then be presented a License Agreement. After consulting your lawyer, click `Agree`.
 4. Wait fo the download and install to complete, then click `Done`.
 
-### On OSX, install HomeBrew
+### 10.1.3. On OSX, install HomeBrew
 
 Homebrew is as the project refers to itself, "The Missing Package Manager for macOS." These days the project also tacks on "(or Linux)". Package managers A package manager automates the process of installing, upgrading, configuring, and removing binaries from an operating system.
 
@@ -613,7 +709,7 @@ No analytics data has been sent yet (or will be during this `install` run).
     https://docs.brew.sh
 ```
 
-### Install Ansible
+### 10.1.4. Install Ansible
 
 Ansible is based on [Python](https://www.python.org/) ans distributed as a Python module that you can install by [pip](https://pip.pypa.io). Pip refers to itself as "the package installer for Python". There are [others](https://packaging.python.org/guides/tool-recommendations/), but most everyone uses pip.
 
@@ -796,7 +892,7 @@ Installing 'community.general:3.3.1' to '/home/nemonik/.ansible/collections/ansi
 community.general:3.3.1 was installed successfully
 ```
 
-## Run the Ansible playbook
+## 10.2. Run the Ansible playbook
 
 The rest of the class will require a number of operating system dependencies be installed. We will accomplish the via executing the [ansible/main.yaml](ansible/main.yaml) playbook.
 
@@ -814,7 +910,7 @@ Enter the project's [ansible/](./ansible) sub-folder
 cd ansible
 ```
 
-### Review the Ansible playbook
+### 10.2.1. Review the Ansible playbook
 
 If you haven't reviewed the playbook, now is a good time to do so.
 
@@ -1156,7 +1252,7 @@ localhost                  : ok=135  changed=65   unreachable=0    failed=0    s
 
 If `failed ` is something other than `0` then you have an issue to debug. Debuging will require you to review the task that resulted in the failure likely the last task run. Review the output, determine what playbook you were in, open and review the playbook and the offending task and then try the equivalent in the command line to debug the issue. The host may be in a state the playbook cannot handle. Perhaps a dependency is missing. Perhaps. Perhaps. Perhaps.
 
-### On OSX, enable nerd fonts in XTerm2
+### 10.2.2. On OSX, enable nerd fonts in XTerm2
 
 To complete the configuration for OS X hosts configure XTerm2 to use `Meslo Nerd Font` and use `Solarized Dark` color them. Optionally, you can install your own [Nerd font](https://www.nerdfonts.com/font-downloads).
 
@@ -1169,7 +1265,7 @@ To complete the configuration for OS X hosts configure XTerm2 to use `Meslo Nerd
 7. Click `Color Preserts...` and select `Solarized Dark`.
 8. Close the `Preference` windows, and re-start your terminal window for your changes to take effect.
 
-## Spin up the Factory
+## 10.3. Spin up the Factory
 
 So, now that you have the prerequisite dependencies, it is time to move on to spinning up the factory.
 
@@ -1189,7 +1285,7 @@ The official documentation can be found here
 
 https://rancher.com/docs/k3s/latest/en/
 
-### The Makefile
+### 10.3.1. The Makefile
 
 I've chosen to author the automation for spinning up the factory in [GNU Make](https://www.gnu.org/software/make/). GNU Make bills itself as "a tool which controls the generation of executables and other non-source files of a program from the program's source files." Created by, [Stuart Feldman](https://en.wikipedia.org/wiki/Stuart_Feldman) Make introduced in PWB/UNIX has been around since 1976. Yep, over 45 years ago. Initially, its purpose was to automate software builds. Yeah, automation one of the core methods of DevOps has been around quite a long time. I've chosen to use Make since the inception of my class to drive this point home. There's alway a few "grey beards" in my class that perk up and smile after hearing it mentioned. Make lends itself well to the task of spinning up the cluster, the tools, etc as a makefile is essentially a collection of rules. An idividual rule in the makefile tells Make how to execute a series of commands. The [Makefile](Makefile) is found at the root of the repository. As I stated earlier, typically Make is utilized for building code, but because of its ubiquity across Linux and OSX it is often used for a wide variety of tasks. We're going to use it stand up a Kubernetes cluster and a top that entire DevOps factory.
 
