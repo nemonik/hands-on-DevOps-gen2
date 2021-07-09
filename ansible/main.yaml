@@ -17,9 +17,6 @@
 - name: Ensure pyenv is installed and configured
   ansible.builtin.import_playbook: pyenv.yaml
 
-- name: Ensure Go is installed and configured
-  ansible.builtin.import_playbook: go.yaml
-
 - name: Ensure sonar-scanner cli is installed and configured
   ansible.builtin.import_playbook: sonar-scanner-cli.yaml
 
@@ -31,3 +28,6 @@
 
 - name: Ensure neovim is installed and configured
   ansible.builtin.import_playbook: neovim.yaml
+
+- name: Ensure Go is installed and configured
+  ansible.builtin.import_playbook: go.yaml

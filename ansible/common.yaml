@@ -111,6 +111,28 @@
             executable: yay
       when: ( ansible_distribution == 'Archlinux' )
 
+    - name: Ensure {{ HOME }}/.bash_profile exists
+      ansible.builtin.file:
+        path: '{{ HOME }}/.bash_profile'
+        state: touch
+
+    - name: Ensure {{ HOME }}/.zshrc exists
+      ansible.builtin.file:
+        path: '{{ HOME }}/.zshrc'
+        state: touch
+
+    - name: Ensure {{ HOME }}/.config/fish/config.fish exists
+      block:
+        - name: Ensure {{ HOME }}/.config/fish/ exists
+          ansible.builtin.file:
+            path: "{{ HOME }}/.config/fish/"
+            state: directory
+
+        - name: Ensure {{ HOME }}/.config/fish/config.fish exists
+          ansible.builtin.file:
+            path: '{{ HOME }}/.config/fish/config.fish'
+            state: touch
+
     - name: Ensure Oh My Zsh is installed and configured
       block:
         - name: Check if {{ HOME }}/.oh-my-zsh exists
@@ -146,7 +168,7 @@
             # As per https://docs.docker.com/compose/completion/ when Zsh is with Oh My Zsh
             - ansible.builtin.lineinfile:
                 dest: "{{ HOME }}/.zshrc"
-                line: "plugins=(git golang docker docker-compose)"
+                line: "plugins=(git golang docker docker-compose kubectl)"
                 insertafter: EOF
           when: ansible_distribution != 'MacOSX'
 
@@ -159,7 +181,7 @@
 
             - ansible.builtin.lineinfile:
                 dest: "{{ HOME }}/.zshrc"
-                line: "plugins=(git golang osx)"
+                line: "plugins=(git golang kubectl osx)"
                 insertafter: EOF
           when: ansible_distribution == 'MacOSX'
 
@@ -377,28 +399,6 @@
         regexp: '^source\s+-\(k3d\s+completion\s+bash\)$'
         line: "source <(k3d completion bash)"
 
-    - name: "To avoid getting `complete:13: command not found: compdef` error in Zsh"
-      block:
-        - ansible.builtin.lineinfile:
-            dest: "{{ HOME }}/.zshrc"
-            regexp: "^autoload -Uz compinit"
-            state: absent
-
-        - ansible.builtin.lineinfile:
-            dest: "{{ HOME }}/.zshrc"
-            line: "autoload -Uz compinit"
-            insertafter: EOF
-
-        - ansible.builtin.lineinfile:
-            dest: "{{ HOME }}/.zshrc"
-            regexp: "^compinit$"
-            state: absent
-
-        - ansible.builtin.lineinfile:
-            dest: "{{ HOME }}/.zshrc"
-            line: "compinit"
-            insertafter: EOF
-
     - name: Ensure zsh completion for k3d is configured
       ansible.builtin.lineinfile:
         path: ~/.zshrc
@@ -445,12 +445,12 @@
 
     # As per https://v1-20.docs.kubernetes.io/docs/tasks/tools/included/optional-kubectl-configs-zsh/
     #
-    - name: Ensure zsh completion for kubectl is configured
-      ansible.builtin.lineinfile:
-        path: ~/.zshrc
-        state: present
-        regexp: '^source\s+<\(kubectl\s+completion\s+zsh\)'
-        line: "source <(kubectl completion zsh)"
+    # - name: Ensure zsh completion for kubectl is configured
+      # ansible.builtin.lineinfile:
+        # path: ~/.zshrc
+        # state: present
+        # regexp: '^source\s+<\(kubectl\s+completion\s+zsh\)'
+        # line: "source <(kubectl completion zsh)"
 
     # There are no batteries included fish completions for kubectl, but @evanlucas maintains a project in regards.  Thank you @evanlucas.
     #
@@ -503,30 +503,6 @@
             insertafter: EOF
       when: ( ansible_distribution == 'MacOSX' )
 
-    - name: Ensure /usr/local/bin is prepended to PATH in {{ HOME }}/.bash_profile
-      block:
-        - ansible.builtin.lineinfile:
-            dest: "{{ HOME }}/.bash_profile"
-            regexp: '^export PATH="/usr/local/bin:\$PATH"'
-            state: absent
-
-        - ansible.builtin.lineinfile:
-            dest: "{{ HOME }}/.bash_profile"
-            line: 'export PATH="/usr/local/bin:$PATH"'
-            insertafter: EOF
-
-    - name: Ensure /usr/local/bin is prepended to PATH in {{ HOME }}/.zshrc
-      block:
-        - ansible.builtin.lineinfile:
-            dest: "{{ HOME }}/.zshrc"
-            regexp: '^export PATH="/usr/local/bin:\$PATH"'
-            state: absent
-
-        - ansible.builtin.lineinfile:
-            dest: "{{ HOME }}/.zshrc"
-            line: 'export PATH="/usr/local/bin:$PATH"'
-            insertafter: EOF
-
     - name: Ensure /usr/local/bin is prepended to PATH in {{ HOME }}/.config/fish/config.fish
       block:
         - ansible.builtin.lineinfile:
@@ -536,5 +512,28 @@
 
         - ansible.builtin.lineinfile:
             dest: "{{ HOME }}/.config/fish/config.fish"
+            regexp: '^set -U fish_user_paths /usr/local/bin \$fish_user_paths'
             line: "set -U fish_user_paths /usr/local/bin $fish_user_paths"
-            insertafter: EOF
+            insertbefore: BOF
+
+    - name: 'To avoid getting complete:13: command not found: compdef error in Zsh'
+      block:
+        - ansible.builtin.lineinfile:
+            dest: '{{ HOME }}/.zshrc'
+            regexp: '^autoload -Uz compinit'
+            state: absent
+
+        - ansible.builtin.lineinfile:
+            dest: '{{ HOME }}/.zshrc'
+            line: 'autoload -Uz compinit'
+            insertbefore: BOF
+
+        - ansible.builtin.lineinfile:
+            dest: '{{ HOME }}/.zshrc'
+            regexp: '^compinit$'
+            state: absent
+
+        - ansible.builtin.lineinfile:
+            dest: '{{ HOME }}/.zshrc'
+            line: 'compinit'
+            insertafter: '^autoload -Uz compinit'

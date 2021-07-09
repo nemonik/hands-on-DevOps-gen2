@@ -76,11 +76,15 @@ If you have spent considerable time configuring your chosen shell, neovim editor
 - This class makes use of **NOTE** sections to call out things that are important to know or to drop a few tidbits. Reading these notes may save you some aggravation.
 
 ```sh
-cp ~/.bash_profile ~/.bash_profile.orig
-cp ~/.zshrc ~/.zshrc.orig
-cp ~/.config/fish/config.fish ~/.config/fish/config.fish.orig
-cp ~/.config/nvim/init.vim ~/.config/nvim/init.vim.orig
-cp ~/.config/nvim/coc-settings.json ~/.config/nvim/coc-settings.json.orig
+cp ~/.bash_profile ~/.bash_profile.back
+cp ~.profile ~.profile.back
+cp ~/.zshrc ~/.zshrc.back
+cp ~/.zshenv ~/.zshenv.back
+cp ~/.zprofile ~/.zprofile.back
+cp ~/.zlogin ~/.zlogin.back
+cp ~/.config/fish/config.fish ~/.config/fish/config.fish.back
+cp ~/.config/nvim/init.vim ~/.config/nvim/init.vim.back
+cp ~/.config/nvim/coc-settings.json ~/.config/nvim/coc-settings.json.back
 ```
 
 On or more of the above commands may fail if you don't have the files on your host. If you are sure you typed the command correctly you can ignore the error
@@ -88,11 +92,7 @@ On or more of the above commands may fail if you don't have the files on your ho
 Now, we're going to to reset our configuration by performing the following
 
 ```sh
-rm ~/.bash_profile
-rm ~/.zshrc
-rm ~/.config/fish/config.fish
-rm ~/.config/nvim/init.vim
-rm ~/.config/nvim/coc-settings.json
+rm ~/.bash_profile ~/.zshrc ~/.zshenv ~/.zprofile ~/.zlogin ~/.config/fish/config.fish ~/.config/nvim/init.vim ~/.config/nvim/coc-settings.json
 ```
 
 ## Installing upfront dependencies
@@ -277,38 +277,6 @@ No analytics data has been sent yet (or will be during this `install` run).
 - Further documentation:
     https://docs.brew.sh
 ```
-
-### All hosts, Add `/usr/local/bin` to your PATH
-
-First determine what shell you are using by performing the following in the
-command line
-
-```sh
-echo $SHELL
-```
-
-The default shell in OS X is now `zsh`, so it is likely you are using `zsh`. If you are then perform the following in the shell
-
-```sh
-echo 'export PATH="/usr/local/bin:$PATH"' >> ~/.zshrc
-source ~/.zshrc
-```
-
-If your shell is `bash` perform the following
-
-```sh
-echo 'export PATH="/usr/local/bin:$PATH"' >> ~/.bash_profile
-source ~/.bash_profile
-```
-
-If you're using `fish` perform the following
-
-```sh
-echo "set -U fish_user_paths /usr/local/bin $fish_user_paths" >> ~/.config/fish/config.fish
-source ~/.config/fish/config.fish
-```
-
-The `source` command in each of the above will apply the changes in your current shell.
 
 ### Install Ansible
 
