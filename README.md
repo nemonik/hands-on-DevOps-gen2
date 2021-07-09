@@ -1091,15 +1091,15 @@ cd ..
 make install-dependencies
 ```
 
-I'll explained what Make and a target is in subsequent section. As is the output is a bit to large to capture here, so I've only capture the last few lines of the output below. I will resemble
+I'll explained what Make and a target is in subsequent section. As the output is a bit too large to capture here, I've only capture the last few lines of the output below. I will resemble
 
 ```
-<localhost> EXEC /bin/sh -c '( umask 77 && mkdir -p "` echo /Users/mjwalsh/.ansible/tmp `"&& mkdir "` echo /Users/mjwalsh/.ansible/tmp/ansible-tmp-1625702462.673148-73856-255765969896439 `" && echo ansible-tmp-1625702462.673148-73856-255765969896439="` echo /Users/mjwalsh/.ansible/tmp/ansible-tmp-1625702462.673148-73856-255765969896439 `" ) && sleep 0'
-Using module file /Users/mjwalsh/.local/lib/python3.9/site-packages/ansible/modules/lineinfile.py
-<localhost> PUT /Users/mjwalsh/.ansible/tmp/ansible-local-27240d5jcmaum/tmp50wpeyk8 TO /Users/mjwalsh/.ansible/tmp/ansible-tmp-1625702462.673148-73856-255765969896439/AnsiballZ_lineinfile.py
-<localhost> EXEC /bin/sh -c 'chmod u+x /Users/mjwalsh/.ansible/tmp/ansible-tmp-1625702462.673148-73856-255765969896439/ /Users/mjwalsh/.ansible/tmp/ansible-tmp-1625702462.673148-73856-255765969896439/AnsiballZ_lineinfile.py && sleep 0'
-<localhost> EXEC /bin/sh -c '/usr/bin/python3 /Users/mjwalsh/.ansible/tmp/ansible-tmp-1625702462.673148-73856-255765969896439/AnsiballZ_lineinfile.py && sleep 0'
-<localhost> EXEC /bin/sh -c 'rm -f -r /Users/mjwalsh/.ansible/tmp/ansible-tmp-1625702462.673148-73856-255765969896439/ > /dev/null 2>&1 && sleep 0'
+<localhost> EXEC /bin/sh -c '( umask 77 && mkdir -p "` echo /Users/nemonik/.ansible/tmp `"&& mkdir "` echo /Users/nemonik/.ansible/tmp/ansible-tmp-1625702462.673148-73856-255765969896439 `" && echo ansible-tmp-1625702462.673148-73856-255765969896439="` echo /Users/nemonik/.ansible/tmp/ansible-tmp-1625702462.673148-73856-255765969896439 `" ) && sleep 0'
+Using module file /Users/nemonik/.local/lib/python3.9/site-packages/ansible/modules/lineinfile.py
+<localhost> PUT /Users/nemonik/.ansible/tmp/ansible-local-27240d5jcmaum/tmp50wpeyk8 TO /Users/nemonik/.ansible/tmp/ansible-tmp-1625702462.673148-73856-255765969896439/AnsiballZ_lineinfile.py
+<localhost> EXEC /bin/sh -c 'chmod u+x /Users/nemonik/.ansible/tmp/ansible-tmp-1625702462.673148-73856-255765969896439/ /Users/nemonik/.ansible/tmp/ansible-tmp-1625702462.673148-73856-255765969896439/AnsiballZ_lineinfile.py && sleep 0'
+<localhost> EXEC /bin/sh -c '/usr/bin/python3 /Users/nemonik/.ansible/tmp/ansible-tmp-1625702462.673148-73856-255765969896439/AnsiballZ_lineinfile.py && sleep 0'
+<localhost> EXEC /bin/sh -c 'rm -f -r /Users/nemonik/.ansible/tmp/ansible-tmp-1625702462.673148-73856-255765969896439/ > /dev/null 2>&1 && sleep 0'
 changed: [localhost] => (item={'line': 'set -U fish_user_paths $HOME/.local/bin $fish_user_paths'}) => {
     "ansible_loop_var": "item",
     "backup": "",
@@ -1107,13 +1107,13 @@ changed: [localhost] => (item={'line': 'set -U fish_user_paths $HOME/.local/bin 
     "diff": [
         {
             "after": "",
-            "after_header": "/Users/mjwalsh/.config/fish/config.fish (content)",
+            "after_header": "/Users/nemonik/.config/fish/config.fish (content)",
             "before": "",
-            "before_header": "/Users/mjwalsh/.config/fish/config.fish (content)"
+            "before_header": "/Users/nemonik/.config/fish/config.fish (content)"
         },
         {
-            "after_header": "/Users/mjwalsh/.config/fish/config.fish (file attributes)",
-            "before_header": "/Users/mjwalsh/.config/fish/config.fish (file attributes)"
+            "after_header": "/Users/nemonik/.config/fish/config.fish (file attributes)",
+            "before_header": "/Users/nemonik/.config/fish/config.fish (file attributes)"
         }
     ],
     "invocation": {
@@ -1122,7 +1122,7 @@ changed: [localhost] => (item={'line': 'set -U fish_user_paths $HOME/.local/bin 
             "backrefs": false,
             "backup": false,
             "create": false,
-            "dest": "/Users/mjwalsh/.config/fish/config.fish",
+            "dest": "/Users/nemonik/.config/fish/config.fish",
             "firstmatch": false,
             "group": null,
             "insertafter": "EOF",
@@ -1130,7 +1130,7 @@ changed: [localhost] => (item={'line': 'set -U fish_user_paths $HOME/.local/bin 
             "line": "set -U fish_user_paths $HOME/.local/bin $fish_user_paths",
             "mode": null,
             "owner": null,
-            "path": "/Users/mjwalsh/.config/fish/config.fish",
+            "path": "/Users/nemonik/.config/fish/config.fish",
             "regexp": null,
             "search_string": null,
             "selevel": null,
@@ -1201,7 +1201,7 @@ First let's inspect the [Makefile](./Makefile) in piecemeal
 # terms of the the license.
 #
 # You should have received a copy of the license with
-# this file. If not, please email <mjwalsh@nemonik.com>
+# this file. If not, please email <nemonik@nemonik.com>
 ```
 
 The above is the copyright.
