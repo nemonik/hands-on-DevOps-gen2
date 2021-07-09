@@ -877,7 +877,7 @@ target [optionally, additional targets...] : prerequisite [optionally, additiona
         ...
 ```
 
-Each rule begins with a line that defines usually one sometimes more than one target followed by a colon and optionally a number of files or targets on which the target depends. Followed by a tab indented recipe comprised of one or more tab indented lines. When building source code, the target is a file, but in the instance where you want your makefile to run a series of commands that do not represent physical files on the file system you are executing what make considers a "phony" target. Phony targets are the name of the recipe. GNU Make provides a built-in target named `.PHONY` where you can explicitly declare your target to be phony by making it a prerequisite of it. This is what I've done above. The line could be skipped and the makefile will still work, but it does make the makefile more readable once you know what phony target is.
+Each rule begins with a line that defines usually one sometimes more than one target followed by a colon and optionally a number of files or targets on which the target depends. Followed by a tab indented recipe comprised of one or more tab indented lines. When building source code, the target is a file, but in the instance where you want your makefile to run a series of commands that do not represent physical files on the file system you are executing what make considers a "phony" target. Phony targets are the name of the recipe. GNU Make provides a built-in target named `.PHONY` where you can make your target a prerequisite of it thereby declaring your target to be phony. This is what I've done above for all of my targert. The `.PHONY` line could be skipped and the makefile will still work, but including the line makes the makefile more readable once you know what a phony target is.
 
 What follows next are the makefile's rules
 
@@ -935,7 +935,7 @@ In the shell, if you were to enter `make all` make would execute the `all` targe
 - execute the `start` target, who in turn will call
   - the `start-registry` target, who will execute the [./start_registry.sh](start_registry.sh) bash script
   - then the `start-cluster` target will be called execute the [./start_cluster.sh](start_cluster.sh) script
-  - then the `patch-coredns` target will be called, descend into the [coredns](cordns) sub-folder and execute the [patch.sh](coredns/patch.sh) script
+  - then the `patch-coredns` target will be called, descend into the [coredns](coredns) sub-folder and execute the [patch.sh](coredns/patch.sh) script
 - then execute the `install` target, who will call
   - the `install-traefik` target, descend into the [traefik](traefik) sub-folder and execute the [install.sh](traefik/install.sh) script
   - then the `install-gitlab` target to descend into the [gitlab](gitlab) sub-folder and execute the [install.sh](gitlab/install.sh) script
