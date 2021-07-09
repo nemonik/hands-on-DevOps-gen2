@@ -54,14 +54,13 @@ Don't fixate on the tools used, nor the apps we develop in the course of learnin
 
 See the [License file](LICENCE) at the root of this project.
 
-
 # DevOps unpacked
 
 ## What is DevOps?
 
-DevOps (a clipped compound of the words *development* and *operations*) is a software development methodology with an emphasis on a reliable release pipeline, automation, and stronger collaboration across all stakeholders with the goal of delivery of value in close alignment with business objectives into the hands of users (i.e., production) more efficiently and effectively.
+DevOps (a clipped compound of the words _development_ and _operations_) is a software development methodology with an emphasis on a reliable release pipeline, automation, and stronger collaboration across all stakeholders with the goal of delivery of value in close alignment with business objectives into the hands of users (i.e., production) more efficiently and effectively.
 
-*Ops* in DevOps gathers up every IT operation stakeholders (i.e., cybersecurity, testing, DB admin, infrastructure and operations practitioners -- essentially, any stakeholder not commonly thought of as directly part of the development team in the system development life cycle).
+_Ops_ in DevOps gathers up every IT operation stakeholders (i.e., cybersecurity, testing, DB admin, infrastructure and operations practitioners -- essentially, any stakeholder not commonly thought of as directly part of the development team in the system development life cycle).
 
 Yeah, that's the formal definition.
 
@@ -73,7 +72,7 @@ The words _security engineering_ could be replaced in the opening sentence with 
 
 The point I'm after is everyone is in it to collectively deliver dependable software.
 
-Also, there is no need to overload the _DevOps_ term -- To _Dev wildcard (i.e., *) Ops_ to include your pet interest(s), such as, _security_, _test_, _whatever_... to form _DevSecOps_, _DevTestOps_, _DevWhateverOps_...  _DevOps_ has you covered.
+Also, there is no need to overload the _DevOps_ term -- To _Dev wildcard (i.e., \*) Ops_ to include your pet interest(s), such as, _security_, _test_, _whatever_... to form _DevSecOps_, _DevTestOps_, _DevWhateverOps_... _DevOps_ has you covered.
 
 ## What DevOps is not
 
@@ -85,13 +84,13 @@ About the tools.
 
 ## To succeed at DevOps you must
 
-__Combine software development and information technology operations in the systems development life cycle__ with __a focus on collaboration across the life cycle to deliver features, fixes, and updates frequently in close alignment with business objectives__.
+**Combine software development and information technology operations in the systems development life cycle** with **a focus on collaboration across the life cycle to deliver features, fixes, and updates frequently in close alignment with business objectives**.
 
 If the effort cannot combine both Dev and Ops in collaboration with this focus the effort will most certainly fail.
 
 ## If your effort doesn't
 
-__grok (i.e, Understand intuitively) what DevOps is in practice__ and have performed the __necessary analysis of the existing culture and a strategy for how to affect a change__ the effort again will likely fail.
+**grok (i.e, Understand intuitively) what DevOps is in practice** and have performed the **necessary analysis of the existing culture and a strategy for how to affect a change** the effort again will likely fail.
 
 I say this because the culture is the largest influencer over the success of both Agile and DevOps and ultimately the path taken (i.e., plans made.)
 
@@ -115,12 +114,12 @@ Providing the culture, methods and repeated practices to permit stakeholders to 
 
 ## What is DevOps culture?
 
-> **culture** noun  \ *ˈkəl-chər* \
+> **culture** noun \ _ˈkəl-chər_ \
 > the set of shared attitudes, values, goals, and practices that characterizes an institution or organization
 
 I love when a word means precisely what you need it to mean.
 
-With the stakeholders sharing the same attitudes, values, goals, using the same tools, methods and repeated practices for their particular discipline you have ***DevOps Culture***.
+With the stakeholders sharing the same attitudes, values, goals, using the same tools, methods and repeated practices for their particular discipline you have **_DevOps Culture_**.
 
 ### We were taught the requisite skills as children
 
@@ -202,7 +201,7 @@ To perform source code analysis via automating formal code inspection and assess
 
 ### Make builds self-testing
 
-In other words, ingrain testing by including unit and integration tests (e.g., Spock, JUnit, Mockito, SOAPUI, go package *Testing*) with the source code to be executed by the build automation to be executed by the CI service.
+In other words, ingrain testing by including unit and integration tests (e.g., Spock, JUnit, Mockito, SOAPUI, go package _Testing_) with the source code to be executed by the build automation to be executed by the CI service.
 
 ### Never commit broken
 
@@ -244,7 +243,7 @@ Although, it is actually possible to [DevOps on mainframes](https://www.youtube.
 
 ## But really why do we automate err. code?
 
-In 2001, I think Larry Wall in his 1st edition of *Programming Perl* book put it best with "We will encourage you to develop the three great virtues of a programmer:
+In 2001, I think Larry Wall in his 1st edition of _Programming Perl_ book put it best with "We will encourage you to develop the three great virtues of a programmer:
 
 laziness,
 
@@ -262,15 +261,15 @@ Let me explain.
 
 ### Laziness
 
-> The quality that makes you go to great effort to reduce overall energy expenditure. It makes you write labor-saving programs that other people will find useful, and document what you wrote so you don't have to answer so many questions about it. Hence, the first great virtue of a programmer._ (p.609)
+> The quality that makes you go to great effort to reduce overall energy expenditure. It makes you write labor-saving programs that other people will find useful, and document what you wrote so you don't have to answer so many questions about it. Hence, the first great virtue of a programmer.\_ (p.609)
 
 ### Impatience
 
-> The anger you feel when the computer is being lazy. This makes you write programs that don't just react to your needs, but actually anticipate them. Or at least pretend to. Hence, the second great virtue of a programmer._ (p.608)
+> The anger you feel when the computer is being lazy. This makes you write programs that don't just react to your needs, but actually anticipate them. Or at least pretend to. Hence, the second great virtue of a programmer.\_ (p.608)
 
 ### Hubris
 
-> Excessive pride, the sort of thing Zeus zaps you for. Also, the quality that makes you write (and maintain) programs that other people won't want to say bad things about. Hence, the third great virtue of a programmer._ (p.607)
+> Excessive pride, the sort of thing Zeus zaps you for. Also, the quality that makes you write (and maintain) programs that other people won't want to say bad things about. Hence, the third great virtue of a programmer.\_ (p.607)
 
 ### We automate for
 
@@ -288,7 +287,7 @@ So, that improvements can be gauged and anomalies detected.A development team's 
 
 ### The _primary_ metric
 
-Is working software, but this is not the only, measurement.  The key to successful DevOps is knowing how well the methodology and the software it produces are performing.  Is the software truely dependable?
+Is working software, but this is not the only, measurement. The key to successful DevOps is knowing how well the methodology and the software it produces are performing. Is the software truely dependable?
 
 ### An understanding of performance
 
@@ -314,7 +313,7 @@ Yep. News flash. DevOps will not entirely stop all bugs or vulnerabilities from 
 
 ### Eliminating waste
 
-Through re-scoping of requirements, re-prioritizing of a backlog, or the deprecation of unused features.  Again, all surfaced through monitoring.
+Through re-scoping of requirements, re-prioritizing of a backlog, or the deprecation of unused features. Again, all surfaced through monitoring.
 
 ## Crawl, walk, run
 
@@ -327,7 +326,7 @@ Through re-scoping of requirements, re-prioritizing of a backlog, or the depreca
 # Reading list
 
 **AntiPatterns: Refactoring Software, Architectures, and Projects in Crisis**
-William J. Brown, Raphael C. Malveau, Hays W. "Skip" McCormick,  and Thomas J. Mowbray
+William J. Brown, Raphael C. Malveau, Hays W. "Skip" McCormick, and Thomas J. Mowbray
 ISBN: 978-0-471-19713-3
 Apr 1998
 
@@ -337,7 +336,7 @@ ISBN-13: 978-0321601919
 August 2010
 
 **The DevOps Handbook: How to Create World-Class Agility, Reliability, and Security in Technology Organizations**
-Gene Kim Jez Humble,  Patrick Debois, and John Willis
+Gene Kim Jez Humble, Patrick Debois, and John Willis
 ISBN-13: 978-1942788003
 October 2016
 
@@ -1088,6 +1087,7 @@ If your on LinkedIn or search many of the job boards you'll find many employers 
 Now that we've reviewed the playbook lets execute it via the Make target `install-dependencies` in the root of the project in our shell
 
 ```sh
+cd ..
 make install-dependencies
 ```
 
@@ -1284,4 +1284,3 @@ In the shell, if you were to enter `make all` make would execute the `all` targe
   - then the `install-taiga` target to descend into the [taiga](taiga) sub-folder and execute the [install.sh](taiga/install.sh) script
   - then the `install-sonarqube` target to descend into the [sonarqube](sonarqube) sub-folder and execute the [install.sh](sonarqube/install.sh) script
   - and finally, the `install-heimdall` target to descend into the [heimdall](heimdall) sub-folder and execute the [install.sh](heimdall/install.sh) script
-
