@@ -54,7 +54,348 @@ Don't fixate on the tools used, nor the apps we develop in the course of learnin
 
 See the [License file](LICENCE) at the root of this project.
 
-# Prerequisites
+
+# DevOps unpacked
+
+## What is DevOps?
+
+DevOps (a clipped compound of the words *development* and *operations*) is a software development methodology with an emphasis on a reliable release pipeline, automation, and stronger collaboration across all stakeholders with the goal of delivery of value in close alignment with business objectives into the hands of users (i.e., production) more efficiently and effectively.
+
+*Ops* in DevOps gathers up every IT operation stakeholders (i.e., cybersecurity, testing, DB admin, infrastructure and operations practitioners -- essentially, any stakeholder not commonly thought of as directly part of the development team in the system development life cycle).
+
+Yeah, that's the formal definition.
+
+In the opening sentences of _Security Engineering: : A Guide to Building Dependable Distributed Systems — Third Edition_, author Ross Anderson defines what a security engineer is
+
+> Security engineering is about building systems to remain dependable in the face of malice, error, or mischance. As a discipline, it focuses on the tools, processes, and methods needed to design, implement, and test complete systems, and to adapt existing systems as their environment evolve.
+
+The words _security engineering_ could be replaced in the opening sentence with each one of the various stakeholders (e.g., development, quality assurance, technology operations).
+
+The point I'm after is everyone is in it to collectively deliver dependable software.
+
+Also, there is no need to overload the _DevOps_ term -- To _Dev wildcard (i.e., *) Ops_ to include your pet interest(s), such as, _security_, _test_, _whatever_... to form _DevSecOps_, _DevTestOps_, _DevWhateverOps_...  _DevOps_ has you covered.
+
+## What DevOps is not
+
+About the tools.
+
+![My Pillow Guy](./images/my_pillow_guy.png)
+
+<sub>There are countless vendors out there, who want to sell you their crummy tool.</sub>
+
+## To succeed at DevOps you must
+
+__Combine software development and information technology operations in the systems development life cycle__ with __a focus on collaboration across the life cycle to deliver features, fixes, and updates frequently in close alignment with business objectives__.
+
+If the effort cannot combine both Dev and Ops in collaboration with this focus the effort will most certainly fail.
+
+## If your effort doesn't
+
+__grok (i.e, Understand intuitively) what DevOps is in practice__ and have performed the __necessary analysis of the existing culture and a strategy for how to affect a change__ the effort again will likely fail.
+
+I say this because the culture is the largest influencer over the success of both Agile and DevOps and ultimately the path taken (i.e., plans made.)
+
+## Conway's Law states
+
+> Any organization that designs a system (defined broadly) will produce a design whose structure is a copy of the organization's communication structure.
+
+From ["How Do Committees Invent?"](http://www.melconway.com/Home/Conways_Law.html)
+
+Followed with
+
+> Ways must be found to reward design managers for keeping their organizations lean and flexible.
+
+This was written over 50 years ago.
+
+If your communication structure is broke, so shall your systems be.
+
+## DevOps is really about
+
+Providing the culture, methods and repeated practices to permit stakeholders to collaborate.
+
+## What is DevOps culture?
+
+> **culture** noun  \ *ˈkəl-chər* \
+> the set of shared attitudes, values, goals, and practices that characterizes an institution or organization
+
+I love when a word means precisely what you need it to mean.
+
+With the stakeholders sharing the same attitudes, values, goals, using the same tools, methods and repeated practices for their particular discipline you have ***DevOps Culture***.
+
+### We were taught the requisite skills as children
+
+![Paw Patrol](./images/paw_patrol.png)
+
+### Maintaining relationships is your most important skill
+
+![Maintaining Relationships](./images/maintaining_relationships.png)
+
+### Be quick... Be slow to...
+
+![Quick to slow](./images/quick_to_slow_to.png)
+
+### The pressures of social media
+
+![Social Media](./images/social_media.png)
+
+## How is DevOps related to the Agile?
+
+Agile Software Development is an umbrella term for a set of methods and practices based on the [values](http://www.agilealliance.org/agile101/the-agile-manifesto/) and [principles](http://www.agilealliance.org/agile101/12-principles-behind-the-agile-manifesto/) expressed in the Agile Manifesto.
+
+For Agile, solutions evolve through collaboration between self-organizing, cross-functional teams utilizing the appropriate practices for their context.
+
+DevOps builds on this.
+
+## How do they differ?
+
+While DevOps extends Agile methods and practices by adding communication and collaboration between
+
+- development,
+- security,
+- quality assurance, and
+- technology operations
+
+functionaries as stakeholders into the broader effort to ensure software systems are delivered in a reliable, low-risk manner.
+
+## Why?
+
+In Agile Software Development, there is rarely an integration of these individuals outside the immediate application development team with members of technology operations (e.g., network engineers, administrators, testers, security engineers.)
+
+## What are the principles of DevOps?
+
+As DevOps matures, several principles have emerged, namely the necessity for product teams to:
+
+- Apply holistic thinking to solve problems,
+- Develop and test against production-like environments,
+- Deploy with repeatable and reliable processes,
+- Remove the drudgery and uncertainty through automation,
+- Validate and monitor operational quality, and
+- Provide rapid, automated feedback to the stakeholders
+
+## Much of this is achieved
+
+Through the repeated practices of Continuous Integration (CI) and Continuous Delivery (CD) often conflated into simply "CI/CD" or "CICD".
+
+WARNING: After tools, CICD is the next (**albeit mistakenly**) thing thought to be the totality of DevOps.
+
+## What is Continuous Integration (CI)?
+
+It is a repeated Agile software development practice lifted specifically from Extreme programming, where members of a development team frequently integrate their work to detect integration issues as quickly as possible thereby shifting discovery of issues "left" (i.e., early) in the software release.
+
+## How?
+
+Each integration is orchestrated through a CI service/orchestrator (e.g., Jenkins CI, Drone CI, GitLab Runners, Concourse CI) that essentially assembles a build, runs unit and integration tests every time a predetermined trigger has been met; and then reports with immediate feedback.
+
+## CI best practices
+
+### Utilize a Configuration Management System
+
+For the software's source code, where the mainline (i.e., master branch) is the most recent working version, past releases held in branches, and new features not yet merged into the mainline branch worked in their own branches.
+
+### Automate the build
+
+By accompanying build automation (e.g., Gradle, Apache Maven, Make) alongside the source code.
+
+### Employ one or more CI services/orchestrators
+
+To perform source code analysis via automating formal code inspection and assessment.
+
+### Make builds self-testing
+
+In other words, ingrain testing by including unit and integration tests (e.g., Spock, JUnit, Mockito, SOAPUI, go package *Testing*) with the source code to be executed by the build automation to be executed by the CI service.
+
+### Never commit broken
+
+Or untested source code to the CMS mainline or otherwise risk breaking a build.
+
+### Stakeholders are expected to pre-flight new code
+
+Prior to committing source code in their own workspace.
+
+### The CI service/orchestrator provides feedback
+
+On the success or fail of a build integration to all its stakeholders.
+
+## What is Continuous Delivery?
+
+It is a repeated software development practice of providing a rapid, reliable, low-risk product delivery achieved through automating all facets of building, testing, and deploying software.
+
+### Extending Continuous Integration (CI)
+
+With additional stages/steps aimed to provide ongoing validation that a newly assembled software build meets all desired requirements and thereby is releasable.
+
+### Consistency
+
+Is achieved through delivering applications into production via individual repeatable pipelines of ingrained system configuration management and testing
+
+## But wait. What's a pipeline?
+
+A pipeline automates the various stages/steps (e.g., Static Application Security Testing (SAST), build, unit testing, Dynamic Application Security Testing (DAST), secure configuration acceptance compliance, integration, function and non-functional testing, delivery, and deployment) to enforce quality conformance.
+
+## How is a pipeline manifested?
+
+Each delivery pipeline is manifested as **Pipeline as Code** (i.e., software automation) accompanying the application's source code in its version control repository.
+
+## What underlines all of this?
+
+I and the community of practice argue DevOps will struggle without ubiquitous access to shared pools of software configurable system resources and higher-level services that can be rapidly provisioned (i.e., cloud).
+
+Although, it is actually possible to [DevOps on mainframes](https://www.youtube.com/watch?v=eMS97X5ZTGc) The video is in the contect of continuous delivery, but read between the lines.
+
+## But really why do we automate err. code?
+
+In 2001, I think Larry Wall in his 1st edition of *Programming Perl* book put it best with "We will encourage you to develop the three great virtues of a programmer:
+
+laziness,
+
+impatience, and
+
+hubris."
+
+The second edition of the same book provided definitions for these terms
+
+### Why do I mention Larry Wall?
+
+Well...
+
+Let me explain.
+
+### Laziness
+
+> The quality that makes you go to great effort to reduce overall energy expenditure. It makes you write labor-saving programs that other people will find useful, and document what you wrote so you don't have to answer so many questions about it. Hence, the first great virtue of a programmer._ (p.609)
+
+### Impatience
+
+> The anger you feel when the computer is being lazy. This makes you write programs that don't just react to your needs, but actually anticipate them. Or at least pretend to. Hence, the second great virtue of a programmer._ (p.608)
+
+### Hubris
+
+> Excessive pride, the sort of thing Zeus zaps you for. Also, the quality that makes you write (and maintain) programs that other people won't want to say bad things about. Hence, the third great virtue of a programmer._ (p.607)
+
+### We automate for
+
+- Faster, coordinated, repeatable, and therefore more reliable deployments.
+- Discover bugs sooner. Shifting their discovery left in the process.
+- To accelerates the feedback loop between Dev and Ops (Again, Ops is everyone not typically considered part of the development team.)
+- Reduce tribal knowledge, where one group or person holds the keys to how things get done. Yep, this is about making us all replaceable.
+- Reduce shadow IT (i.e., hardware or software within an enterprise that is not supported by IT. Just waiting for its day to explode.)
+
+## Monitoring
+
+Once deployed, the work is done, right?
+
+So, that improvements can be gauged and anomalies detected.A development team's work is not complete once a product leaves CICD and enters production; especially, under DevOps where the development team includes members of ops (e.g., security and technology operations).
+
+### The _primary_ metric
+
+Is working software, but this is not the only, measurement.  The key to successful DevOps is knowing how well the methodology and the software it produces are performing.  Is the software truely dependable?
+
+### An understanding of performance
+
+Is achieved by collecting and analyzing data produced by environments used for CICD and production.
+
+### Establish a baseline performance
+
+So, that improvements can be gauged and anomalies detected.
+
+### Set reaction thresholds
+
+To formulate and prioritize reactions weighting factors, such as, the frequency at which an anomaly arises and who is impacted.
+
+### Reacting
+
+Could be as simple as operations instructing users through training to not do something that triggers the anomaly, or more ideally, result in an issue being entered into the product's backlog culminating in the development team delivering a fix into production.
+
+### Gaps in CICD
+
+Are surfaces through monitoring resulting in for example additional testing for an issue discovered in prodcuction.
+
+Yep. News flash. DevOps will not entirely stop all bugs or vulnerabilities from making it into production, but this was never the point.
+
+### Eliminating waste
+
+Through re-scoping of requirements, re-prioritizing of a backlog, or the deprecation of unused features.  Again, all surfaced through monitoring.
+
+## Crawl, walk, run
+
+### Ultimately, DevOps is Goal
+
+- With DevOps one does not simply hit the ground running.
+- One must first crawl, walk and then ultimately run as you embrace the necessary culture change, methods, and repeated practices.
+- Collaboration and automation are expected to continually improve so to achieve more frequent and more reliable releases.
+
+# Reading list
+
+**AntiPatterns: Refactoring Software, Architectures, and Projects in Crisis**
+William J. Brown, Raphael C. Malveau, Hays W. "Skip" McCormick,  and Thomas J. Mowbray
+ISBN: 978-0-471-19713-3
+Apr 1998
+
+**Continuous Delivery: Reliable Software Releases through Build, Test, and Deployment Automation (Addison-Wesley Signature Series (Fowler))**
+David Farley and Jez Humble
+ISBN-13: 978-0321601919
+August 2010
+
+**The DevOps Handbook: How to Create World-Class Agility, Reliability, and Security in Technology Organizations**
+Gene Kim Jez Humble,  Patrick Debois, and John Willis
+ISBN-13: 978-1942788003
+October 2016
+
+**Accelerate: The Science of Lean Software and DevOps: Building and Scaling High Performing Technology Organizations**
+Nicole Forsgren PhD, Jez Humble, and Gene Kim
+ISBN-13: 978-1942788331
+March 27, 2018
+
+**Site Reliability Engineering: How Google Runs Production Systems 1st Edition**
+Betsy Beyer, Chris Jones, Jennifer Petoff, and Niall Richard Murphy
+ISBN-13: 978-1491929124
+April 16, 2016
+Also, available online at https://landing.google.com/sre/book/index.html
+
+**Release It!: Design and Deploy Production-Ready Software 2nd Edition**
+Michael T. Nygard
+ISBN-13: 978-1680502398
+January 18, 2018
+
+**The SPEED of TRUST: The One Thing That Changes Everything**
+Stephen M .R. Covey
+ISBN-13: 978-1416549000
+February 5, 2008
+The gist of the book can be found at SlideShare https://www.slideshare.net/nileshchamoli/the-speed-of-trust-13205957
+
+**RELATIONSHIP TRUST: The 13 Behaviors of High-Trust Leaders Mini Session**
+Franklin Covey Co.
+https://archive.franklincovey.com/facilitator/minisessions/handouts/13_Behaviors_MiniSession_Handout.pdf
+
+**How to Deal With Difficult People**
+Ujjwal Sinha
+Oct 25, 2014
+The SlideShare can be found here https://www.slideshare.net/abhiujjwal/how-2-deal-wid-diiclt-ppl
+
+**Leadership Secrets of the Rouge Warrior: A Commando's Guide to Success**
+Richard Marcinko w/ John Weisman
+ISBN-13: 978-0671545154
+June 1, 1996
+
+**Security Engineering: A Guide To Building Dependable Distributed Systems**
+Ross Anderson
+ISBN-13: 978-0470068526
+April 14, 2008
+The second edition of this book can be downloaded in whole from https://www.cl.cam.ac.uk/~rja14/book.html and Mr Anderson has released chapters from his 3rd edition under development.
+
+**How Do Committees Invent?**
+Melvin E. Conway
+Copyright 1968, F. D. Thompson Publications, Inc.
+http://www.melconway.com/Home/Conways_Law.html
+
+**The Pragmatic Programmer: Your Journey To Mastery, 20th Anniversary Edition (2nd Edition)**
+David Thomas and Andrew Hunt
+ISBN-13: 978-0135957059
+September 23, 2019
+
+# Now the hands-on part
+
+## Prerequisites
 
 The supported host operating systems for this class are OSX, Windows 11 and Arch Linux. By "host operating system", I mean the computer you will use to work the class.
 
@@ -943,3 +1284,4 @@ In the shell, if you were to enter `make all` make would execute the `all` targe
   - then the `install-taiga` target to descend into the [taiga](taiga) sub-folder and execute the [install.sh](taiga/install.sh) script
   - then the `install-sonarqube` target to descend into the [sonarqube](sonarqube) sub-folder and execute the [install.sh](sonarqube/install.sh) script
   - and finally, the `install-heimdall` target to descend into the [heimdall](heimdall) sub-folder and execute the [install.sh](heimdall/install.sh) script
+
