@@ -1,0 +1,42 @@
+---
+- name: Ensure Docker is installed
+  hosts: factory
+
+  tasks:
+    - name: Set fact for $HOME
+      ansible.builtin.set_fact:
+        HOME: "{{ lookup('env', 'HOME') }}"
+
+    - name: When Archlinux ensure Docker is installed
+      block:
+        - name: Update pacman and upgrade all packages
+          community.general.pacman:
+            update_cache: yes
+            upgrade: yes
+          become: yes
+
+        - name: Ensure pacman packages are installed
+          community.general.pacman:
+            name: docker
+            state: latest
+          retries: "{{ default_retries }}"
+          delay: "{{ default_delay }}"
+          register: result
+          until: result is succeeded
+          become: yes
+
+        - name: Make sure Docker is enabled and started
+          ansible.builtin.systemd:
+            name: docker
+            enabled: yes 
+            state: started
+
+        # After this logout and login again for changes to take effect.
+        #
+        - name: Ensure {{ ansible_user }} is in the docker group 
+          user:
+            name: "{{ ansible_user }}"
+            groups: docker
+            append: yes
+          become: yes
+      when: ( ansible_distribution == 'Archlinux' )

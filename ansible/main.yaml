@@ -11,6 +11,12 @@
         msg: "{{ ansible_distribution }} - {{ ansible_distribution_release }} is not MacOSX or ArchLinux"
       when: ansible_distribution not in supported_host_os
 
+- name: When ArchLinux ensure Docker is installed
+  ansible.builtin.import_playbook: docker.yaml
+
+- name: When ArchLinuc ensure yay AUR helper is installed
+  ansible.builtin.import_playbook: yay.yaml
+
 - name: Ensure common dependencies are installed
   ansible.builtin.import_playbook: common.yaml
 

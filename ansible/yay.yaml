@@ -1,0 +1,46 @@
+---
+- name: Ensure yay AUR helper installed
+  hosts: factory
+
+  tasks:
+    - name: Set fact for $HOME
+      ansible.builtin.set_fact:
+        HOME: "{{ lookup('env', 'HOME') }}"
+
+    - name: When Archlinux ensure yay AUR helper is installed
+      block:
+        - name: Update pacman and upgrade all packages
+          community.general.pacman:
+            update_cache: yes
+            upgrade: yes
+          become: yes
+
+        - name: Ensure pacman packages are installed
+          community.general.pacman:
+            name:
+              - base-devel
+              - git
+            state: latest
+          retries: "{{ default_retries }}"
+          delay: "{{ default_delay }}"
+          register: result
+          until: result is succeeded
+          become: yes
+
+        - name: Determine if yay AUR helper is installed?
+          ansible.builtin.stat:
+            path: /usr/bin/yay
+          register: stat_result
+
+        - name: Install yay when not installed
+          block:
+            - name: Git clone yay repo to {{ HOME }}/yay
+              ansible.builtin.git:
+                repo: https://aur.archlinux.org/yay.git
+                dest: '{{ HOME }}/yay'
+
+            - name: Install yay
+              ansible.builtin.shell: makepkg -si  
+              when: not stat_result.stat.exists
+
+      when: ( ansible_distribution == 'Archlinux' )

@@ -709,6 +709,43 @@ No analytics data has been sent yet (or will be during this `install` run).
     https://docs.brew.sh
 ```
 
+### On Arch Linux, ensure Python3 and pip are installed
+
+On Arch if we need to ensure you have Python 3 and pip installed by performing the following in the shell
+
+```sh
+sudo pacman -Syu python3 python-pip
+```
+
+Output will resemble
+
+```
+:: Synchronizing package databases...
+ core                                       134.2 KiB  2033 KiB/s 00:00 [########################################] 100%
+ extra                                     1565.3 KiB  25.5 MiB/s 00:00 [########################################] 100%
+ community                                    5.6 MiB  58.3 MiB/s 00:00 [########################################] 100%
+:: Starting full system upgrade...
+resolving dependencies...
+looking for conflicting packages...
+
+Packages (2) python-3.9.6-1  python-pip-20.3.4-1
+
+Total Installed Size:  54.20 MiB
+Net Upgrade Size:       0.00 MiB
+
+:: Proceed with installation? [Y/n] y
+(2/2) checking keys in keyring                                          [########################################] 100%
+(2/2) checking package integrity                                        [########################################] 100%
+(2/2) loading package files                                             [########################################] 100%
+(2/2) checking for file conflicts                                       [########################################] 100%
+(2/2) checking available disk space                                     [########################################] 100%
+:: Processing package changes...
+(1/2) reinstalling python                                               [########################################] 100%
+(2/2) reinstalling python-pip                                           [########################################] 100%
+:: Running post-transaction hooks...
+(1/1) Arming ConditionNeedsUpdate...
+```
+
 ### 10.1.4. Install Ansible
 
 Ansible is based on [Python](https://www.python.org/) ans distributed as a Python module that you can install by [pip](https://pip.pypa.io). Pip refers to itself as "the package installer for Python". There are [others](https://packaging.python.org/guides/tool-recommendations/), but most everyone uses pip.
@@ -726,7 +763,6 @@ This will install the ansible module into the Python user install directory for 
 Output will resemble
 
 ```
-⋊> ~ python3 -m pip install --user ansible
 Collecting ansible
   Downloading ansible-4.2.0.tar.gz (35.0 MB)
      |████████████████████████████████| 35.0 MB 6.0 MB/s
@@ -904,15 +940,15 @@ cd $HOME/Development/workspace
 git clone https://github.com/nemonik/hands-on-DevOps-gen2.git
 ```
 
+### 10.2.1. Review the Ansible playbook
+
+If you haven't reviewed the playbook, now is a good time to do so.
+
 Enter the project's [ansible/](./ansible) sub-folder
 
 ```sh
 cd ansible
 ```
-
-### 10.2.1. Review the Ansible playbook
-
-If you haven't reviewed the playbook, now is a good time to do so.
 
 The `ansible-playbook` command will execute a series of playbooks across an inventory of hosts. For the class we have just one host and this is `localhost`, your host.
 
@@ -1063,14 +1099,17 @@ EXAMPLES:
 And the playbook continues on to importing and executing each of the following playbooks
 
 ```ansible
+- name: When ArchLinux ensure Docker is installed
+  ansible.builtin.import_playbook: docker.yaml
+
+- name: When ArchLinuc ensure yay AUR helper is installed
+  ansible.builtin.import_playbook: yay.yaml
+
 - name: Ensure common dependencies are installed
   ansible.builtin.import_playbook: common.yaml
 
 - name: Ensure pyenv is installed and configured
   ansible.builtin.import_playbook: pyenv.yaml
-
-- name: Ensure Go is installed and configured
-  ansible.builtin.import_playbook: go.yaml
 
 - name: Ensure sonar-scanner cli is installed and configured
   ansible.builtin.import_playbook: sonar-scanner-cli.yaml
@@ -1083,6 +1122,9 @@ And the playbook continues on to importing and executing each of the following p
 
 - name: Ensure neovim is installed and configured
   ansible.builtin.import_playbook: neovim.yaml
+
+- name: Ensure Go is installed and configured
+  ansible.builtin.import_playbook: go.yaml
 ```
 
 I'd encourage you to review them all, but lets look at a portion of the first to be imported and executed, the [ansible/common.yaml](./ansible/common.yaml) playbook
@@ -1187,62 +1229,11 @@ cd ..
 make install-dependencies
 ```
 
+Pay attention to the playbook's run as it may stop to ask you for your password.
+
 I'll explained what Make and a target is in subsequent section. As the output is a bit too large to capture here, I've only capture the last few lines of the output below. I will resemble
 
 ```
-<localhost> EXEC /bin/sh -c '( umask 77 && mkdir -p "` echo /Users/nemonik/.ansible/tmp `"&& mkdir "` echo /Users/nemonik/.ansible/tmp/ansible-tmp-1625702462.673148-73856-255765969896439 `" && echo ansible-tmp-1625702462.673148-73856-255765969896439="` echo /Users/nemonik/.ansible/tmp/ansible-tmp-1625702462.673148-73856-255765969896439 `" ) && sleep 0'
-Using module file /Users/nemonik/.local/lib/python3.9/site-packages/ansible/modules/lineinfile.py
-<localhost> PUT /Users/nemonik/.ansible/tmp/ansible-local-27240d5jcmaum/tmp50wpeyk8 TO /Users/nemonik/.ansible/tmp/ansible-tmp-1625702462.673148-73856-255765969896439/AnsiballZ_lineinfile.py
-<localhost> EXEC /bin/sh -c 'chmod u+x /Users/nemonik/.ansible/tmp/ansible-tmp-1625702462.673148-73856-255765969896439/ /Users/nemonik/.ansible/tmp/ansible-tmp-1625702462.673148-73856-255765969896439/AnsiballZ_lineinfile.py && sleep 0'
-<localhost> EXEC /bin/sh -c '/usr/bin/python3 /Users/nemonik/.ansible/tmp/ansible-tmp-1625702462.673148-73856-255765969896439/AnsiballZ_lineinfile.py && sleep 0'
-<localhost> EXEC /bin/sh -c 'rm -f -r /Users/nemonik/.ansible/tmp/ansible-tmp-1625702462.673148-73856-255765969896439/ > /dev/null 2>&1 && sleep 0'
-changed: [localhost] => (item={'line': 'set -U fish_user_paths $HOME/.local/bin $fish_user_paths'}) => {
-    "ansible_loop_var": "item",
-    "backup": "",
-    "changed": true,
-    "diff": [
-        {
-            "after": "",
-            "after_header": "/Users/nemonik/.config/fish/config.fish (content)",
-            "before": "",
-            "before_header": "/Users/nemonik/.config/fish/config.fish (content)"
-        },
-        {
-            "after_header": "/Users/nemonik/.config/fish/config.fish (file attributes)",
-            "before_header": "/Users/nemonik/.config/fish/config.fish (file attributes)"
-        }
-    ],
-    "invocation": {
-        "module_args": {
-            "attributes": null,
-            "backrefs": false,
-            "backup": false,
-            "create": false,
-            "dest": "/Users/nemonik/.config/fish/config.fish",
-            "firstmatch": false,
-            "group": null,
-            "insertafter": "EOF",
-            "insertbefore": null,
-            "line": "set -U fish_user_paths $HOME/.local/bin $fish_user_paths",
-            "mode": null,
-            "owner": null,
-            "path": "/Users/nemonik/.config/fish/config.fish",
-            "regexp": null,
-            "search_string": null,
-            "selevel": null,
-            "serole": null,
-            "setype": null,
-            "seuser": null,
-            "state": "present",
-            "unsafe_writes": false,
-            "validate": null
-        }
-    },
-    "item": {
-        "line": "set -U fish_user_paths $HOME/.local/bin $fish_user_paths"
-    },
-    "msg": "line added"
-}
 META: ran handlers
 META: ran handlers
 
