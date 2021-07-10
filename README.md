@@ -77,76 +77,79 @@ What you should bring:
 - [5. What you should bring](#5-what-you-should-bring)
 - [6. Table of Contents](#6-table-of-contents)
 - [7. DevOps unpacked](#7-devops-unpacked)
-  - [7.1. What is DevOps?](#71-what-is-devops)
-  - [7.2. What DevOps is not](#72-what-devops-is-not)
-  - [7.3. To succeed at DevOps you must](#73-to-succeed-at-devops-you-must)
-  - [7.4. If your effort doesn't](#74-if-your-effort-doesnt)
-  - [7.5. Conway's Law states](#75-conways-law-states)
-  - [7.6. DevOps is really about](#76-devops-is-really-about)
-  - [7.7. What is DevOps culture?](#77-what-is-devops-culture)
-    - [7.7.1. We were taught the requisite skills as children](#771-we-were-taught-the-requisite-skills-as-children)
-    - [7.7.2. Maintaining relationships is your most important skill](#772-maintaining-relationships-is-your-most-important-skill)
-    - [7.7.3. Be quick... Be slow to...](#773-be-quick-be-slow-to)
-    - [7.7.4. The pressures of social media](#774-the-pressures-of-social-media)
-  - [7.8. How is DevOps related to the Agile?](#78-how-is-devops-related-to-the-agile)
-  - [7.9. How do they differ?](#79-how-do-they-differ)
-  - [7.10. Why?](#710-why)
-  - [7.11. What are the principles of DevOps?](#711-what-are-the-principles-of-devops)
-  - [7.12. Much of this is achieved](#712-much-of-this-is-achieved)
-  - [7.13. What is Continuous Integration (CI)?](#713-what-is-continuous-integration-ci)
-  - [7.14. How?](#714-how)
-  - [7.15. CI best practices](#715-ci-best-practices)
-    - [7.15.1. Utilize a Configuration Management System](#7151-utilize-a-configuration-management-system)
-    - [7.15.2. Automate the build](#7152-automate-the-build)
-    - [7.15.3. Employ one or more CI services/orchestrators](#7153-employ-one-or-more-ci-servicesorchestrators)
-    - [7.15.4. Make builds self-testing](#7154-make-builds-self-testing)
-    - [7.15.5. Never commit broken](#7155-never-commit-broken)
-    - [7.15.6. Stakeholders are expected to pre-flight new code](#7156-stakeholders-are-expected-to-pre-flight-new-code)
-    - [7.15.7. The CI service/orchestrator provides feedback](#7157-the-ci-serviceorchestrator-provides-feedback)
-  - [7.16. What is Continuous Delivery?](#716-what-is-continuous-delivery)
-    - [7.16.1. Extending Continuous Integration (CI)](#7161-extending-continuous-integration-ci)
-    - [7.16.2. Consistency](#7162-consistency)
-  - [7.17. But wait. What's a pipeline?](#717-but-wait-whats-a-pipeline)
-  - [7.18. How is a pipeline manifested?](#718-how-is-a-pipeline-manifested)
-  - [7.19. What underlines all of this?](#719-what-underlines-all-of-this)
-  - [7.20. But really why do we automate err. code?](#720-but-really-why-do-we-automate-err-code)
-    - [7.20.1. Why do I mention Larry Wall?](#7201-why-do-i-mention-larry-wall)
-    - [7.20.2. Laziness](#7202-laziness)
-    - [7.20.3. Impatience](#7203-impatience)
-    - [7.20.4. Hubris](#7204-hubris)
-    - [7.20.5. We automate for](#7205-we-automate-for)
-  - [7.21. Monitoring](#721-monitoring)
-    - [7.21.1. The _primary_ metric](#7211-the-_primary_-metric)
-    - [7.21.2. An understanding of performance](#7212-an-understanding-of-performance)
-    - [7.21.3. Establish a baseline performance](#7213-establish-a-baseline-performance)
-    - [7.21.4. Set reaction thresholds](#7214-set-reaction-thresholds)
-    - [7.21.5. Reacting](#7215-reacting)
-    - [7.21.6. Gaps in CICD](#7216-gaps-in-cicd)
-    - [7.21.7. Eliminating waste](#7217-eliminating-waste)
-  - [7.22. Crawl, walk, run](#722-crawl-walk-run)
-    - [7.22.1. Ultimately, DevOps is Goal](#7221-ultimately-devops-is-goal)
+    - [7.1. What is DevOps?](#71-what-is-devops)
+    - [7.2. What DevOps is not](#72-what-devops-is-not)
+    - [7.3. To succeed at DevOps you must](#73-to-succeed-at-devops-you-must)
+    - [7.4. If your effort doesn't](#74-if-your-effort-doesnt)
+    - [7.5. Conway's Law states](#75-conways-law-states)
+    - [7.6. DevOps is really about](#76-devops-is-really-about)
+    - [7.7. What is DevOps culture?](#77-what-is-devops-culture)
+        - [7.7.1. We were taught the requisite skills as children](#771-we-were-taught-the-requisite-skills-as-children)
+        - [7.7.2. Maintaining relationships is your most important skill](#772-maintaining-relationships-is-your-most-important-skill)
+        - [7.7.3. Be quick... Be slow to...](#773-be-quick-be-slow-to)
+        - [7.7.4. The pressures of social media](#774-the-pressures-of-social-media)
+    - [7.8. How is DevOps related to the Agile?](#78-how-is-devops-related-to-the-agile)
+    - [7.9. How do they differ?](#79-how-do-they-differ)
+    - [7.10. Why?](#710-why)
+    - [7.11. What are the principles of DevOps?](#711-what-are-the-principles-of-devops)
+    - [7.12. Much of this is achieved](#712-much-of-this-is-achieved)
+    - [7.13. What is Continuous Integration (CI)?](#713-what-is-continuous-integration-ci)
+    - [7.14. How?](#714-how)
+    - [7.15. CI best practices](#715-ci-best-practices)
+        - [7.15.1. Utilize a Configuration Management System](#7151-utilize-a-configuration-management-system)
+        - [7.15.2. Automate the build](#7152-automate-the-build)
+        - [7.15.3. Employ one or more CI services/orchestrators](#7153-employ-one-or-more-ci-servicesorchestrators)
+        - [7.15.4. Make builds self-testing](#7154-make-builds-self-testing)
+        - [7.15.5. Never commit broken](#7155-never-commit-broken)
+        - [7.15.6. Stakeholders are expected to pre-flight new code](#7156-stakeholders-are-expected-to-pre-flight-new-code)
+        - [7.15.7. The CI service/orchestrator provides feedback](#7157-the-ci-serviceorchestrator-provides-feedback)
+    - [7.16. What is Continuous Delivery?](#716-what-is-continuous-delivery)
+        - [7.16.1. Extending Continuous Integration (CI)](#7161-extending-continuous-integration-ci)
+        - [7.16.2. Consistency](#7162-consistency)
+    - [7.17. But wait. What's a pipeline?](#717-but-wait-whats-a-pipeline)
+    - [7.18. How is a pipeline manifested?](#718-how-is-a-pipeline-manifested)
+    - [7.19. What underlines all of this?](#719-what-underlines-all-of-this)
+    - [7.20. But really why do we automate err. code?](#720-but-really-why-do-we-automate-err-code)
+        - [7.20.1. Why do I mention Larry Wall?](#7201-why-do-i-mention-larry-wall)
+        - [7.20.2. Laziness](#7202-laziness)
+        - [7.20.3. Impatience](#7203-impatience)
+        - [7.20.4. Hubris](#7204-hubris)
+        - [7.20.5. We automate for](#7205-we-automate-for)
+    - [7.21. Monitoring](#721-monitoring)
+        - [7.21.1. The _primary_ metric](#7211-the-_primary_-metric)
+        - [7.21.2. An understanding of performance](#7212-an-understanding-of-performance)
+        - [7.21.3. Establish a baseline performance](#7213-establish-a-baseline-performance)
+        - [7.21.4. Set reaction thresholds](#7214-set-reaction-thresholds)
+        - [7.21.5. Reacting](#7215-reacting)
+        - [7.21.6. Gaps in CICD](#7216-gaps-in-cicd)
+        - [7.21.7. Eliminating waste](#7217-eliminating-waste)
+    - [7.22. Crawl, walk, run](#722-crawl-walk-run)
+        - [7.22.1. Ultimately, DevOps is Goal](#7221-ultimately-devops-is-goal)
 - [8. Reading list](#8-reading-list)
 - [9. Now the hands-on part](#9-now-the-hands-on-part)
-  - [9.1. Prerequisites](#91-prerequisites)
-  - [9.2. Manual inspection](#92-manual-inspection)
-  - [9.3. Shell configuration](#93-shell-configuration)
-  - [9.4. Installing upfront dependencies](#94-installing-upfront-dependencies)
-  - [9.5. OS X or Windows 11, install Docker Desktop](#95-os-x-or-windows-11-install-docker-desktop)
-    - [9.5.1. On OSX install Docker Desktop](#951-on-osx-install-docker-desktop)
-    - [9.5.2. On Windows install Docker Desktop](#952-on-windows-install-docker-desktop)
-    - [9.5.3. On Arch Linux](#953-on-arch-linux)
-  - [9.6. On OSX install iTerm2](#96-on-osx-install-iterm2)
+    - [9.1. Prerequisites](#91-prerequisites)
+    - [9.2. Manual inspection](#92-manual-inspection)
+    - [9.3. Shell configuration](#93-shell-configuration)
+    - [9.4. Installing upfront dependencies](#94-installing-upfront-dependencies)
+    - [9.5. OS X or Windows 11, install Docker Desktop](#95-os-x-or-windows-11-install-docker-desktop)
+        - [9.5.1. On OSX install Docker Desktop](#951-on-osx-install-docker-desktop)
+        - [9.5.2. On Windows install Docker Desktop](#952-on-windows-install-docker-desktop)
+        - [9.5.3. On Arch Linux](#953-on-arch-linux)
+    - [9.6. On OSX install iTerm2](#96-on-osx-install-iterm2)
 - [10. Installing the software factory](#10-installing-the-software-factory)
-  - [10.1. Ansible](#101-ansible)
-    - [10.1.1. Installing Ansible](#1011-installing-ansible)
-    - [10.1.2. On OSX, install the Xcode Command Line tools](#1012-on-osx-install-the-xcode-command-line-tools)
-    - [10.1.3. On OSX, install HomeBrew](#1013-on-osx-install-homebrew)
-    - [10.1.4. Install Ansible](#1014-install-ansible)
-  - [10.2. Run the Ansible playbook](#102-run-the-ansible-playbook)
-    - [10.2.1. Review the Ansible playbook](#1021-review-the-ansible-playbook)
-    - [10.2.2. On OSX, enable nerd fonts in XTerm2](#1022-on-osx-enable-nerd-fonts-in-xterm2)
-  - [10.3. Spin up the Factory](#103-spin-up-the-factory)
-    - [10.3.1. The Makefile](#1031-the-makefile)
+    - [10.1. Ansible](#101-ansible)
+        - [10.1.1. Installing Ansible](#1011-installing-ansible)
+        - [10.1.2. On OSX, install the Xcode Command Line tools](#1012-on-osx-install-the-xcode-command-line-tools)
+        - [10.1.3. On OSX, install HomeBrew](#1013-on-osx-install-homebrew)
+        - [10.1.4. On Arch Linux, ensure Python3 and pip are installed](#1014-on-arch-linux-ensure-python3-and-pip-are-installed)
+        - [10.1.5. Install Ansible](#1015-install-ansible)
+    - [10.2. Run the Ansible playbook](#102-run-the-ansible-playbook)
+        - [10.2.1. Review the Ansible playbook](#1021-review-the-ansible-playbook)
+        - [10.2.2. On OSX, enable nerd fonts in XTerm2](#1022-on-osx-enable-nerd-fonts-in-xterm2)
+        - [10.2.3. On Arch Linux, enable nerd fonts in Gnome Terminal](#1023-on-arch-linux-enable-nerd-fonts-in-gnome-terminal)
+        - [10.2.4. Change your shell to fish](#1024-change-your-shell-to-fish)
+    - [10.3. Spin up the Factory](#103-spin-up-the-factory)
+        - [10.3.1. The Makefile](#1031-the-makefile)
 
 <!-- /TOC -->
 
@@ -709,7 +712,7 @@ No analytics data has been sent yet (or will be during this `install` run).
     https://docs.brew.sh
 ```
 
-### On Arch Linux, ensure Python3 and pip are installed
+### 10.1.4. On Arch Linux, ensure Python3 and pip are installed
 
 On Arch if we need to ensure you have Python 3 and pip installed by performing the following in the shell
 
@@ -746,7 +749,7 @@ Net Upgrade Size:       0.00 MiB
 (1/1) Arming ConditionNeedsUpdate...
 ```
 
-### 10.1.4. Install Ansible
+### 10.1.5. Install Ansible
 
 Ansible is based on [Python](https://www.python.org/) ans distributed as a Python module that you can install by [pip](https://pip.pypa.io). Pip refers to itself as "the package installer for Python". There are [others](https://packaging.python.org/guides/tool-recommendations/), but most everyone uses pip.
 
@@ -1250,11 +1253,32 @@ To complete the configuration for OS X hosts configure XTerm2 to use `Meslo Nerd
 1. Open iTerm2's `Preferences`.
 2. In the `Preference` window that opens, select `Profile`.
 3. In the `Default` profile, select `Text`.
-4. In the `Text` profile, select `from the`Font` pannel.
-5. Optionally, check off `Use ligatures`.
-6. In the `Preferences` window, select `Color`.
-7. Click `Color Preserts...` and select `Solarized Dark`.
-8. Close the `Preference` windows, and re-start your terminal window for your changes to take effect.
+4. In the `Text` profile, select `Meslo Nerd Font` from the `Font` panel.
+5. In the `Preferences` window, select `Color`.
+6. Click `Color Preserts...` and select `Solarized Dark`.
+7. Close the `Preference` windows, and re-start your terminal window for your changes to take effect.
+
+### 10.2.3. On Arch Linux, enable nerd fonts in Gnome Terminal
+
+To complete the configuration for Arch Linux hosts configure the Terminal to use `Meslo Nerd Font` and use `Solarized Dark` color them. Optionally, you can install your own [Nerd font](https://www.nerdfonts.com/font-downloads).
+
+1. Open Terminal's `Preferences`.
+2. In the `Preference` window that opens, select the `Unamed` profile.
+3. In the `Text` panel, check off `Custom font` and select `Meslo Nerd Font`. Size as per your eyesight.
+4. In the `Colors`panel, unclick `Use colors from system theme` and select `Solarized dark` from the available built-in themes.
+5. Close the `Preference` windows, and your Terminal should of updated as per your selections.
+
+### 10.2.4. Change your shell to fish
+
+The class automation will attempt to configure Bash, Zsh and fish, but let's try something perhaps new.
+
+Let's use fish as our shell
+
+```sh
+sudo chsh -s $(which fish) $(whoami)
+```
+
+On OSX, simply closing your current terminal and opening a new one should be enough for the change to take, but for Arch you may have to logout or reboot.
 
 ## 10.3. Spin up the Factory
 
