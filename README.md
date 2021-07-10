@@ -1365,7 +1365,7 @@ First let's inspect the [Makefile](./Makefile) in piecemeal
 The above is the copyright.
 
 ```
-.PHONY: all install-dependencies start install start-registry delete-registry start-cluster delete-cluster patch-coredns install-traefik uninstall-traefik install-gitlab uninstall-gitlab install-drone uninstall-drone install-taiga uninstall-taiga install-sonarqube uninstall-sonarqube install-heimdall uninstall-heimdall decrypt-vault encrypt-vault
+.PHONY: all install-dependencies start install start-registry delete-registry start-cluster delete-cluster patch-coredns install-traefik uninstall-traefik install-gitlab uninstall-gitlab install-drone uninstall-drone install-taiga uninstall-taiga install-sonarqube uninstall-sonarqube install-heimdall uninstall-heimdall install-plantuml uninstall-plantuml decrypt-vault encrypt-vault
 ```
 
 Generally, a makefile is comprised of rules that look like this
@@ -1383,7 +1383,7 @@ What follows next are the makefile's rules
 ```
 all: start install
 start: start-registry start-cluster patch-coredns
-install: install-traefik install-gitlab install-drone install-taiga install-sonarqube install-heimdall
+install: install-traefik install-gitlab install-drone install-taiga install-sonarqube install-heimdall install-plantuml
 uninstall: delete-cluster
 install-dependencies:
 	./install_dependencies.sh
@@ -1421,6 +1421,10 @@ install-heimdall:
 	cd heimdall2 && ./install.sh
 uninstall-heimdall:
 	cd heimdall2 && ./uninstall.sh
+install-plantuml:
+	cd plantuml-server && ./install.sh
+uninstall-plantuml:
+	cd plantuml-server && ./uninstall.sh
 decrypt-vault:
 	./decrypt-vault.sh
 encrypt-vault:
@@ -1441,7 +1445,8 @@ In the shell, if you were to enter `make all` make would execute the `all` targe
   - then the `install-drone` target to descend into the [drone](drone) sub-folder and execute the [install.sh](drone/install.sh) script
   - then the `install-taiga` target to descend into the [taiga](taiga) sub-folder and execute the [install.sh](taiga/install.sh) script
   - then the `install-sonarqube` target to descend into the [sonarqube](sonarqube) sub-folder and execute the [install.sh](sonarqube/install.sh) script
-  - and finally, the `install-heimdall` target to descend into the [heimdall](heimdall) sub-folder and execute the [install.sh](heimdall/install.sh) script
+  - then the `install-heimdall` target to descend into the [heimdall](heimdall) sub-folder and execute the [install.sh](heimdall/install.sh) script
+  - and finally, the `install-plantuml` target to descend into the [plantuml-server](plantuml-server) sub-folder and execute the [install.sh](plantuml-server/install.sh) script
 
 ### 10.3.2. Starting a container registry, the K3s cluster and patching CoreDNS
 

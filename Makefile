@@ -5,11 +5,11 @@
 # You should have received a copy of the license with
 # this file. If not, please email <mjwalsh@nemonik.com>
 
-.PHONY: all install-dependencies start install start-registry delete-registry start-cluster delete-cluster patch-coredns install-traefik uninstall-traefik install-gitlab uninstall-gitlab install-drone uninstall-drone install-taiga uninstall-taiga install-sonarqube uninstall-sonarqube install-heimdall uninstall-heimdall decrypt-vault encrypt-vault
+.PHONY: all install-dependencies start install start-registry delete-registry start-cluster delete-cluster patch-coredns install-traefik uninstall-traefik install-gitlab uninstall-gitlab install-drone uninstall-drone install-taiga uninstall-taiga install-sonarqube uninstall-sonarqube install-heimdall uninstall-heimdall install-plantuml uninstall-plantuml decrypt-vault encrypt-vault
 
 all: start install
 start: start-registry start-cluster patch-coredns
-install: install-traefik install-gitlab install-drone install-taiga install-sonarqube install-heimdall
+install: install-traefik install-gitlab install-drone install-taiga install-sonarqube install-heimdall install-plantuml
 uninstall: delete-cluster
 install-dependencies:
 	./install_dependencies.sh
@@ -47,6 +47,10 @@ install-heimdall:
 	cd heimdall2 && ./install.sh
 uninstall-heimdall:
 	cd heimdall2 && ./uninstall.sh
+install-plantuml:
+	cd plantuml-server && ./install.sh
+uninstall-plantuml:
+	cd plantuml-server && ./uninstall.sh
 decrypt-vault:
 	./decrypt-vault.sh
 encrypt-vault:
