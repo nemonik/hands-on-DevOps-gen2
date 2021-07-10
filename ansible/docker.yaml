@@ -7,6 +7,10 @@
       ansible.builtin.set_fact:
         HOME: "{{ lookup('env', 'HOME') }}"
 
+    - name: Set fact for $USER
+      ansible.builtin.set_fact:
+        USER: "{{ lookup('env', 'USER') }}"
+
     - name: When Archlinux ensure Docker is installed
       block:
         - name: Update pacman and upgrade all packages
@@ -33,9 +37,9 @@
 
         # After this logout and login again for changes to take effect.
         #
-        - name: Ensure {{ ansible_user }} is in the docker group 
+        - name: Ensure {{ USER }} is in the docker group 
           user:
-            name: "{{ ansible_user }}"
+            name: "{{ USER }}"
             groups: docker
             append: yes
           become: yes
