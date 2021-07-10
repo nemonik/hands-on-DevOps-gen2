@@ -8,6 +8,9 @@
 # this file. If not, please email <mjwalsh@nemonik.com>
 
 set -a
+
+skip_encrypted_variables=true
+
 . ../.env
 
 images_into_registry traefik_images
@@ -90,4 +93,13 @@ eval ./test_patch.sh
 
 cd ..
 
-warn "Remember to add any new entries to /etc/hosts!"
+echo
+warn "======================================================="
+warn "Ensure the following lines are in youy /etc/hosts file:"
+warn "======================================================="
+echo
+
+for entry in "${coredns_entries[@]}"
+do
+  echo "$host_ip $entry"
+done

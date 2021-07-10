@@ -69,8 +69,8 @@
     - name: Ensure pynvim python module is installed for coc-pyright
       ansible.builtin.shell: bash -c "python3 -m pip install --user --upgrade pynvim"
 
-    - name: Ensure neovim gem is installed for coc-solargraph
-      ansible.builtin.shell: bash -c "source ~/.bash_profile && gem install neovim"
+    - name: Ensure solargraph gem is installed for coc-solargraph
+      ansible.builtin.shell: bash -c "source ~/.bash_profile && gem install solargraph"
 
     # See: https://prettier.io/docs/en/install.html
     #

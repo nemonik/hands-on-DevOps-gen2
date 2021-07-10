@@ -51,7 +51,7 @@ Don't fixate on the tools used, nor the apps we develop in the course of learnin
 
 # 3. Author
 
-- Michael Joseph Walsh [mjwalsh@mitre.org](mailto:mjwalsh@mitre.org), [walsh@nemonik.com](mailto:walsh@nemonik.com)
+- Michael Joseph Walsh [nemonik@mitre.org](mailto:nemonik@mitre.org), [walsh@nemonik.com](mailto:walsh@nemonik.com)
 
 # 4. Copyright and license
 
@@ -77,79 +77,83 @@ What you should bring:
 - [5. What you should bring](#5-what-you-should-bring)
 - [6. Table of Contents](#6-table-of-contents)
 - [7. DevOps unpacked](#7-devops-unpacked)
-    - [7.1. What is DevOps?](#71-what-is-devops)
-    - [7.2. What DevOps is not](#72-what-devops-is-not)
-    - [7.3. To succeed at DevOps you must](#73-to-succeed-at-devops-you-must)
-    - [7.4. If your effort doesn't](#74-if-your-effort-doesnt)
-    - [7.5. Conway's Law states](#75-conways-law-states)
-    - [7.6. DevOps is really about](#76-devops-is-really-about)
-    - [7.7. What is DevOps culture?](#77-what-is-devops-culture)
-        - [7.7.1. We were taught the requisite skills as children](#771-we-were-taught-the-requisite-skills-as-children)
-        - [7.7.2. Maintaining relationships is your most important skill](#772-maintaining-relationships-is-your-most-important-skill)
-        - [7.7.3. Be quick... Be slow to...](#773-be-quick-be-slow-to)
-        - [7.7.4. The pressures of social media](#774-the-pressures-of-social-media)
-    - [7.8. How is DevOps related to the Agile?](#78-how-is-devops-related-to-the-agile)
-    - [7.9. How do they differ?](#79-how-do-they-differ)
-    - [7.10. Why?](#710-why)
-    - [7.11. What are the principles of DevOps?](#711-what-are-the-principles-of-devops)
-    - [7.12. Much of this is achieved](#712-much-of-this-is-achieved)
-    - [7.13. What is Continuous Integration (CI)?](#713-what-is-continuous-integration-ci)
-    - [7.14. How?](#714-how)
-    - [7.15. CI best practices](#715-ci-best-practices)
-        - [7.15.1. Utilize a Configuration Management System](#7151-utilize-a-configuration-management-system)
-        - [7.15.2. Automate the build](#7152-automate-the-build)
-        - [7.15.3. Employ one or more CI services/orchestrators](#7153-employ-one-or-more-ci-servicesorchestrators)
-        - [7.15.4. Make builds self-testing](#7154-make-builds-self-testing)
-        - [7.15.5. Never commit broken](#7155-never-commit-broken)
-        - [7.15.6. Stakeholders are expected to pre-flight new code](#7156-stakeholders-are-expected-to-pre-flight-new-code)
-        - [7.15.7. The CI service/orchestrator provides feedback](#7157-the-ci-serviceorchestrator-provides-feedback)
-    - [7.16. What is Continuous Delivery?](#716-what-is-continuous-delivery)
-        - [7.16.1. Extending Continuous Integration (CI)](#7161-extending-continuous-integration-ci)
-        - [7.16.2. Consistency](#7162-consistency)
-    - [7.17. But wait. What's a pipeline?](#717-but-wait-whats-a-pipeline)
-    - [7.18. How is a pipeline manifested?](#718-how-is-a-pipeline-manifested)
-    - [7.19. What underlines all of this?](#719-what-underlines-all-of-this)
-    - [7.20. But really why do we automate err. code?](#720-but-really-why-do-we-automate-err-code)
-        - [7.20.1. Why do I mention Larry Wall?](#7201-why-do-i-mention-larry-wall)
-        - [7.20.2. Laziness](#7202-laziness)
-        - [7.20.3. Impatience](#7203-impatience)
-        - [7.20.4. Hubris](#7204-hubris)
-        - [7.20.5. We automate for](#7205-we-automate-for)
-    - [7.21. Monitoring](#721-monitoring)
-        - [7.21.1. The _primary_ metric](#7211-the-_primary_-metric)
-        - [7.21.2. An understanding of performance](#7212-an-understanding-of-performance)
-        - [7.21.3. Establish a baseline performance](#7213-establish-a-baseline-performance)
-        - [7.21.4. Set reaction thresholds](#7214-set-reaction-thresholds)
-        - [7.21.5. Reacting](#7215-reacting)
-        - [7.21.6. Gaps in CICD](#7216-gaps-in-cicd)
-        - [7.21.7. Eliminating waste](#7217-eliminating-waste)
-    - [7.22. Crawl, walk, run](#722-crawl-walk-run)
-        - [7.22.1. Ultimately, DevOps is Goal](#7221-ultimately-devops-is-goal)
+  - [7.1. What is DevOps?](#71-what-is-devops)
+  - [7.2. What DevOps is not](#72-what-devops-is-not)
+  - [7.3. To succeed at DevOps you must](#73-to-succeed-at-devops-you-must)
+  - [7.4. If your effort doesn't](#74-if-your-effort-doesnt)
+  - [7.5. Conway's Law states](#75-conways-law-states)
+  - [7.6. DevOps is really about](#76-devops-is-really-about)
+  - [7.7. What is DevOps culture?](#77-what-is-devops-culture)
+    - [7.7.1. We were taught the requisite skills as children](#771-we-were-taught-the-requisite-skills-as-children)
+    - [7.7.2. Maintaining relationships is your most important skill](#772-maintaining-relationships-is-your-most-important-skill)
+    - [7.7.3. Be quick... Be slow to...](#773-be-quick-be-slow-to)
+    - [7.7.4. The pressures of social media](#774-the-pressures-of-social-media)
+  - [7.8. How is DevOps related to the Agile?](#78-how-is-devops-related-to-the-agile)
+  - [7.9. How do they differ?](#79-how-do-they-differ)
+  - [7.10. Why?](#710-why)
+  - [7.11. What are the principles of DevOps?](#711-what-are-the-principles-of-devops)
+  - [7.12. Much of this is achieved](#712-much-of-this-is-achieved)
+  - [7.13. What is Continuous Integration (CI)?](#713-what-is-continuous-integration-ci)
+  - [7.14. How?](#714-how)
+  - [7.15. CI best practices](#715-ci-best-practices)
+    - [7.15.1. Utilize a Configuration Management System](#7151-utilize-a-configuration-management-system)
+    - [7.15.2. Automate the build](#7152-automate-the-build)
+    - [7.15.3. Employ one or more CI services/orchestrators](#7153-employ-one-or-more-ci-servicesorchestrators)
+    - [7.15.4. Make builds self-testing](#7154-make-builds-self-testing)
+    - [7.15.5. Never commit broken](#7155-never-commit-broken)
+    - [7.15.6. Stakeholders are expected to pre-flight new code](#7156-stakeholders-are-expected-to-pre-flight-new-code)
+    - [7.15.7. The CI service/orchestrator provides feedback](#7157-the-ci-serviceorchestrator-provides-feedback)
+  - [7.16. What is Continuous Delivery?](#716-what-is-continuous-delivery)
+    - [7.16.1. Extending Continuous Integration (CI)](#7161-extending-continuous-integration-ci)
+    - [7.16.2. Consistency](#7162-consistency)
+  - [7.17. But wait. What's a pipeline?](#717-but-wait-whats-a-pipeline)
+  - [7.18. How is a pipeline manifested?](#718-how-is-a-pipeline-manifested)
+  - [7.19. What underlines all of this?](#719-what-underlines-all-of-this)
+  - [7.20. But really why do we automate err. code?](#720-but-really-why-do-we-automate-err-code)
+    - [7.20.1. Why do I mention Larry Wall?](#7201-why-do-i-mention-larry-wall)
+    - [7.20.2. Laziness](#7202-laziness)
+    - [7.20.3. Impatience](#7203-impatience)
+    - [7.20.4. Hubris](#7204-hubris)
+    - [7.20.5. We automate for](#7205-we-automate-for)
+  - [7.21. Monitoring](#721-monitoring)
+    - [7.21.1. The _primary_ metric](#7211-the-_primary_-metric)
+    - [7.21.2. An understanding of performance](#7212-an-understanding-of-performance)
+    - [7.21.3. Establish a baseline performance](#7213-establish-a-baseline-performance)
+    - [7.21.4. Set reaction thresholds](#7214-set-reaction-thresholds)
+    - [7.21.5. Reacting](#7215-reacting)
+    - [7.21.6. Gaps in CICD](#7216-gaps-in-cicd)
+    - [7.21.7. Eliminating waste](#7217-eliminating-waste)
+  - [7.22. Crawl, walk, run](#722-crawl-walk-run)
+    - [7.22.1. Ultimately, DevOps is Goal](#7221-ultimately-devops-is-goal)
 - [8. Reading list](#8-reading-list)
 - [9. Now the hands-on part](#9-now-the-hands-on-part)
-    - [9.1. Prerequisites](#91-prerequisites)
-    - [9.2. Manual inspection](#92-manual-inspection)
-    - [9.3. Shell configuration](#93-shell-configuration)
-    - [9.4. Installing upfront dependencies](#94-installing-upfront-dependencies)
-    - [9.5. OS X or Windows 11, install Docker Desktop](#95-os-x-or-windows-11-install-docker-desktop)
-        - [9.5.1. On OSX install Docker Desktop](#951-on-osx-install-docker-desktop)
-        - [9.5.2. On Windows install Docker Desktop](#952-on-windows-install-docker-desktop)
-        - [9.5.3. On Arch Linux](#953-on-arch-linux)
-    - [9.6. On OSX install iTerm2](#96-on-osx-install-iterm2)
+  - [9.1. Prerequisites](#91-prerequisites)
+  - [9.2. Manual inspection](#92-manual-inspection)
+  - [9.3. Shell configuration](#93-shell-configuration)
+  - [9.4. Installing upfront dependencies](#94-installing-upfront-dependencies)
+  - [9.5. OS X or Windows 11, install Docker Desktop](#95-os-x-or-windows-11-install-docker-desktop)
+    - [9.5.1. On OSX install Docker Desktop](#951-on-osx-install-docker-desktop)
+    - [9.5.2. On Windows install Docker Desktop](#952-on-windows-install-docker-desktop)
+    - [9.5.3. On Arch Linux](#953-on-arch-linux)
+  - [9.6. On OSX install iTerm2](#96-on-osx-install-iterm2)
 - [10. Installing the software factory](#10-installing-the-software-factory)
-    - [10.1. Ansible](#101-ansible)
-        - [10.1.1. Installing Ansible](#1011-installing-ansible)
-        - [10.1.2. On OSX, install the Xcode Command Line tools](#1012-on-osx-install-the-xcode-command-line-tools)
-        - [10.1.3. On OSX, install HomeBrew](#1013-on-osx-install-homebrew)
-        - [10.1.4. On Arch Linux, ensure Python3 and pip are installed](#1014-on-arch-linux-ensure-python3-and-pip-are-installed)
-        - [10.1.5. Install Ansible](#1015-install-ansible)
-    - [10.2. Run the Ansible playbook](#102-run-the-ansible-playbook)
-        - [10.2.1. Review the Ansible playbook](#1021-review-the-ansible-playbook)
-        - [10.2.2. On OSX, enable nerd fonts in XTerm2](#1022-on-osx-enable-nerd-fonts-in-xterm2)
-        - [10.2.3. On Arch Linux, enable nerd fonts in Gnome Terminal](#1023-on-arch-linux-enable-nerd-fonts-in-gnome-terminal)
-        - [10.2.4. Change your shell to fish](#1024-change-your-shell-to-fish)
-    - [10.3. Spin up the Factory](#103-spin-up-the-factory)
-        - [10.3.1. The Makefile](#1031-the-makefile)
+  - [10.1. Ansible](#101-ansible)
+    - [10.1.1. Installing Ansible](#1011-installing-ansible)
+    - [10.1.2. On OSX, install the Xcode Command Line tools](#1012-on-osx-install-the-xcode-command-line-tools)
+    - [10.1.3. On OSX, install HomeBrew](#1013-on-osx-install-homebrew)
+    - [10.1.4. On Arch Linux, ensure Python3 and pip are installed](#1014-on-arch-linux-ensure-python3-and-pip-are-installed)
+    - [10.1.5. Install Ansible](#1015-install-ansible)
+  - [10.2. Run the Ansible playbook](#102-run-the-ansible-playbook)
+    - [10.2.1. Review the Ansible playbook](#1021-review-the-ansible-playbook)
+    - [10.2.2. On OSX, enable nerd fonts in XTerm2](#1022-on-osx-enable-nerd-fonts-in-xterm2)
+    - [10.2.3. On Arch Linux, enable nerd fonts in Gnome Terminal](#1023-on-arch-linux-enable-nerd-fonts-in-gnome-terminal)
+    - [10.2.4. Change your shell to fish](#1024-change-your-shell-to-fish)
+    - [10.2.5. Finish configuring neovim](#1025-finish-configuring-neovim)
+  - [10.3. Spin up the Factory](#103-spin-up-the-factory)
+    - [10.3.1. The Makefile](#1031-the-makefile)
+    - [10.3.2. Starting a container registry, the K3s cluster and patching CoreDNS](#1032-starting-a-container-registry-the-k3s-cluster-and-patching-coredns)
+    - [10.3.3. Verifying the cluster is up and running](#1033-verifying-the-cluster-is-up-and-running)
+    - [10.3.4. Starting the factory tools](#1034-starting-the-factory-tools)
 
 <!-- /TOC -->
 
@@ -1248,7 +1252,7 @@ If `failed ` is something other than `0` then you have an issue to debug. Debugi
 
 ### 10.2.2. On OSX, enable nerd fonts in XTerm2
 
-To complete the configuration for OS X hosts configure XTerm2 to use `Meslo Nerd Font` and use `Solarized Dark` color them. Optionally, you can install your own [Nerd font](https://www.nerdfonts.com/font-downloads).
+XTerm2 must be further configured to benefit from the Nerd Fonts installed by Ansible. We're going to configure XTerm2 to use `Meslo Nerd Font` and use `Solarized Dark` color theme. Optionally, you can select another [Nerd font](https://www.nerdfonts.com/font-downloads).
 
 1. Open iTerm2's `Preferences`.
 2. In the `Preference` window that opens, select `Profile`.
@@ -1260,7 +1264,7 @@ To complete the configuration for OS X hosts configure XTerm2 to use `Meslo Nerd
 
 ### 10.2.3. On Arch Linux, enable nerd fonts in Gnome Terminal
 
-To complete the configuration for Arch Linux hosts configure the Terminal to use `Meslo Nerd Font` and use `Solarized Dark` color them. Optionally, you can install your own [Nerd font](https://www.nerdfonts.com/font-downloads).
+The Gnome Terminal must be further configure to benefit from the Nerd Fonts installed Ansible. We're going to configure Terminal to `Meslo Nerd Font` and use `Solarized Dark` color them. Optionally, you can select another [Nerd Font](https://www.nerdfonts.com/font-downloads).
 
 1. Open Terminal's `Preferences`.
 2. In the `Preference` window that opens, select the `Unamed` profile.
@@ -1270,7 +1274,7 @@ To complete the configuration for Arch Linux hosts configure the Terminal to use
 
 ### 10.2.4. Change your shell to fish
 
-The class automation will attempt to configure Bash, Zsh and fish, but let's try something perhaps new.
+The class automation will attempt to configure Bash, Zsh and fish, but let's try something perhaps new. Further information on fish can be found in its [documentation](http://fishshell.com/docs/current/index.html), but essentially it syntax highlighting, autosuggestions, and tab completion along with some other improvements that in my opnion pushes it past my prior shell, Zsh.
 
 Let's use fish as our shell
 
@@ -1279,6 +1283,49 @@ sudo chsh -s $(which fish) $(whoami)
 ```
 
 On OSX, simply closing your current terminal and opening a new one should be enough for the change to take, but for Arch you may have to logout or reboot.
+
+### 10.2.5. Finish configuring neovim
+
+The class automation will attempt to configure [neovim](https://github.com/neovim/neovim) (nvim) installing [junegunn/vim-plug](https://github.com/junegunn/vim-plug) a plugin manager, a number of additional plugins to include a language server.
+
+The plugins installed
+
+- [tpope/vim-commentary](https://github.com/tpope/vim-commentary) to comment stuff out when in nvim's "normal" mode you just type `gcc`.
+- [junegunn/vim-easy-align](https://github.com/junegunn/vim-easy-align) to align text when in "visual" mode.
+- [ctrlpvim/ctrlp.vim](https://github.com/ctrlpvim/ctrlp.vim) to provide a finder.
+- [preservim/nerdtree](https://github.com/preservim/nerdtree) to provide a file tree explorer, when in "normal" mode press thje `space` key followed by the `n` key.
+- [Xuyuanp/nerdtree-git-plugin](https://github.com/scrooloose/nerdtree-git-plugin) to extend NERDTree to show git status,
+- [tiagofumo/vim-nerdtree-syntax-highlight](https://github.com/tiagofumo/vim-nerdtree-syntax-highlight) to extend NERDTree with extra syntax and highlighting.
+- [airblade/vim-gitgutter](https://github.com/airblade/vim-gitgutter) to show in sign column which lines have been added, modified, or removed when in a git repository.
+- [tpope/vim-fugitive](https://github.com/tpope/vim-fugitive) to provide a git command functionality in the editor.
+- [vim-airline/vim-airline](https://github.com/vim-airline/vim-airline) to provide a status/tabline.
+- [vim-airline/vim-airline-themes](https://github.com/vim-airline/vim-airline-themes) to provide themes to the vim-airline status/tabline.
+- [preservim/nerdcommenter](https://github.com/preservim/nerdcommenter) to comment stuff out. I haven't settled on whether i I like thise plugin or `tpope/vim-commentary`. To comment out a line in either normal/visual mode type `space` followed by `cc`.
+- [NLKNguyen/papercolor-theme](https://github.com/NLKNguyen/papercolor-theme) to provide both light and dark schemes. I've selected `PaperColor` color scheme later in the [ansible/files/init.vim](./ansible/files/init.vim).
+- [fatih/vim-go](https://github.com/fatih/vim-go) to install the official Go development plugin.
+- [neoclide/coc.nvim](https://github.com/neoclide/coc.nvim) to install and configure a language server. I've configured the language server to install a number of extensions:
+  - [coc-go](https://github.com/josa42/coc-go), a Go language server extension using `gopls`.
+  - [coc-pyright](https://github.com/fannheyward/coc-pyright), a Python3 language server extension.
+  - [coc-solargraph](https://github.com/neoclide/coc-solargraph), a Ruby language server extension using `solargraph`.
+  - [coc-spell-checker](https://github.com/iamcco/coc-spell-checker), a basic spell checker that works with camelCase code.
+  - [coc-json](https://github.com/neoclide/coc-json), a Json language server extension.
+  - [coc-yaml](https://github.com/neoclide/coc-yaml), a fork of [vscode-yaml](https://github.com/redhat-developer/vscode-yaml) that provides a YAML language server extension.
+  - [coc-angular](https://github.com/iamcco/coc-angular), an [Angular](https://github.com/angular/angular) language server extension.
+  - [coc-html](https://github.com/neoclide/coc-html), an HTML language server extension.
+  - [coc-snippets](https://github.com/neoclide/coc-snippets) provides a snippets solution.
+  - [coc-prettier](https://github.com/neoclide/coc-prettier) provides Coc extension to format a numbe of file types using [prettier](https://github.com/prettier/prettier). To run the prettier command line interface enter `npx prettier` in the shell.
+
+I'll be honest I use most of these plugins and extensions, some more than others. A few I have yet to fully learn.
+
+When you first start `nvim` on the command-line you will be greated with a number of warning/error messages. This is because the [ansible/files/init.vim](./ansible/files/init.vim) copied to your `~/.config/nvim/init.vim` is pre-configure to use the plugins yet to be installed.
+
+You must now install them while in visual mode. Just press the `esc` to get past the error messages and then type `:PlugInstall` and `junegunn/vim-plug` will install the plugins described above. To close the status window type `:q!` then restart `nvim` and the langauge server will automatically install its extensions. Pressing `:q` will close Coc's status window.
+
+I would really love to teach you about `vi`, `vim` and `nvim`, but doing so is really outside the scope of this class. I've really been an avid [nano](https://www.nano-editor.org/), but capable of using `vi` in a pinch as it almost always garunteed to be installed in Unix-like operating system. Neovim pushed me over the cliff to use it fill time. This is is why `nano` is aliased to `nvim`, so if you enter `nano` into the the shell it will start instead `nvim`. You can override this by typing nano's full path, `/usr/local/bin/nano` on OSX and `/usr/bin` on Arch. You can strip the alias out of your shell initialization file or for a session map it back the the `alias` command.
+
+I'd encourage you to read vim's [docs](https://www.vim.org/docs.php). Read through the [FAQ](https://vimhelp.org/vim_faq.txt.html). Give [VIM Adventures](https://vim-adventures.com/) some play. May print out [Allison McKnight's cheat sheet](https://www.cs.cmu.edu/~15131/f17/topics/vim/vim-cheatsheet.pdf) or search the Internet for another.
+
+We will be using `nvim` in the class, but I won't know if you're using something else.
 
 ## 10.3. Spin up the Factory
 
@@ -1395,3 +1442,312 @@ In the shell, if you were to enter `make all` make would execute the `all` targe
   - then the `install-taiga` target to descend into the [taiga](taiga) sub-folder and execute the [install.sh](taiga/install.sh) script
   - then the `install-sonarqube` target to descend into the [sonarqube](sonarqube) sub-folder and execute the [install.sh](sonarqube/install.sh) script
   - and finally, the `install-heimdall` target to descend into the [heimdall](heimdall) sub-folder and execute the [install.sh](heimdall/install.sh) script
+
+### 10.3.2. Starting a container registry, the K3s cluster and patching CoreDNS
+
+Let's execute the makefile `start` rule
+
+```sh
+make start
+```
+
+Make first start a docker registry to hold your container images by executing the `start-registry` rule, who will inturn execute the [./start_registry.sh](start_registry.sh) bash script, whose output will resemble
+
+```
+./start_registry.sh
+Setting unsecured variables into current context...
+Creating registry k3d-registry.localhost:5000
+INFO[0000] Creating node 'k3d-registry.localhost'
+INFO[0000] Successfully created registry 'k3d-registry.localhost'
+INFO[0000] Starting Node 'k3d-registry.localhost'
+INFO[0001] Successfully created registry 'k3d-registry.localhost'
+# You can now use the registry like this (example):
+# 1. create a new cluster that uses this registry
+k3d cluster create --registry-use k3d-registry.localhost:5000
+
+# 2. tag an existing local image to be pushed to the registry
+docker tag nginx:latest k3d-registry.localhost:5000/mynginx:v0.1
+
+# 3. push that image to the registry
+docker push k3d-registry.localhost:5000/mynginx:v0.1
+
+# 4. run a pod that uses this image
+kubectl run mynginx --image k3d-registry.localhost:5000/mynginx:v0.1
+
+Waiting til k3d-registry.localhost:5000 is running...
+Now running.
+```
+
+The bash scripts make use of color for informational purpose.
+
+- Yellow is used to notify
+- Red is used to warn
+- Blue is use to clue you in that the script expects user input
+
+If the [registry](https://hub.docker.com/_/registry) container is already running or needs to be restart this will be handled as well.
+
+Make then moves to execute the `start-cluster` rule, where the [./start_cluster.sh](start_cluster.sh) script will pause
+
+```
+Attempting to load secrets from /Users/nemonik/Development/workspace/hands-on-DevOps-gen2/vault...
+Enter vault password to decrypt vault to access secured variables in /Users/nemonik/Development/workspace/hands-on-DevOps-gen2/vault:
+```
+
+seeking input from the user. What the script is asking for is password to decrypt the [vault](./vault) at the root of the project. This file contains the following variable whose values are secret. I will share them with MITRE students, but not others. When unencrypted the file looks like sonarqube
+
+```bash
+# Copyright (C) 2021 Michael Joseph Walsh - All Rights Reserved
+# You may use, distribute and modify this code under the
+# terms of the the license.
+#
+# You should have received a copy of the license with
+# this file. If not, please email <nemonik@nemonik.com>
+read -d '' traefik_tls_crt << EOF
+   LS0tLS1CRUd...
+   ... a whole bunch more lines
+   Cg==
+EOF
+read -d '' traefik_tls_key << EOF
+   LS0tLS1CRUd...
+   ... a whole bunch more lines
+EOF
+```
+
+The `traefik_tls_crt` variable holds the Lets Encrypt certifacte chain for wildcard dns entry (\*.nemonik.com) and `traefik_tls_key` holds the private key.
+
+Why are these needed? Well, the cluster's HTTP reverse Proxy service,[Traefik](https://github.com/traefik/traefik) will respond to requests recieved. Each factory tool will register a fully qualified domain name with Traefik, for example GitLab will register `gitlab.nemonik.com` and since most modern browsers force the use of HTTPS a wildcard cert must be configure in Traefik so that proper certificate are presented to the browser in response otherwise the browser will choke and warn that it doesn't trust Traefiks default self-signed certificate.
+
+To use this class I will have provided you the password to decrypt the [vault](./vault) file or you will need to own a domain for which you can generate a wildcard SSL certificate for using Let's Encrypt/Certbot and then place the full certidicate chain and key into the vault file as I did.
+
+TODO: Provide documentation for generating a wildcard SSL certificate using Let’s Encrypt/Certbot.
+
+You can move forward by entering the [vault](./vault) file password, but you'll be asked repeatedly for it, so on subsequent Make runs I would suggest setting an environment variable to hold the value
+
+```sh
+ export VAULT_PASSWORD=super-secret-password
+```
+
+If you put a `space` before `export` the environment variable `VAULT_PASSWORD`and its value wont be entered into your shell's history thereby protecting its value from being plucked.
+
+Back to `make start-cluster` if you entered the password or had set it in an environmental variable the output will resemble
+
+```
+Attempting to load secrets from /Users/nemonik/Development/workspace/hands-on-DevOps-gen2/vault...
+Using VAULT_PASSWORD env variable to access secured variables contained in the /Users/nemonik/Development/workspace/hands-on-DevOps-gen2/vault...
+Setting unsecured variables into current context...
+Using existing container registry: http://k3d-registry.localhost:5000
+Cluster doesn't exist, so created it...
+INFO[0000] Prep: Network
+INFO[0000] Re-using existing network 'k3d-hands-on-devops-class' (9b7412270c50e411603066b8f5c5ae7326879e802ade1879613387475576678c)
+INFO[0000] Created volume 'k3d-hands-on-devops-class-images'
+INFO[0000] Container 'k3d-registry.localhost' is already connected to 'k3d-hands-on-devops-class'
+INFO[0001] Creating node 'k3d-hands-on-devops-class-server-0'
+INFO[0001] Creating node 'k3d-hands-on-devops-class-agent-0'
+INFO[0001] Creating LoadBalancer 'k3d-hands-on-devops-class-serverlb'
+INFO[0001] Starting cluster 'hands-on-devops-class'
+INFO[0001] Starting servers...
+INFO[0001] Starting Node 'k3d-hands-on-devops-class-server-0'
+INFO[0009] Starting agents...
+INFO[0009] Starting Node 'k3d-hands-on-devops-class-agent-0'
+INFO[0019] Starting helpers...
+INFO[0019] Starting Node 'k3d-hands-on-devops-class-serverlb'
+INFO[0022] (Optional) Trying to get IP of the docker host and inject it into the cluster as 'host.k3d.internal' for easy access
+INFO[0023] Successfully added host record to /etc/hosts in 3/3 nodes and to the CoreDNS ConfigMap
+INFO[0024] Cluster 'hands-on-devops-class' created successfully!
+INFO[0024] --kubeconfig-update-default=false --> sets --kubeconfig-switch-context=false
+INFO[0024] You can now use it like this:
+kubectl config use-context k3d-hands-on-devops-class
+kubectl cluster-info
+
+```
+
+In the case above run, I had set an `VAULT_PASSWORD` environment variable to hold the passoword.
+
+Make will then move onto executing `patch-coredns` rule, descend into the [coredns](coredns) sub-folder and execute the [patch.sh](coredns/patch.sh) script.
+
+The output will resemble
+
+```
+cd coredns && ./patch.sh
+Setting unsecured variables into current context...
+Pulling images and placing into k3d-registry...
+Pulling, tagging and pushing traefik:2.2.8 into k3d-registry.localhost: container image repository...
+2.2.8: Pulling from library/traefik
+Digest: sha256:f5af5a5ce17fc3e353b507e8acce65d7f28126408a8c92dc3cac246d023dc9e8
+Status: Image is up to date for traefik:2.2.8
+docker.io/library/traefik:2.2.8
+The push refers to repository [k3d-registry.localhost:5000/traefik]
+90a7e4076ff6: Layer already exists
+a35039a172cc: Layer already exists
+4dca0fb1912d: Layer already exists
+3e207b409db3: Layer already exists
+2.2.8: digest: sha256:2468d73cafe08a8973ac3d4e7d0163c1e86c36c8b1bc1f212fdf88999a799fb5 size: 1157
+Get host ip...
+pod/get-host-ip created
+pod/get-host-ip condition met
+Block waiting for CoreDNS to start responding...
+PING host.k3d.internal (192.168.65.2): 56 data bytes
+64 bytes from 192.168.65.2: seq=0 ttl=36 time=0.281 ms
+
+--- host.k3d.internal ping statistics ---
+1 packets transmitted, 1 packets received, 0% packet loss
+round-trip min/avg/max = 0.281/0.281/0.281 ms
+found
+pod "get-host-ip" deleted
+Patching DNS in the cluster to resolve application FDQNs using 192.168.65.2 ip...
+kubectl patch cm coredns -n kube-system -p='{"data": {"NodeHosts":"172.18.0.4 k3d-hands-on-devops-class-agent-0\n172.18.0.3 k3d-hands-on-devops-class-server-0\n192.168.65.2 host.k3d.internal\n192.168.65.2 gitlab.nemonik.com\n192.168.65.2 drone.nemonik.com\n192.168.65.2 taiga.nemonik.com\n192.168.65.2 sonar.nemonik.com\n192.168.65.2 plantuml.nemonik.com\n192.168.65.2 heimdall.nemonik.com "}}'
+configmap/coredns patched
+Forcing retart of coredns so that the tests can run immediately...
+deployment.apps/coredns restarted
+Waiting for deployment "coredns" rollout to finish: 0 of 1 updated replicas are available...
+deployment "coredns" successfully rolled out
+error: there is no need to specify a resource type as a separate argument when passing arguments in resource/name form (e.g. 'kubectl get resource/<resource_name>' instead of 'kubectl get resource resource/<resource_name>'
+Setting unsecured variables into current context...
+Using k3d-registry.localhost:5000/traefik:2.2.8 container to query coreDNS for entries...
+Pulling images and placing into k3d-registry...
+Pulling, tagging and pushing traefik:2.2.8 into k3d-registry.localhost: container image repository...
+2.2.8: Pulling from library/traefik
+Digest: sha256:f5af5a5ce17fc3e353b507e8acce65d7f28126408a8c92dc3cac246d023dc9e8
+Status: Image is up to date for traefik:2.2.8
+docker.io/library/traefik:2.2.8
+The push refers to repository [k3d-registry.localhost:5000/traefik]
+90a7e4076ff6: Layer already exists
+a35039a172cc: Layer already exists
+4dca0fb1912d: Layer already exists
+3e207b409db3: Layer already exists
+2.2.8: digest: sha256:2468d73cafe08a8973ac3d4e7d0163c1e86c36c8b1bc1f212fdf88999a799fb5 size: 1157
+pod/test-coredns created
+pod/test-coredns condition met
+Block waiting for CoreDNS to start responding...
+This may go forever.
+PING host.k3d.internal (192.168.65.2): 56 data bytes
+64 bytes from 192.168.65.2: seq=0 ttl=36 time=0.437 ms
+
+--- host.k3d.internal ping statistics ---
+1 packets transmitted, 1 packets received, 0% packet loss
+round-trip min/avg/max = 0.437/0.437/0.437 ms
+found
+Query the DNS server for the FDQNs added...
+Server:		10.43.0.10
+Address:	10.43.0.10:53
+
+
+Name:	gitlab.nemonik.com
+Address: 192.168.65.2
+
+Server:		10.43.0.10
+Address:	10.43.0.10:53
+
+
+Name:	drone.nemonik.com
+Address: 192.168.65.2
+
+Server:		10.43.0.10
+Address:	10.43.0.10:53
+
+Name:	taiga.nemonik.com
+Address: 192.168.65.2
+
+
+Server:		10.43.0.10
+Address:	10.43.0.10:53
+
+
+Name:	sonar.nemonik.com
+Address: 192.168.65.2
+
+Server:		10.43.0.10
+Address:	10.43.0.10:53
+
+
+Name:	plantuml.nemonik.com
+Address: 192.168.65.2
+
+Server:		10.43.0.10
+Address:	10.43.0.10:53
+
+
+Name:	heimdall.nemonik.com
+Address: 192.168.65.2
+
+pod "test-coredns" deleted
+
+=======================================================
+Ensure the following lines are in youy /etc/hosts file:
+=======================================================
+
+192.168.65.2 gitlab.nemonik.com
+192.168.65.2 drone.nemonik.com
+192.168.65.2 taiga.nemonik.com
+192.168.65.2 sonar.nemonik.com
+192.168.65.2 plantuml.nemonik.com
+192.168.65.2 heimdall.nemonik.com
+```
+
+The purpose of the rule is to add DNS entries for the factory tools into Kubernetes, so the tools can resolve each other. Without this for example when you you attempt to authenticate into Drone CI, and it OpenAuths off of GitLab, GitLab won't be able to resolve Drone in DNS.
+
+The script ends reminding you to add the following lines to your `/etc/hosts` file
+
+```
+192.168.65.2 gitlab.nemonik.com
+192.168.65.2 drone.nemonik.com
+192.168.65.2 taiga.nemonik.com
+192.168.65.2 sonar.nemonik.com
+192.168.65.2 plantuml.nemonik.com
+192.168.65.2 heimdall.nemonik.com
+```
+
+You do this via running nvim as root (i.e., `sudo nvim /etc/hosts`) to edit the hosts file and add the lines above.
+
+The IP address (`192.168.65.2`) will likely be different for you. If you are using your own domain then `nemonik.com` will be replaced with whatever you've provided the `domain` variable in the [.env](./.env) file.
+
+### 10.3.3. Verifying the cluster is up and running
+
+The k3s cluster should now be up and running. Let's verify this by entering into your shell
+
+```sh
+kubectl get nodes -o wide
+```
+
+Output should resemble
+
+```
+NAME                                 STATUS   ROLES                  AGE   VERSION        INTERNAL-IP   EXTERNAL-IP   OS-IMAGE   KERNEL-VERSION     CONTAINER-RUNTIME
+k3d-hands-on-devops-class-server-0   Ready    control-plane,master   11m   v1.21.1+k3s1   172.18.0.3    <none>        Unknown    5.10.25-linuxkit   containerd://1.4.4-k3s2
+k3d-hands-on-devops-class-agent-0    Ready    <none>                 11m   v1.21.1+k3s1   172.18.0.4    <none>        Unknown    5.10.25-linuxkit   containerd://1.4.4-k3s2
+```
+
+The `STATUS` of each node should be `Ready`. Our cluster by default has two nodes: one server node who provides the control-plane and is a master node, whereas the other is an agent node.
+
+Above is the wide output providing more information. You could of just entered `kubectl get nodes` and only get back in return the first five columns worth of information.
+
+Our cluster is also already running pods. Enter the following into your shell
+
+```sh
+kubectl get pods -A -o wide
+```
+
+Output will resemble
+
+```
+NAMESPACE     NAME                                      READY   STATUS    RESTARTS   AGE   IP          NODE                                 NOMINATED NODE   READINESS GATES
+kube-system   local-path-provisioner-5ff76fc89d-nqs99   1/1     Running   0          17m   10.42.1.2   k3d-hands-on-devops-class-agent-0    <none>           <none>
+kube-system   metrics-server-86cbb8457f-f5zrj           1/1     Running   0          17m   10.42.0.3   k3d-hands-on-devops-class-server-0   <none>           <none>
+kube-system   coredns-85546dbd9-t244v                   1/1     Running   0          16m   10.42.1.3   k3d-hands-on-devops-class-agent-0    <none>           <none>
+```
+
+You'll see the coredns service whose data we patched.
+
+The `-A` option tells `kubectl` to list the pods across all namespaces. The `-o wide` option again returns additional information. The `-o` option can also return output in `yaml`, `json`, etc. If you leave `-o wide` off, you'll just get the first 6 columns of output.
+
+### 10.3.4. Starting the factory tools
+
+Now that we have a cluster up and running we can install all the long running factory tools (Taiga, GitLab, Drone CI, etc) upon it.
+
+```sh
+make install
+```
+
+This is a long running process as each install rule will be execute triggering a tool's install script. Each install script retrieves the container images related to the factory tool and then executes one or more Helm charts and applies zero or more Kubernetes resource files to get the desire state of tool on the cluster followed by possibly additional step to further configure the tool on the cluster.
+
+TODO: more to follow...
