@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Copyright (C) 2021 Michael Joseph Walsh - All Rights Reserved
 # You may use, distribute and modify this code under the
