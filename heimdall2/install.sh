@@ -8,6 +8,9 @@
 # this file. If not, please email <mjwalsh@nemonik.com>
 
 set -a
+
+skip_encrypted_variables=true
+
 . ../.env
 
 heimdall_protocol="${heimdall_protocol,,}"

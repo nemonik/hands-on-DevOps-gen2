@@ -8,9 +8,9 @@ match_max 100000
 expect -exact "Username: "
 send -- "root\r"
 expect -exact "Email address: "
-send -- "root@nemonik.com\r"
+send -- "${taiga_user}@${domain}\r"
 expect -exact "Password: "
-send -- "password\r"
+send -- "${taiga_password}\r"
 expect -exact "Password (again): "
-send -- "password\r"
+send -- "${taiga_password}\r"
 expect eof

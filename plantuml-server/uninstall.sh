@@ -10,6 +10,9 @@
 # Uninstall PlantUML-Server
 
 set -a
+
+skip_encrypted_variables=true
+
 . ../.env
 
 helm uninstall plantuml-server --namespace ${plantuml_server_namespace}

@@ -8,6 +8,9 @@
 # this file. If not, please email <mjwalsh@nemonik.com>
 
 set -a
+
+skip_encrypted_variables=true
+
 . ../.env
 
 taiga_protocol="${taiga_protocol,,}" 
@@ -21,11 +24,13 @@ else
     taiga_tls="false"
 fi  
 
-taiga_secret_key=`tr -dc A-Za-z0-9 </dev/urandom | head -c 65`
+taiga_secret_key=`pwgen -Bsv1 64`
 
 images_into_registry taiga_images
 
 template_file ./templates/taiga-chart-values.yaml.tpl taiga-chart-values.yaml
+
+template_file ./templates/createsuperuser.sh.tpl createsuperuser.sh
 
 notify "Spinning up Taiga..."
 
@@ -53,26 +58,6 @@ while : ; do
 
   if curl -sD - -o /dev/null "${taiga_protocol}://${taiga_fdqn}"; then
 
-    ## Write expect script to create super user
-    ##
-    cat > createsuperuser.sh << EOF 
-#!/usr/bin/expect -f
-      
-set force_conservative 0  
-      
-set timeout -1
-spawn python manage.py createsuperuser
-match_max 100000
-expect -exact "Username: "
-send -- "${taiga_user}\r"
-expect -exact "Email address: "
-send -- "${taiga_user}@${taiga_fdqn}\r"
-expect -exact "Password: "
-send -- "${taiga_password}\r"
-expect -exact "Password (again): "
-send -- "${taiga_password}\r"
-expect eof
-EOF
     kubectl run create-super-user --image=${taiga_back_image_name}:${taiga_back_image_tag} -n ${taiga_namespace} --env "RABBITMQ_USER=taiga" --env "RABBITMQ_PASS=taiga" \
       --env "CELERY_ENABLED=false" --env "TAIGA_SECRET_KEY=${taiga_secret_key}" --env "POSTGRES_DB=taiga" --env "POSTGRES_USER=taiga" \
       --env "POSTGRES_PASSWORD=taiga" --env "POSTGRES_HOST=taiga-db" --env "TAIGA_SITES_DOMAIN=${taiga_fdqn}" --env "TAIGA_SITES_SCHEME=${taiga_protocol}" \
@@ -84,18 +69,15 @@ EOF
 
     notify "Waiting for taiga-db to be listening and the Django migrations of occured..."
 
-    kubectl exec -it create-super-user -n ${taiga_namespace} -n ${taiga_namespace} -- /bin/bash -c " \
+    kubectl exec -it create-super-user -n ${taiga_namespace} -n ${taiga_namespace} -- /bin/bash -c ' \
        apt update && \
        apt install netcat expect -y && \
        while ! nc -zv taiga-db 5432; do sleep 15; done && \
-       while true; do \
-         if [ "$(python manage.py showmigrations 2>&1 | grep \"[ ]\" | wc -l)" == "0" ]; then \
-           break; \ 
-         else \
-           sleep 10; \
-         fi; \
-       done && \
-       ./createsuperuser.sh" 
+       chmod +x ./createsuperuser.sh && \
+       echo -n "Attempting to create root user..." &&  \
+       until ./createsuperuser.sh &>/dev/null; do sleep 15; echo -n "."; done && \
+       echo "" && \
+       echo "Done."' 
     kubectl delete pod -n ${taiga_namespace} create-super-user --wait=false
 
     notify "Complete post step"

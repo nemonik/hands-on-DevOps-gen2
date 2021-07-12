@@ -8,7 +8,9 @@
 # this file. If not, please email <mjwalsh@nemonik.com>
 
 set -a
+
 skip_encrypted_variables=true
+
 . .env
 
 echo Deleting "${k3d_cluster_name}"...

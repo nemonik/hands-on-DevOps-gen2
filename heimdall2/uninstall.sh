@@ -10,6 +10,9 @@
 # Uninstall PlantUML-Server
 
 set -a
+
+skip_encrypted_variables=true
+
 . ../.env
 
 helm uninstall heimdall2 --namespace ${heimdall_namespace}
