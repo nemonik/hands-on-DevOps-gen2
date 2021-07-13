@@ -1,0 +1,34 @@
+---
+- name: Ensure Ensure /usr/local/bin is prepended to PATH
+  hosts: factory
+
+  tasks:
+    - name: Set fact for $HOME
+      ansible.builtin.set_fact:
+        HOME: "{{ lookup('env', 'HOME') }}"
+
+    - name: Get HOMEBREW_PREFIX
+      block:
+       - name: Execute brew --prefix
+         ansible.builtin.shell: brew --prefix
+         register: brew_prefix
+
+       - name: Create brew_fact with stdout of of prior command
+         ansible.builtin.set_fact:
+            HOMEBREW_PREFIX: "{{ brew_prefix.stdout }}"
+      when: ( ansible_distribution == 'MacOSX' )
+
+    - name: Template {{ HOME }}/.zshrc
+      ansible.builtin.template:
+        src: templates/zshrc.tpl
+        dest: '{{ HOME }}/.zshrc'
+
+    - name: Template {{ HOME }}/.bash_profile
+      ansible.builtin.template:
+        src: templates/bash_profile.tpl
+        dest: '{{ HOME }}/.bash_profile'
+
+    - name: Template {{ HOME }}/.config/fish/config.fish
+      ansible.builtin.template:
+        src: templates/config.fish.tpl
+        dest: '{{ HOME }}//.config/fish/config.fish'

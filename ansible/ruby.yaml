@@ -71,19 +71,3 @@
 
     - name: Set {{ ruby_version }} as the default for new shells. This will override the 'system' Ruby
       ansible.builtin.shell: bash -c 'source ~/.bash_profile && rvm use {{ ruby_version }} --default'
-
-    - name: Ensure fish is configured to use rvm
-      block:
-        - ansible.builtin.lineinfile:
-            dest: "{{ HOME }}/.config/fish/config.fish"
-            regexp: "{{ item.regexp }}"
-            state: absent
-          with_items:
-            - { regexp: "^rvm default$" }
-
-        - ansible.builtin.lineinfile:
-            dest: "{{ HOME }}/.config/fish/config.fish"
-            line: "{{ item.line }}"
-            insertafter: EOF
-          with_items:
-            - { line: "rvm default" }

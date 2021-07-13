@@ -403,3 +403,10 @@ let g:go_def_mapping_enabled = 0
 " vim-airline/vim-airline settings
 " -----------------------------------------------------------------------------
 let g:airline_powerline_fonts = 1
+
+" -----------------------------------------------------------------------------
+" Configure `:Lint` in Vim to run golint on the current file and populate the 
+" quickfix list 
+" -----------------------------------------------------------------------------
+set rtp+=$GOPATH/src/github.com/golang/lint/misc/vim
+

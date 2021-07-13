@@ -37,3 +37,6 @@
 
 - name: Ensure Go is installed and configured
   ansible.builtin.import_playbook: go.yaml
+
+- name: Template in shell configs 
+  ansible.builtin.import_playbook: template-shell-configs.yaml

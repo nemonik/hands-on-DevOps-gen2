@@ -17,4 +17,6 @@ drone/drone-ingress.yaml
 drone/drone-runner-kube-chart-values.yaml
 gitlab/gitlab-chart-values.yaml
 gitlab/gitlab-IngressTcpRoute.yaml
+
 taiga/taiga-chart-values.yaml
+taiga/createsuperuser.sh
