@@ -64,8 +64,19 @@ while : ; do
 
   if curl --silent ${gitlab_protocol}://${gitlab_fdqn} | grep -q "sign_in"; then
     notify "Performing post ready configuration setup..."
-    kubectl exec -it pod/${gitlab_pod_name} -n ${gitlab_namespace} -- /bin/bash -c "bundle exec rails runner -e production \"user = User.find_by_username('root'); token = user.personal_access_tokens.create(scopes: [:api], name: 'Automation_token'); token.set_token('$token'); token.save\""   
-    curl --request PUT --header "PRIVATE-TOKEN: $token" "${gitlab_protocol}://${gitlab_fdqn}/api/v4/application/settings?signup_enabled=false&allow_local_requests_from_hooks_and_services=true&auto_devops_enabled=false&send_user_confirmation_email=false&allow_local_requests_from_hooks_and_services=true" | jq '.'
+    kubectl exec -it pod/${gitlab_pod_name} -n ${gitlab_namespace} -- /bin/bash -c "bundle exec rails runner -e production \"user = User.find_by_username('root'); token = user.personal_access_tokens.create(scopes: [:api], name: 'Automation_token'); token.set_token('$token'); token.save\""
+
+    # it takes time for the token to stick, so try and try again...
+    declare -i tries=0
+    until curl --silent --request PUT --header "PRIVATE-TOKEN: $token" "${gitlab_protocol}://${gitlab_fdqn}/api/v4/application/settings?signup_enabled=false&allow_local_requests_from_hooks_and_services=true&auto_devops_enabled=false&send_user_confirmation_email=false&allow_local_requests_from_hooks_and_services=true" | jq '.'; do
+      sleep 5
+      tries=tries+1
+      if [ $tries -eq 10 ]; then
+        warn "Giving up."
+        exit 1
+      fi
+    done
+
     kubectl exec -it pod/${gitlab_pod_name} -n ${gitlab_namespace} -- /bin/bash -c "bundle exec rails runner -e production \"PersonalAccessToken.find_by_token('$token').revoke!\""
     notify "Completed post step."
     break

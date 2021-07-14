@@ -9,6 +9,14 @@ rbac:
   buildNamespaces:
     - ${drone_namespace}
 
+resources:
+  limits:
+    cpu: 100m
+    memory: 128Mi
+  requests:
+    cpu: 100m
+    memory: 128Mi
+
 env:
   ## REQUIRED: Set the secret secret token that the Kubernetes runner and its runners will use
   ## to authenticate. This is commented out in order to leave you the ability to set the

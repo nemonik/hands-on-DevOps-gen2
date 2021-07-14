@@ -28,7 +28,7 @@ notify "Integrate SonarQube into GitLab..."
 
 notify "Creating a GitLab token for the following automation..."
 
-token=`tr -dc A-Za-z0-9 </dev/urandom | head -c 20`
+token=`pwgen -Bsv1 20`
 
 gitlab_pod_name=`kubectl get pod -n gitlab -l "app.kubernetes.io/component=gitlab" -o json | jq -r '.items | .[] | .metadata.name'`
 
@@ -46,7 +46,7 @@ fi
 notify "Adding the SonarQube application integration to GitLab..."
 application_values=`curl --silent --request POST --header "PRIVATE-TOKEN: ${token}" --data "name=SonarQube&redirect_uri=${sonarqube_protocol}://${sonarqube_fdqn}:${sonarqube_port}/oauth2/callback/gitlab&scopes=api+read_user" "${gitlab_protocol}://${gitlab_fdqn}:${gitlab_port}/api/v4/applications"`
 
-sonar_auth_gitlab_applicationid=`echo "${application_values}" | jq '.application_id'` 
+sonar_auth_gitlab_applicationid=`echo "${application_values}" | jq '.application_id'`
 sonar_auth_gitlab_secret=`echo "${application_values}" | jq ".secret"`
 
 notify "Revoking the token used to perform the prior automation..."

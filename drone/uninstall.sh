@@ -10,7 +10,7 @@
 source -a
 . ../.env
 
-echo Uninstalling Drone CI... 
+echo Uninstalling Drone CI...
 
 helm uninstall drone --namespace ${drone_namespace}
 

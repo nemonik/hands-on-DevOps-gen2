@@ -13,16 +13,16 @@ skip_encrypted_variables=true
 
 . .env
 
-if ! file vault | grep -q "openssl"; then 
+if ! file vault | grep -q "openssl"; then
   echo "Vault is not encrypted."
   exit 1
 fi
 
-if [ -z "${VAULT_PASSWORD}" ]; then 
+if [ -z "${VAULT_PASSWORD}" ]; then
   echo "Enter vault password to decrypt:"
   read VAULT_PASSWORD
-else 
-  echo "Using VAULT_PASSWORD env variable to decrypt..."; 
+else
+  echo "Using VAULT_PASSWORD env variable to decrypt...";
 fi
 
 openssl enc -base64 -d -aes-256-cbc -md sha512 -pbkdf2 -iter 100000 -salt -pass pass:${VAULT_PASSWORD} -in ./vault -out ./vault_new

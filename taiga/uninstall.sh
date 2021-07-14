@@ -15,4 +15,4 @@ skip_encrypted_variables=true
 
 notify "Uninstalling Taiga..."
 
-kubectl delete namespace taiga 
+kubectl delete namespace taiga

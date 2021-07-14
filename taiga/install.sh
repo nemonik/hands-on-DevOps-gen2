@@ -13,7 +13,7 @@ skip_encrypted_variables=true
 
 . ../.env
 
-taiga_protocol="${taiga_protocol,,}" 
+taiga_protocol="${taiga_protocol,,}"
 if [ "${taiga_protocol}" == "https" ]; then
     taiga_websocket_protocol="wss"
     taiga_entrypoint="websecure"
@@ -22,7 +22,7 @@ else
     taiga_websocket_protocol="ws"
     taiga_entrypoint="web"
     taiga_tls="false"
-fi  
+fi
 
 taiga_secret_key=`pwgen -Bsv1 64`
 
@@ -38,7 +38,7 @@ helm repo add nemonik https://nemonik.github.io/helm-charts/
 
 helm repo update
 
-helm install taiga nemonik/taiga --namespace ${taiga_namespace} --create-namespace -f taiga-chart-values.yaml 
+helm install taiga nemonik/taiga --namespace ${taiga_namespace} --create-namespace -f taiga-chart-values.yaml
 
 taiga_gateway_pod_name=`kubectl get pods -n taiga -l app.kubernetes.io/component=taiga-gateway -o json | jq -r '.items | .[] | .metadata.name'`
 
@@ -77,7 +77,7 @@ while : ; do
        echo -n "Attempting to create root user..." &&  \
        until ./createsuperuser.sh &>/dev/null; do sleep 15; echo -n "."; done && \
        echo "" && \
-       echo "Done."' 
+       echo "Done."'
     kubectl delete pod -n ${taiga_namespace} create-super-user --wait=false
 
     notify "Complete post step"

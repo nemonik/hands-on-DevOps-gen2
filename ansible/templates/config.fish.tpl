@@ -26,7 +26,8 @@ set -Ux GOPATH $HOME/go
 
 fish_add_path $GOBIN
 
-fish_add_path /usr/local/bin
+set PATH /usr/local/bin $PATH
+
 {% if ansible_distribution == 'MacOSX' %}
 fish_add_path $HOMEBREW_PREFIX/opt/openssl@1.1/bin
 {% endif %}

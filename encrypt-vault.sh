@@ -13,7 +13,7 @@ skip_encrypted_variables=true
 
 . .env
 
-if file vault | grep -q "openssl"; then 
+if file vault | grep -q "openssl"; then
   echo "Vault is already encrypted."
   exit 1
 fi

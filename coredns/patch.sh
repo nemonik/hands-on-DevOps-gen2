@@ -27,7 +27,7 @@ kubectl exec pod/get-host-ip -- sh -c "loop=true && while \$loop; do if ping -c 
 
 output=`kubectl exec pod/get-host-ip -- sh -c "nslookup host.k3d.internal"`
 
-read -ra parts <<< "${output##*$'\n'}" 
+read -ra parts <<< "${output##*$'\n'}"
 
 host_ip="${parts[1]}"
 
@@ -95,7 +95,7 @@ cd ..
 
 echo
 warn "======================================================="
-warn "Ensure the following lines are in youy /etc/hosts file:"
+warn "Ensure the following lines are in your /etc/hosts file:"
 warn "======================================================="
 echo
 
