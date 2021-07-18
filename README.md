@@ -35,7 +35,7 @@ After this course, you will
    3. code configuration in git and [GitLab](https://gitlab.com/rluna-gitlab/gitlab-ce);
    4. authoring code in Go;
    5. using style checkers and linters;
-   6. authoring a Makefile;
+   6. authoring a [Makefile](<https://en.wikipedia.org/wiki/Make_(software)#Makefile>;
    7. various commands in [Docker](https://docker.io) (e.g., building a container image, pushing a container into a registry, creating and running a container);
    8. authoring a pipeline for [Drone CI](https://github.com/drone/drone);
    9. using Sonar Scanner CLI to perform static analysis;
@@ -173,7 +173,7 @@ What you should bring:
         - [10.4.6. Heimdall 2](#1046-heimdall-2)
             - [10.4.6.1. Documentation, source, container image](#10461-documentation-source-container-image)
             - [10.4.6.2. URL, username and password](#10462-url-username-and-password)
-- [11. Golang _helloworld_ project](#11-golang-_helloworld_-project)
+- [11. Golang `helloworld` project](#11-golang-helloworld-project)
     - [11.1. Create the project's backlog](#111-create-the-projects-backlog)
     - [11.2. Create the project in GitLab](#112-create-the-project-in-gitlab)
     - [11.3. Setup the project](#113-setup-the-project)
@@ -183,12 +183,12 @@ What you should bring:
     - [11.7. Build the application](#117-build-the-application)
     - [11.8. Run your application](#118-run-your-application)
     - [11.9. Author the unit tests](#119-author-the-unit-tests)
-    - [11.10. Automate the build (i.e., write the Makefile)](#1110-automate-the-build-ie-write-the-makefile)
+    - [11.10. Automate the build (i.e., write the `Makefile`)](#1110-automate-the-build-ie-write-the-makefile)
     - [11.11. Author Drone-based Continuous Integration](#1111-author-drone-based-continuous-integration)
         - [11.11.1. Configure Drone to execute your pipeline](#11111-configure-drone-to-execute-your-pipeline)
         - [11.11.2. Trigger the build](#11112-trigger-the-build)
-    - [11.12. The completed source for _helloworld_](#1112-the-completed-source-for-_helloworld_)
-- [12. Golang _helloworld-web_ project](#12-golang-_helloworld-web_-project)
+    - [11.12. The completed source for `helloworld`](#1112-the-completed-source-for-helloworld)
+- [12. Golang `helloworld-web` project](#12-golang-helloworld-web-project)
     - [12.1. Create the project's backlog](#121-create-the-projects-backlog)
     - [12.2. Create the project in GitLab](#122-create-the-project-in-gitlab)
     - [12.3. Setup the project](#123-setup-the-project)
@@ -230,7 +230,7 @@ What you should bring:
             - [12.21.9. Build, tag, and push the `selenium` step container](#12219-build-tag-and-push-the-selenium-step-container)
             - [12.21.10. Add the `selenium` step to the pipeline](#122110-add-the-selenium-step-to-the-pipeline)
     - [12.22. Add the DAST (`owasp-zap`) step to the pipeline](#1222-add-the-dast-owasp-zap-step-to-the-pipeline)
-    - [12.23. All the source for _helloworld-web_](#1223-all-the-source-for-_helloworld-web_)
+    - [12.23. All the source for `helloworld-web`](#1223-all-the-source-for-helloworld-web)
 - [13. Additional best practices to consider around securing containerized applications](#13-additional-best-practices-to-consider-around-securing-containerized-applications)
 
 <!-- /TOC -->
@@ -1306,9 +1306,9 @@ The Gnome Terminal must be further configure to benefit from the Nerd Fonts inst
 
 ### 10.2.4. Change your shell to fish
 
-The class automation will attempt to configure [Bash](https://www.gnu.org/software/bash/), [Zsh](https://www.zsh.org/) and [fish](https://fishshell.com/, but let's try something perhaps new. Further information on [fish](https://fishshell.com/ can be found in its [documentation](http://fishshell.com/docs/current/index.html), but essentially it syntax highlighting, autosuggestions, and tab completion along with some other improvements that in my opinion pushes it past my prior shell, [Zsh](https://www.zsh.org/).
+The class automation will attempt to configure [Bash](https://www.gnu.org/software/bash/), [Zsh](https://www.zsh.org/) and [fish](https://fishshell.com/, but let's try something perhaps new. Further information on [fish](https://fishshell.com/) can be found in its [documentation](http://fishshell.com/docs/current/index.html), but essentially it syntax highlighting, autosuggestions, and tab completion along with some other improvements that in my opinion pushes it past my prior shell, [Zsh](https://www.zsh.org/).
 
-Let's use [fish](https://fishshell.com/ as our shell
+Let's use [fish](https://fishshell.com/)as our shell
 
 ```bash
 sudo chsh -s $(which fish) $(whoami)
@@ -1359,7 +1359,12 @@ You must now install them while in visual mode. Just press the `esc` to get past
 
 I would really love to teach you about `vi`, `vim` and `nvim`, but doing so is really outside the scope of this class. I've really been an avid [nano](https://www.nano-editor.org/), but capable of using `vi` in a pinch as it almost always garunteed to be installed in [Unix](https://en.wikipedia.org/wiki/Unix)-like operating system. Neovim pushed me over the cliff to use it fill time. This is is why `nano` is aliased to `nvim`, so if you enter `nano` into the the shell it will start instead `nvim`. You can override this by typing nano's full path, `/usr/local/bin/nano` on OSX and `/usr/bin` on Arch. You can strip the alias out of your shell initialization file or for a session map it back the the `alias` command.
 
-I'd encourage you to read vim's [docs](https://www.vim.org/docs.php). Read through the [FAQ](https://vimhelp.org/vim_faq.txt.html). Give [VIM Adventures](https://vim-adventures.com/) some play. May print out [Allison McKnight's cheat sheet](https://www.cs.cmu.edu/~15131/f17/topics/vim/vim-cheatsheet.pdf) or search the Internet for another.
+`vi`, `vim` and `nvim` pointers:
+
+- I'd encourage you to read vim's [docs](https://www.vim.org/docs.php).
+- Read through the [FAQ](https://vimhelp.org/vim_faq.txt.html).
+- Give [VIM Adventures](https://vim-adventures.com/) some play.
+- Print out [Allison McKnight's cheat sheet](https://www.cs.cmu.edu/~15131/f17/topics/vim/vim-cheatsheet.pdf) or search the Internet for another.
 
 We will be using `nvim` in the class, but I won't know if you're using something else.
 
@@ -1404,7 +1409,7 @@ The above is the copyright. The BSD 3-clause license allows you nearly almost un
 .PHONY: all install-dependencies start install start-registry delete-registry start-cluster delete-cluster patch-coredns install-traefik uninstall-traefik install-gitlab uninstall-gitlab install-drone uninstall-drone install-taiga uninstall-taiga install-sonarqube uninstall-sonarqube install-heimdall uninstall-heimdall install-plantuml uninstall-plantuml decrypt-vault encrypt-vault
 ```
 
-Generally, a Makefile is comprised of rules that look like this
+Generally, a [Makefile](<https://en.wikipedia.org/wiki/Make_(software)#Makefile> is comprised of rules that look like this
 
 ```
 target [optionally, additional targets...] : prerequisite [optionally, additional prerequisite]
@@ -1718,15 +1723,22 @@ Address: 192.168.65.2
 pod "test-coredns" deleted
 
 =======================================================
-Ensure the following lines are in youy /etc/hosts file:
+Your host IP is 192.168.65.2
+Writing 192.168.65.2 into /tmp/host_ip
 =======================================================
 
-192.168.65.2 gitlab.nemonik.com
-192.168.65.2 drone.nemonik.com
-192.168.65.2 taiga.nemonik.com
-192.168.65.2 sonar.nemonik.com
-192.168.65.2 plantuml.nemonik.com
-192.168.65.2 heimdall.nemonik.com
+=======================================================
+Ensure the following lines are in your /etc/hosts file:
+=======================================================
+
+127.0.0.1 gitlab.nemonik.com
+127.0.0.1 drone.nemonik.com
+127.0.0.1 taiga.nemonik.com
+127.0.0.1 sonar.nemonik.com
+127.0.0.1 plantuml.nemonik.com
+127.0.0.1 heimdall.nemonik.com
+127.0.0.1 k3d-registry.nemonik.com
+127.0.0.1 helloworld.nemonik.com
 ```
 
 The purpose of the rule is to add DNS entries for the factory tools into [Kubernetes](https://kubernetes.io/docs/concepts/overview/what-is-kubernetes/), so the tools can resolve each other. Without this for example when you you attempt to authenticate into [Drone CI](https://github.com/drone/drone), and it OpenAuths off of [GitLab](https://gitlab.com/rluna-gitlab/gitlab-ce), [GitLab](https://gitlab.com/rluna-gitlab/gitlab-ce) won't be able to resolve Drone in DNS.
@@ -1734,17 +1746,23 @@ The purpose of the rule is to add DNS entries for the factory tools into [Kubern
 The script ends reminding you to add the following lines to your `/etc/hosts` file
 
 ```
-192.168.65.2 gitlab.nemonik.com
-192.168.65.2 drone.nemonik.com
-192.168.65.2 taiga.nemonik.com
-192.168.65.2 sonar.nemonik.com
-192.168.65.2 plantuml.nemonik.com
-192.168.65.2 heimdall.nemonik.com
+127.0.0.1 gitlab.nemonik.com
+127.0.0.1 drone.nemonik.com
+127.0.0.1 taiga.nemonik.com
+127.0.0.1 sonar.nemonik.com
+127.0.0.1 plantuml.nemonik.com
+127.0.0.1 heimdall.nemonik.com
+127.0.0.1 k3d-registry.nemonik.com
+127.0.0.1 helloworld.nemonik.com
 ```
 
-You do this via running nvim as root (i.e., `sudo nvim /etc/hosts`) to edit the hosts file and add the lines above.
+**NOTES**
 
-The IP address (`192.168.65.2`) will likely be different for you. If you are using your own domain then `nemonik.com` will be replaced with whatever you've provided the `domain` variable in the [.env](./.env) file.
+- You do this via running nvim as root (i.e., `sudo nvim /etc/hosts`) to edit the hosts file and add the lines above.
+
+- Your host IP address (`192.168.65.2`) will likely be different for you.
+
+- If you are using your own domain then `nemonik.com` will be replaced with whatever you've provided the `domain` variable in the [.env](./.env) file.
 
 ### 10.3.3. Verifying the cluster is up and running
 
@@ -1798,9 +1816,15 @@ This is a long running process as each install rule will be execute triggering a
 
 [![asciicast](https://asciinema.org/a/zhBz6xp7kgwQNhmr0SO6vgRzD.svg)](https://asciinema.org/a/zhBz6xp7kgwQNhmr0SO6vgRzD)
 
+In another shell you can watch the tools spin
+
+```bash
+watch -n 15 kubectl get pods -A
+```
+
 ## 10.4. The long-running tools
 
-The class makes use of two types of tools: those that are long-running (e.g., [GitLab](https://gitlab.com/rluna-gitlab/gitlab-ce), Drone, [SonarQube](https://github.com/SonarSource/sonarqube/)) and those used to perform short-lived individual tasks (e.g., Makefile, [InSpec](https://github.com/inspec/inspec), OWASP-ZAP.)
+The class makes use of two types of tools: those that are long-running (e.g., [GitLab](https://gitlab.com/rluna-gitlab/gitlab-ce), Drone, [SonarQube](https://github.com/SonarSource/sonarqube/)) and those used to perform short-lived individual tasks (e.g., [Makefile](<https://en.wikipedia.org/wiki/Make_(software)#Makefile>, [InSpec](https://github.com/inspec/inspec), OWASP-ZAP.)
 
 This section will describe the long-running tools leaving subsequent sections to describe the latter as you use the short-lived tools.
 
@@ -2191,7 +2215,7 @@ To create an account perform the following:
 5. Being this a security application you're going to be asked to provide a secure password (You'll be warned, _Passwords are a minimum of 15 characters in length. Passwords must contain at least one special character, number, upper-case letter, and lower-case letter. Passwords cannot contain more than three consecutive repeating characters. Passwords cannot contain more than four repeating characters from the same character class._) Provide a secure password (.e.g., `sup3rS3cr3tCr3d3nt1@ls!`).
 6. Then login with with the email you provided (e.g., `root@nemonik.com`) and the password you provided (e.g., `sup3rS3cr3tCr3d3nt1@ls!`), and click `Login`.
 
-# 11. Golang _helloworld_ project
+# 11. Golang `helloworld` project
 
 The [Kubernetes](https://kubernetes.io/docs/concepts/overview/what-is-kubernetes/) cluster and the long running tools are required to be up and running for the following sections.
 
@@ -2233,16 +2257,16 @@ Complete the follow to track your progress in completing the Golang _helloworld_
 5. In the `NEW` column select `Add New bulk` icon that looks like a list and when the page updates cut-and-paste the lines below into the text box and click `SAVE`.
 
    ```
-   Create the project’s backlog
+   Create the project's backlog
    Create the project in GitLab
-   Setup your project
+   Setup the project
    Author the application
    Align source code with Go coding standards
-   Lint the code
+   Lint your code
    Build the application
    Run your application
    Author the unit tests
-   Write the Makefile
+   Automate the build (i.e., write the Makefile)
    Author Drone-based Continuous Integration
    ```
 
@@ -2533,12 +2557,12 @@ ok  	github.com/nemonik/helloworld	0.542s
 
 This step and all the proceeding follows of a DevOps tenant where "Developers are expected to pre-flight new code."
 
-## 11.10. Automate the build (i.e., write the Makefile)
+## 11.10. Automate the build (i.e., write the `Makefile`)
 
 ![Activity Diagram for helloworld project: Automate the build](diagrams/helloworld-write-make-file.svg)
 [PlantUML source for this diagram](plantuml/helloworld-write-make-file.puml)
 
-Build automation is a key practice of CI. So, let's make the build reproducible by automating everything we've done this far via authoring a Makefile.
+Build automation is a key practice of CI. So, let's make the build reproducible by automating everything we've done this far via authoring a [Makefile](<https://en.wikipedia.org/wiki/Make_(software)#Makefile>.
 
 In the root of the project create `Makefile` and add the following contents
 
@@ -2744,13 +2768,13 @@ That's it. This is essentially CI. Remember, CI stands for "Continuous Integrati
 
 - You can also re-run the pipelne for a build in `debug` mode via the [Drone CI](https://github.com/drone/drone) web interface. Click on the hamburger in the upper left (i.e., three dots in a vertical line), select `Debug` and it will re-run the pipeline and then pause at the failed step, so you can open a web-based shell into the running step and debug it. Once, Drone CI gets to the failed step it will provide a `OPEN REMOTE SESSION` button to open you into a shell of the step that failed. Pretty cool.
 
-## 11.12. The completed source for _helloworld_
+## 11.12. The completed source for `helloworld`
 
 The `helloworld` project can be viewed completed on GitHub at
 
 https://github.com/nemonik/helloworld
 
-# 12. Golang _helloworld-web_ project
+# 12. Golang `helloworld-web` project
 
 Like `helloworld`, the `helloworld-web` project is a very simple application that we will use to explore Continuous Deliver. Remember, Continuous Delivery builds upon Continuous Integration. You've accomplished Continuous Integration. Wahoo.
 
@@ -2779,24 +2803,23 @@ Complete the follow to track your progress in completing the _helloworld-web_ pr
    Create the project's backlog
    Create the project in GitLab
    Setup the project
-   Author the `helloworld-web` application
-   Build and run the application
-   Run gometalinter.v2 on application
-   Fix the application
-   Author unit tests
-   Perform static analysis on the CLI
-   Write the Makefile
-   Dockerize the application
-   Run thhe container
+   Author the helloworld-web application
+   Build and run the helloworld-web application
+   Run golangci-lint on the helloworld-web application
+   Author the unit tests
+   Perform static analysis (i.e., sonar-scanner) on the command line
+   Automate the build (i.e., write the Makefile)
+   Containerize the application
+   Run the container
    Push the container image to the private registry
-   Configure Drone to execute the CICD pipeline
-   Add Static Analysis step to pipeline
-   Add build step to pipeline
-   Add container image publish step to pipeline
-   Add container deploy step to pipeline
-   Add compliance automation test (InSpec) step to pipeline
-   Add automated functional test to pipeline
-   Add DAST step (OWASP ZAP) to the pipeline
+   Configure Drone to execute your CICD pipeline
+   Add Static Analysis (sonar) step to your CICD pipeline
+   Add the build step to the pipeline
+   Add the nemonik\helloworld-web:latest container image publish step to pipeline
+   Deploy helloworld-web application to the Kubernetes cluster
+   Add a deploy rule to the Makefile
+   Add a deploy step to the pipeline
+   Add compliance-as-code (inspec) test to the pipeline
    ```
 
 Track your progress in [Taiga](https://www.taiga.io/) as you work through each section.
@@ -3244,7 +3267,7 @@ run:
 
 **NOTE**
 
-- The indents are `tab` characters and not `spaces` characters otherwise your `make` will fail to execute. The `nvim` editor will recognize your file is a Makefile and warn you incorrect indentation.
+- The indents are `tab` characters and not `spaces` characters otherwise your `make` will fail to execute. The `nvim` editor will recognize your file is a [Makefile](<https://en.wikipedia.org/wiki/Make_(software)#Makefile> and warn you incorrect indentation.
 
 Test out your `Makefile`
 
@@ -3362,7 +3385,7 @@ CGO_ENABLED=0 GOOS=linux go build -a -o helloworld-web .
 
 - `-a` parameter is used to force rebuilding package to ensure you have all the dependencies.
 
-We can update the project's Makefile to do the same by modifying the `GOBUILD` variable
+We can update the project's [Makefile](<https://en.wikipedia.org/wiki/Make_(software)#Makefile> to do the same by modifying the `GOBUILD` variable
 
 ```makefile
 GOBUILD=CGO_ENABLED=0 GOOS=linux $(GOCMD) build -a
@@ -4525,7 +4548,7 @@ So, with the `k8s_server`, `k8s_cert` and `k8s_token` values above
 
 **NOTES**
 
-- When copying these values out of your [fish](https://fishshell.com/ shell be mindful not to copy the last character (⏎).
+- When copying these values out of your [fish](https://fishshell.com/)shell be mindful not to copy the last character (⏎).
 
 ### 12.20.3. Build, tag and push our `deploy` step container
 
@@ -5093,7 +5116,7 @@ docker tag selenium/standalone-chrome:3.141 k3d-registry.nemonik.com:5000/seleni
 docker push k3d-registry.nemonik.com:5000/selenium/standalone-chrome:3.141
 ```
 
-If you're using th [fish](https://fishshell.com/ shell
+If you're using th [fish](https://fishshell.com/)shell
 
 ```fish
 set host_ip (cat /tmp/host_ip)
@@ -5338,7 +5361,7 @@ if __name__ == "__main__":
 
 Save the file and exit.
 
-For now, if your using the [fish](https://fishshell.com/ shell let us run our test by entering into the command line
+For now, if your using the [fish](https://fishshell.com/)shell let us run our test by entering into the command line
 
 ```fish
 set -x SELENIUM_HOST localhost
@@ -5591,7 +5614,7 @@ docker tag owasp/zap2docker-stable:latest k3d-registry.nemonik.com:5000/owasp/za
 docker push k3d-registry.nemonik.com:5000/owasp/zap2docker-stable:2.8.0
 ```
 
-If you're using the [fish](https://fishshell.com/ shell
+If you're using the [fish](https://fishshell.com/)shell
 
 ```fish
 set host_ip (cat /tmp/host_ip)
@@ -5760,7 +5783,7 @@ FAIL-NEW: 0	FAIL-INPROG: 0	WARN-NEW: 0	WARN-INPROG: 0	INFO: 0	IGNORE: 0	PASS: 51
 
 Our application is relatively simple, so it was doubtful anything would be found.
 
-## 12.23. All the source for _helloworld-web_
+## 12.23. All the source for `helloworld-web`
 
 The `helloworld-web` project can be viewed completed at
 
