@@ -31,7 +31,7 @@ if [ "$(echo $clusters_json | jq -r --arg k3d_cluster_name ${k3d_cluster_name} '
   notify "Cluster doesn't exist, so created it..."
 
   k3d cluster create ${k3d_cluster_name} \
-    --api-port 127.0.0.1:6443 -p 80:80@loadbalancer -p 443:443@loadbalancer \
+    --api-port host.k3d.internal:6443 -p 80:80@loadbalancer -p 443:443@loadbalancer \
     -p 9000:9000@loadbalancer -p 2022:2022@loadbalancer --k3s-server-arg "--no-deploy=traefik" \
     --registry-use ${registry_name}:${registry_port} \
     --servers ${k3d_server_count} --agents ${k3d_agent_count}

@@ -7,8 +7,8 @@
         msg: Installing InSpec requiring lots and lots of Ruby gems. This will take sometime... Go have some pie.
 
     - name: Ensure inspec-bin gem is installed
-      ansible.builtin.shell: bash -c "source ~/.bash_profile && gem install inspec-bin"
+      ansible.builtin.shell: bash -c '[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" && gem install inspec-bin'
 
     - name: 'RubyZip has released v2.3.1 "dummy" release that repeatedly splashes a warning about v3.0 coming.  Grr!  Get rid of it.'
-      ansible.builtin.shell: bash -c "source ~/.bash_profile && gem uninstall --force rubyzip && gem install rubyzip -v 2.3.0"
+      ansible.builtin.shell: bash -c '[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" && gem uninstall --force rubyzip && gem install rubyzip -v 2.3.0'
 # https://docs.chef.io/chef_license_accept/

@@ -67,7 +67,7 @@
         msg: Building and installing the ruby {{ ruby_version }} will take some time...
 
     - name: Installing ruby {{ ruby_version }}
-      ansible.builtin.shell: bash -c 'source ~/.bash_profile && rvm install ruby-{{ ruby_version }}'
+      ansible.builtin.shell: bash -c '[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" && rvm install ruby-{{ ruby_version }}'
 
     - name: Set {{ ruby_version }} as the default for new shells. This will override the 'system' Ruby
-      ansible.builtin.shell: bash -c 'source ~/.bash_profile && rvm use {{ ruby_version }} --default'
+      ansible.builtin.shell: bash -c '[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" && rvm use {{ ruby_version }} --default'

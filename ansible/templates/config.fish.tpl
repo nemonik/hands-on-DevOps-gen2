@@ -5,7 +5,7 @@ set -Ux HOMEBREW_PREFIX "{{ HOMEBREW_PREFIX }}"
 set -Ux PYENV_ROOT $HOME/.pyenv
 fish_add_path $PYENV_ROOT/bin
 
-pyenv init - | source
+status is-interactive; and pyenv init --path | source
 
 set -Ux SONAR_HOST_URL "{{ lookup('env', 'sonarqube_protocol') }}://{{ lookup('env', 'sonarqube_fdqn') }}:{{ lookup('env', 'sonarqube_port') }}"
 
@@ -29,5 +29,5 @@ fish_add_path $GOBIN
 set PATH /usr/local/bin $PATH
 
 {% if ansible_distribution == 'MacOSX' %}
-fish_add_path $HOMEBREW_PREFIX/opt/openssl@1.1/bin
+fish_add_path $HOMEBREW_PREFIX/opt/openssl/bin
 {% endif %}

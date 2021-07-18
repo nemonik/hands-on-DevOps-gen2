@@ -37,3 +37,4 @@ env:
   DRONE_GITLAB_SKIP_VERIFY: true
   #DRONE_LOGS_DEBUG: true
   #DRONE_LOGS_TRACE: true
+  DRONE_USER_CREATE: username:root,admin:true

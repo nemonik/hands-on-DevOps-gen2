@@ -39,5 +39,5 @@ export PATH="$GOBIN:$PATH"
 export PATH="$HOME/.local/bin:$PATH"
 
 {% if ansible_distribution == 'MacOSX' %}
-export PATH="$HOMEBREW_PREFIX/opt/openssl@1\.1/bin:$PATH"
+export PATH="$HOMEBREW_PREFIX/opt/openssl/bin:$PATH"
 {% endif %}

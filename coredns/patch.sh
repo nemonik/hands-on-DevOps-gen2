@@ -95,11 +95,19 @@ cd ..
 
 echo
 warn "======================================================="
+warn "Your host IP is ${host_ip}"
+warn "Writing ${host_ip} into /tmp/host_ip"
+warn "======================================================="
+
+echo "${host_ip}" > /tmp/host_ip
+
+echo
+warn "======================================================="
 warn "Ensure the following lines are in your /etc/hosts file:"
 warn "======================================================="
 echo
 
 for entry in "${coredns_entries[@]}"
 do
-  echo "$host_ip $entry"
+  echo "127.0.0.1 $entry"
 done
