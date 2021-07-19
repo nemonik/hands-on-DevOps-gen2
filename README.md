@@ -3300,7 +3300,7 @@ test: lint
 sonar: test
 	sonar-scanner
 build:
-	CGO_ENABLED=0 GOOS=linux go build -o $(BINARY_NAME) -v
+	go build -o $(BINARY_NAME) -v
 run:
 	./$(BINARY_NAME)
 ```
@@ -3315,11 +3315,109 @@ Test out your `Makefile`
 make all
 ```
 
-And so, you have build and test automation whose output resembles
+Output will resemble
 
-[![asciicast](https://asciinema.org/a/NyCIYYxl4s9HiinC8kPHwJTyj.svg)](https://asciinema.org/a/NyCIYYxl4s9HiinC8kPHwJTyj)
+```
+go fmt
+mkdir -p tests/reports && touch tests/reports/.gitkeep
+golangci-lint run --out-format checkstyle | tee tests/reports/golangci-lint.xml
+<?xml version="1.0" encoding="UTF-8"?>
 
-The same as when you pre-flighted. In fact this is the same asciinema cast.
+<checkstyle version="5.0">
+</checkstyle>
+mkdir -p tests/reports && touch tests/reports/.gitkeep
+go test ./... -coverprofile=tests/reports/coverage.out
+ok  	github.com/nemonik/helloworld-web	0.004s	coverage: 55.6% of statements
+sonar-scanner
+INFO: Scanner configuration file: /opt/sonar-scanner/conf/sonar-scanner.properties
+INFO: Project root configuration file: /home/student/go/src/github.com/nemonik/helloworld-web/sonar-project.properties
+INFO: SonarScanner 4.6.0.2311
+INFO: Java 16.0.1 N/A (64-bit)
+INFO: Linux 5.12.15-arch1-1 amd64
+INFO: User cache: /home/student/.sonar/cache
+INFO: Scanner configuration file: /opt/sonar-scanner/conf/sonar-scanner.properties
+INFO: Project root configuration file: /home/student/go/src/github.com/nemonik/helloworld-web/sonar-project.properties
+INFO: Analyzing on SonarQube server 8.5.1
+INFO: Default locale: "en_US", source code encoding: "UTF-8" (analysis is platform dependent)
+INFO: Load global settings
+INFO: Load global settings (done) | time=134ms
+INFO: Server id: EA8D9556-AXq_eICKOsCp9_iMkQ-O
+INFO: User cache: /home/student/.sonar/cache
+INFO: Load/download plugins
+INFO: Load plugins index
+INFO: Load plugins index (done) | time=37ms
+INFO: Load/download plugins (done) | time=98ms
+INFO: Process project properties
+INFO: Process project properties (done) | time=6ms
+INFO: Execute project builders
+INFO: Execute project builders (done) | time=1ms
+INFO: Project key: helloworld-web
+INFO: Base dir: /home/student/go/src/github.com/nemonik/helloworld-web
+INFO: Working dir: /home/student/go/src/github.com/nemonik/helloworld-web/.scannerwork
+INFO: Load project settings for component key: 'helloworld-web'
+INFO: Load project settings for component key: 'helloworld-web' (done) | time=16ms
+INFO: Load quality profiles
+INFO: Load quality profiles (done) | time=56ms
+INFO: Load active rules
+INFO: Load active rules (done) | time=623ms
+INFO: Indexing files...
+INFO: Project configuration:
+INFO:   Excluded sources: **/**_test.go
+INFO:   Included tests: **/**_test.go
+INFO: 6 files indexed
+INFO: 9 files ignored because of inclusion/exclusion patterns
+INFO: 3 files ignored because of scm ignore settings
+INFO: Quality profile for go: Sonar way
+INFO: ------------- Run sensors on module helloworld-web
+INFO: Load metrics repository
+INFO: Load metrics repository (done) | time=23ms
+INFO: Sensor CSS Rules [cssfamily]
+INFO: No CSS, PHP, HTML or VueJS files are found in the project. CSS analysis is skipped.
+INFO: Sensor CSS Rules [cssfamily] (done) | time=0ms
+INFO: Sensor JaCoCo XML Report Importer [jacoco]
+INFO: 'sonar.coverage.jacoco.xmlReportPaths' is not defined. Using default locations: target/site/jacoco/jacoco.xml,target/site/jacoco-it/jacoco.xml,build/reports/jacoco/test/jacocoTestReport.xml
+INFO: No report imported, no coverage information will be imported by JaCoCo XML Report Importer
+INFO: Sensor JaCoCo XML Report Importer [jacoco] (done) | time=3ms
+INFO: Sensor SonarGo [go]
+INFO: 1 source files to be analyzed
+INFO: Load project repositories
+INFO: Load project repositories (done) | time=15ms
+INFO: Sensor SonarGo [go] (done) | time=165ms
+INFO: Sensor Go Cover sensor for Go coverage [go]
+INFO: 1/1 source files have been analyzed
+INFO: Load coverage report from '/home/student/go/src/github.com/nemonik/helloworld-web/tests/reports/coverage.out'
+INFO: Sensor Go Cover sensor for Go coverage [go] (done) | time=9ms
+INFO: Sensor Import of GolangCI-Lint issues [go]
+INFO: Importing /home/student/go/src/github.com/nemonik/helloworld-web/tests/reports/golangci-lint.xml
+INFO: Sensor Import of GolangCI-Lint issues [go] (done) | time=40ms
+INFO: Sensor C# Properties [csharp]
+INFO: Sensor C# Properties [csharp] (done) | time=1ms
+INFO: Sensor JavaXmlSensor [java]
+INFO: Sensor JavaXmlSensor [java] (done) | time=1ms
+INFO: Sensor HTML [web]
+INFO: Sensor HTML [web] (done) | time=3ms
+INFO: Sensor VB.NET Properties [vbnet]
+INFO: Sensor VB.NET Properties [vbnet] (done) | time=0ms
+INFO: ------------- Run sensors on project
+INFO: Sensor Zero Coverage Sensor
+INFO: Sensor Zero Coverage Sensor (done) | time=1ms
+INFO: CPD Executor Calculating CPD for 1 file
+INFO: CPD Executor CPD calculation finished (done) | time=5ms
+INFO: Analysis report generated in 54ms, dir size=84 KB
+INFO: Analysis report compressed in 19ms, zip size=12 KB
+INFO: Analysis report uploaded in 63ms
+INFO: ANALYSIS SUCCESSFUL, you can browse https://sonar.nemonik.com/dashboard?id=helloworld-web
+INFO: Note that you will be able to access the updated dashboard once the server has processed the submitted analysis report
+INFO: More about the report processing at https://sonar.nemonik.com/api/ce/task?id=AXq_uDjqOsCp9_iMkVvo
+INFO: Analysis total time: 2.609 s
+INFO: ------------------------------------------------------------------------
+INFO: EXECUTION SUCCESS
+INFO: ------------------------------------------------------------------------
+INFO: Total time: 3.667s
+INFO: Final Memory: 14M/80M
+INFO: ------------------------------------------------------------------------
+go build -o helloworld-web -v
+```
 
 ## 12.10. Containerize the application
 
@@ -3422,10 +3520,11 @@ CGO_ENABLED=0 GOOS=linux go build -a -o helloworld-web .
 
 - `-a` parameter is used to force rebuilding package to ensure you have all the dependencies.
 
-We can update the project's [Makefile](<https://en.wikipedia.org/wiki/Make_(software)#Makefile> to do the same by modifying the `GOBUILD` variable
+We can update the project's [Makefile](<https://en.wikipedia.org/wiki/Make_(software)#Makefile> to do the same by modifying the `build` rule
 
 ```makefile
-GOBUILD=CGO_ENABLED=0 GOOS=linux $(GOCMD) build -a
+build:
+	CGO_ENABLED=0 GOOS=linux go build -o $(BINARY_NAME) -v
 ```
 
 While we are at it add a `docker-build` target to the end of the `Dockerfile`
