@@ -5,9 +5,9 @@
 
 # 1. Preface
 
-The future home of the second edition of my hands-on DevOps course building upon [nemonik/hands-on-DevOps](https://github.com/nemonik/hands-on-DevOps).
+This is the second edition of my hands-on DevOps course building upon [nemonik/hands-on-DevOps](https://github.com/nemonik/hands-on-DevOps).
 
-The content of this course is presently under development.
+The content of this course is actively under development whereas the prior is not.
 
 This newest version of my Hands-on DevOps class is a re-platforming of sorts -- A sort of rewrite if you will. The prior version relied on multiple Vagrants (i.e., virtual machines) and was a beast to maintain. Several Vagrants were created through automation to run a multi-node [[Kubernetes)](https://kubernetes.io/docs/concepts/overview/what-is-kubernetes/) cluster as well asa development VM. The approach modeled how I pre-flighted my work on my laptop vice using [minikube](https://github.com/kubernetes/minikube). The [Kubernetes](https://kubernetes.io/docs/concepts/overview/what-is-kubernetes/) cluster my class used made use of was [[k3s](https://github.com/k3s-io/k3s)](https://github.com/k3s-io/k3s) and as it matured [k3d](https://k3d.io/) was introduced. [K3d](https://github.com/rancher/k3d/) is a lightweight wrapper to run [k3s](https://github.com/k3s-io/k3s) in [[Docker](https://docker.io)](https://docker.com) and provides a rather elegant solution to create and manage a single or multi-node [k3s](https://github.com/k3s-io/k3s) cluster for development vice standing up multi-VMs and the burden they impose on the host (in my case my laptop). Around this same time I was considering using [k3d](https://github.com/rancher/k3d/) I also gave [Docker Desktop's](https://www.docker.com/products/docker-desktop) means of providing a [Kubernetes](https://kubernetes.io/docs/concepts/overview/what-is-kubernetes/) cluster a try but I found it lacking, so I stuck with [k3d](https://github.com/rancher/k3d/). Around this same time I also moved fully off my MacBook for personal development moving to [Arch Linux](https://archlinux.org/) where I used [Docker](https://docker.io). This new version of my class infrastructure-as-code automation focuses instead of directly configuring the host or if need be a single Vagrant for the purpose of development.
 
@@ -589,7 +589,7 @@ It's a good idea to inspect the install scripts from projects you don't yet know
 
 ## 9.2. Shell configuration
 
-The class automation will configure [Bash](https://www.gnu.org/software/bash/), [[Zsh](https://www.zsh.org/)](https://www.zsh.org/) and [fish](https://fishshell.com/) [shell](<https://en.wikipedia.org/wiki/Shell_(computing)>)s, as well as [neovim](https://github.com/neovim/neovim) (nvim). A [Unix](https://en.wikipedia.org/wiki/Unix) shell is a command-line iterpreter, a command-line interface for the Unix or Unix-like operating systems, such as [Linux](https://en.wikipedia.org/wiki/Linux). The shell exists in a [terminal emulator](https://en.wikipedia.org/wiki/Terminal_emulator). In this course we will either be [iTerm2](https://iterm2.com/) for OSX or [Arch Linux](https://archlinux.org/)' [Gnome Terminal](https://en.wikipedia.org/wiki/GNOME_Terminal).
+The class automation will configure [Bash](https://www.gnu.org/software/bash/), [[Zsh](https://www.zsh.org/)] and [fish](https://fishshell.com/) [shell](<https://en.wikipedia.org/wiki/Shell_(computing)>)s, as well as [neovim](https://github.com/neovim/neovim) (nvim). A [Unix](https://en.wikipedia.org/wiki/Unix) shell is a command-line iterpreter, a command-line interface for the Unix or Unix-like operating systems, such as [Linux](https://en.wikipedia.org/wiki/Linux). The shell exists in a [terminal emulator](https://en.wikipedia.org/wiki/Terminal_emulator). In this course we will either be [iTerm2](https://iterm2.com/) for OSX or [Arch Linux](https://archlinux.org/)' [Gnome Terminal](https://en.wikipedia.org/wiki/GNOME_Terminal).
 
 **NOTE**
 
@@ -612,7 +612,11 @@ cp ~/.config/nvim/init.vim ~/.config/nvim/init.vim.back
 cp ~/.config/nvim/coc-settings.json ~/.config/nvim/coc-settings.json.back
 ```
 
-On or more of the above commands may fail if you don't have the file on your host. If you are sure you typed the command correctly you can ignore the error message. Use these backup files to recover your prior shell configuration.
+**NOTE**
+
+- When cutting-and-pasting from GitHub click on the clipboard icon in the uppper right-section of the code block.
+- On or more of the above commands may fail if you don't have the file on your host. If you are sure you typed the command correctly you can ignore the error message.
+- Use these backup files to recover your prior shell configuration. Just reverse the direction of the copy.
 
 Now, we're going to to reset our configuration by performing the following
 
@@ -852,7 +856,7 @@ Type the following
 python3 -m pip install --user ansible --no-cache-dir
 ```
 
-This will install the [Ansible](https://github.com/ansible/ansible) module into the Python user install directory for your platform. Typically into the `.local/` sub-folder of the user's home directory.
+This will install the [Ansible](https://github.com/ansible/ansible) module into the Python user install directory for your platform. Typically this results in the [Ansible](https://github.com/ansible/ansible) binaries being installed into the `.local/bin` sub-folder in the user's home directory (i.e., `$HOME/.local/bin`)
 
 Output will resemble
 
@@ -884,14 +888,16 @@ ansible-playbook not found
 
 The [`which`](https://linux.die.net/man/1/which) command will attempt to locate a program file in the user's path.
 
-If you are using `bash` perform the following (You likely at this point.  To check type `echo $SHELL`.):
+You are likely using the Bash shell at this point. To check type `echo $SHELL` into your shell. Depending on what is returned perfom what is appropriate for your shell.
+
+If your shell is [Bash](https://www.gnu.org/software/bash/):
 
 ```bash
 echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.bash_profile
 source ~/.bash_profile
 ```
 
-If your shell is `zsh`:
+If your shell is [[Zsh](https://www.zsh.org/)]:
 
 ```bash
 echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.zshrc
@@ -968,7 +974,7 @@ community.general:3.3.1 was installed successfully
 
 ## 10.2. Run the Ansible playbook
 
-The rest of the class will require a number of operating system dependencies be installed. We will accomplish the via executing the [ansible/main.yaml](ansible/main.yaml) playbook.
+The rest of the class will require a number of operating system dependencies be installed. We will accomplish the via executing the [./ansible/main.yaml](./ansible/main.yaml) playbook.
 
 First we will need to [git clone](https://git-scm.com/docs/git-clone) the class repository by performing the following in your shell
 
@@ -978,10 +984,6 @@ cd $HOME/Development/workspace
 git clone https://github.com/nemonik/hands-on-DevOps-gen2.git
 cd hands-on-DevOps-gen2
 ```
-
-**NOTES**
-
-- If you've been following along in the shell you've already done this step.
 
 ### 10.2.1. Reviewing the Ansible playbooks
 
@@ -1173,7 +1175,7 @@ And the playbook continues on to importing and executing each of the following p
   ansible.builtin.import_playbook: template-shell-configs.yaml
 ```
 
-I'd encourage you to review them all, but lets look at a portion of the first to be imported and executed, the [ansible/common.yaml](./ansible/common.yaml) playbook
+I'd encourage you to review them all, but lets look at a portion of the first to be imported and executed, the [./ansible/common.yaml](./ansible/common.yaml) playbook
 
 ```ansible
 ---
@@ -1264,7 +1266,7 @@ The block collects the following tasks:
    1. `ansible.builtin.shell` executing `brew --prefix` and storing the result in a register
    2. `ansible.builtin.set_fact` is used to hold the standard output (stdout) of `brew--prefix` command in a Ansible fact, `HOMEBREW_PREFIX`.
 
-The [ansible/common.yaml](./ansible/common.yaml) playbook continues until completion and then you are returned to the [ansible/main.yaml](./ansible/main.yaml) to execute the next playbook. I'd encourage you to review each.
+The [./ansible/common.yaml](./ansible/common.yaml) playbook continues until completion and then you are returned to the [./ansible/main.yaml](./ansible/main.yaml) to execute the next playbook. I'd encourage you to review each.
 
 If your on LinkedIn or search many of the job boards you'll find many employers equate infrastructure-as-code as DevOps. Infrastructure-as-code is a DevOps methodology but not the entirety of DevOps.
 
@@ -1282,6 +1284,9 @@ make install-dependencies
 **NOTES**
 
 - Pay attention to the playbook's run as it may stop to ask you for your password.
+- The first line runs only if you re on OSX to install a Bash](https://www.gnu.org/software/bash/) 5.  OSX ship with Bash](https://www.gnu.org/software/bash/) 3.2.57(1)-release.
+- Some tasks are long running.  I've put debug statements prior to these tasks.  Look for them if you think [Ansible](https://github.com/ansible/ansible) has froze.  It likely has not.
+- How long this takes to run is dependent on the speed of your Internet connection.
 
 The output should resemble
 
