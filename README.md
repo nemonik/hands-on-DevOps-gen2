@@ -1521,10 +1521,11 @@ Edit your `/etc/host` with `nvim` like so
 sudo nvim /etc/hosts
 ```
 
-and add to the end
+and add to the end the following, so these domains can be resolved
 
 ```
 127.0.0.1 host.k3d.internal
+127.0.0.1 k3d-registry.nemonik.com
 ```
 
 Then execute the makefile `start` rule

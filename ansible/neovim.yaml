@@ -70,7 +70,7 @@
       when: ( ansible_distribution == 'Archlinux' )
 
     - name: Ensure pynvim python module is installed for coc-pyright
-      ansible.builtin.shell: bash -c "python3 -m pip install --user --upgrade pynvim"
+      ansible.builtin.shell: bash -c 'export PYENV_ROOT="$HOME/.pyenv"; export PATH="$PYENV_ROOT/bin:$PATH"; eval "$(pyenv init --path)"; eval "$(pyenv init -)"; python3 -m pip install --user --upgrade pynvim'
 
     #- name: Ensure black python module is installed for coc-pyright to be able to call on black for formatting
     #  ansible.builtin.shell: bash -c "python3 -m pip install --user --upgrade black"

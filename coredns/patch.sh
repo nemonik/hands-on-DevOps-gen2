@@ -107,6 +107,8 @@ warn "Ensure the following lines are in your /etc/hosts file:"
 warn "======================================================="
 echo
 
+echo "127.0.0.1 host.k3d.internal"
+
 for entry in "${coredns_entries[@]}"
 do
   echo "127.0.0.1 $entry"
