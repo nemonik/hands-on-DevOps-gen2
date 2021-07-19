@@ -1,0 +1,81 @@
+@startuml
+skinparam shadowing false
+
+skinparam actor {
+  BorderColor #0B5C92
+  BackgroundColor none
+  FontStyle "Thin"
+  FontSize 18
+}
+
+skinparam node {
+  BorderColor #0B5C92
+  BackgroundColor #ffffff
+  FontStyle "Thin"
+  FontSize 15
+}
+
+skinparam rectangle {
+  roundCorner 25
+  BorderColor #0B5C92
+  BackgroundColor #ffffff
+  FontStyle "Thin"
+  FontSize 15
+}
+
+skinparam component {
+  BorderColor #0B5C92
+  BackgroundColor #e0e59a
+  FontStyle "Thin"
+  FontSize 15
+}
+
+
+skinparam note {
+  BorderColor #0B5C92
+  BackgroundColor #FEFECE
+  FontStyle "Thin"
+  FontSize 15
+}
+
+skinparam database {
+  BorderColor #0B5C92
+  BackgroundColor #e0e59a
+  FontStyle "Thin"
+  FontSize 15
+}
+
+actor "You" as you
+
+rectangle "Host (e.g., your laptop, desktop)" {
+
+  rectangle "Docker (containerd)" {
+
+    rectangle "K3s Cluster\n(master and agent)" as k3s {
+      component "Traefik" as traefik
+      component "Taiga" as taiga
+      component "GitLab" as gitlab
+      component "Drone CI" as drone
+      component "SonarQube" as sonarqube
+      component "PlantUML Server" as plantuml_server
+      component "Heimdall 2" as heimdall2
+    }
+
+    component "Private\nContainer Registry" as private_registry
+  }
+}
+
+traefik <.[#0B5C92]d.> gitlab : http
+traefik <.[#0B5C92]d.> drone : http
+traefik <.[#0B5C92]d.> taiga : http
+traefik <.[#0B5C92]d.> plantuml_server : http
+traefik <.[#0B5C92]d.> drone : http
+traefik <.[#0B5C92]d.> sonarqube : http
+traefik <.[#0B5C92]d.> heimdall2 : http
+
+k3s <.[#0B5C92]d.> private_registry : http
+
+you <-[#0B5C92]d-> private_registry : https
+you <-[#0B5C92]d-> traefik : https
+
+@enduml
