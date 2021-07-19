@@ -4378,7 +4378,12 @@ Hello world!
 
 ## 12.18. Add a `deploy` rule to the Makefile
 
-Let's add a deploy rule to our `Makefile` with `nvim`
+Let's add a deploy rule to our `Makefile`
+
+```bash
+cd ~/go/src/github.com/nemonik/helloworld-web
+nvim Makefile
+```
 
 Update the `.PHONY ` line to
 
