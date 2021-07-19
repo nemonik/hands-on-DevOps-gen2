@@ -1,7 +1,9 @@
 autoload -Uz compinit
 compinit
 
+{% if ansible_distribution == 'MacOSX' %}
 export HOMEBREW_PREFIX="{{ HOMEBREW_PREFIX }}"
+{% endif %}
 
 source $HOME/.config/powerlevel10/powerlevel10k.zsh-theme
 
