@@ -64,7 +64,7 @@
               - fzf
               - watchman-bin
               - python-poetry-git
-              - python-black-git
+              - python-black
             state: latest
             executable: yay
       when: ( ansible_distribution == 'Archlinux' )
@@ -142,9 +142,19 @@
         src: files/init.vim
         dest: "{{ HOME }}/.config/nvim/init.vim"
 
-    - name: Copy coc-settings.json configuration file into place
-      ansible.builtin.copy:
-        src: files/coc-settings.json
+    - name: Setting BLACK_PATH when OSX
+      set_fact:
+        BLACK_PATH: /usr/local/bin
+      when: ( ansible_distribution == 'MacOSX' )
+
+    - name: Setting BLACK_PATH when Archlinux
+      set_fact:
+        BLACK_PATH: /usr/local/bin
+      when: ( ansible_distribution == 'Archlinux' )
+
+    - name: Template coc-settings.json configuration file into place
+      ansible.builtin.template:
+        src: templates/coc-settings.json.tpl
         dest: "{{ HOME }}/.config/nvim/coc-settings.json"
 
     - name: Ensure Powerline fonts are installed for Vim Airline plugin

@@ -4,7 +4,7 @@
   "python.linting.mypyEnabled": true,
   "python.linting.enabled": true,
   "python.formatting.provider": "black",
-  "python.formatting.blackPath": "/usr/local/bin/black",
+  "python.formatting.blackPath": "{{ BLACK_PATH }}",
   "coc.preferences.formatOnType": true,
   "python.linting.lintOnSave": true,
   "python.linting.pylintUseMinimalCheckers": false,
