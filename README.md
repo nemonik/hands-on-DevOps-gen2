@@ -3251,7 +3251,7 @@ Then start the analysis with
 go fmt
 mkdir -p tests/reports && touch tests/reports/.gitkeep
 golangci-lint run --out-format checkstyle | tee tests/reports/golangci-lint.xml
-go test ./... -coverprofile=tests/reports/coverage.ou
+go test ./... -coverprofile=tests/reports/coverage.out
 sonar-scanner
 ```
 
@@ -3268,9 +3268,9 @@ Let me unpack what the above commands are doing
 
 `go fmt` formats the code as we did earlier.
 
-`golangci-lint run --out-format checkstyle > goangci-lint.xml` gathers golangci-lint reports in checkstyle format
+`golangci-lint run --out-format checkstyle | tee tests/reports/golangci-lint.xml` gathers golangci-lint reports in checkstyle format
 
-`go test -coverprofile=coverage.out` executes your unit tests and generate the `coverage.out` report.
+`go test ./... -coverprofile=tests/reports/coverage.out` executes your unit tests and generate the `coverage.out` report.
 
 `sonar-scanner` then submits the reports. [SonarQube](https://github.com/SonarSource/sonarqube/) will automatically create the project for you with a report (e.g., <https://sonar.nemonik.com/dashboard?id=helloworld-web>).
 
