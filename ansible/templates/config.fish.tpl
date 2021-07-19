@@ -1,6 +1,8 @@
 set -g theme_nerd_fonts yes
 
+{% if ansible_distribution == 'MacOSX' %}
 set -Ux HOMEBREW_PREFIX "{{ HOMEBREW_PREFIX }}"
+{% endif %}
 
 set -Ux PYENV_ROOT $HOME/.pyenv
 fish_add_path $PYENV_ROOT/bin
