@@ -3537,7 +3537,7 @@ docker-build: build
 And also, replace `build` with `docker-build` in the `all` target line like so:
 
 ```makefile
-all: docker-build
+all: sonar docker-push
 ```
 
 Remember to use `tab` characters vice `space` characters.
@@ -3679,8 +3679,8 @@ Below `docker-push` insert `docker-push` rule
 
 ```makefile
 docker-push: docker-build
-	docker tag nemonik/helloworld-web 192.168.0.10:5000/nemonik/helloworld-web
-	docker push 192.168.0.10:5000/nemonik/helloworld-web
+	docker tag nemonik/helloworld-web k3d-registry.nemonik.com:5000/nemonik/helloworld-web
+	docker push k3d-registry.nemonik.com:5000/nemonik/helloworld-web
 ```
 
 And then run in the command line
