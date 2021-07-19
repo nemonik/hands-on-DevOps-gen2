@@ -1515,7 +1515,19 @@ In the shell, if you were to enter `make all` make would execute the `all` targe
 
 ### 10.3.2. Starting a container registry, the K3s cluster and patching CoreDNS
 
-Let's execute the makefile `start` rule
+Edit your `/etc/host` with `nvim` like so
+
+```bash
+sudo nvim /etc/hosts
+```
+
+and add to the end
+
+```
+127.0.0.1 host.k3d.internal
+```
+
+Then execute the makefile `start` rule
 
 ```bash
 make start
