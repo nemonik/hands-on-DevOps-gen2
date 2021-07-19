@@ -3281,7 +3281,7 @@ In `nvim` create a `Makefile` to ensure the build and the steps leading to are r
 ```makefile
 BINARY_NAME=helloworld-web
 
-.PHONY: all clean fmt lint test sonar build run docker-build docker-push inspec
+.PHONY: all clean fmt lint test sonar build run
 
 all: sonar build
 clean:
@@ -3914,7 +3914,111 @@ The pipeline should execute in a few minutes.
 Success typically resembles
 
 ```
-
++ export DRONESRC=/drone/src
++ export GOBIN=$GOPATH/bin
++ export PATH="$GOBIN:$PATH"
++ mkdir -p $GOPATH/src/github.com/nemonik
++ cd $GOPATH/src/github.com/nemonik
++ ln -s $DRONESRC helloworld-web
++ cd helloworld-web
++ golangci-lint run --out-format checkstyle > tests/reports/golangci-lint.xml || true
++ go test -v ./... -coverprofile=tests/reports/coverage.out || true
+=== RUN   TestLogRequest
+--- PASS: TestLogRequest (0.00s)
+=== RUN   TestHandler
+--- PASS: TestHandler (0.00s)
+PASS
+coverage: 55.6% of statements
+ok  	github.com/nemonik/helloworld-web	0.004s	coverage: 55.6% of statements
++ sonar-scanner || true
+INFO: Scanner configuration file: /usr/local/sonar-scanner-4.6.2.2472-linux/conf/sonar-scanner.properties
+INFO: Project root configuration file: /go/src/github.com/nemonik/helloworld-web/sonar-project.properties
+INFO: SonarScanner 4.6.2.2472
+INFO: Java 11.0.11 AdoptOpenJDK (64-bit)
+INFO: Linux 5.12.15-arch1-1 amd64
+INFO: User cache: /root/.sonar/cache
+INFO: Scanner configuration file: /usr/local/sonar-scanner-4.6.2.2472-linux/conf/sonar-scanner.properties
+INFO: Project root configuration file: /go/src/github.com/nemonik/helloworld-web/sonar-project.properties
+INFO: Analyzing on SonarQube server 8.5.1
+INFO: Default locale: "en_US", source code encoding: "US-ASCII" (analysis is platform dependent)
+INFO: Load global settings
+INFO: Load global settings (done) | time=105ms
+INFO: Server id: EA8D9556-AXq_eICKOsCp9_iMkQ-O
+INFO: User cache: /root/.sonar/cache
+INFO: Load/download plugins
+INFO: Load plugins index
+INFO: Load plugins index (done) | time=40ms
+INFO: Load/download plugins (done) | time=1704ms
+INFO: Process project properties
+INFO: Process project properties (done) | time=8ms
+INFO: Execute project builders
+INFO: Execute project builders (done) | time=1ms
+INFO: Project key: helloworld-web
+INFO: Base dir: /go/src/github.com/nemonik/helloworld-web
+INFO: Working dir: /go/src/github.com/nemonik/helloworld-web/.scannerwork
+INFO: Load project settings for component key: 'helloworld-web'
+INFO: Load project settings for component key: 'helloworld-web' (done) | time=14ms
+INFO: Load quality profiles
+INFO: Load quality profiles (done) | time=55ms
+INFO: Auto-configuring with CI 'DroneCI'
+INFO: Load active rules
+INFO: Load active rules (done) | time=624ms
+INFO: Indexing files...
+INFO: Project configuration:
+INFO:   Excluded sources: **/**_test.go
+INFO:   Included tests: **/**_test.go
+INFO: 6 files indexed
+INFO: 8 files ignored because of inclusion/exclusion patterns
+INFO: 2 files ignored because of scm ignore settings
+INFO: Quality profile for go: Sonar way
+INFO: ------------- Run sensors on module helloworld-web
+INFO: Load metrics repository
+INFO: Load metrics repository (done) | time=22ms
+INFO: Sensor CSS Rules [cssfamily]
+INFO: No CSS, PHP, HTML or VueJS files are found in the project. CSS analysis is skipped.
+INFO: Sensor CSS Rules [cssfamily] (done) | time=1ms
+INFO: Sensor JaCoCo XML Report Importer [jacoco]
+INFO: 'sonar.coverage.jacoco.xmlReportPaths' is not defined. Using default locations: target/site/jacoco/jacoco.xml,target/site/jacoco-it/jacoco.xml,build/reports/jacoco/test/jacocoTestReport.xml
+INFO: No report imported, no coverage information will be imported by JaCoCo XML Report Importer
+INFO: Sensor JaCoCo XML Report Importer [jacoco] (done) | time=2ms
+INFO: Sensor SonarGo [go]
+INFO: 1 source files to be analyzed
+INFO: Load project repositories
+INFO: Load project repositories (done) | time=20ms
+INFO: Sensor SonarGo [go] (done) | time=178ms
+INFO: Sensor Go Cover sensor for Go coverage [go]
+INFO: 1/1 source files have been analyzed
+INFO: Load coverage report from '/go/src/github.com/nemonik/helloworld-web/tests/reports/coverage.out'
+INFO: Sensor Go Cover sensor for Go coverage [go] (done) | time=12ms
+INFO: Sensor Import of GolangCI-Lint issues [go]
+INFO: Importing /go/src/github.com/nemonik/helloworld-web/tests/reports/golangci-lint.xml
+INFO: Sensor Import of GolangCI-Lint issues [go] (done) | time=48ms
+INFO: Sensor C# Properties [csharp]
+INFO: Sensor C# Properties [csharp] (done) | time=1ms
+INFO: Sensor JavaXmlSensor [java]
+INFO: Sensor JavaXmlSensor [java] (done) | time=1ms
+INFO: Sensor HTML [web]
+INFO: Sensor HTML [web] (done) | time=3ms
+INFO: Sensor VB.NET Properties [vbnet]
+INFO: Sensor VB.NET Properties [vbnet] (done) | time=3ms
+INFO: ------------- Run sensors on project
+INFO: Sensor Zero Coverage Sensor
+INFO: Sensor Zero Coverage Sensor (done) | time=1ms
+INFO: CPD Executor Calculating CPD for 1 file
+INFO: CPD Executor CPD calculation finished (done) | time=7ms
+INFO: Analysis report generated in 53ms, dir size=84 KB
+INFO: Analysis report compressed in 14ms, zip size=12 KB
+INFO: Analysis report uploaded in 21ms
+INFO: ANALYSIS SUCCESSFUL, you can browse https://sonar.nemonik.com/dashboard?id=helloworld-web
+INFO: Note that you will be able to access the updated dashboard once the server has processed the submitted analysis report
+INFO: More about the report processing at https://sonar.nemonik.com/api/ce/task?id=AXrAARniOsCp9_iMkVvv
+INFO: Analysis total time: 2.719 s
+INFO: ------------------------------------------------------------------------
+INFO: EXECUTION SUCCESS
+INFO: ------------------------------------------------------------------------
+INFO: Total time: 6.088s
+INFO: Final Memory: 13M/68M
+INFO: ------------------------------------------------------------------------
 ```
 
 Open on your host open [SonarQube](https://github.com/SonarSource/sonarqube/) (e.g., <https://sonar.nemonik.com/dashboard?id=helloworld-web>) to view the results.
@@ -3943,8 +4047,6 @@ Open the `helloworld-web` ind Drone CI (e.g., ) to monitor progress.
 Output for `build` will resemble
 
 ```
-+ which make
-/usr/bin/make
 + make build
 CGO_ENABLED=0 GOOS=linux go build -a -o helloworld-web -v
 internal/unsafeheader
