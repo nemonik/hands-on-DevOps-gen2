@@ -4503,6 +4503,12 @@ deploy: docker-push
 	kubectl wait --for=condition=ready pod -n helloworld-web -l app.kubernetes.io/component=helloworld-web --timeout=180s
 ```
 
+Execute the make deploy
+
+```bash
+make deploy
+```
+
 Output will resemble
 
 [![asciicast](https://asciinema.org/a/GKe2ARz7o1MFIHZnHhXgTj1P8.svg)](https://asciinema.org/a/GKe2ARz7o1MFIHZnHhXgTj1P8)
@@ -4736,9 +4742,14 @@ docker push k3d-registry.nemonik.com:5000/nemonik/drone-kubectl:1.21.2
 
 Now that service account created, the secrets have been added and we have our container image we'll use to automate the `kubectl` command let's create the `deployment` step.
 
-Now let add a step to our pipeline to deploy our helloworld-web application to our [Kubernetes](https://kubernetes.io/docs/concepts/overview/what-is-kubernetes/) cluster.
+Now let add a step to our pipeline to deploy our helloworld-web application to our [Kubernetes](https://kubernetes.io/docs/concepts/overview/what-is-kubernetes/) cluster
 
-In the root of the project open `.drone.yaml` in `nvim` and add the following step at the bottom
+```bash
+cd ~/go/src/github.com/nemonik/helloworld-web/
+nvim .drone.yaml
+```
+
+And add the following step at the bottom
 
 ```yaml
 - name: deploy
