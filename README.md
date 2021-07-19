@@ -3845,27 +3845,31 @@ The output will resemble
 [![asciicast](https://asciinema.org/a/KSjRi7tBhsdajrBINIYbmbwJG.svg)](https://asciinema.org/a/KSjRi7tBhsdajrBINIYbmbwJG)
 
 Now that we've built, tagged and pushed the container into our registery we can utiulize it in a pipeline.
-Let's `.drone.yml` in our text editor
+
+In the shell
+
+```bash
+cd ~/go/src/github.com/nemonik/helloworld-web
+nvim .drone.yml
+```
+
+copy the content below to create our pipeline (`.drone.yml`) in our text editor
 
 ```yaml
-kind: pipeline
-type: kubernetes
-name: default
-
 steps:
-  - name: sonarqube
-    image: k3d-registry.nemonik.com:5000/nemonik/golang-sonarqube-scanner:latest
-    commands:
-      - export DRONESRC=`pwd`
-      - export GOBIN=$GOPATH/bin
-      - export PATH="$GOBIN:$PATH"
-      - mkdir -p $GOPATH/src/github.com/nemonik
-      - cd $GOPATH/src/github.com/nemonik
-      - ln -s $DRONESRC helloworld-web
-      - cd helloworld-web
-      - golangci-lint run --out-format checkstyle > tests/reports/goangci-lint.xml || true
-      - go test -v ./... -coverprofile=tests/reports/coverage.out || true
-      - sonar-scanner || true
+- name: sonarqube
+  image: k3d-registry.nemonik.com:5000/nemonik/golang-sonarqube-scanner:latest
+  commands:
+  - export DRONESRC=`pwd`
+  - export GOBIN=$GOPATH/bin
+  - export PATH="$GOBIN:$PATH"
+  - mkdir -p $GOPATH/src/github.com/nemonik
+  - cd $GOPATH/src/github.com/nemonik
+  - ln -s $DRONESRC helloworld-web
+  - cd helloworld-web
+  - golangci-lint run --out-format checkstyle > tests/reports/golangci-lint.xml || true
+  - go test -v ./... -coverprofile=tests/reports/coverage.out || true
+  - sonar-scanner || true
 ```
 
 Things to note in the above
@@ -4040,8 +4044,7 @@ Add a build step to our `.drone.yml`
 - name: build
   image: k3d-registry.nemonik.com:5000/golang:1.16.5
   commands:
-    - which make
-    - make build
+  - make build
 ```
 
 To execute your pipeline, push your changes to [GitLab](https://gitlab.com/rluna-gitlab/gitlab-ce)
