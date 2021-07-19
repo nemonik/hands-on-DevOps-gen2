@@ -186,7 +186,7 @@
           register: omf
 
         - name: Install Oh My Fish, if not installed
-          ansible.builtin.shell: sh -c "curl -fsSL https://get.oh-my.fish > ~/omf_install && fish omf_install --yes && rm ~/omf_install"
+          ansible.builtin.shell: sh -c "curl -fsSL https://get.oh-my.fish > ~/omf_install && ~/fish omf_install --yes && rm ~/omf_install"
           when: not omf.stat.exists
 
     - name: Ensure Tide theme for fish is installed
