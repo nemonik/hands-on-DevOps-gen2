@@ -30,6 +30,13 @@ skinparam component {
   FontSize 15
 }
 
+skinparam agent {
+  BorderColor #0B5C92
+  BackgroundColor #e0e59a
+  FontStyle "Thin"
+  FontSize 15
+}
+
 
 skinparam note {
   BorderColor #0B5C92
@@ -63,7 +70,11 @@ rectangle "Host (e.g., your laptop, desktop)" {
 
     component "Private\nContainer Registry" as private_registry
   }
+
+  agent "k3d" as k3d
 }
+
+
 
 traefik <.[#0B5C92]d.> gitlab : http
 traefik <.[#0B5C92]d.> drone : http
@@ -77,5 +88,8 @@ k3s <.[#0B5C92]d.> private_registry : http
 
 you <-[#0B5C92]d-> private_registry : https
 you <-[#0B5C92]d-> traefik : https
+
+you -[#0B5C92]d-> k3d : cli
+k3d -[#0B5C92]d-> k3s : api
 
 @enduml
