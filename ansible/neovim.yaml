@@ -69,8 +69,8 @@
     - name: Ensure pynvim python module is installed for coc-pyright
       ansible.builtin.shell: bash -c "python3 -m pip install --user --upgrade pynvim"
 
-    - name: Ensure black python module is installed for coc-pyright to be able to call on black for formatting
-      ansible.builtin.shell: bash -c "python3 -m pip install --user --upgrade black"
+    #- name: Ensure black python module is installed for coc-pyright to be able to call on black for formatting
+    #  ansible.builtin.shell: bash -c "python3 -m pip install --user --upgrade black"
 
     - name: Ensure solargraph gem is installed for coc-solargraph
       ansible.builtin.shell: bash -c '[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" && gem install solargraph'

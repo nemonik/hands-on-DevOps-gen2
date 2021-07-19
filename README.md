@@ -195,42 +195,43 @@ What you should bring:
     - [12.4. Author the `helloworld-web` application](#124-author-the-helloworld-web-application)
     - [12.5. Build and run the `helloworld-web` application](#125-build-and-run-the-helloworld-web-application)
     - [12.6. Run golangci-lint on the `helloworld-web` application](#126-run-golangci-lint-on-the-helloworld-web-application)
-        - [12.7. Fixing the problem](#127-fixing-the-problem)
-    - [12.8. Author the unit tests](#128-author-the-unit-tests)
-    - [12.9. Perform static analysis (i.e., sonar-scanner) on the command line](#129-perform-static-analysis-ie-sonar-scanner-on-the-command-line)
-        - [12.9.1. Perform static analysis on the command line](#1291-perform-static-analysis-on-the-command-line)
-    - [12.10. Automate the build (i.e., write the Makefile)](#1210-automate-the-build-ie-write-the-makefile)
-    - [12.11. Containerize the application](#1211-containerize-the-application)
-    - [12.12. Run the container](#1212-run-the-container)
-        - [12.12.1. Option 1](#12121-option-1)
-        - [12.12.2. Option 2](#12122-option-2)
-    - [12.13. Push the container image to the private registry](#1213-push-the-container-image-to-the-private-registry)
-    - [12.14. Configure Drone to execute your CICD pipeline](#1214-configure-drone-to-execute-your-cicd-pipeline)
-    - [12.15. Add Static Analysis (`sonar`) step to your CICD pipeline](#1215-add-static-analysis-sonar-step-to-your-cicd-pipeline)
-    - [12.16. Add the `build` step to the pipeline](#1216-add-the-build-step-to-the-pipeline)
-    - [12.17. Add the `nemonik\helloworld-web:latest` container image `publish` step to pipeline](#1217-add-the-nemonik\helloworld-weblatest-container-image-publish-step-to-pipeline)
-    - [12.18. Deploy `helloworld-web` application to the Kubernetes cluster](#1218-deploy-helloworld-web-application-to-the-kubernetes-cluster)
-    - [12.19. Add a `deploy` rule to the Makefile](#1219-add-a-deploy-rule-to-the-makefile)
-    - [12.20. Add a `deploy` step to the pipeline](#1220-add-a-deploy-step-to-the-pipeline)
-        - [12.20.1. Add a Kubernetes service account for the automation](#12201-add-a-kubernetes-service-account-for-the-automation)
-        - [12.20.2. Add secrets to our `helloworld-web` Drone CI repistory](#12202-add-secrets-to-our-helloworld-web-drone-ci-repistory)
-        - [12.20.3. Build, tag and push our `deploy` step container](#12203-build-tag-and-push-our-deploy-step-container)
-        - [12.20.4. Add the `deploy` step to our pipeline](#12204-add-the-deploy-step-to-our-pipeline)
-    - [12.21. Add compliance-as-code (`inspec`) test to the pipeline](#1221-add-compliance-as-code-inspec-test-to-the-pipeline)
-        - [12.21.1. Author our InSpec tests](#12211-author-our-inspec-tests)
-        - [12.21.2. Execute the InSpec tests on your `helloworld-web` deployment](#12212-execute-the-inspec-tests-on-your-helloworld-web-deployment)
-        - [12.21.3. Add an `inspec` rule to the Makefile](#12213-add-an-inspec-rule-to-the-makefile)
-        - [12.21.4. Add a `inspec` step to the pipeline](#12214-add-a-inspec-step-to-the-pipeline)
-            - [12.21.4.1. Build, tag, and push our `inspec` step container](#122141-build-tag-and-push-our-inspec-step-container)
-            - [12.21.4.2. Add the compliance-as-code (`inspec`) step to the pipeline](#122142-add-the-compliance-as-code-inspec-step-to-the-pipeline)
-        - [12.21.5. Viewing the `inspec` results in Heimdall 2 Lite](#12215-viewing-the-inspec-results-in-heimdall-2-lite)
-        - [12.21.6. Add an automated functional test (`selenium`) step to the pipeline](#12216-add-an-automated-functional-test-selenium-step-to-the-pipeline)
-            - [12.21.7. Pull and run the Selenium Chrome Standalone browser](#12217-pull-and-run-the-selenium-chrome-standalone-browser)
-            - [12.21.8. Create our functional test automation](#12218-create-our-functional-test-automation)
-            - [12.21.9. Build, tag, and push the `selenium` step container](#12219-build-tag-and-push-the-selenium-step-container)
-            - [12.21.10. Add the `selenium` step to the pipeline](#122110-add-the-selenium-step-to-the-pipeline)
-    - [12.22. Add the DAST (`owasp-zap`) step to the pipeline](#1222-add-the-dast-owasp-zap-step-to-the-pipeline)
-    - [12.23. All the source for `helloworld-web`](#1223-all-the-source-for-helloworld-web)
+        - [12.6.1. Fixing the problem](#1261-fixing-the-problem)
+    - [12.7. Author the unit tests](#127-author-the-unit-tests)
+    - [12.8. Perform static analysis (i.e., sonar-scanner) on the command line](#128-perform-static-analysis-ie-sonar-scanner-on-the-command-line)
+        - [12.8.1. Perform static analysis on the command line](#1281-perform-static-analysis-on-the-command-line)
+    - [12.9. Automate the build (i.e., write the Makefile)](#129-automate-the-build-ie-write-the-makefile)
+    - [12.10. Containerize the application](#1210-containerize-the-application)
+    - [12.11. Run the container](#1211-run-the-container)
+        - [12.11.1. Option 1](#12111-option-1)
+        - [12.11.2. Option 2](#12112-option-2)
+    - [12.12. Push the container image to the private registry](#1212-push-the-container-image-to-the-private-registry)
+    - [12.13. Configure Drone to execute your CICD pipeline](#1213-configure-drone-to-execute-your-cicd-pipeline)
+    - [12.14. Add Static Analysis (`sonar`) step to your CICD pipeline](#1214-add-static-analysis-sonar-step-to-your-cicd-pipeline)
+    - [12.15. Add the `build` step to the pipeline](#1215-add-the-build-step-to-the-pipeline)
+    - [12.16. Add the `nemonik\helloworld-web:latest` container image `publish` step to pipeline](#1216-add-the-nemonik\helloworld-weblatest-container-image-publish-step-to-pipeline)
+    - [12.17. Deploy `helloworld-web` application to the Kubernetes cluster](#1217-deploy-helloworld-web-application-to-the-kubernetes-cluster)
+    - [12.18. Add a `deploy` rule to the Makefile](#1218-add-a-deploy-rule-to-the-makefile)
+    - [12.19. Add a `deploy` step to the pipeline](#1219-add-a-deploy-step-to-the-pipeline)
+        - [12.19.1. Add a Kubernetes service account for the automation](#12191-add-a-kubernetes-service-account-for-the-automation)
+        - [12.19.2. Add secrets to our `helloworld-web` Drone CI repistory](#12192-add-secrets-to-our-helloworld-web-drone-ci-repistory)
+        - [12.19.3. Build, tag and push our `deploy` step container](#12193-build-tag-and-push-our-deploy-step-container)
+        - [12.19.4. Add the `deploy` step to our pipeline](#12194-add-the-deploy-step-to-our-pipeline)
+    - [12.20. Add compliance-as-code (`inspec`) test to the pipeline](#1220-add-compliance-as-code-inspec-test-to-the-pipeline)
+        - [12.20.1. Author our InSpec tests](#12201-author-our-inspec-tests)
+        - [12.20.2. Execute the InSpec tests on your `helloworld-web` deployment](#12202-execute-the-inspec-tests-on-your-helloworld-web-deployment)
+        - [12.20.3. Add an `inspec` rule to the Makefile](#12203-add-an-inspec-rule-to-the-makefile)
+        - [12.20.4. Add a `inspec` step to the pipeline](#12204-add-a-inspec-step-to-the-pipeline)
+            - [12.20.4.1. Build, tag, and push our `inspec` step container](#122041-build-tag-and-push-our-inspec-step-container)
+            - [12.20.4.2. Add the compliance-as-code (`inspec`) step to the pipeline](#122042-add-the-compliance-as-code-inspec-step-to-the-pipeline)
+        - [12.20.5. Viewing the `inspec` results in Heimdall 2 Lite](#12205-viewing-the-inspec-results-in-heimdall-2-lite)
+        - [12.20.6. Supplemental InSpec output for viewing in Heimdall 2 Lite](#12206-supplemental-inspec-output-for-viewing-in-heimdall-2-lite)
+        - [12.20.7. Add an automated functional test (`selenium`) step to the pipeline](#12207-add-an-automated-functional-test-selenium-step-to-the-pipeline)
+            - [12.20.7.1. Pull and run the Selenium Chrome Standalone browser](#122071-pull-and-run-the-selenium-chrome-standalone-browser)
+            - [12.20.7.2. Create our functional test automation](#122072-create-our-functional-test-automation)
+            - [12.20.7.3. Build, tag, and push the `selenium` step container](#122073-build-tag-and-push-the-selenium-step-container)
+            - [12.20.7.4. Add the `selenium` step to the pipeline](#122074-add-the-selenium-step-to-the-pipeline)
+    - [12.21. Add the DAST (`owasp-zap`) step to the pipeline](#1221-add-the-dast-owasp-zap-step-to-the-pipeline)
+    - [12.22. All the source for `helloworld-web`](#1222-all-the-source-for-helloworld-web)
 - [13. Additional best practices to consider around securing containerized applications](#13-additional-best-practices-to-consider-around-securing-containerized-applications)
 
 <!-- /TOC -->
@@ -647,7 +648,7 @@ If you're on an OSX host perform the following:
 
 #### 9.4.0.2. On Windows, install Docker Desktop
 
-TODO: Complete this section.  I have plans to add this within a few weeks.
+TODO: Complete this section. I have plans to add this within a few weeks.
 
 ### 9.4.1. On Arch Linux, installing Docker
 
@@ -697,8 +698,9 @@ Each [Ansible](https://github.com/ansible/ansible) playbook is written in a [YAM
 The playbooks for this class are located in the [ansible/](./ansible/) project sub-folder
 
 ```
-ansible/
+ansible
 ├── common.yaml
+├── docker.yaml
 ├── files
 │   ├── coc-settings.json
 │   └── init.vim
@@ -707,10 +709,15 @@ ansible/
 ├── inventory.yaml
 ├── main.yaml
 ├── neovim.yaml
-├── package.json
 ├── pyenv.yaml
 ├── ruby.yaml
-└── sonar-scanner-cli.yaml
+├── sonar-scanner-cli.yaml
+├── template-shell-configs.yaml
+├── templates
+│   ├── bash_profile.tpl
+│   ├── config.fish.tpl
+│   └── zshrc.tpl
+└── yay.yaml
 ```
 
 Each playbook is responsible for a unit of configuration. [ansible/files/](./ansible/files/) contains a number of files copied into the userspace to configure the [neovim](https://github.com/neovim/neovim) editor.
@@ -853,7 +860,7 @@ Output will resemble
 In order to use the paramiko connection plugin or modules that require paramiko, install paramiko
 
 ```bash
-python3 -m pip3 install --user paramiko --no-cache-dir
+python3 -m pip install --user paramiko --no-cache-dir
 ```
 
 Output will resemble
@@ -1259,16 +1266,21 @@ If your on LinkedIn or search many of the job boards you'll find many employers 
 Now that we've reviewed the playbook lets execute it via the Make target `install-dependencies` in the root of the project in our shell
 
 ```bash
-cd ~/Development/workspace/hands-on-DevOps-gen2
-if [[ "$OSTYPE" == "darwin"* ]]; then brew install bash; fi
+if [[ "$OSTYPE" == "darwin"* ]]; then brew install bash; /usr/local/bin/bash; fi
 export PATH="~/.local/bin/:/usr/local/bin:$PATH"
 cd $HOME/Development/workspace/hands-on-DevOps-gen2
 make install-dependencies
 ```
 
-Pay attention to the playbook's run as it may stop to ask you for your password.
+**NOTES**
 
-I'll explained what Make and a target is in subsequent section. As the output is a bit too large to capture here, I've only capture the last few lines of the output below. I will resemble
+- Pay attention to the playbook's run as it may stop to ask you for your password.
+
+The output should resemble
+
+[![asciicast](https://asciinema.org/a/0dldJSH5189opfqyInl5p61Ou.svg)](https://asciinema.org/a/0dldJSH5189opfqyInl5p61Ou)
+
+The last bit of output is important
 
 ```
 META: ran handlers
@@ -1499,7 +1511,7 @@ make start
 
 The output will resemble
 
-[![asciicast](https://asciinema.org/a/xh83WI2Ndyc8WLqcRv5gQesfO.svg)](https://asciinema.org/a/xh83WI2Ndyc8WLqcRv5gQesfO)
+[![asciicast](https://asciinema.org/a/I6DUWex7m79MrnkwCXCqfJsnS.svg)](https://asciinema.org/a/I6DUWex7m79MrnkwCXCqfJsnS)
 
 Make first start a private container registry to hold your container images by executing the `start-registry` rule, who will inturn execute the [./start_registry.sh](start_registry.sh) bash script, whose output will resemble
 
@@ -1756,13 +1768,13 @@ The script ends reminding you to add the following lines to your `/etc/hosts` fi
 127.0.0.1 helloworld.nemonik.com
 ```
 
-**NOTES**
+You do this via running nvim as root (i.e., `sudo nvim /etc/hosts`) to edit the hosts file and add the lines above.
 
-- You do this via running nvim as root (i.e., `sudo nvim /etc/hosts`) to edit the hosts file and add the lines above.
+**NOTES**
 
 - Your host IP address (`192.168.65.2`) will likely be different for you.
 
-- If you are using your own domain then `nemonik.com` will be replaced with whatever you've provided the `domain` variable in the [.env](./.env) file.
+- If you are using your own domain then `nemonik.com` will b:e replaced with whatever you've provided the `domain` variable in the [.env](./.env) file.
 
 ### 10.3.3. Verifying the cluster is up and running
 
@@ -1814,13 +1826,19 @@ make install
 
 This is a long running process as each install rule will be execute triggering a tool's install script. Each install script retrieves the container images related to the factory tool being installed and then executes one or more Helm charts and applies zero or more [Kubernetes](https://kubernetes.io/docs/concepts/overview/what-is-kubernetes/) resource files followed by possibly additional steps to ensure the desired state of the tool is on the cluster
 
-[![asciicast](https://asciinema.org/a/zhBz6xp7kgwQNhmr0SO6vgRzD.svg)](https://asciinema.org/a/zhBz6xp7kgwQNhmr0SO6vgRzD)
+[![asciicast](https://asciinema.org/a/0N1KzcDazU199HuGDt65hWjxL.svg)](https://asciinema.org/a/0N1KzcDazU199HuGDt65hWjxL)
 
-In another shell you can watch the tools spin
+In another shell you can watch the tools spin up
 
 ```bash
 watch -n 15 kubectl get pods -A
 ```
+
+Whose output will resemble.
+
+[![asciicast](https://asciinema.org/a/FOOwDvztqoLrAwXvpRYY3b603.svg)](https://asciinema.org/a/FOOwDvztqoLrAwXvpRYY3b603)
+
+Pop some corn it will be a while.
 
 ## 10.4. The long-running tools
 
@@ -1835,6 +1853,7 @@ This section will describe the long-running tools leaving subsequent sections to
 Typically, Agile teams work using a visual task management tool such as a project board, task board, Kanban or Scrum visual management board. These boards can be implemented using a whiteboard or open space on the walls of a room with colored index cards taped to them or in software. The board is at a minimum segmented into a few columns _To do_, _In process_, and _Done_, but the board can be tailored. I've personally seen boards for very large projects consume every bit of wall space of a very large cavernous room, but as Lean-Agile has matured, teams have grown larger and more disparate, tools have emerged to provide a clear view into a project's management to all levels of concern (e.g., developers, managers, product owner, and the customer) answering:
 
 - Are deadlines being achieved?
+- What is the work in progress?
 - Are team members overloaded?
 - How much is complete?
 - What's next?
@@ -1847,7 +1866,7 @@ Further, the Lean-Agile Software tools should provide the following capabilities
 - Facilitating the selection and assignment of individual requirements to resources, and the tracking of progress for a release.
 - Permit collaboration with external third parties.
 
-The 800 pound Gorilla in this market segment is JIRA Software. Some of my co-workers hate it. It is part of the Atlassian suite providing provides collaboration software for teams with products including JIRA Software, Confluence, Bitbucket, and Stash. Back when Atlassian (Stocker ticker: TEAM) was trading at 50-dollars it was a good investment.
+The 800 pound Gorilla in this market segment is JIRA Software. I and some of my co-workers loath it. It is part of the Atlassian suite providing provides collaboration software for teams with products including JIRA Software, Confluence, Bitbucket, and Stash. Back when Atlassian (Stocker ticker: TEAM) was trading at 50-dollars it was a good investment. It feel more like a ticketing systems in comparison to the others.
 
 **NOTE**
 
@@ -2590,7 +2609,7 @@ run:
 
 **NOTE**
 
-- Each line indentation is a `tab` and **not** a series of `space` characters. `Make` will fail to execute if these tabs are converted to a series of space characters.
+- Each line indentation is a `tab` and **not** a series of `space bar` characters. `Make` will fail to execute if these tabs are converted to a series of space characters.
 
 Save the file and exit your editor.
 
@@ -2665,7 +2684,7 @@ The pipeline is authored in YAML like almost all the CI orchestrators out there 
 
 - `steps:` - defines the list of steps followed to build, test and deploy your code.
 - `build` and `run` - defines the names of the step. These are yours to name. Name steps something meaningful as to what the step is orchestrating. Each step is executed serially, in the order defined.
-- `image: k3d-registry.nemonik.com:5000/golang:1.16.5` - defines the container image to execute the step. The golang container tagged `1.16.5` will be retrieved from private Docker registry located at `k3d-registry.nemonik.com:5000`. Drone uses Docker images for the build environment, plugins and service containers. Drone spins them up for the execution of the pipeline and when no longer needed they go poof.
+- `image: k3d-registry.nemonik.com:5000/golang:1.16.5` - defines the container image to execute the step. The golang container tagged `1.16.5` will be retrieved from private container image registry located at `k3d-registry.nemonik.com:5000`. Drone uses Docker images for the build environment, plugins and service containers. Drone spins them up for the execution of the pipeline and when no longer needed they go poof.
 - `commands` - defines a collection of terminal commands to be executed. These are all the same commands we executed previously in the command line. If anyone of these commands were to fail returning a non-zero exit code, the pipeline will immediately end resulting in a failed build.
 
 ### 11.11.1. Configure Drone to execute your pipeline
@@ -2694,7 +2713,7 @@ To trigger the build, simply commit your code:
 
 ```bash
 git add .
-git commit -m "Added Drone pipeline"
+git commit -m "added Drone pipeline"
 git push origin master
 ```
 
@@ -3022,7 +3041,7 @@ Oops. Line 11 has problems:
 
 - `http.ListenAndServe(":3000", logRequest(http.DefaultServeMux))` on line 11 returns an `err` if it runs into problems. We need to handle the problem by logging the `err` and exit.
 
-### 12.7. Fixing the problem
+### 12.6.1. Fixing the problem
 
 ![Activity Diagram for helloworld-web project: Fix the application](diagrams/helloworld-web-fix-the-application.svg)
 [PlantUML source for this diagram](plantuml/helloworld-web-fix-the-application.puml)
@@ -3069,7 +3088,7 @@ golangci-lint run
 
 And after some time, nothing is returned. Problem solved. If they could all be this easy.
 
-## 12.8. Author the unit tests
+## 12.7. Author the unit tests
 
 ![Activity Diagram for helloworld-web project: Author unit tests](diagrams/helloworld-web-author-unit-tests.svg)
 [PlantUML source for this diagram](plantuml/helloworld-web-author-unit-tests.puml)
@@ -3170,14 +3189,14 @@ ok  	github.com/nemonik/helloworld-web	1.044s
 
 Notice, we only scored 55.6% coverage, but we appear to have a unit test for all our methods? This where discernment comes in. Do you battle for a 100%, 80%, some other number snatched from the air or call this a win. Up to you or really your team.
 
-## 12.9. Perform static analysis (i.e., sonar-scanner) on the command line
+## 12.8. Perform static analysis (i.e., sonar-scanner) on the command line
 
 ![Activity Diagram for helloworld-web project: Perform static analysis](diagrams/helloworld-web-perform-static-analysis.svg)
 [PlantUML source for this diagram](plantuml/helloworld-web-perform-static-analysis.puml)
 
 [SonarQube](https://github.com/SonarSource/sonarqube/) provides a static analysis capability to show the health of an application's source code, highlighting issues as they are introduced.
 
-### 12.9.1. Perform static analysis on the command line
+### 12.8.1. Perform static analysis on the command line
 
 Before you run sonar-scanner you have to commit your code so Sonar knows who to blame, so first head back to your `development` shell and enter
 
@@ -3231,7 +3250,7 @@ Let me unpack what the above commands are doing
 
 `sonar-scanner` then submits the reports. [SonarQube](https://github.com/SonarSource/sonarqube/) will automatically create the project for you with a report (e.g., <https://sonar.nemonik.com/dashboard?id=helloworld-web>).
 
-## 12.10. Automate the build (i.e., write the Makefile)
+## 12.9. Automate the build (i.e., write the Makefile)
 
 ![Activity Diagram for helloworld-web project: Automate the build](diagrams/helloworld-web-write-make-file.svg)
 [PlantUML source for this diagram](plantuml/helloworld-web-write-make-file.puml)
@@ -3281,7 +3300,7 @@ And so, you have build and test automation whose output resembles
 
 The same as when you pre-flighted. In fact this is the same asciinema cast.
 
-## 12.11. Containerize the application
+## 12.10. Containerize the application
 
 ![Activity Diagram for helloworld-web project: Containerize the application](diagrams/helloworld-web-dockerize-the-application.svg)
 [PlantUML source for this diagram](plantuml/helloworld-web-dockerize-the-application.puml)
@@ -3337,11 +3356,11 @@ After some time, the command line output will resemble
 
 What just happened?
 
-- The `FROM` line instructs Docker to retrieve the `golang:1.16.5` from the private Docker registry running on Docker, which it did. And then use this as the basis of your application's docker image.
+- The `FROM` line instructs Docker to retrieve the `golang:1.16.5` from the private container image registry running on Docker, which it did. And then use this as the basis of your application's docker image.
 - Then the rest of the commands in the `Dockerfile` are executed laying down layers on top of the `golang:1.16.5` container image thereby building a new docker image entitled `nemonik/helloworld-web` and tagging it `latest`.
-- `docker build` then places the image with the name `nemonik/helloworld-web` in your host's local Docker registry so that containers can be created off this image locally.
+- `docker build` then places the image with the name `nemonik/helloworld-web` in your host's local container image registry so that containers can be created off this image locally.
 
-Check the development vagrant's local Docker registry via
+Check the development vagrant's local container image registry via
 
 ```bash
 docker images nemonik/helloworld-web
@@ -3431,7 +3450,7 @@ nemonik/helloworld-web   latest    2a95b88aaa45   4 minutes ago   6.14MB
 
 The image is a slim 6.14 MB and way more secure.
 
-## 12.12. Run the container
+## 12.11. Run the container
 
 ![Activity Diagram for helloworld-web project: Run the container](diagrams/helloworld-web-run-the-docker-container.svg)
 [PlantUML source for this diagram](plantuml/helloworld-web-run-the-docker-container.puml)
@@ -3478,7 +3497,7 @@ Where
 - `--name helloworld-web` names the running container
 - `nemonik/helloworld-web` states what container image to use.
 
-### 12.12.1. Option 1
+### 12.11.1. Option 1
 
 The command line output for the first option will be
 
@@ -3487,7 +3506,7 @@ Listening on :3000
 172.17.0.1:60178  GET  /
 ```
 
-### 12.12.2. Option 2
+### 12.11.2. Option 2
 
 For the second option there will be no output written to the screen, but you can see the same output if you run
 
@@ -3516,7 +3535,7 @@ To kill the container
 docker rm -f helloworld-web
 ```
 
-## 12.13. Push the container image to the private registry
+## 12.12. Push the container image to the private registry
 
 ![Activity Diagram for helloworld-web project: Push the container image](diagrams/helloworld-web-push-container-image.svg)
 [PlantUML source for this diagram](plantuml/helloworld-web-push-container-image.puml)
@@ -3563,7 +3582,7 @@ The output will be something like
 
 [![asciicast](https://asciinema.org/a/UBSDv2sI83klwFhbZIotIcJpH.svg)](https://asciinema.org/a/UBSDv2sI83klwFhbZIotIcJpH)
 
-The Docker registry container image shipped by Docker does not provide a GUI, but we can verify by querying the catalog of the private registry through a web browser or [Unix](https://en.wikipedia.org/wiki/Unix) command line tool `curl` by entering into the command line
+The container registry image shipped by Docker does not provide a GUI, but we can verify by querying the catalog of the private registry through a web browser or [Unix](https://en.wikipedia.org/wiki/Unix) command line tool `curl` by entering into the command line
 
 ```bash
 curl -X GET http://k3d-registry.nemonik.com:5000/v2/_catalog
@@ -3655,7 +3674,7 @@ The pretty print of this look like
 }
 ```
 
-## 12.14. Configure Drone to execute your CICD pipeline
+## 12.13. Configure Drone to execute your CICD pipeline
 
 ![Activity Diagram for helloworld-web project: Configure Drone to execute your CICD pipeline](diagrams/helloworld-web-configure-drone-to-execute.svg)
 [PlantUML source for this diagram](plantuml/helloworld-web-configure-drone-to-execute.puml)
@@ -3669,7 +3688,7 @@ Complete the following:
 3. Then click `root/helloworld-web` repo and `ACTIVATE REPOSITORY` to enable Drone orchestration for the project.
 4. Then click the Drone logo in the upper left of the page to return home.
 
-## 12.15. Add Static Analysis (`sonar`) step to your CICD pipeline
+## 12.14. Add Static Analysis (`sonar`) step to your CICD pipeline
 
 ![Activity Diagram for helloworld-web project: Add Static Analysis step to pipeline](diagrams/helloworld-web-add-static-analysis.svg)
 [PlantUML source for this diagram](plantuml/helloworld-web-add-static-analysis.puml)
@@ -3775,7 +3794,7 @@ git commit -m "added sonar step to pipeline"
 git push origin master
 ```
 
-And then monitor the progress of the build in [Drone CI](https://github.com/drone/drone) (e.g., <https://drone.nemonik.com/root/helloworld-web> ).
+And then monitor the progress of the `root/helloworld-web` repository build (e.g., <https://drone.nemonik.com/root/helloworld-web> ) in [Drone CI](https://github.com/drone/drone).
 
 The pipeline should execute in a few minutes.
 
@@ -3908,7 +3927,7 @@ INFO: ------------------------------------------------------------------------
 
 Open on your host open [SonarQube](https://github.com/SonarSource/sonarqube/) (e.g., <https://sonar.nemonik.com/dashboard?id=helloworld-web>) to view the results.
 
-## 12.16. Add the `build` step to the pipeline
+## 12.15. Add the `build` step to the pipeline
 
 ![Activity Diagram for helloworld-web project: Add the build step to pipeline](diagrams/helloworld-web-add-build-step.svg)
 [PlantUML source for this diagram](plantuml/helloworld-web-add-build-step.puml)
@@ -3931,7 +3950,7 @@ git commit -m "added build step to pipeline"
 git push origin master
 ```
 
-In a Web browser open Drone at <http://192.168.0.10/root/helloworld-web> and click on the build being executed to monitor progress.
+Open the `helloworld-web` ind Drone CI (e.g., ) to monitor progress.
 
 Output for `build` will resemble
 
@@ -4049,7 +4068,7 @@ github.com/nemonik/helloworld-web
 
 Mirroring what you saw in development in your local environment.
 
-## 12.17. Add the `nemonik\helloworld-web:latest` container image `publish` step to pipeline
+## 12.16. Add the `nemonik\helloworld-web:latest` container image `publish` step to pipeline
 
 ![Activity Diagram for helloworld-web project: Add image publish step to pipeline](diagrams/helloworld-web-add-container-image-publish-step.svg)
 [PlantUML source for this diagram](plantuml/helloworld-web-add-container-image-publish-step.puml)
@@ -4218,7 +4237,7 @@ Indicating the `publish` step executed, successfully.
 
 This step is typically painfully slow if your container isn't optimized suchs as ours as this step leverages docker-in-docker to perform its tasks.
 
-## 12.18. Deploy `helloworld-web` application to the Kubernetes cluster
+## 12.17. Deploy `helloworld-web` application to the Kubernetes cluster
 
 Let's deploy the `helloworld-web` to the cluster. First we need to author the necessary [Kubernetes](https://kubernetes.io/docs/concepts/overview/what-is-kubernetes/) resource files to declare the desired state of the application on the cluster.
 
@@ -4372,7 +4391,7 @@ Either your deployment will return
 Hello world!
 ```
 
-## 12.19. Add a `deploy` rule to the Makefile
+## 12.18. Add a `deploy` rule to the Makefile
 
 Let's add a deploy rule to our `Makefile` with `nvim`
 
@@ -4396,14 +4415,14 @@ Output will resemble
 
 [![asciicast](https://asciinema.org/a/GKe2ARz7o1MFIHZnHhXgTj1P8.svg)](https://asciinema.org/a/GKe2ARz7o1MFIHZnHhXgTj1P8)
 
-## 12.20. Add a `deploy` step to the pipeline
+## 12.19. Add a `deploy` step to the pipeline
 
 ![Activity Diagram for helloworld-web project: Add container deploy step to pipeline](diagrams/helloworld-web-add-container-deploy-step.svg)
 [PlantUML source for this diagram](plantuml/helloworld-web-add-container-deploy-step.puml)
 
 Adding a `deploy` step to our Drone pipeline to perform the deployment of `nemonik/helloworld:latest` container image is a bit more involved.
 
-### 12.20.1. Add a Kubernetes service account for the automation
+### 12.19.1. Add a Kubernetes service account for the automation
 
 First, we need to create a service account so that we can automate the deployment.
 
@@ -4482,7 +4501,7 @@ rolebinding.rbac.authorization.k8s.io/helloworld-web-rolebinding created
 
 But we're not done. More still to do...
 
-### 12.20.2. Add secrets to our `helloworld-web` Drone CI repistory
+### 12.19.2. Add secrets to our `helloworld-web` Drone CI repistory
 
 In order to deploy from our pipeline we will need to add a few secrets to our pipeline to utilize our service account.
 
@@ -4550,7 +4569,7 @@ So, with the `k8s_server`, `k8s_cert` and `k8s_token` values above
 
 - When copying these values out of your [fish](https://fishshell.com/)shell be mindful not to copy the last character (⏎).
 
-### 12.20.3. Build, tag and push our `deploy` step container
+### 12.19.3. Build, tag and push our `deploy` step container
 
 To deploy our helloworld-web application to our cluster we will use a container. [Sinlead](https://github.com/sinlead) provides a Drone plug (i.e., a container) to do this [sinlead
 /drone-kubectl](https://github.com/sinlead/drone-kubectl) that I've patched his plugin to to build from the latest [bitnami/kubectl:1.21.2](https://hub.docker.com/layers/bitnami/kubectl/1.21.2/images/sha256-b039c6e142d7c915cdafa664482efa7c4b2619baa0c05974020d9c5a0b419550?context=explore) container image and direct its initialization output to `/dev/null`, so that this unexpected output doesn't break the build.
@@ -4624,7 +4643,7 @@ docker tag nemonik/drone-kubectl:1.21.2 k3d-registry.nemonik.com:5000/nemonik/dr
 docker push k3d-registry.nemonik.com:5000/nemonik/drone-kubectl:1.21.2
 ```
 
-### 12.20.4. Add the `deploy` step to our pipeline
+### 12.19.4. Add the `deploy` step to our pipeline
 
 Now that service account created, the secrets have been added and we have our container image we'll use to automate the `kubectl` command let's create the `deployment` step.
 
@@ -4656,7 +4675,7 @@ git commit -m "added deploy step to pipeline"
 git push origin master
 ```
 
-Open [Drone CI](https://github.com/drone/drone) and monitor `helloworld` builds (e.g., https://drone.nemonik.com/root/helloworld-web) and click on the executing build
+Open the `root/helloworld-web` repository pipeline (e.g., https://drone.nemonik.com/root/helloworld-web) in [Drone CI](https://github.com/drone/drone) to monitor.
 
 The pipeline should complete in a few minutes.
 
@@ -4711,7 +4730,7 @@ So, now we have beginnings of a real CICD pipeline. There are no strings on me e
 
   near the end as an indication.
 
-## 12.21. Add compliance-as-code (`inspec`) test to the pipeline
+## 12.20. Add compliance-as-code (`inspec`) test to the pipeline
 
 ![Activity Diagram for helloworld-web project: Add InSpec test to the pipeline](diagrams/helloworld-web-add-inspec.svg)
 [PlantUML source for this diagram](plantuml/helloworld-web-add-inspec.puml)
@@ -4742,7 +4761,7 @@ A really good tutorial focused on InSpec can be found here:
 
 <http://www.anniehedgie.com/inspec-basics-1>
 
-### 12.21.1. Author our InSpec tests
+### 12.20.1. Author our InSpec tests
 
 Back in your shell at the root of the `helloworld-web` project (i.e., `~/go/src/github.com/nemonik/helloworld-web`), we'll initialize an [InSpec](https://github.com/inspec/inspec) profile to verify your container's compliance to policy and configuration guidance. Yep, you're "gonna" be a security engineer.
 
@@ -4778,7 +4797,7 @@ cd tests/inspec/controls
 rm example.rb
 ```
 
-Then author a simple Ruby-based tests to verify the expected state of our deployment by creating `helloworld-web.rb` in an editor with this content:
+Then author a Ruby-based tests to verify the expected state of our deployment by creating `helloworld-web.rb` in an editor with this content:
 
 ```ruby
 # copyright: 2021, Michael Joseph Walsh
@@ -4879,7 +4898,7 @@ control "helloworld-web-deployment-4" do
 end
 ```
 
-### 12.21.2. Execute the InSpec tests on your `helloworld-web` deployment
+### 12.20.2. Execute the InSpec tests on your `helloworld-web` deployment
 
 We'll execute the [InSpec](https://github.com/inspec/inspec) test of the [Kubernetes](https://kubernetes.io/docs/concepts/overview/what-is-kubernetes/) deployment
 
@@ -4919,9 +4938,9 @@ Profile Summary: 4 successful controls, 0 control failures, 0 controls skipped
 Test Summary: 14 successful, 0 failures, 0 skipped
 ```
 
-We check each resource (i.e., ingress, service, and deployment) in the deployment for conformance.
+We check each resource ([Ingress](https://kubernetes.io/docs/concepts/services-networking/ingress/), [Service](https://kubernetes.io/docs/concepts/services-networking/service/), and [Deployment](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/)) declared in the deployment for conformance.
 
-### 12.21.3. Add an `inspec` rule to the Makefile
+### 12.20.3. Add an `inspec` rule to the Makefile
 
 Add the [InSpec](https://github.com/inspec/inspec) step to our `Makefile` with `nvim`
 
@@ -4948,11 +4967,11 @@ The results resemble
 
 [![asciicast](https://asciinema.org/a/9u3BxL9kTU43vUvwdNWUk38TZ.svg)](https://asciinema.org/a/9u3BxL9kTU43vUvwdNWUk38TZ)
 
-### 12.21.4. Add a `inspec` step to the pipeline
+### 12.20.4. Add a `inspec` step to the pipeline
 
 Now that we've preflighted our [InSpec](https://github.com/inspec/inspec) test from our host, let's add the test to our pipeline.
 
-#### 12.21.4.1. Build, tag, and push our `inspec` step container
+#### 12.20.4.1. Build, tag, and push our `inspec` step container
 
 We'll build from the `nemonik/drone-kubectl:1.21.2` we built earlier
 
@@ -4997,7 +5016,7 @@ Output will resemble
 
 [![asciicast](https://asciinema.org/a/KaEN3ttRjvtGjo5Mktfu59oOl.svg)](https://asciinema.org/a/KaEN3ttRjvtGjo5Mktfu59oOl)
 
-#### 12.21.4.2. Add the compliance-as-code (`inspec`) step to the pipeline
+#### 12.20.4.2. Add the compliance-as-code (`inspec`) step to the pipeline
 
 Head back into our `helloworld-web` project (i.e., `~/go/src/github.com/nemonik/helloworld-web/`) and edit `.drone.yml` in `nvim` to our `inspec` step.
 
@@ -5023,7 +5042,7 @@ git commit -m "added inspec step to pipeline"
 git push origin master
 ```
 
-Head over to Drone and watch the pipeline execute (e.g., https://drone.nemonik.com/root/helloworld-web).
+Head over to Drone and watch the `helloworld-web` repository pipeline execute (e.g., <https://drone.nemonik.com/root/helloworld-web>).
 
 Output of the `inspec` step of the pipeline will resemble
 
@@ -5075,7 +5094,7 @@ Test Summary: [38;5;41m14 successful[0m, 0 failures, 0 skipped
 
   near the end as an indication.
 
-### 12.21.5. Viewing the `inspec` results in Heimdall 2 Lite
+### 12.20.5. Viewing the `inspec` results in Heimdall 2 Lite
 
 We'll use Heimdall 2 to view the results in security engineer friendly manner.
 
@@ -5085,11 +5104,20 @@ inspec exec --chef-license=accept-silent helloworld --reporter json > tests/repo
 
 Open Heimdall 2 Lite - (e.g., <http://heimdall.nemonik.com>). You will need to authenticate and will be presented with an upload pane. Make sure `LOCAL FILES`, click `Choose files to upload`, then browse to navigate to `inspec_helloworld.json` in the class project (`go/src/github.com/nemonik/helloworld-web/tests/reports/inspec_helloworld.json`) and upload to view the results.
 
+### 12.20.6. Supplemental InSpec output for viewing in Heimdall 2 Lite
+
+The [./supplemental](./supplemental) folder holds
+
+- [./supplemental/k3s-server-sample.json](./supplemental/k3s-server-sample.json) - a compliance scan against a K3S Cluster as per the K8s STIG.
+- [./supplemental/RHEL7-STIG-scan-sample.json](./supplemental/RHEL7-STIG-scan-sample.json) - a compliance scan against a Centos7 VM as per the RHEL7 STIG.
+
+the results of two other InSpec tests that show off the power of Heimdall. Give uploading these into Heimdall a try.
+
 **NOTES**
 
 - If we were using the Heimdall Enterprise Server 2 edition we would have a REST API available to upload the results from our pipeline. Maybe in a future version of my class.
 
-### 12.21.6. Add an automated functional test (`selenium`) step to the pipeline
+### 12.20.7. Add an automated functional test (`selenium`) step to the pipeline
 
 ![Activity Diagram for helloworld-web project: Add automated functional test to the pipeline](diagrams/helloworld-web-add-automated-functional-test.svg)
 [PlantUML source for this diagram](plantuml/helloworld-web-add-automated-functional-test.puml)
@@ -5106,7 +5134,7 @@ More can be found here
 
 You'll need a couple of shells open to your `development` vagrant to complete this section.
 
-#### 12.21.7. Pull and run the Selenium Chrome Standalone browser
+#### 12.20.7.1. Pull and run the Selenium Chrome Standalone browser
 
 In a shell retrieve the [standalone-firefox:3.141](https://hub.docker.com/layers/selenium/standalone-firefox/3.141/images/sha256-9a199a23b054cb7dbf167507f28fe000c9e9d2d4291516edd1788572474433f3?context=explore) container, tag, and push it into our private container registry.
 
@@ -5138,9 +5166,9 @@ This spins up headless Chrome browser you can programmatically drive, so we can 
 
 **NOTES**
 
-- `--add-host helloworld.nemonik.com:$host_ip` parameter is needed, because the container will not know how to resolve the `helloworld.nemonik.com` domain. This is not a problem in the cluster as [./coredns/patch.sh](./coredns/patch.sh) patches CoreDNS in the K8s cluster.
+- `--add-host helloworld.nemonik.com:$host_ip` parameter is needed, because the container will not know how to resolve the `helloworld.nemonik.com` domain. This is not a problem in the cluster as [./coredns/patch.sh](./coredns/patch.sh) patches CoreDNS so that containers running inside the cluster can resolve the domain.
 
-A good start outputs to the command line
+A good start outputs to the command line like so
 
 ```
 2021-07-18 13:46:22,105 INFO Included extra file "/etc/supervisor/conf.d/selenium.conf" during parsing
@@ -5158,7 +5186,7 @@ A good start outputs to the command line
 
 Leave this shell running the container and move on...
 
-#### 12.21.8. Create our functional test automation
+#### 12.20.7.2. Create our functional test automation
 
 Open another shell, so we can author and run our automated test.
 
@@ -5176,7 +5204,7 @@ We're going to write our test in [Python](https://www.python.org/). [Python](htt
 pyenv versions
 ```
 
-Output will reseble
+Output will resemble
 
 ```
   system
@@ -5184,7 +5212,7 @@ Output will reseble
 * 3.9.6 (set by /Users/mjwalsh/.pyenv/version
 ```
 
-The one marked with an Asterix (\*) is the presently configure Python
+The one marked with an Asterix (\*) is the presently configured Python
 
 ```bash
 python version
@@ -5192,7 +5220,9 @@ python version
 
 Will verify we'll be using `Python 3.9.6` as well.
 
-So, now that's taken care of, but we're going to use [Poetry](https://python-poetry.org/) to create our project for selenium test and enter it
+So, now that's taken care of, but we're going to use [Poetry](https://python-poetry.org/) to create our project, manage our dependencies and run our [Selenium](https://github.com/SeleniumHQ/selenium) test.
+
+Perform the following
 
 ```bash
 poetry new func-test-helloworld-web
@@ -5218,7 +5248,7 @@ func-test-helloworld-web
     └── test_func_test_helloworld_web.py
 ```
 
-We need to add the `selenium==3.141` dependency so we can author our test, so let's add that
+[Poetry](https://python-poetry.org/)  handles retreiving and adding the `selenium==3.141` dependency via
 
 ```bash
 poetry add selenium==3.141
@@ -5248,7 +5278,7 @@ Package operations: 10 installs, 0 updates, 0 removals
   • Installing selenium (3.141.0)
 ```
 
-Poetry will create a virtualenv, retrieve the dependencies in to it and up update the `pyproject.toml` file
+[Poetry](https://python-poetry.org/)  will create a [virtualenv](https://virtualenv.pypa.io/en/latest/) for the project, retrieve the dependencies in to it and update the project's `pyproject.toml` file
 
 ```
 [tool.poetry]
@@ -5288,8 +5318,9 @@ And copy the following [Python](https://www.python.org/) source code into `nvim`
 
 """ helloworld-web selenium test """
 
+import logging
 import unittest
-import sys
+import os
 import socket
 import time
 from selenium import webdriver
@@ -5334,19 +5365,28 @@ class HelloworldWebTest(unittest.TestCase):
 
         assert "Hello world!" in self.browser.page_source
 
-
 if __name__ == "__main__":
-    if len(sys.argv) == 4:
-        SELENIUM_HOST = sys.argv[1]
-        SELENIUM_PORT = sys.argv[2]
-        HELLOWORLD_WEB_URL = sys.argv[3]
-    else:
-        print(
-            "python test_hello_world.py SELENIUM_HOST SELENIUM_PORT HELLOWORLD_WEB_URL"
-        )
-        sys.exit()
 
-    del sys.argv[1:]
+    try:
+        SELENIUM_HOST = os.environ["SELENIUM_HOST"]
+
+        logging.info("SELENIUM_HOST=%s" % SELENIUM_HOST)
+    except:
+        raise Exception("SELENIUM_HOST environment variable not set.")
+
+    try:
+        SELENIUM_PORT = os.environ["SELENIUM_PORT"]
+
+        logging.info("SELENIUM_PORT=%s" % SELENIUM_PORT)
+    except:
+        raise exception("SELENIUM_PORT environment variable not set.")
+
+    try:
+        HELLOWORLD_WEB_URL = os.environ["HELLOWORLD_WEB_URL"]
+
+        logging.info("HELLOWORLD_WEB_URL=%s" % HELLOWORLD_WEB_URL)
+    except:
+        raise exception("HELLOWORLD_WEB_URL environment variable not set.")
 
     # So that tests are fire in the order declared as the delete project is dependent on the
     # create project test
@@ -5359,7 +5399,7 @@ if __name__ == "__main__":
     )
 ```
 
-Save the file and exit.
+Save the file and exit. Yep. All this code to execute an automated functional test for the return of the text _Hello world!_.  They're note cheap. Top of the test pyramid expensive, so use them wisely.
 
 For now, if your using the [fish](https://fishshell.com/)shell let us run our test by entering into the command line
 
@@ -5392,9 +5432,7 @@ Ran 1 test in 1.188s
 OK
 ```
 
-The other windows will show logging.
-
-The [selenium/standalone-chrome:3.141](https://hub.docker.com/layers/selenium/standalone-chrome/3.141/images/sha256-bc4023992691ab8e2f20297f334fdcddd982928fbd969239b39b3dbc2dfc0657?context=explore) container running in our other shell will output
+The [selenium/standalone-chrome:3.141](https://hub.docker.com/layers/selenium/standalone-chrome/3.141/images/sha256-bc4023992691ab8e2f20297f334fdcddd982928fbd969239b39b3dbc2dfc0657?context=explore) container running in the other shell will output
 
 ```
 16:37:26.608 INFO [ActiveSessionFactory.apply] - Capabilities are: {
@@ -5412,7 +5450,7 @@ ChromeDriver was started successfully.
 16:37:27.354 INFO [ActiveSessions$1.onStop] - Removing session fd7024d1503fffdd7865d41056e0166f (org.openqa.selenium.chrome.ChromeDriverService)
 ```
 
-#### 12.21.9. Build, tag, and push the `selenium` step container
+#### 12.20.7.3. Build, tag, and push the `selenium` step container
 
 In your shell
 
@@ -5442,7 +5480,7 @@ FROM k3d-registry.nemonik.com:5000/nemonik/python:3.9.6
 LABEL maintainer "Michael Joseph Walsh <github.com@nemonik.com>"
 
 RUN pip install --upgrade pip && \
-    pip3 install poetry
+    pip install poetry
 ```
 
 Now to build, tag, and push the container to our private container registry
@@ -5463,7 +5501,7 @@ Output will resemble
  => => transferring context: 2B
  => [internal] load metadata for k3d-registry.nemonik.com:5000/nemonik/python:3.9.6
  => [1/2] FROM k3d-registry.nemonik.com:5000/nemonik/python:3.9.6
- => [2/2] RUN pip install --upgrade pip &&     pip3 install poetry
+ => [2/2] RUN pip install --upgrade pip &&     pip install poetry
  => exporting to image
  => => exporting layers
  => => writing image sha256:f738b305093af2bfef3a5e3aae1f568bb77e3d366b3eaa3ad7152d57a7ad3d1a
@@ -5482,7 +5520,7 @@ e4d0e810d54a: Mounted from nemonik/python
 latest: digest: sha256:8fc54ec8f4326f7cf521ba05306d01ffe4105d2865a6cbe357f007a6b9df381d size: 2429
 ```
 
-#### 12.21.10. Add the `selenium` step to the pipeline
+#### 12.20.7.4. Add the `selenium` step to the pipeline
 
 Edit the `.drone.yml` file at the root of your `helloworld-web` project and add the following `selenium` step, the `shared_memory` volume, and a `firefox` service.
 
@@ -5595,9 +5633,9 @@ ChromeDriver was started successfully.
 
 **NOTE**
 
-- If your build fails outright with the message `default: linter: untrusted repositories cannot mount host volumes`, you have forgotten the enable `Trusted` for the repository in [Drone CI](https://github.com/drone/drone). You can then go back do that and `RESTART` the build.
+- If your build fails outright with the message `default: linter: untrusted repositories cannot mount host volumes`, you have forgotten the enable `Trusted` for the `root/hellworld-web` repository in [Drone CI](https://github.com/drone/drone). You can  go back do that and restart the build by clicking on the hamburger (the icon with three dots in a vertical line) to open a drop down and selecting ``RESTART`.
 
-## 12.22. Add the DAST (`owasp-zap`) step to the pipeline
+## 12.21. Add the DAST (`owasp-zap`) step to the pipeline
 
 ![Activity Diagram for helloworld-web project: Add the DAST (`owasp-zap`) step to the pipeline](diagrams/helloworld-web-add-dast-step.svg)
 [PlantUML source for this diagram](plantuml/helloworld-web-add-dast-step.puml)
@@ -5696,7 +5734,7 @@ PASS: Loosely Scoped Cookie [90033]
 FAIL-NEW: 0	FAIL-INPROG: 0	WARN-NEW: 0	WARN-INPROG: 0	INFO: 0	IGNORE: 0	PASS: 51
 ```
 
-Great, now lets add another step to our pipeline after the `selenium` step, but before `services:` block.
+Great, now lets add another step to our pipeline after the `selenium` step, but before `services:` block.  Again, before the `services:` block.
 
 ```yaml
 - name: owasp-zap
@@ -5707,17 +5745,17 @@ Great, now lets add another step to our pipeline after the `selenium` step, but 
 
 **NOTE**
 
-- Again, add this new step right after the last above `services:`.
+- Again, add this new step right after the last `step`, but before the `services:`.
 
 To execute your pipeline, push your changes to [GitLab](https://gitlab.com/rluna-gitlab/gitlab-ce)
 
 ```bash
 git add .
-git commit -m "added owasp-zap step to pipeline"
+git commit -m "added owasp-zap step to the pipeline"
 git push origin master
 ```
 
-Open your `helloworld-web` repository in [Drone CI](https://github.com/drone/drone) (e.g., <https://drone.nemonik.com/root/helloworld-web>) and monitor the progress of the build. The pipeline should execute in a few minutes.
+Open your `root/helloworld-web` repository (e.g., <https://drone.nemonik.com/root/helloworld-web>) in [Drone CI](https://github.com/drone/drone)and monitor the progress of the build. The pipeline should execute in a few minutes.
 
 Successful output for this stage resembles the prior output
 
@@ -5783,7 +5821,7 @@ FAIL-NEW: 0	FAIL-INPROG: 0	WARN-NEW: 0	WARN-INPROG: 0	INFO: 0	IGNORE: 0	PASS: 51
 
 Our application is relatively simple, so it was doubtful anything would be found.
 
-## 12.23. All the source for `helloworld-web`
+## 12.22. All the source for `helloworld-web`
 
 The `helloworld-web` project can be viewed completed at
 
@@ -5791,7 +5829,7 @@ The `helloworld-web` project can be viewed completed at
 
 # 13. Additional best practices to consider around securing containerized applications
 
-This class doesn't cover a number of container application development best practices. A topic out of scope of the original intention of this course; especially, as I'm already cramming in several days of course material into a one-day course when taught in person, but perhaps subsequent course updates I'll cover a few of the following not already covered in the course material as additional topics. The biggest reason why relates with the followin sections. Agile and DevOps both exist to deliver features into the hands of users. We're not doing DevOps to do DevOps. If all anyone talks about is DevOps in the absense of the application life cycle you have a problem. Also, DevOps is very much intertwined with modern cloud-native development this is the reason for the folloiwing sections.
+This class doesn't cover a number of container application development best practices. A topic out of scope of the original intention of this course; especially, as I'm already cramming in several days of course material into a one-day course when taught in person, but perhaps subsequent course updates I'll cover a few of the following not already covered in the course material as additional topics. The biggest reason why relates with the followin sections. Agile and DevOps both exist to deliver features into the hands of users. We're not doing DevOps to do DevOps. If all anyone talks about is DevOps in the absense of the application life cycle you have a problem. Also, DevOps is very much intertwined with modern cloud-native development.
 
 Wth that, here's some best practices for containerized application development and operation:
 
@@ -5801,6 +5839,6 @@ Wth that, here's some best practices for containerized application development a
 4. Clean temporary files, such as, OS package repository caches, when creating your images.
 5. Avoid running the container’s process as root.
 6. Harden your Docker configuration as per an [InSpec](https://github.com/inspec/inspec) compliance profile, such as https://github.com/mitre/docker-ce-cis-baseline and https://github.com/dev-sec/cis-docker-benchmark or if you are using another container runtime either find one for the runtime or write your own compliance profile.
-7. Doing item-6 will require you to make use of a [notary](https://github.com/theupdateframework/notary) and private Docker registry (e.g., <https://hub.docker.com/_/registry>, <https://hub.docker.com/r/sonatype/nexus3>). I’ve written [Ansible](https://github.com/ansible/ansible) IaC to deploy Notary and it was a real pain in the butt to figure it out and took my countless hours, because the documentation is to put it plainly, "Sh!t." It would seem, they (i.e., whoever owns Docker Enterprise now) wants you to use Docker Enterprise vice getting Notary up and running with Docker.
+7. Doing item-6 will require you to make use of a [notary](https://github.com/theupdateframework/notary) and private container registry (e.g., <https://hub.docker.com/_/registry>, <https://hub.docker.com/r/sonatype/nexus3>). I’ve written [Ansible](https://github.com/ansible/ansible) IaC to deploy Notary and it was a real pain in the butt to figure it out and took my countless hours, because the documentation is to put it plainly, "Sh!t." It would seem, they (i.e., whoever owns Docker Enterprise now) wants you to use Docker Enterprise vice getting Notary up and running with Docker.
 8. Put your application development through a CICD pipeline like this class of the following that applies: code format enforcement, linting, static analysis, build automation, unit testing, compliance-as-code for the container image, automated functional test, and dynamic analysis.
 9. Consider adding to your CICD pipelines the exeuction of vulnerability scanning tools, such as, [Clair](https://coreos.com/clair/docs/latest/), [Docker Bench for Security](https://github.com/docker/docker-bench-security), [OpenSCAP Workbench](https://github.com/OpenSCAP/scap-workbench/releases), [Anchore](https://anchore.com/opensource/), et cetera. There will be overlap between these and other similar tools. Pick the ones that work the best for you, ones with frequent updates and having the largest vibrant community around.

@@ -20,3 +20,5 @@ gitlab/gitlab-IngressTcpRoute.yaml
 
 taiga/taiga-chart-values.yaml
 taiga/createsuperuser.sh
+
+ansible/package.json
