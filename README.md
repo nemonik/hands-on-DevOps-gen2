@@ -1307,11 +1307,6 @@ localhost                  : ok=135  changed=65   unreachable=0    failed=0    s
 
 If `failed ` equals something other than `0` then you have an issue to debug. Debuging will require you to review the task that resulted in the failure likely the last task run. Review the output, determine what playbook you were in, open and review the playbook and the offending task and then try the equivalent in the command line to debug the issue. The host may be in a state the playbook cannot handle. Perhaps a dependency is missing. Perhaps. Perhaps. Perhaps.
 
-The result is the following factory
-
-![Deployment diagram](diagrams/deployment.svg)
-[PlantUML source for this diagram](plantuml/deployment.puml)
-
 ### 10.2.3. On OSX, enable nerd fonts in XTerm2
 
 XTerm2 must be further configured to benefit from the Nerd Fonts installed by [Ansible](https://github.com/ansible/ansible). We're going to configure XTerm2 to use `Meslo Nerd Font` and use `Solarized Dark` color theme. Optionally, you can select another [Nerd font](https://www.nerdfonts.com/font-downloads).
@@ -1895,6 +1890,11 @@ Whose output will resemble.
 Pop some corn it will be a while.
 
 ## 10.4. The long-running tools
+
+The result is the following factory spun up
+
+![Deployment diagram](diagrams/deployment.svg)
+[PlantUML source for this diagram](plantuml/deployment.puml)
 
 The class makes use of two types of tools: those that are long-running (e.g., [GitLab](https://gitlab.com/rluna-gitlab/gitlab-ce), Drone, [SonarQube](https://github.com/SonarSource/sonarqube/)) and those used to perform short-lived individual tasks (e.g., [Makefile](<https://en.wikipedia.org/wiki/Make_(software)#Makefile>, [InSpec](https://github.com/inspec/inspec), OWASP-ZAP.)
 
