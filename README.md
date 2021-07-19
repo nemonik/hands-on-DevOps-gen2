@@ -149,6 +149,7 @@ What you should bring:
         - [10.2.3. On OSX, enable nerd fonts in XTerm2](#1023-on-osx-enable-nerd-fonts-in-xterm2)
         - [10.2.4. On Arch Linux, enable nerd fonts in the Gnome Terminal](#1024-on-arch-linux-enable-nerd-fonts-in-the-gnome-terminal)
         - [10.2.5. Change your shell to fish](#1025-change-your-shell-to-fish)
+        - [10.2.6. Finish conifiguring fish](#1026-finish-conifiguring-fish)
         - [10.2.6. Finish configuring neovim](#1026-finish-configuring-neovim)
     - [10.3. Spin up the Factory](#103-spin-up-the-factory)
         - [10.3.1. The `Makefile`](#1031-the-makefile)
@@ -1284,6 +1285,8 @@ make install-dependencies
 **NOTES**
 
 - Pay attention to the playbook's run as it may stop to ask you for your password.
+- The password asked for out of the gate is needed, so that [Ansible](https://github.com/ansible/ansible) can become the root and install system-wide packages and software.
+- You may be asked again when installing fonts, so keep an eye out for this.
 - The first line runs only if you re on OSX to install a Bash](https://www.gnu.org/software/bash/) 5.  OSX ship with Bash](https://www.gnu.org/software/bash/) 3.2.57(1)-release.
 - Some tasks are long running.  I've put debug statements prior to these tasks.  Look for them if you think [Ansible](https://github.com/ansible/ansible) has froze.  It likely has not.
 - How long this takes to run is dependent on the speed of your Internet connection.
@@ -1302,7 +1305,7 @@ PLAY RECAP *********************************************************************
 localhost                  : ok=135  changed=65   unreachable=0    failed=0    skipped=34   rescued=0    ignored=1
 ```
 
-If `failed ` is something other than `0` then you have an issue to debug. Debuging will require you to review the task that resulted in the failure likely the last task run. Review the output, determine what playbook you were in, open and review the playbook and the offending task and then try the equivalent in the command line to debug the issue. The host may be in a state the playbook cannot handle. Perhaps a dependency is missing. Perhaps. Perhaps. Perhaps.
+If `failed ` equals something other than `0` then you have an issue to debug. Debuging will require you to review the task that resulted in the failure likely the last task run. Review the output, determine what playbook you were in, open and review the playbook and the offending task and then try the equivalent in the command line to debug the issue. The host may be in a state the playbook cannot handle. Perhaps a dependency is missing. Perhaps. Perhaps. Perhaps.
 
 The result is the following factory
 
@@ -1339,15 +1342,36 @@ The class automation will attempt to configure [Bash](https://www.gnu.org/softwa
 
 Let's use [fish](https://fishshell.com/) as our shell
 
+On OSX type
+
 ```bash
 sudo chsh -s $(which fish) $(whoami)
 ```
 
-On OSX, simply closing your current terminal and opening a new one should be enough for the change to take, but for Arch you may have to logout or reboot.
+On Arch Linux
+
+```bash
+chsh -s $(which fish) $(whoami)
+sudo reboot
+```
+
+On OSX, simply closing your current terminal and opening a new one should be enough for the change to take, but for Arch you appear to have to logout or reboot.
 
 **NOTE**
 
 - Effort was take to support [Bash](https://www.gnu.org/software/bash/), [Zsh](https://www.zsh.org/), and [fish](https://fishshell.com/, but preference was given to [fish](https://fishshell.com/, so if there are flaws in the course they'll be discovered using [Bash](https://www.gnu.org/software/bash/) and [Zsh](https://www.zsh.org/).
+
+### 10.2.6. Finish conifiguring fish
+
+If you are going to use the fish shell consider using the [tide](https://github.com/IlanCosman/tide) prompt. To configure
+
+```fish
+tide configure
+```
+
+**NOTE**
+
+- A shout out to [@IlanCosman](https://github.com/IlanCosman) for helping me figure out my fish path issue.
 
 ### 10.2.6. Finish configuring neovim
 
