@@ -54,11 +54,11 @@ skinparam database {
 
 actor "You" as you
 
-rectangle "Host (e.g., your laptop, desktop)" {
+rectangle "Host (e.g., your laptop, desktop)" as host {
 
   rectangle "Docker (containerd)" {
 
-    rectangle "K3s Cluster\n(master and agent)" as k3s {
+    rectangle "K3s Cluster\n(actually, a master and agent container)" as k3s {
       component "Traefik" as traefik
       component "Taiga" as taiga
       component "GitLab" as gitlab
@@ -66,15 +66,12 @@ rectangle "Host (e.g., your laptop, desktop)" {
       component "SonarQube" as sonarqube
       component "PlantUML Server" as plantuml_server
       component "Heimdall 2" as heimdall2
+
     }
 
     component "Private\nContainer Registry" as private_registry
   }
-
-  agent "k3d" as k3d
 }
-
-
 
 traefik <.[#0B5C92]d.> gitlab : http
 traefik <.[#0B5C92]d.> drone : http
@@ -88,8 +85,5 @@ k3s <.[#0B5C92]d.> private_registry : http
 
 you <-[#0B5C92]d-> private_registry : https
 you <-[#0B5C92]d-> traefik : https
-
-you -[#0B5C92]d-> k3d : cli
-k3d -[#0B5C92]d-> k3s : api
 
 @enduml
