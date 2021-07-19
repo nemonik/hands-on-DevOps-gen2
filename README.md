@@ -1332,7 +1332,7 @@ The Gnome Terminal must be further configure to benefit from the Nerd Fonts inst
 
 The class automation will attempt to configure [Bash](https://www.gnu.org/software/bash/), [Zsh](https://www.zsh.org/) and [fish](https://fishshell.com/, but let's try something perhaps new. Further information on [fish](https://fishshell.com/) can be found in its [documentation](http://fishshell.com/docs/current/index.html), but essentially it syntax highlighting, autosuggestions, and tab completion along with some other improvements that in my opinion pushes it past my prior shell, [Zsh](https://www.zsh.org/).
 
-Let's use [fish](https://fishshell.com/)as our shell
+Let's use [fish](https://fishshell.com/) as our shell
 
 ```bash
 sudo chsh -s $(which fish) $(whoami)
