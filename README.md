@@ -3856,6 +3856,10 @@ nvim .drone.yml
 copy the content below to create our pipeline (`.drone.yml`) in our text editor
 
 ```yaml
+kind: pipeline
+type: kubernetes
+name: default
+
 steps:
 - name: sonarqube
   image: k3d-registry.nemonik.com:5000/nemonik/golang-sonarqube-scanner:latest
