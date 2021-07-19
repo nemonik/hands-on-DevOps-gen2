@@ -884,7 +884,7 @@ ansible-playbook not found
 
 The [`which`](https://linux.die.net/man/1/which) command will attempt to locate a program file in the user's path.
 
-If you are using `bash` perform the following:
+If you are using `bash` perform the following (You likely at this point.  To check type `echo $SHELL`.):
 
 ```bash
 echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.bash_profile
@@ -978,6 +978,10 @@ cd $HOME/Development/workspace
 git clone https://github.com/nemonik/hands-on-DevOps-gen2.git
 cd hands-on-DevOps-gen2
 ```
+
+**NOTES**
+
+- If you've been following along in the shell you've already done this step.
 
 ### 10.2.1. Reviewing the Ansible playbooks
 
