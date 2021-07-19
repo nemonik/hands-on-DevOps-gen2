@@ -3317,7 +3317,7 @@ make all
 
 And so, you have build and test automation whose output resembles
 
-[![asciicast](https://asciinema.org/a/gc5bYuATrkteOmY2MsbkxLGUi.svg)](https://asciinema.org/a/gc5bYuATrkteOmY2MsbkxLGUi)
+[![asciicast](https://asciinema.org/a/NyCIYYxl4s9HiinC8kPHwJTyj.svg)](https://asciinema.org/a/NyCIYYxl4s9HiinC8kPHwJTyj)
 
 The same as when you pre-flighted. In fact this is the same asciinema cast.
 
