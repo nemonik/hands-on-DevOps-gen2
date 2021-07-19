@@ -1292,6 +1292,11 @@ localhost                  : ok=135  changed=65   unreachable=0    failed=0    s
 
 If `failed ` is something other than `0` then you have an issue to debug. Debuging will require you to review the task that resulted in the failure likely the last task run. Review the output, determine what playbook you were in, open and review the playbook and the offending task and then try the equivalent in the command line to debug the issue. The host may be in a state the playbook cannot handle. Perhaps a dependency is missing. Perhaps. Perhaps. Perhaps.
 
+The result is the following factory
+
+![Deployment diagram](diagrams/deploymentsvg)
+[PlantUML source for this diagram](plantuml/deployment.puml)
+
 ### 10.2.2. On OSX, enable nerd fonts in XTerm2
 
 XTerm2 must be further configured to benefit from the Nerd Fonts installed by [Ansible](https://github.com/ansible/ansible). We're going to configure XTerm2 to use `Meslo Nerd Font` and use `Solarized Dark` color theme. Optionally, you can select another [Nerd font](https://www.nerdfonts.com/font-downloads).
@@ -2242,9 +2247,6 @@ In this next part, we will create a simple helloworld GoLang project to demonstr
 
 ## 11.1. Create the project's backlog
 
-![Activity Diagram for helloworld project: Create the project's backlog](diagrams/helloworld-create-the-projects-backlog.svg)
-[PlantUML source for this diagram](plantuml/helloworld-create-the-projects-backlog.puml)
-
 A backlog is essentially your (or your team's) to-do list, a prioritized list of work derived from the road map (e.g., the outline for future product functionality and when new features will be released) and its requirements.
 
 Open [Taiga](https://www.taiga.io/) (e.g., <https://taiga.nemonik.com>) in your web browser.
@@ -2293,9 +2295,6 @@ Track your progress in [Taiga](https://www.taiga.io/) as you work through each s
 
 ## 11.2. Create the project in GitLab
 
-![Activity Diagram for helloworld project: Create the project in GitLab](diagrams/helloworld-create-project-in-gitlab.svg)
-[PlantUML source for this diagram](plantuml/helloworld-create-project-in-gitlab.puml)
-
 1. In [GitLab](https://gitlab.com/rluna-gitlab/gitlab-ce) (e.g., <https://gitlab.nemonik.com>), if you need to login the default username is `root` and the password is `5iveL!fe`.
 2. Click on `Projects` in the upper left and select `Create blank project` (e.g., <https://gitlab.nemonik.com/projects/new#blank_project>).
 3. When the page load, enter `helloworld` for the `Project name`.
@@ -2306,9 +2305,6 @@ Track your progress in [Taiga](https://www.taiga.io/) as you work through each s
 The UI will refresh to show you a landing page for the project (e.g., <https://gitlab.nemonik.com/root/helloworld>)
 
 ## 11.3. Setup the project
-
-![Activity Diagram for helloworld project: Setup the project](diagrams/helloworld-setup-project.svg)
-[PlantUML source for this diagram](plantuml/helloworld-setup-project.puml)
 
 On your host open a shell and configure your user name and email:
 
@@ -2374,9 +2370,6 @@ golangci-lint.xml
 
 ## 11.4. Author the application
 
-![Activity Diagram for helloworld project: Author the application](diagrams/helloworld-author-the-application.svg)
-[PlantUML source for this diagram](plantuml/helloworld-author-the-application.puml)
-
 In the project folder (i.e., `~/go/src/github.com/nemonik/helloworld`) start your module using
 
 ```bash
@@ -2423,9 +2416,6 @@ Just delete or edit.
 
 ## 11.5. Align source code with Go coding standards
 
-![Activity Diagram for helloworld project: Align source code to Go coding standards](diagrams/helloworld-align-source.svg)
-[PlantUML source for this diagram](plantuml/helloworld-align-source.puml)
-
 `vim-go` will automagically format the source code according to Go coding standards upon saving the file and exiting the editor.
 
 Otherwise, you can format source code in the module by entering into the shell
@@ -2435,9 +2425,6 @@ go fmt
 ```
 
 ## 11.6. Lint your code
-
-![Activity Diagram for helloworld project: Lint your code](diagrams/helloworld-lint-your-code.svg)
-[PlantUML source for this diagram](plantuml/helloworld-lint-your-code.puml)
 
 Already installed on your `host` is `golint`. Where `go fmt` reformatted the code to GoLang standards, `golint` prints style mistakes.
 
@@ -2474,9 +2461,6 @@ Run `golint` again and it should return no output indicating it sees nothing wro
 
 ## 11.7. Build the application
 
-![Activity Diagram for helloworld project: Author the application](diagrams/helloworld-build-the-application.svg)
-[PlantUML source for this diagram](plantuml/helloworld-build-the-application.puml)
-
 Build the project by executing
 
 ```bash
@@ -2486,9 +2470,6 @@ go build -o helloworld .
 Success returns no command line output. What? Did you want a cookie? No cookie for you. This is GoLang's way of doing things. Silence is golden and means things went fine. Otherwise, go back and fix the mistakes in your code.
 
 ## 11.8. Run your application
-
-![Activity Diagram for helloworld project: Run your application](diagrams/helloworld-run-your-application.svg)
-[PlantUML source for this diagram](plantuml/helloworld-run-your-application.puml)
 
 Now run your application
 
@@ -2503,9 +2484,6 @@ hello world
 ```
 
 ## 11.9. Author the unit tests
-
-![Activity Diagram for helloworld project: Author the unit tests](diagrams/helloworld-author-unit-tests.svg)
-[PlantUML source for this diagram](plantuml/helloworld-author-unit-tests.puml)
 
 GoLang ships with a built-in `testing` package
 
@@ -2578,9 +2556,6 @@ This step and all the proceeding follows of a DevOps tenant where "Developers ar
 
 ## 11.10. Automate the build (i.e., write the `Makefile`)
 
-![Activity Diagram for helloworld project: Automate the build](diagrams/helloworld-write-make-file.svg)
-[PlantUML source for this diagram](plantuml/helloworld-write-make-file.puml)
-
 Build automation is a key practice of CI. So, let's make the build reproducible by automating everything we've done this far via authoring a [Makefile](<https://en.wikipedia.org/wiki/Make_(software)#Makefile>.
 
 In the root of the project create `Makefile` and add the following contents
@@ -2636,9 +2611,6 @@ go build -o helloworld -v
 ```
 
 ## 11.11. Author Drone-based Continuous Integration
-
-![Activity Diagram for helloworld project: Author Drone-based continuous integration](diagrams/helloworld-author-drone-based-continuous-integration.svg)
-[PlantUML source for this diagram](plantuml/helloworld-author-drone-based-continuous-integration.puml)
 
 CI integrates all of the steps we have worked to ensure a high quality build into a pipeline, so let's do that.
 
@@ -2799,9 +2771,6 @@ Like `helloworld`, the `helloworld-web` project is a very simple application tha
 
 ## 12.1. Create the project's backlog
 
-![Activity Diagram for helloworld-web project: Crete the project's backlog](diagrams/helloworld-web-create-the-projects-backlog.svg)
-[PlantUML source for this diagram](plantuml/helloworld-web-create-the-projects-backlog.puml)
-
 Open [Taiga](https://www.taiga.io/) in your web browser (e.g., <http://taiga.nemonik.com>).
 
 Complete the follow to track your progress in completing the _helloworld-web_ project
@@ -2845,9 +2814,6 @@ Track your progress in [Taiga](https://www.taiga.io/) as you work through each s
 
 ## 12.2. Create the project in GitLab
 
-![Activity Diagram for helloworld-web project: Create the project in GitLab](diagrams/helloworld-web-create-project-in-gitlab.svg)
-[PlantUML source for this diagram](plantuml/helloworld-web-create-project-in-gitlab.puml)
-
 1. In [GitLab](https://gitlab.com/rluna-gitlab/gitlab-ce) (e.g., <https://gitlab.nemonik.com>) click on the [GitLab](https://gitlab.com/rluna-gitlab/gitlab-ce) logo in the upper left.
 2. Click `Projects` on the far upper-left and `Click blank project` (e.g. <https://gitlab.nemonik.com/projects/new#blank_project>)
 3. Enter `helloworld-web` for the `Project name`. **Be careful with the spelling.**
@@ -2858,9 +2824,6 @@ Track your progress in [Taiga](https://www.taiga.io/) as you work through each s
 The UI will refresh to show you landing page for the project (e.g., <https://gitlab.nemonik.com/root/helloworld-web>).
 
 ## 12.3. Setup the project
-
-![Activity Diagram for helloworld-web project: Setup the project on the development Vagrant](diagrams/helloworld-web-setup-project-on-development-vagrant.svg)
-[PlantUML source for this diagram](plantuml/helloworld-web-setup-project-on-development-vagrant.puml)
 
 You'll now clone the new `helloworld-web` [GitLab](https://gitlab.com/rluna-gitlab/gitlab-ce) hosted repo as you did prior for the `helloworld` project.
 
@@ -2897,9 +2860,6 @@ helloworld-web
 ```
 
 ## 12.4. Author the `helloworld-web` application
-
-![Activity Diagram for helloworld-web project: Author the application](diagrams/helloworld-web-author-the-application.svg)
-[PlantUML source for this diagram](plantuml/helloworld-web-author-the-application.puml)
 
 In the project folder (i.e., `~/go/src/github.com/nemonik/helloworld`) start your module using
 
@@ -2951,9 +2911,6 @@ go fmt
 
 ## 12.5. Build and run the `helloworld-web` application
 
-![Activity Diagram for helloworld-web project: Build and run the application](diagrams/helloworld-web-build-and-run-the-application.svg)
-[PlantUML source for this diagram](plantuml/helloworld-web-build-and-run-the-application.puml)
-
 Build the application
 
 ```bash
@@ -2998,9 +2955,6 @@ listening on :3000
 
 ## 12.6. Run golangci-lint on the `helloworld-web` application
 
-![Activity Diagram for helloworld-web project: Run golangci-lint on the application](diagrams/helloworld-web-run-linter-on-application.svg)
-[PlantUML source for this diagram](plantuml/helloworld-web-run-linter-on-application.puml)
-
 Okay. So, our code runs, but are there any hidden problems?
 
 In our prior `helloworld ` project we used `golint`, but although `golint` is still a "useful engine" it has been [deprecated/frozen](https://github.com/golang/go/issues/38968) (i.e., no longer maintained) we should look for another linter. Earlier versions of this course used the [Go Meta Linter](https://github.com/alecthomas/gometalinter), but this linter is also deprecated with the advise to use [golangci-lint](https://github.com/golangci/golangci-lint), so this is what we'll use. the Like the [Go Meta Linter](https://github.com/alecthomas/gometalinter), [golangci-lint](https://github.com/golangci/golangci-lint) provides an extensible list of linters, so we'll have all our bases covered.
@@ -3042,9 +2996,6 @@ Oops. Line 11 has problems:
 - `http.ListenAndServe(":3000", logRequest(http.DefaultServeMux))` on line 11 returns an `err` if it runs into problems. We need to handle the problem by logging the `err` and exit.
 
 ### 12.6.1. Fixing the problem
-
-![Activity Diagram for helloworld-web project: Fix the application](diagrams/helloworld-web-fix-the-application.svg)
-[PlantUML source for this diagram](plantuml/helloworld-web-fix-the-application.puml)
 
 Let's fix the problems by opening `main.go` in our editor, make the following changes to address the concerns and save
 
@@ -3089,9 +3040,6 @@ golangci-lint run
 And after some time, nothing is returned. Problem solved. If they could all be this easy.
 
 ## 12.7. Author the unit tests
-
-![Activity Diagram for helloworld-web project: Author unit tests](diagrams/helloworld-web-author-unit-tests.svg)
-[PlantUML source for this diagram](plantuml/helloworld-web-author-unit-tests.puml)
 
 So, our code runs and we've fixed the problems surfaced by our linter.
 
@@ -3191,9 +3139,6 @@ Notice, we only scored 55.6% coverage, but we appear to have a unit test for all
 
 ## 12.8. Perform static analysis (i.e., sonar-scanner) on the command line
 
-![Activity Diagram for helloworld-web project: Perform static analysis](diagrams/helloworld-web-perform-static-analysis.svg)
-[PlantUML source for this diagram](plantuml/helloworld-web-perform-static-analysis.puml)
-
 [SonarQube](https://github.com/SonarSource/sonarqube/) provides a static analysis capability to show the health of an application's source code, highlighting issues as they are introduced.
 
 ### 12.8.1. Perform static analysis on the command line
@@ -3252,9 +3197,6 @@ Let me unpack what the above commands are doing
 
 ## 12.9. Automate the build (i.e., write the Makefile)
 
-![Activity Diagram for helloworld-web project: Automate the build](diagrams/helloworld-web-write-make-file.svg)
-[PlantUML source for this diagram](plantuml/helloworld-web-write-make-file.puml)
-
 In `nvim` create a `Makefile` to ensure the build and the steps leading to are repeatable.
 
 ```makefile
@@ -3301,9 +3243,6 @@ And so, you have build and test automation whose output resembles
 The same as when you pre-flighted. In fact this is the same asciinema cast.
 
 ## 12.10. Containerize the application
-
-![Activity Diagram for helloworld-web project: Containerize the application](diagrams/helloworld-web-dockerize-the-application.svg)
-[PlantUML source for this diagram](plantuml/helloworld-web-dockerize-the-application.puml)
 
 We can build a Docker image for our application on top of a `golang:1.16.5` container image we earlier pushed into our private container registry by creating a `Dockerfile` with the following content
 
@@ -3452,9 +3391,6 @@ The image is a slim 6.14 MB and way more secure.
 
 ## 12.11. Run the container
 
-![Activity Diagram for helloworld-web project: Run the container](diagrams/helloworld-web-run-the-docker-container.svg)
-[PlantUML source for this diagram](plantuml/helloworld-web-run-the-docker-container.puml)
-
 Spin up a new `nemonik/helloworld-web` container by entering either
 
 - Option 1 - Run the container in the foreground
@@ -3536,9 +3472,6 @@ docker rm -f helloworld-web
 ```
 
 ## 12.12. Push the container image to the private registry
-
-![Activity Diagram for helloworld-web project: Push the container image](diagrams/helloworld-web-push-container-image.svg)
-[PlantUML source for this diagram](plantuml/helloworld-web-push-container-image.puml)
 
 In the development vagrant, push the `nemonik/helloworld-web` container image into the private container registry running in the [Kubernetes](https://kubernetes.io/docs/concepts/overview/what-is-kubernetes/) cluster, so that all the vagrants can create containers from the image with the commands
 
@@ -3676,9 +3609,6 @@ The pretty print of this look like
 
 ## 12.13. Configure Drone to execute your CICD pipeline
 
-![Activity Diagram for helloworld-web project: Configure Drone to execute your CICD pipeline](diagrams/helloworld-web-configure-drone-to-execute.svg)
-[PlantUML source for this diagram](plantuml/helloworld-web-configure-drone-to-execute.puml)
-
 As you did for the purpose of CI (Continuous Integration) of the prior application, you will need to configure Drone to perform CICD (a combination of Continuous Integration and Continuous Delivery) on the `helloworld-web` application.
 
 Complete the following:
@@ -3689,9 +3619,6 @@ Complete the following:
 4. Then click the Drone logo in the upper left of the page to return home.
 
 ## 12.14. Add Static Analysis (`sonar`) step to your CICD pipeline
-
-![Activity Diagram for helloworld-web project: Add Static Analysis step to pipeline](diagrams/helloworld-web-add-static-analysis.svg)
-[PlantUML source for this diagram](plantuml/helloworld-web-add-static-analysis.puml)
 
 So, lets create our pipeline starting with a `sonarqube` step to update [SonarQube](https://github.com/SonarSource/sonarqube/) with code quality scans automatically.
 
@@ -3929,9 +3856,6 @@ Open on your host open [SonarQube](https://github.com/SonarSource/sonarqube/) (e
 
 ## 12.15. Add the `build` step to the pipeline
 
-![Activity Diagram for helloworld-web project: Add the build step to pipeline](diagrams/helloworld-web-add-build-step.svg)
-[PlantUML source for this diagram](plantuml/helloworld-web-add-build-step.puml)
-
 Add a build step to our `.drone.yml`
 
 ```yaml
@@ -4069,9 +3993,6 @@ github.com/nemonik/helloworld-web
 Mirroring what you saw in development in your local environment.
 
 ## 12.16. Add the `nemonik\helloworld-web:latest` container image `publish` step to pipeline
-
-![Activity Diagram for helloworld-web project: Add image publish step to pipeline](diagrams/helloworld-web-add-container-image-publish-step.svg)
-[PlantUML source for this diagram](plantuml/helloworld-web-add-container-image-publish-step.puml)
 
 Add the publish step to your `.drone.yml` to the root of the project (e.g., `~/go/src/github.com/nemonik/helloworld-web`), so that the container image is publish to the private registry via the pipeline. The `publish:` step must be indented the same as the prior `build:` step.
 
@@ -4417,9 +4338,6 @@ Output will resemble
 
 ## 12.19. Add a `deploy` step to the pipeline
 
-![Activity Diagram for helloworld-web project: Add container deploy step to pipeline](diagrams/helloworld-web-add-container-deploy-step.svg)
-[PlantUML source for this diagram](plantuml/helloworld-web-add-container-deploy-step.puml)
-
 Adding a `deploy` step to our Drone pipeline to perform the deployment of `nemonik/helloworld:latest` container image is a bit more involved.
 
 ### 12.19.1. Add a Kubernetes service account for the automation
@@ -4731,9 +4649,6 @@ So, now we have beginnings of a real CICD pipeline. There are no strings on me e
   near the end as an indication.
 
 ## 12.20. Add compliance-as-code (`inspec`) test to the pipeline
-
-![Activity Diagram for helloworld-web project: Add InSpec test to the pipeline](diagrams/helloworld-web-add-inspec.svg)
-[PlantUML source for this diagram](plantuml/helloworld-web-add-inspec.puml)
 
 First let me switch gears into discussing DevSecOps.
 
@@ -5118,9 +5033,6 @@ the results of two other InSpec tests that show off the power of Heimdall. Give 
 - If we were using the Heimdall Enterprise Server 2 edition we would have a REST API available to upload the results from our pipeline. Maybe in a future version of my class.
 
 ### 12.20.6. Add an automated functional test (`selenium`) step to the pipeline
-
-![Activity Diagram for helloworld-web project: Add automated functional test to the pipeline](diagrams/helloworld-web-add-automated-functional-test.svg)
-[PlantUML source for this diagram](plantuml/helloworld-web-add-automated-functional-test.puml)
 
 Although, functional testing, where a system is tested against the functional requirements, is by far the most expensive, most brittle and arguably least valuable in comparison to integration and unit testing, it still has its place in testing an application.
 
@@ -5636,9 +5548,6 @@ ChromeDriver was started successfully.
 - If your build fails outright with the message `default: linter: untrusted repositories cannot mount host volumes`, you have forgotten the enable `Trusted` for the `root/hellworld-web` repository in [Drone CI](https://github.com/drone/drone). You can go back do that and restart the build by clicking on the hamburger (the icon with three dots in a vertical line) to open a drop down and selecting ``RESTART`.
 
 ## 12.21. Add the DAST (`owasp-zap`) step to the pipeline
-
-![Activity Diagram for helloworld-web project: Add the DAST (`owasp-zap`) step to the pipeline](diagrams/helloworld-web-add-dast-step.svg)
-[PlantUML source for this diagram](plantuml/helloworld-web-add-dast-step.puml)
 
 Dynamic application security testing (DAST) is used to detect security vulnerabilities in an application while it is running, so as to help you remediate these concerns while in development. Again, yet another example of "thinking about application and infrastructure security from the start."
 
