@@ -33,3 +33,7 @@ set PATH /usr/local/bin $PATH
 {% if ansible_distribution == 'MacOSX' %}
 fish_add_path $HOMEBREW_PREFIX/opt/openssl/bin
 {% endif %}
+
+{% if ansible_distribution == 'Archlinux' %}
+fish_add_path /opt/sonar-scanner/bin
+{% endif %}

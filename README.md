@@ -381,7 +381,7 @@ For the software's source code, where the mainline (i.e., master branch) is the 
 
 ### 7.16.2. Automate the build
 
-By accompanying build automation (e.g., Gradle, Apache Maven, Make) alongside the source code.
+By accompanying build automation (e.g., Gradle, Apache Maven, [MAke](https://www.gnu.org/software/make/)) alongside the source code.
 
 ### 7.16.3. Employ one or more CI services/orchestrators
 
@@ -1273,7 +1273,7 @@ If your on LinkedIn or search many of the job boards you'll find many employers 
 
 ### 10.2.2. Install dependencies
 
-Now that we've reviewed the playbook lets execute it via the Make target `install-dependencies` in the root of the project in our shell
+Now that we've reviewed the playbook lets execute it via the [MAke](https://www.gnu.org/software/make/) target `install-dependencies` in the root of the project in our shell
 
 ```bash
 if [[ "$OSTYPE" == "darwin"* ]]; then brew install bash; /usr/local/bin/bash; fi
@@ -1403,9 +1403,9 @@ I'll be honest I use most of these plugins and extensions, some more than others
 
 When you first start `nvim` on the command-line you will be greated with a number of warning/error messages. This is because the [ansible/files/init.vim](./ansible/files/init.vim) copied to your `~/.config/nvim/init.vim` is pre-configure to use the plugins yet to be installed.
 
-You must now install them while in visual mode. Just press the `esc` to get past the error messages and then type `:PlugInstall` and `junegunn/vim-plug` will install the plugins described above. To close the status window type `:q!` then restart `nvim` and the langauge server will automatically install its extensions. Pressing `:q` will close Coc's status window.
+You must now install them while in visual mode. Just press the `esc` to get past the error messages and then type `:PlugInstall` and `junegunn/vim-plug` will install the plugins described above. `coc` language server should then take over and install its own extensions, but you may have to close the status window type `:q!` and then restart `nvim` for langauge server to install its extensions. Pressing `:q!` will close Coc's status window.
 
-I would really love to teach you about `vi`, `vim` and `nvim`, but doing so is really outside the scope of this class. I've really been an avid [nano](https://www.nano-editor.org/), but capable of using `vi` in a pinch as it almost always garunteed to be installed in [Unix](https://en.wikipedia.org/wiki/Unix)-like operating system. Neovim pushed me over the cliff to use it fill time. This is is why `nano` is aliased to `nvim`, so if you enter `nano` into the the shell it will start instead `nvim`. You can override this by typing nano's full path, `/usr/local/bin/nano` on OSX and `/usr/bin` on Arch. You can strip the alias out of your shell initialization file or for a session map it back the the `alias` command.
+I would really love to teach you about `vi`, `vim` and `nvim`, but doing so is really outside the scope of this class. I've really been an avid [nano](https://www.nano-editor.org/) user, but capable of using `vi` in a pinch as it almost always garunteed to be installed in [Unix](https://en.wikipedia.org/wiki/Unix)-like operating system. Neovim pushed me over the cliff to use it fill time.  And I'm focused to learn `nvim`. This is is why `nano` is aliased to `nvim`, so if you enter `nano` into the the shell it will start instead `nvim`. You can override this by typing nano's full path, `/usr/local/bin/nano` on OSX and `/usr/bin` on Arch. You can strip the alias out of your shell initialization file or for a session map it back the the `alias` command.
 
 `vi`, `vim` and `nvim` pointers:
 
@@ -1438,7 +1438,7 @@ The official documentation can be found here
 
 ### 10.3.1. The `Makefile`
 
-I've chosen to author the automation for spinning up the factory in [GNU Make](https://www.gnu.org/software/make/). GNU Make bills itself as "a tool which controls the generation of executables and other non-source files of a program from the program's source files." Created by, [Stuart Feldman](https://en.wikipedia.org/wiki/Stuart_Feldman) Make introduced in PWB/UNIX has been around since 1976. Yep, over 45 years ago. Initially, its purpose was to automate software builds. Yeah, automation one of the core methods of DevOps has been around quite a long time. I've chosen to use Make since the inception of my class to drive this point home. There's alway a few "grey beards" in my class that perk up and smile after hearing it mentioned. Make lends itself well to the task of spinning up the cluster, the tools, etc as a makefile is essentially a collection of rules. An individual rule in the makefile tells Make how to execute a series of commands. The [Makefile](./Makefile) is found at the root of the repository. As I stated earlier, typically Make is utilized for building code, but because of its ubiquity across Linux and OSX it is often used for a wide variety of tasks. We're going to use it stand up a [Kubernetes](https://kubernetes.io/docs/concepts/overview/what-is-kubernetes/) cluster and a top that entire DevOps factory. Maybe this was a wrong decision. Only time will tell.
+I've chosen to author the automation for spinning up the factory in [GNU Make](https://www.gnu.org/software/make/). [GNU Make](https://www.gnu.org/software/make/) bills itself as "a tool which controls the generation of executables and other non-source files of a program from the program's source files." Created by, [Stuart Feldman](https://en.wikipedia.org/wiki/Stuart_Feldman) Make introduced in PWB/UNIX has been around since 1976. Yep, over 45 years ago. Initially, its purpose was to automate software builds. Yeah, automation one of the core methods of DevOps has been around quite a long time. I've chosen to use [MAke](https://www.gnu.org/software/make/) since the inception of my class to drive this point home. There's alway a few "grey beards" in my class that perk up and smile after hearing it mentioned. [MAke](https://www.gnu.org/software/make/) lends itself well to the task of spinning up the cluster, the tools, etc as a makefile is essentially a collection of rules. An individual rule in the makefile tells [MAke](https://www.gnu.org/software/make/) how to execute a series of commands. The [[MAke](https://www.gnu.org/software/make/)file](./[MAke](https://www.gnu.org/software/make/)file) is found at the root of the repository. As I stated earlier, typically [MAke](https://www.gnu.org/software/make/) is utilized for building code, but because of its ubiquity across Linux and OSX it is often used for a wide variety of tasks. We're going to use it stand up a [Kubernetes](https://kubernetes.io/docs/concepts/overview/what-is-kubernetes/) cluster and a top that entire DevOps factory. Maybe this was a wrong decision. Only time will tell.
 
 First let's inspect the [Makefile](./Makefile) in piecemeal
 
@@ -1465,7 +1465,7 @@ target [optionally, additional targets...] : prerequisite [optionally, additiona
         ...
 ```
 
-Each rule begins with a line that defines usually one sometimes more than one target followed by a colon and optionally a number of files or targets on which the target depends. Followed by a tab indented recipe comprised of one or more tab indented lines. When building source code, the target is a file, but in the instance where you want your makefile to run a series of commands that do not represent physical files on the file system you are executing what make considers a "phony" target. Phony targets are the name of the recipe. GNU Make provides a built-in target named `.PHONY` where you can make your target a prerequisite of it thereby declaring your target to be phony. This is what I've done above for all of my targert. The `.PHONY` line could be skipped and the makefile will still work, but including the line makes the makefile more readable once you know what a phony target is.
+Each rule begins with a line that defines usually one sometimes more than one target followed by a colon and optionally a number of files or targets on which the target depends. Followed by a tab indented recipe comprised of one or more tab indented lines. When building source code, the target is a file, but in the instance where you want your makefile to run a series of commands that do not represent physical files on the file system you are executing what make considers a "phony" target. Phony targets are the name of the recipe. [GNU Make](https://www.gnu.org/software/make/) provides a built-in target named `.PHONY` where you can make your target a prerequisite of it thereby declaring your target to be phony. This is what I've done above for all of my targert. The `.PHONY` line could be skipped and the makefile will still work, but including the line makes the makefile more readable once you know what a phony target is.
 
 What follows next are the makefile's rules
 
@@ -1552,9 +1552,22 @@ and add to the end the following, so these domains can be resolved
 127.0.0.1 k3d-registry.nemonik.com
 ```
 
+To use this class I will have provided you the password to decrypt the [vault](./vault) file containing Let's Encrypt cert and private key for the wildcard nemonik.com domain (`*.nemonik.com`) issued certificate or you will need to own a domain for which you can generate a wildcard SSL certificate for using Let's Encrypt/Certbot and then place the full certidicate chain and key into the vault file as I did.
+
+**TODO**: Provide documentation for generating a wildcard SSL certificate using Let’s Encrypt/Certbot.
+
+You can move forward by entering the [vault](./vault) file password, but you'll be asked repeatedly for it, I would suggest setting an environment variable to hold the value
+
+```bash
+ export VAULT_PASSWORD=super-secret-password
+```
+
+If you put a `space board` character before `export` the environment variable `VAULT_PASSWORD`and its value wont be entered into your shell's history thereby protecting its value from being plucked.
+
 Then execute the makefile `start` rule
 
 ```bash
+cd $HOME/Development/workspace/hands-on-DevOps-gen2
 make start
 ```
 
@@ -1562,7 +1575,7 @@ The output will resemble
 
 [![asciicast](https://asciinema.org/a/I6DUWex7m79MrnkwCXCqfJsnS.svg)](https://asciinema.org/a/I6DUWex7m79MrnkwCXCqfJsnS)
 
-Make first start a private container registry to hold your container images by executing the `start-registry` rule, who will inturn execute the [./start_registry.sh](start_registry.sh) bash script, whose output will resemble
+[MAke](https://www.gnu.org/software/make/) first start a private container registry to hold your container images by executing the `start-registry` rule, who will inturn execute the [./start_registry.sh](start_registry.sh) bash script, whose output will resemble
 
 ```
 ./start_registry.sh
@@ -1597,7 +1610,7 @@ The [Bash](https://www.gnu.org/software/bash/) scripts make use of color for inf
 
 If the [registry](https://hub.docker.com/_/registry) container is already running or needs to be restart this will be handled as well.
 
-Make then moves on to executing the `start-cluster` rule, where the [./start_cluster.sh](start_cluster.sh) script will pause
+[MAke](https://www.gnu.org/software/make/) then moves on to executing the `start-cluster` rule, where the [./start_cluster.sh](start_cluster.sh) script will pause
 
 ```
 Attempting to load secrets from /Users/nemonik/Development/workspace/hands-on-DevOps-gen2/vault...
@@ -1627,18 +1640,6 @@ EOF
 The `traefik_tls_crt` variable holds the Lets Encrypt certifacte chain for wildcard dns entry (\*.nemonik.com) and `traefik_tls_key` holds the private key.
 
 Why are these needed? Well, the cluster's HTTP reverse Proxy service,[Traefik](https://github.com/traefik/traefik) will respond to requests recieved. Each factory tool will register a fully qualified domain name with [Traefik](https://github.com/traefik/traefik), for example [GitLab](https://gitlab.com/rluna-gitlab/gitlab-ce) will register `gitlab.nemonik.com` and since most modern browsers force the use of HTTPS a wildcard cert must be configure in [Traefik](https://github.com/traefik/traefik) so that proper certificate are presented to the browser in response otherwise the browser will choke and warn that it doesn't trust Traefiks default self-signed certificate.
-
-To use this class I will have provided you the password to decrypt the [vault](./vault) file or you will need to own a domain for which you can generate a wildcard SSL certificate for using Let's Encrypt/Certbot and then place the full certidicate chain and key into the vault file as I did.
-
-**TODO**: Provide documentation for generating a wildcard SSL certificate using Let’s Encrypt/Certbot.
-
-You can move forward by entering the [vault](./vault) file password, but you'll be asked repeatedly for it, so on subsequent Make runs I would suggest setting an environment variable to hold the value
-
-```bash
- export VAULT_PASSWORD=super-secret-password
-```
-
-If you put a `space` before `export` the environment variable `VAULT_PASSWORD`and its value wont be entered into your shell's history thereby protecting its value from being plucked.
 
 Back to `make start-cluster` if you entered the password or had set it in an environmental variable the output will resemble
 
@@ -1674,7 +1675,7 @@ kubectl cluster-info
 
 In the case above run, I had set an `VAULT_PASSWORD` environment variable to hold the password.
 
-Make will then move onto executing `patch-coredns` rule, descend into the [coredns](coredns) sub-folder and execute the [patch.sh](coredns/patch.sh) script.
+[MAke](https://www.gnu.org/software/make/) will then move onto executing `patch-coredns` rule, descend into the [coredns](coredns) sub-folder and execute the [patch.sh](coredns/patch.sh) script.
 
 The output will resemble
 
@@ -1869,9 +1870,34 @@ The `-A` option tells `kubectl` to list the pods across all namespaces. The `-o 
 Now that we have a cluster up and running we can install all the long running factory tools ([Taiga](https://www.taiga.io/), [GitLab](https://gitlab.com/rluna-gitlab/gitlab-ce), [Drone CI](https://github.com/drone/drone), etc) upon it.
 
 ```bash
-cd
+cd $HOME/Development/workspace/hands-on-DevOps-gen2
 make install
 ```
+
+**NOTE**
+
+- To save yourself from enterinng the `VAULT_PASSWORD` repeatedly set it as an environment variable, ` export VAULT_PASSWORD=super-secret-password` then execute the `make install`.
+- If the GitLab install appears stuck doing the following for like ever.  It is normal for it to loop doing this for a bit, but not forever.
+
+  ```
+  Still waiting for GitLab to respond to https requests...
+  Still waiting for GitLab to respond to https requests...
+  Still waiting for GitLab to respond to https requests...
+  Still waiting for GitLab to respond to https requests...
+  Still waiting for GitLab to respond to https requests...
+  ```
+
+  You didn't update your `/etc/hosts` file with the values provided by the [./coredns/patch.sh](./coredns/patch.sh) script.
+
+  To fix this do perfom the following.
+
+  ```bash
+  cd $HOME/Development/workspace/hands-on-DevOps-gen2
+  make patch-coredns
+  ```
+
+  And add the entries it tells you to as covered in the prior section and then re-run the `make install`.
+
 
 This is a long running process as each install rule will be execute triggering a tool's install script. Each install script retrieves the container images related to the factory tool being installed and then executes one or more Helm charts and applies zero or more [Kubernetes](https://kubernetes.io/docs/concepts/overview/what-is-kubernetes/) resource files followed by possibly additional steps to ensure the desired state of the tool is on the cluster
 
@@ -2024,7 +2050,7 @@ A CMS must facilitate best practices, not limited to:
   - Utilizing branching to separate different lines of development, and
   - Standardizing on CMS workflows (e.g., GitHub Workflow),
 
-- Make builds be self-testing (i.e., ingrain testing) by including unit and integration test with the source code so that it can be executed by
+- [MAke](https://www.gnu.org/software/make/) builds be self-testing (i.e., ingrain testing) by including unit and integration test with the source code so that it can be executed by
 
   - the build automation, and
   - the Continuous Integration service.
@@ -2348,7 +2374,7 @@ Track your progress in [Taiga](https://www.taiga.io/) as you work through each s
 2. Click on `Projects` in the upper left and select `Create blank project` (e.g., <https://gitlab.nemonik.com/projects/new#blank_project>).
 3. When the page load, enter `helloworld` for the `Project name`.
 4. Provide an optional `Project description`. Something descriptive, such as, `GoLang helloworld application for the hands-on DevOps class.`.
-5. Make the application `Public` to save yourself from entering your username and password when cloning.
+5. [MAke](https://www.gnu.org/software/make/) the application `Public` to save yourself from entering your username and password when cloning.
 6. Click the blue `Create project` button on the lower left.
 
 The UI will refresh to show you a landing page for the project (e.g., <https://gitlab.nemonik.com/root/helloworld>)
@@ -2358,8 +2384,8 @@ The UI will refresh to show you a landing page for the project (e.g., <https://g
 On your host open a shell and configure your user name and email:
 
 ```bash
-git config --global user.name "Administrator"
-git config --global user.email "admin@example.com"
+git config --global user.name "root"
+git config --global user.email "root@nemonik.com"
 ```
 
 The [Ansible](https://github.com/ansible/ansible) `golang` playbook will already have configured:
@@ -2398,7 +2424,13 @@ Then move into the clone of your repository via
 cd helloworld
 ```
 
-So, that you do not version control certain files in git, create a `.gitignore` file with your editor with the following contents
+So, that you do not version control certain files in git, create a `.gitignore` file with your editor
+
+```bash
+nvim .gitignore
+```
+
+with the following contents
 
 ```
 # OS-specific
@@ -2414,7 +2446,7 @@ golangci-lint.xml
 
 **NOTE**
 
-- Make sure you pre-pend that dot (`.`) at the start of `.gitignore`. In \*NIX Dot-files are hidden files.
+- [MAke](https://www.gnu.org/software/make/) sure you pre-pend that dot (`.`) at the start of `.gitignore`. In \*NIX Dot-files are hidden files.
 - `.gitignore` will not show up if you simply list the file system via the `ls` command, but if you use `ls -a` or `ls --all` it will. Either arguments configures `ls` to not ignore entries starting with `.`.
 
 ## 11.4. Author the application
@@ -2571,7 +2603,6 @@ The test is 16 lines as per
 
 ```bash
 $ cat main_test.go | wc -l
-      16
 ```
 
 where we pipe the contents of `main_test.go` through the `wc` command-line utility used to display the number of lines, words, and/or bytes in standard input
@@ -2580,7 +2611,6 @@ The `helloworld` application itself is just 12 lines of code as per
 
 ```bash
 $ cat main.go | wc -l
-      12
 ```
 
 Yes, line count is an overly simple metric to weigh, but line count should serve to inform you of the obvious -- there's a cost in authoring unit tests. This cost is perhaps the number one reason why authoring unit tests will be skipped. Well, that and having the necessary engineering prowess to author them. The same could be said in regards to automation authored in this course. Please, keep this in mind as you work your way through the course material.
@@ -2598,7 +2628,7 @@ The command line returns
 --- PASS: TestHelloWorld (0.00s)
 PASS
 coverage: 50.0% of statements
-ok  	github.com/nemonik/helloworld	0.542s
+ok  	github.com/nemonik/helloworld	0.003s
 ```
 
 This step and all the proceeding follows of a DevOps tenant where "Developers are expected to pre-flight new code."
@@ -2633,7 +2663,8 @@ run:
 
 **NOTE**
 
-- Each line indentation is a `tab` and **not** a series of `space bar` characters. `Make` will fail to execute if these tabs are converted to a series of space characters.
+- Each line indentation is a `tab` and **not** a series of `space bar` characters. [Make](https://www.gnu.org/software/make/) will fail to execute if these tabs are converted to a series of space characters.
+- The first letter of the `Makefile` is capitialized.
 
 Save the file and exit your editor.
 
@@ -2897,15 +2928,15 @@ So, that you do not version control certain files in git, create a `.gitignore` 
 .DS_Store
 
 # reports
-.scannerwork
 coverage.out
-golint-report.out
-gometalinter-report.out
-report.json
+golangci-lint.xml
 inspec_helloworld.json
 
 # binary
 helloworld-web
+
+# sonar
+.scannerwork/
 ```
 
 ## 12.4. Author the `helloworld-web` application
@@ -2952,7 +2983,7 @@ func logRequest(handler http.Handler) http.Handler {
 }
 ```
 
-Format the code like you did previously, but if you are using `nvim` as configured through class automation the source will already by formatted correctly.
+Format the code like you did previously, but if you are using `nvim` as configured through the class automation the source will already by formatted correctly up save.
 
 ```bash
 go fmt
@@ -3218,10 +3249,9 @@ Then start the analysis with
 
 ```bash
 go fmt
-mkdir -p test/reports
-touch test/reports/.gitkeep
+mkdir -p tests/reports && touch tests/reports/.gitkeep
 golangci-lint run --out-format checkstyle | tee tests/reports/golangci-lint.xml
-go test ./... -coverprofile=tests/reports/coverage.out
+go test ./... -coverprofile=tests/reports/coverage.ou
 sonar-scanner
 ```
 

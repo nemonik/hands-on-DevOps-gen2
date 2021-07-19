@@ -43,3 +43,7 @@ export PATH="$HOME/.local/bin:$PATH"
 {% if ansible_distribution == 'MacOSX' %}
 export PATH="$HOMEBREW_PREFIX/opt/openssl/bin:$PATH"
 {% endif %}
+
+{% if ansible_distribution == 'Archlinux' %}
+export PATH="/opt/sonar-scanner/bin:$PATH"
+{% endif %}
