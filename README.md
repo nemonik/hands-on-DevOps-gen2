@@ -145,10 +145,11 @@ What you should bring:
         - [10.1.5. Install Ansible](#1015-install-ansible)
     - [10.2. Run the Ansible playbook](#102-run-the-ansible-playbook)
         - [10.2.1. Reviewing the Ansible playbooks](#1021-reviewing-the-ansible-playbooks)
-        - [10.2.2. On OSX, enable nerd fonts in XTerm2](#1022-on-osx-enable-nerd-fonts-in-xterm2)
-        - [10.2.3. On Arch Linux, enable nerd fonts in the Gnome Terminal](#1023-on-arch-linux-enable-nerd-fonts-in-the-gnome-terminal)
-        - [10.2.4. Change your shell to fish](#1024-change-your-shell-to-fish)
-        - [10.2.5. Finish configuring neovim](#1025-finish-configuring-neovim)
+        - [10.2.2. Install dependencies](#1022-install-dependencies)
+        - [10.2.3. On OSX, enable nerd fonts in XTerm2](#1023-on-osx-enable-nerd-fonts-in-xterm2)
+        - [10.2.4. On Arch Linux, enable nerd fonts in the Gnome Terminal](#1024-on-arch-linux-enable-nerd-fonts-in-the-gnome-terminal)
+        - [10.2.5. Change your shell to fish](#1025-change-your-shell-to-fish)
+        - [10.2.6. Finish configuring neovim](#1026-finish-configuring-neovim)
     - [10.3. Spin up the Factory](#103-spin-up-the-factory)
         - [10.3.1. The `Makefile`](#1031-the-makefile)
         - [10.3.2. Starting a container registry, the K3s cluster and patching CoreDNS](#1032-starting-a-container-registry-the-k3s-cluster-and-patching-coredns)
@@ -1263,6 +1264,8 @@ The [ansible/common.yaml](./ansible/common.yaml) playbook continues until comple
 
 If your on LinkedIn or search many of the job boards you'll find many employers equate infrastructure-as-code as DevOps. Infrastructure-as-code is a DevOps methodology but not the entirety of DevOps.
 
+### 10.2.2. Install dependencies
+
 Now that we've reviewed the playbook lets execute it via the Make target `install-dependencies` in the root of the project in our shell
 
 ```bash
@@ -1294,10 +1297,10 @@ If `failed ` is something other than `0` then you have an issue to debug. Debugi
 
 The result is the following factory
 
-![Deployment diagram](diagrams/deploymentsvg)
+![Deployment diagram](diagrams/deployment.svg)
 [PlantUML source for this diagram](plantuml/deployment.puml)
 
-### 10.2.2. On OSX, enable nerd fonts in XTerm2
+### 10.2.3. On OSX, enable nerd fonts in XTerm2
 
 XTerm2 must be further configured to benefit from the Nerd Fonts installed by [Ansible](https://github.com/ansible/ansible). We're going to configure XTerm2 to use `Meslo Nerd Font` and use `Solarized Dark` color theme. Optionally, you can select another [Nerd font](https://www.nerdfonts.com/font-downloads).
 
@@ -1310,7 +1313,7 @@ XTerm2 must be further configured to benefit from the Nerd Fonts installed by [A
 7. Close the `Preference` windows, and re-start your terminal window for your changes to take effect.
 8. Close iTerm2 and restart it.
 
-### 10.2.3. On Arch Linux, enable nerd fonts in the Gnome Terminal
+### 10.2.4. On Arch Linux, enable nerd fonts in the Gnome Terminal
 
 The Gnome Terminal must be further configure to benefit from the Nerd Fonts installed [Ansible](https://github.com/ansible/ansible). We're going to configure Terminal to `Meslo Nerd Font` and use `Solarized Dark` color them. Optionally, you can select another [Nerd Font](https://www.nerdfonts.com/font-downloads).
 
@@ -1321,7 +1324,7 @@ The Gnome Terminal must be further configure to benefit from the Nerd Fonts inst
 5. Close the `Preference` windows.
 6. Close and restart Gnome Terminal and your Terminal should of updated as per your selections.
 
-### 10.2.4. Change your shell to fish
+### 10.2.5. Change your shell to fish
 
 The class automation will attempt to configure [Bash](https://www.gnu.org/software/bash/), [Zsh](https://www.zsh.org/) and [fish](https://fishshell.com/, but let's try something perhaps new. Further information on [fish](https://fishshell.com/) can be found in its [documentation](http://fishshell.com/docs/current/index.html), but essentially it syntax highlighting, autosuggestions, and tab completion along with some other improvements that in my opinion pushes it past my prior shell, [Zsh](https://www.zsh.org/).
 
@@ -1337,7 +1340,7 @@ On OSX, simply closing your current terminal and opening a new one should be eno
 
 - Effort was take to support [Bash](https://www.gnu.org/software/bash/), [Zsh](https://www.zsh.org/), and [fish](https://fishshell.com/, but preference was given to [fish](https://fishshell.com/, so if there are flaws in the course they'll be discovered using [Bash](https://www.gnu.org/software/bash/) and [Zsh](https://www.zsh.org/).
 
-### 10.2.5. Finish configuring neovim
+### 10.2.6. Finish configuring neovim
 
 The class automation will attempt to configure [neovim](https://github.com/neovim/neovim) (nvim) installing [junegunn/vim-plug](https://github.com/junegunn/vim-plug) a plugin manager, a number of additional plugins to include a language server.
 
