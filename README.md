@@ -224,12 +224,12 @@ What you should bring:
             - [12.20.4.1. Build, tag, and push our `inspec` step container](#122041-build-tag-and-push-our-inspec-step-container)
             - [12.20.4.2. Add the compliance-as-code (`inspec`) step to the pipeline](#122042-add-the-compliance-as-code-inspec-step-to-the-pipeline)
         - [12.20.5. Viewing the `inspec` results in Heimdall 2 Lite](#12205-viewing-the-inspec-results-in-heimdall-2-lite)
-        - [12.20.6. Supplemental InSpec output for viewing in Heimdall 2 Lite](#12206-supplemental-inspec-output-for-viewing-in-heimdall-2-lite)
-        - [12.20.7. Add an automated functional test (`selenium`) step to the pipeline](#12207-add-an-automated-functional-test-selenium-step-to-the-pipeline)
-            - [12.20.7.1. Pull and run the Selenium Chrome Standalone browser](#122071-pull-and-run-the-selenium-chrome-standalone-browser)
-            - [12.20.7.2. Create our functional test automation](#122072-create-our-functional-test-automation)
-            - [12.20.7.3. Build, tag, and push the `selenium` step container](#122073-build-tag-and-push-the-selenium-step-container)
-            - [12.20.7.4. Add the `selenium` step to the pipeline](#122074-add-the-selenium-step-to-the-pipeline)
+            - [12.20.5.1. Supplemental InSpec output for viewing in Heimdall 2 Lite](#122051-supplemental-inspec-output-for-viewing-in-heimdall-2-lite)
+        - [12.20.6. Add an automated functional test (`selenium`) step to the pipeline](#12206-add-an-automated-functional-test-selenium-step-to-the-pipeline)
+            - [12.20.6.1. Pull and run the Selenium Chrome Standalone browser](#122061-pull-and-run-the-selenium-chrome-standalone-browser)
+            - [12.20.6.2. Create our functional test automation](#122062-create-our-functional-test-automation)
+            - [12.20.6.3. Build, tag, and push the `selenium` step container](#122063-build-tag-and-push-the-selenium-step-container)
+            - [12.20.6.4. Add the `selenium` step to the pipeline](#122064-add-the-selenium-step-to-the-pipeline)
     - [12.21. Add the DAST (`owasp-zap`) step to the pipeline](#1221-add-the-dast-owasp-zap-step-to-the-pipeline)
     - [12.22. All the source for `helloworld-web`](#1222-all-the-source-for-helloworld-web)
 - [13. Additional best practices to consider around securing containerized applications](#13-additional-best-practices-to-consider-around-securing-containerized-applications)
@@ -671,7 +671,7 @@ Perform the following tasks:
 
 # 10. Installing the software factory
 
-This class uses a software factory hosted on a [Kubernetes (K8s)](https://kubernetes.io/docs/concepts/overview/what-is-kubernetes/) cluste. (What a [Kubernetes](https://kubernetes.io/docs/concepts/overview/what-is-kubernetes/) cluster is will be covered later.) To spin up the K8s cluster you will need to perform the following tasks in your shell.
+This class uses a software factory hosted on a [Kubernetes (K8s)](https://kubernetes.io/docs/concepts/overview/what-is-kubernetes/) cluster. K8s is an abbreviation of Kubernetes ("K" followed by 8 letters "ubernete" followed by "s"). (What a [Kubernetes](https://kubernetes.io/docs/concepts/overview/what-is-kubernetes/) cluster is will be covered later.) To spin up the K8s cluster you will need to perform the following tasks in your shell.
 
 ## 10.1. Ansible
 
@@ -1386,7 +1386,7 @@ So, now that you have the prerequisite dependencies, it is time to move on to sp
 
 The factory tools are entirely execute on a containerized [Kubernetes](https://github.com/kubernetes/kubernetes) cluster hosted on [k3s](https://github.com/k3s-io/k3s) (Rancher Lab’s minimal [Kubernetes](https://kubernetes.io/docs/concepts/overview/what-is-kubernetes/) distribution) on Docker created by [k3d](https://github.com/rancher/k3d/). [Kubernetes](https://kubernetes.io/docs/concepts/overview/what-is-kubernetes/) is used to orchestrate the life cycles the long-running tools (e.g., [Taiga](https://www.taiga.io/), [GitLab](https://gitlab.com/rluna-gitlab/gitlab-ce), Docker CI, [SonarQube](https://github.com/SonarSource/sonarqube/), [Heimdall 2](https://github.com/mitre/heimdall2).) [Kubernetes](https://kubernetes.io/docs/concepts/overview/what-is-kubernetes/) is an open-source system for automating deployment, scaling, and management of containerized applications. Essentially, [Kubernetes](https://kubernetes.io/docs/concepts/overview/what-is-kubernetes/) serves as an operating system for a cluster of computing resource (in the cases of [k3d](https://github.com/rancher/k3d/) these computing resources themselves are containers) and manages the life cycle and discovery of the applications running upon the cluster.
 
-Initially, [k3s](https://github.com/k3s-io/k3s) was billed as a light-weight, CNCF certified [Kubernetes](https://kubernetes.io/docs/concepts/overview/what-is-kubernetes/) distribution designed for resource-constrained environments, where one doesn't need the added steps and dependencies a full [Kubernetes](https://kubernetes.io/docs/concepts/overview/what-is-kubernetes/) cluster would require. As [k3s](https://github.com/k3s-io/k3s) has matured it has become just a darn good [Kubernetes](https://kubernetes.io/docs/concepts/overview/what-is-kubernetes/) distrobution.
+Initially, [k3s](https://github.com/k3s-io/k3s) was billed as a light-weight (Its less than 40 MB binary completely implements the Kubernetes API.), fully CNCF certified [Kubernetes](https://kubernetes.io/docs/concepts/overview/what-is-kubernetes/) distribution designed for resource-constrained environments (It can run on host with as little as 512MB RAM.), where one doesn't need the added steps and dependencies a full [Kubernetes](https://kubernetes.io/docs/concepts/overview/what-is-kubernetes/) cluster would require. Keep in mind memory and compute equates to money when it comes to cloud. It installs in a fraction of the time it takes to launch a canonical Kubernetes cluster. As [k3s](https://github.com/k3s-io/k3s) has matured it has become just a darn good [Kubernetes](https://kubernetes.io/docs/concepts/overview/what-is-kubernetes/) distribution.
 
 It's canonical source can be found at
 
@@ -1402,7 +1402,7 @@ The official documentation can be found here
 
 ### 10.3.1. The `Makefile`
 
-I've chosen to author the automation for spinning up the factory in [GNU Make](https://www.gnu.org/software/make/). GNU Make bills itself as "a tool which controls the generation of executables and other non-source files of a program from the program's source files." Created by, [Stuart Feldman](https://en.wikipedia.org/wiki/Stuart_Feldman) Make introduced in PWB/UNIX has been around since 1976. Yep, over 45 years ago. Initially, its purpose was to automate software builds. Yeah, automation one of the core methods of DevOps has been around quite a long time. I've chosen to use Make since the inception of my class to drive this point home. There's alway a few "grey beards" in my class that perk up and smile after hearing it mentioned. Make lends itself well to the task of spinning up the cluster, the tools, etc as a makefile is essentially a collection of rules. An individual rule in the makefile tells Make how to execute a series of commands. The [Makefile](./Makefile) is found at the root of the repository. As I stated earlier, typically Make is utilized for building code, but because of its ubiquity across Linux and OSX it is often used for a wide variety of tasks. We're going to use it stand up a [Kubernetes](https://kubernetes.io/docs/concepts/overview/what-is-kubernetes/) cluster and a top that entire DevOps factory.
+I've chosen to author the automation for spinning up the factory in [GNU Make](https://www.gnu.org/software/make/). GNU Make bills itself as "a tool which controls the generation of executables and other non-source files of a program from the program's source files." Created by, [Stuart Feldman](https://en.wikipedia.org/wiki/Stuart_Feldman) Make introduced in PWB/UNIX has been around since 1976. Yep, over 45 years ago. Initially, its purpose was to automate software builds. Yeah, automation one of the core methods of DevOps has been around quite a long time. I've chosen to use Make since the inception of my class to drive this point home. There's alway a few "grey beards" in my class that perk up and smile after hearing it mentioned. Make lends itself well to the task of spinning up the cluster, the tools, etc as a makefile is essentially a collection of rules. An individual rule in the makefile tells Make how to execute a series of commands. The [Makefile](./Makefile) is found at the root of the repository. As I stated earlier, typically Make is utilized for building code, but because of its ubiquity across Linux and OSX it is often used for a wide variety of tasks. We're going to use it stand up a [Kubernetes](https://kubernetes.io/docs/concepts/overview/what-is-kubernetes/) cluster and a top that entire DevOps factory. Maybe this was a wrong decision. Only time will tell.
 
 First let's inspect the [Makefile](./Makefile) in piecemeal
 
@@ -5104,7 +5104,7 @@ inspec exec --chef-license=accept-silent helloworld --reporter json > tests/repo
 
 Open Heimdall 2 Lite - (e.g., <http://heimdall.nemonik.com>). You will need to authenticate and will be presented with an upload pane. Make sure `LOCAL FILES`, click `Choose files to upload`, then browse to navigate to `inspec_helloworld.json` in the class project (`go/src/github.com/nemonik/helloworld-web/tests/reports/inspec_helloworld.json`) and upload to view the results.
 
-### 12.20.6. Supplemental InSpec output for viewing in Heimdall 2 Lite
+#### 12.20.5.1. Supplemental InSpec output for viewing in Heimdall 2 Lite
 
 The [./supplemental](./supplemental) folder holds
 
@@ -5117,7 +5117,7 @@ the results of two other InSpec tests that show off the power of Heimdall. Give 
 
 - If we were using the Heimdall Enterprise Server 2 edition we would have a REST API available to upload the results from our pipeline. Maybe in a future version of my class.
 
-### 12.20.7. Add an automated functional test (`selenium`) step to the pipeline
+### 12.20.6. Add an automated functional test (`selenium`) step to the pipeline
 
 ![Activity Diagram for helloworld-web project: Add automated functional test to the pipeline](diagrams/helloworld-web-add-automated-functional-test.svg)
 [PlantUML source for this diagram](plantuml/helloworld-web-add-automated-functional-test.puml)
@@ -5134,7 +5134,7 @@ More can be found here
 
 You'll need a couple of shells open to your `development` vagrant to complete this section.
 
-#### 12.20.7.1. Pull and run the Selenium Chrome Standalone browser
+#### 12.20.6.1. Pull and run the Selenium Chrome Standalone browser
 
 In a shell retrieve the [standalone-firefox:3.141](https://hub.docker.com/layers/selenium/standalone-firefox/3.141/images/sha256-9a199a23b054cb7dbf167507f28fe000c9e9d2d4291516edd1788572474433f3?context=explore) container, tag, and push it into our private container registry.
 
@@ -5186,7 +5186,7 @@ A good start outputs to the command line like so
 
 Leave this shell running the container and move on...
 
-#### 12.20.7.2. Create our functional test automation
+#### 12.20.6.2. Create our functional test automation
 
 Open another shell, so we can author and run our automated test.
 
@@ -5248,7 +5248,7 @@ func-test-helloworld-web
     └── test_func_test_helloworld_web.py
 ```
 
-[Poetry](https://python-poetry.org/)  handles retreiving and adding the `selenium==3.141` dependency via
+[Poetry](https://python-poetry.org/) handles retreiving and adding the `selenium==3.141` dependency via
 
 ```bash
 poetry add selenium==3.141
@@ -5278,7 +5278,7 @@ Package operations: 10 installs, 0 updates, 0 removals
   • Installing selenium (3.141.0)
 ```
 
-[Poetry](https://python-poetry.org/)  will create a [virtualenv](https://virtualenv.pypa.io/en/latest/) for the project, retrieve the dependencies in to it and update the project's `pyproject.toml` file
+[Poetry](https://python-poetry.org/) will create a [virtualenv](https://virtualenv.pypa.io/en/latest/) for the project, retrieve the dependencies in to it and update the project's `pyproject.toml` file
 
 ```
 [tool.poetry]
@@ -5399,7 +5399,7 @@ if __name__ == "__main__":
     )
 ```
 
-Save the file and exit. Yep. All this code to execute an automated functional test for the return of the text _Hello world!_.  They're note cheap. Top of the test pyramid expensive, so use them wisely.
+Save the file and exit. Yep. All this code to execute an automated functional test for the return of the text _Hello world!_. They're note cheap. Top of the test pyramid expensive, so use them wisely.
 
 For now, if your using the [fish](https://fishshell.com/)shell let us run our test by entering into the command line
 
@@ -5450,7 +5450,7 @@ ChromeDriver was started successfully.
 16:37:27.354 INFO [ActiveSessions$1.onStop] - Removing session fd7024d1503fffdd7865d41056e0166f (org.openqa.selenium.chrome.ChromeDriverService)
 ```
 
-#### 12.20.7.3. Build, tag, and push the `selenium` step container
+#### 12.20.6.3. Build, tag, and push the `selenium` step container
 
 In your shell
 
@@ -5520,7 +5520,7 @@ e4d0e810d54a: Mounted from nemonik/python
 latest: digest: sha256:8fc54ec8f4326f7cf521ba05306d01ffe4105d2865a6cbe357f007a6b9df381d size: 2429
 ```
 
-#### 12.20.7.4. Add the `selenium` step to the pipeline
+#### 12.20.6.4. Add the `selenium` step to the pipeline
 
 Edit the `.drone.yml` file at the root of your `helloworld-web` project and add the following `selenium` step, the `shared_memory` volume, and a `firefox` service.
 
@@ -5633,7 +5633,7 @@ ChromeDriver was started successfully.
 
 **NOTE**
 
-- If your build fails outright with the message `default: linter: untrusted repositories cannot mount host volumes`, you have forgotten the enable `Trusted` for the `root/hellworld-web` repository in [Drone CI](https://github.com/drone/drone). You can  go back do that and restart the build by clicking on the hamburger (the icon with three dots in a vertical line) to open a drop down and selecting ``RESTART`.
+- If your build fails outright with the message `default: linter: untrusted repositories cannot mount host volumes`, you have forgotten the enable `Trusted` for the `root/hellworld-web` repository in [Drone CI](https://github.com/drone/drone). You can go back do that and restart the build by clicking on the hamburger (the icon with three dots in a vertical line) to open a drop down and selecting ``RESTART`.
 
 ## 12.21. Add the DAST (`owasp-zap`) step to the pipeline
 
@@ -5734,7 +5734,7 @@ PASS: Loosely Scoped Cookie [90033]
 FAIL-NEW: 0	FAIL-INPROG: 0	WARN-NEW: 0	WARN-INPROG: 0	INFO: 0	IGNORE: 0	PASS: 51
 ```
 
-Great, now lets add another step to our pipeline after the `selenium` step, but before `services:` block.  Again, before the `services:` block.
+Great, now lets add another step to our pipeline after the `selenium` step, but before `services:` block. Again, before the `services:` block.
 
 ```yaml
 - name: owasp-zap
@@ -5842,3 +5842,4 @@ Wth that, here's some best practices for containerized application development a
 7. Doing item-6 will require you to make use of a [notary](https://github.com/theupdateframework/notary) and private container registry (e.g., <https://hub.docker.com/_/registry>, <https://hub.docker.com/r/sonatype/nexus3>). I’ve written [Ansible](https://github.com/ansible/ansible) IaC to deploy Notary and it was a real pain in the butt to figure it out and took my countless hours, because the documentation is to put it plainly, "Sh!t." It would seem, they (i.e., whoever owns Docker Enterprise now) wants you to use Docker Enterprise vice getting Notary up and running with Docker.
 8. Put your application development through a CICD pipeline like this class of the following that applies: code format enforcement, linting, static analysis, build automation, unit testing, compliance-as-code for the container image, automated functional test, and dynamic analysis.
 9. Consider adding to your CICD pipelines the exeuction of vulnerability scanning tools, such as, [Clair](https://coreos.com/clair/docs/latest/), [Docker Bench for Security](https://github.com/docker/docker-bench-security), [OpenSCAP Workbench](https://github.com/OpenSCAP/scap-workbench/releases), [Anchore](https://anchore.com/opensource/), et cetera. There will be overlap between these and other similar tools. Pick the ones that work the best for you, ones with frequent updates and having the largest vibrant community around.
+
