@@ -3281,9 +3281,9 @@ In `nvim` create a `Makefile` to ensure the build and the steps leading to are r
 ```makefile
 BINARY_NAME=helloworld-web
 
-.PHONY: all clean fmt lint test sonar build run docker-build docker-push
+.PHONY: all clean fmt lint test sonar build run docker-build docker-push inspec
 
-all: build
+all: sonar build
 clean:
 	go clean
 	rm -f $(BINARY_NAME)
@@ -3299,7 +3299,7 @@ test: lint
 	go test ./... -coverprofile=tests/reports/coverage.out
 sonar: test
 	sonar-scanner
-build: sonar
+build:
 	CGO_ENABLED=0 GOOS=linux go build -o $(BINARY_NAME) -v
 run:
 	./$(BINARY_NAME)
