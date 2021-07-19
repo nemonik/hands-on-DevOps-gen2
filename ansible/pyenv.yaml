@@ -43,8 +43,8 @@
       when: ( ansible_distribution == 'Archlinux' )
 
     - name: Install latest Python3 into user space
-      ansible.builtin.shell: bash -c "source ~/.bash_profile && pyenv install --force $(pyenv install --list | grep -v - | grep -v b | tail -1) && pyenv global $(pyenv install --list | grep -v - | grep -v b | tail -1)"
+      ansible.builtin.shell: bash -c 'export PYENV_ROOT="$HOME/.pyenv"; export PATH="$PYENV_ROOT/bin:$PATH"; eval "$(pyenv init --path)"; eval "$(pyenv init -)"; pyenv install --force $(pyenv install --list | grep -v - | grep -v b | tail -1); pyenv global $(pyenv install --list | grep -v - | grep -v b | tail -1)'
 
-    - name: Ensure pynvim python module is installed for coc-pyright
-      ansible.builtin.shell: bash -c "python3 -m pip install --user --upgrade wheel"
+      - name: Ensure pynvim python module is installed for coc-pyright
+      ansible.builtin.shell: bash -c "export PYENV_ROOT="$HOME/.pyenv"; export PATH="$PYENV_ROOT/bin:$PATH"; eval "$(pyenv init --path)"; eval "$(pyenv init -)"; python3 -m pip install --user --upgrade wheel"
       when: ( ansible_distribution == 'Archlinux' )
