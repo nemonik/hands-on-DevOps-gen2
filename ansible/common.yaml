@@ -48,7 +48,6 @@
               - tree
               - htop
               - kubectl
-              - poetry
             state: latest
           retries: "{{ default_retries }}"
           delay: "{{ default_delay }}"

@@ -25,6 +25,7 @@
               - pylint
               - mypy
               - black
+              - poetry
             state: latest
           retries: "{{ default_retries }}"
           delay: "{{ default_delay }}"
@@ -62,6 +63,8 @@
             name:
               - fzf
               - watchman-bin
+              - python-poetry-git
+              - python-black-git
             state: latest
             executable: yay
       when: ( ansible_distribution == 'Archlinux' )
