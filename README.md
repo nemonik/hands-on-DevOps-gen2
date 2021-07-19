@@ -4746,7 +4746,7 @@ Now let add a step to our pipeline to deploy our helloworld-web application to o
 
 ```bash
 cd ~/go/src/github.com/nemonik/helloworld-web/
-nvim .drone.yaml
+nvim .drone.yml
 ```
 
 And add the following step at the bottom
