@@ -9,7 +9,7 @@
 
     - name: When MacOSX ensure Go is installed
       community.general.homebrew:
-        name: 
+        name:
           - go
           - golangci-lint
         state: latest
@@ -41,12 +41,12 @@
         - src
 
     - name: Ensure golint is installed
-      command: /bin/bash -c "source ~/.bash_profile && go get -u golang.org/x/lint/golint"
+      command: /bin/bash -c 'export GOBIN="$HOME/go/bin"; export GOPATH="$HOME/go"; export PATH="$GOBIN:$PATH"; go get -u golang.org/x/lint/golint'
       retries: "{{ default_retries }}"
       delay: "{{ default_delay }}"
       register: result
       until: result is succeeded
 
     - name: When Archlinux ensure golangci-lint is installed
-      ansible.builtin.shell: curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v1.41.1
+      ansible.builtin.shell: export GOBIN="$HOME/go/bin"; export GOPATH="$HOME/go"; export PATH="$GOBIN:$PATH"; curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v1.41.1
       when: ( ansible_distribution == 'Archlinux' )
