@@ -44,3 +44,7 @@
 
     - name: Install latest Python3 into user space
       ansible.builtin.shell: bash -c "source ~/.bash_profile && pyenv install --force $(pyenv install --list | grep -v - | grep -v b | tail -1) && pyenv global $(pyenv install --list | grep -v - | grep -v b | tail -1)"
+
+    - name: Ensure pynvim python module is installed for coc-pyright
+      ansible.builtin.shell: bash -c "python3 -m pip install --user --upgrade wheel"
+      when: ( ansible_distribution == 'Archlinux' )
