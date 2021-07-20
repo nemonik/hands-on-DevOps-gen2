@@ -4679,7 +4679,8 @@ Whose output will resemble
 ```Dockerfile
 FROM bitnami/kubectl:1.21.1
 
-LABEL maintainer "Sinlead <opensource@sinlead.com>"
+LABEL maintainer "Michael Joseph Walsh <github.com@nemonik.com>"
+LABEL base-on-the-work-of "Sinlead <opensource@sinlead.com>"
 
 COPY init-kubectl kubectl /opt/sinlead/kubectl/bin/
 
