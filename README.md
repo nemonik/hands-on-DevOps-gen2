@@ -1287,7 +1287,7 @@ make install-dependencies
 - Pay attention to the playbook's run as it may stop to ask you for your password.
 - The password asked for out of the gate is needed, so that [Ansible](https://github.com/ansible/ansible) can become the root and install system-wide packages and software.
 - You may be asked again when installing fonts, so keep an eye out for this.
-- The first line runs only if you re on OSX to install a Bash](https://www.gnu.org/software/bash/) 5.  OSX ship with Bash](https://www.gnu.org/software/bash/) 3.2.57(1)-release.
+- The first line runs only if you re on OSX to install a [Bash](https://www.gnu.org/software/bash/) 5.  OSX ship with [Bash](https://www.gnu.org/software/bash/) 3.2.57(1)-release.
 - Some tasks are long running.  I've put debug statements prior to these tasks.  Look for them if you think [Ansible](https://github.com/ansible/ansible) has froze.  It likely has not.
 - How long this takes to run is dependent on the speed of your Internet connection.
 
@@ -1610,7 +1610,7 @@ The [Bash](https://www.gnu.org/software/bash/) scripts make use of color for inf
 
 If the [registry](https://hub.docker.com/_/registry) container is already running or needs to be restart this will be handled as well.
 
-[MAke](https://www.gnu.org/software/make/) then moves on to executing the `start-cluster` rule, where the [./start_cluster.sh](start_cluster.sh) script will pause
+[Make](https://www.gnu.org/software/make/) then moves on to executing the `start-cluster` rule, where the [./start_cluster.sh](start_cluster.sh) script will pause
 
 ```
 Attempting to load secrets from /Users/nemonik/Development/workspace/hands-on-DevOps-gen2/vault...
