@@ -4703,8 +4703,8 @@ docker build -t nemonik/drone-kubectl:1.21.1 .
 Then tag it and add it to our private container registry
 
 ```bash
-docker tag nemonik/drone-kubectl:1.21.2 k3d-registry.nemonik.com:5000/nemonik/drone-kubectl:1.21.2
-docker push k3d-registry.nemonik.com:5000/nemonik/drone-kubectl:1.21.2
+docker tag nemonik/drone-kubectl:1.21.1 k3d-registry.nemonik.com:5000/nemonik/drone-kubectl:1.21.1
+docker push k3d-registry.nemonik.com:5000/nemonik/drone-kubectl:1.21.1
 ```
 
 ### 12.19.4. Add the `deploy` step to our pipeline
@@ -4782,7 +4782,7 @@ So, now we have beginnings of a real CICD pipeline. There are no strings on me e
 
 **NOTES**
 
-- If your `deploy` step fails with `default: deploy - Error` you likely skipped building, tagging and pushing the `nemonik/drone-kubectl:1.21.2` container image in the prior step. You can debug by looking at the `drone-runner-kube` logs. This pod is used to run your pipelne.
+- If your `deploy` step fails with `default: deploy - Error` you likely skipped building, tagging and pushing the `nemonik/drone-kubectl:1.21.1` container image in the prior step. You can debug by looking at the `drone-runner-kube` logs. This pod is used to run your pipelne.
 
   ```bash
   kubectl logs -n drone -l app.kubernetes.io/component=drone-runner-kube
@@ -5038,7 +5038,7 @@ Now that we've preflighted our [InSpec](https://github.com/inspec/inspec) test f
 
 #### 12.20.4.1. Build, tag, and push our `inspec` step container
 
-We'll build from the `nemonik/drone-kubectl:1.21.2` we built earlier
+We'll build from the `nemonik/drone-kubectl:1.21.1` we built earlier
 
 Let's changes directories and set up our project for this your the shell
 
