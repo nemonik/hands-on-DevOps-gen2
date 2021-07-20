@@ -35,7 +35,7 @@ After this course, you will
    3. code configuration in git and [GitLab](https://gitlab.com/rluna-gitlab/gitlab-ce);
    4. authoring code in Go;
    5. using style checkers and linters;
-   6. authoring a [Makefile](<https://en.wikipedia.org/wiki/Make_(software)#Makefile>;
+   6. authoring a [Makefile](https://en.wikipedia.org/wiki/Make_(software)#Makefile);
    7. various commands in [Docker](https://docker.io) (e.g., building a container image, pushing a container into a registry, creating and running a container);
    8. authoring a pipeline for [Drone CI](https://github.com/drone/drone);
    9. using Sonar Scanner CLI to perform static analysis;
