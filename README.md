@@ -590,7 +590,7 @@ It's a good idea to inspect the install scripts from projects you don't yet know
 
 ## 9.2. Shell configuration
 
-The class automation will configure [Bash](https://www.gnu.org/software/bash/), [[Zsh](https://www.zsh.org/)] and [fish](https://fishshell.com/) [shell](<https://en.wikipedia.org/wiki/Shell_(computing)>)s, as well as [neovim](https://github.com/neovim/neovim) (nvim). A [Unix](https://en.wikipedia.org/wiki/Unix) shell is a command-line iterpreter, a command-line interface for the Unix or Unix-like operating systems, such as [Linux](https://en.wikipedia.org/wiki/Linux). The shell exists in a [terminal emulator](https://en.wikipedia.org/wiki/Terminal_emulator). In this course we will either be [iTerm2](https://iterm2.com/) for OSX or [Arch Linux](https://archlinux.org/)' [Gnome Terminal](https://en.wikipedia.org/wiki/GNOME_Terminal).
+The class automation will configure [Bash](https://www.gnu.org/software/bash/), [Zsh](https://www.zsh.org/) and [fish](https://fishshell.com/) [shell](<https://en.wikipedia.org/wiki/Shell_(computing)>)s, as well as [neovim](https://github.com/neovim/neovim) (nvim). A [Unix](https://en.wikipedia.org/wiki/Unix) shell is a command-line iterpreter, a command-line interface for the Unix or Unix-like operating systems, such as [Linux](https://en.wikipedia.org/wiki/Linux). The shell exists in a [terminal emulator](https://en.wikipedia.org/wiki/Terminal_emulator). In this course we will either be [iTerm2](https://iterm2.com/) for OSX or [Arch Linux](https://archlinux.org/)' [Gnome Terminal](https://en.wikipedia.org/wiki/GNOME_Terminal).
 
 **NOTE**
 
