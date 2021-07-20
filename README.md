@@ -381,7 +381,7 @@ For the software's source code, where the mainline (i.e., master branch) is the 
 
 ### 7.16.2. Automate the build
 
-By accompanying build automation (e.g., Gradle, Apache Maven, [MAke](https://www.gnu.org/software/make/)) alongside the source code.
+By accompanying build automation (e.g., Gradle, Apache Maven, [Make](https://www.gnu.org/software/make/)) alongside the source code.
 
 ### 7.16.3. Employ one or more CI services/orchestrators
 
@@ -1273,7 +1273,7 @@ If your on LinkedIn or search many of the job boards you'll find many employers 
 
 ### 10.2.2. Install dependencies
 
-Now that we've reviewed the playbook lets execute it via the [MAke](https://www.gnu.org/software/make/) target `install-dependencies` in the root of the project in our shell
+Now that we've reviewed the playbook lets execute it via the [Make](https://www.gnu.org/software/make/) target `install-dependencies` in the root of the project in our shell
 
 ```bash
 if [[ "$OSTYPE" == "darwin"* ]]; then brew install bash; /usr/local/bin/bash; fi
@@ -1354,7 +1354,7 @@ On OSX, simply closing your current terminal and opening a new one should be eno
 
 **NOTE**
 
-- Effort was take to support [Bash](https://www.gnu.org/software/bash/), [Zsh](https://www.zsh.org/), and [fish](https://fishshell.com/, but preference was given to [fish](https://fishshell.com/, so if there are flaws in the course they'll be discovered using [Bash](https://www.gnu.org/software/bash/) and [Zsh](https://www.zsh.org/).
+- Effort was take to support [Bash](https://www.gnu.org/software/bash/), [Zsh](https://www.zsh.org/), and [fish](https://fishshell.com/), but preference was given to [fish](https://fishshell.com/), so if there are flaws in the course they'll be discovered using [Bash](https://www.gnu.org/software/bash/) and [Zsh](https://www.zsh.org/).
 
 ### 10.2.6. Finish conifiguring fish
 
@@ -1420,7 +1420,7 @@ We will be using `nvim` in the class, but I won't know if you're using something
 
 So, now that you have the prerequisite dependencies, it is time to move on to spinning up the factory.
 
-The factory tools are entirely execute on a containerized [Kubernetes](https://github.com/kubernetes/kubernetes) cluster hosted on [k3s](https://github.com/k3s-io/k3s) (Rancher Lab’s minimal [Kubernetes](https://kubernetes.io/docs/concepts/overview/what-is-kubernetes/) distribution) on Docker created by [k3d](https://github.com/rancher/k3d/). [Kubernetes](https://kubernetes.io/docs/concepts/overview/what-is-kubernetes/) is used to orchestrate the life cycles the long-running tools (e.g., [Taiga](https://www.taiga.io/), [GitLab](https://gitlab.com/rluna-gitlab/gitlab-ce), Docker CI, [SonarQube](https://github.com/SonarSource/sonarqube/), [Heimdall 2](https://github.com/mitre/heimdall2).) [Kubernetes](https://kubernetes.io/docs/concepts/overview/what-is-kubernetes/) is an open-source system for automating deployment, scaling, and management of containerized applications. Essentially, [Kubernetes](https://kubernetes.io/docs/concepts/overview/what-is-kubernetes/) serves as an operating system for a cluster of computing resource (in the cases of [k3d](https://github.com/rancher/k3d/) these computing resources themselves are containers) and manages the life cycle and discovery of the applications running upon the cluster.
+The factory tools are entirely execute on a containerized [Kubernetes](https://github.com/kubernetes/kubernetes) cluster hosted on [k3s](https://github.com/k3s-io/k3s) (Rancher Lab’s minimal [Kubernetes](https://kubernetes.io/docs/concepts/overview/what-is-kubernetes/) distribution) on Docker created by [k3d](https://github.com/rancher/k3d/). [Kubernetes](https://kubernetes.io/docs/concepts/overview/what-is-kubernetes/) is used to orchestrate the life cycles the long-running tools (e.g., [Taiga](https://www.taiga.io/), [GitLab](https://gitlab.com/rluna-gitlab/gitlab-ce), Docker CI, [SonarQube](https://github.com/SonarSource/sonarqube/), [Heimdall 2](https://github.com/mitre/heimdall2). [Kubernetes](https://kubernetes.io/docs/concepts/overview/what-is-kubernetes/) is an open-source system for automating deployment, scaling, and management of containerized applications. Essentially, [Kubernetes](https://kubernetes.io/docs/concepts/overview/what-is-kubernetes/) serves as an operating system for a cluster of computing resource (in the cases of [k3d](https://github.com/rancher/k3d/) these computing resources themselves are containers) and manages the life cycle and discovery of the applications running upon the cluster.
 
 Initially, [k3s](https://github.com/k3s-io/k3s) was billed as a light-weight (Its less than 40 MB binary completely implements the Kubernetes API.), [fully CNCF certified](https://github.com/cncf/k8s-conformance/pulls?q=is%3Apr+k3s) [Kubernetes](https://kubernetes.io/docs/concepts/overview/what-is-kubernetes/) distribution designed for resource-constrained environments (It can run on host with as little as 512MB RAM.), not needing the added steps and dependencies a full [Kubernetes](https://kubernetes.io/docs/concepts/overview/what-is-kubernetes/) cluster would require. Keep in mind memory and compute equates to money when it comes to cloud, so why burn memory and computer err. money when you don't have to. It installs in a fraction of the time it takes to launch a canonical Kubernetes cluster. As [k3s](https://github.com/k3s-io/k3s) has matured it has become just a darn good [Kubernetes](https://kubernetes.io/docs/concepts/overview/what-is-kubernetes/) distribution.
 
@@ -1438,7 +1438,7 @@ The official documentation can be found here
 
 ### 10.3.1. The `Makefile`
 
-I've chosen to author the automation for spinning up the factory in [GNU Make](https://www.gnu.org/software/make/). [GNU Make](https://www.gnu.org/software/make/) bills itself as "a tool which controls the generation of executables and other non-source files of a program from the program's source files." Created by, [Stuart Feldman](https://en.wikipedia.org/wiki/Stuart_Feldman) Make introduced in PWB/UNIX has been around since 1976. Yep, over 45 years ago. Initially, its purpose was to automate software builds. Yeah, automation one of the core methods of DevOps has been around quite a long time. I've chosen to use [MAke](https://www.gnu.org/software/make/) since the inception of my class to drive this point home. There's alway a few "grey beards" in my class that perk up and smile after hearing it mentioned. [MAke](https://www.gnu.org/software/make/) lends itself well to the task of spinning up the cluster, the tools, etc as a makefile is essentially a collection of rules. An individual rule in the makefile tells [MAke](https://www.gnu.org/software/make/) how to execute a series of commands. The [[MAke](https://www.gnu.org/software/make/)file](./[MAke](https://www.gnu.org/software/make/)file) is found at the root of the repository. As I stated earlier, typically [MAke](https://www.gnu.org/software/make/) is utilized for building code, but because of its ubiquity across Linux and OSX it is often used for a wide variety of tasks. We're going to use it stand up a [Kubernetes](https://kubernetes.io/docs/concepts/overview/what-is-kubernetes/) cluster and a top that entire DevOps factory. Maybe this was a wrong decision. Only time will tell.
+I've chosen to author the automation for spinning up the factory in [GNU Make](https://www.gnu.org/software/make/). [GNU Make](https://www.gnu.org/software/make/) bills itself as "a tool which controls the generation of executables and other non-source files of a program from the program's source files." Created by, [Stuart Feldman](https://en.wikipedia.org/wiki/Stuart_Feldman) Make introduced in PWB/UNIX has been around since 1976. Yep, over 45 years ago. Initially, its purpose was to automate software builds. Yeah, automation one of the core methods of DevOps has been around quite a long time. I've chosen to use [Make](https://www.gnu.org/software/make/) since the inception of my class to drive this point home. There's alway a few "grey beards" in my class that perk up and smile after hearing it mentioned. [Make](https://www.gnu.org/software/make/) lends itself well to the task of spinning up the cluster, the tools, etc as a makefile is essentially a collection of rules. An individual rule in the makefile tells [Make](https://www.gnu.org/software/make/) how to execute a series of commands. The [./Makefile](./Makefile) is found at the root of the repository. As I stated earlier, typically [Make](https://www.gnu.org/software/make/) is utilized for building code, but because of its ubiquity across Linux and OSX it is often used for a wide variety of tasks. We're going to use it stand up a [Kubernetes](https://kubernetes.io/docs/concepts/overview/what-is-kubernetes/) cluster and a top that entire DevOps factory. Maybe this was a wrong decision. Only time will tell.
 
 First let's inspect the [Makefile](./Makefile) in piecemeal
 
@@ -1457,7 +1457,7 @@ The above is the copyright. The BSD 3-clause license allows you nearly almost un
 .PHONY: all install-dependencies start install start-registry delete-registry start-cluster delete-cluster patch-coredns install-traefik uninstall-traefik install-gitlab uninstall-gitlab install-drone uninstall-drone install-taiga uninstall-taiga install-sonarqube uninstall-sonarqube install-heimdall uninstall-heimdall install-plantuml uninstall-plantuml decrypt-vault encrypt-vault
 ```
 
-Generally, a [Makefile](<https://en.wikipedia.org/wiki/Make_(software)#Makefile> is comprised of rules that look like this
+Generally, a [Makefile](<https://en.wikipedia.org/wiki/Make_(software)#Makefile>) is comprised of rules that look like this
 
 ```
 target [optionally, additional targets...] : prerequisite [optionally, additional prerequisite]
@@ -1575,7 +1575,7 @@ The output will resemble
 
 [![asciicast](https://asciinema.org/a/I6DUWex7m79MrnkwCXCqfJsnS.svg)](https://asciinema.org/a/I6DUWex7m79MrnkwCXCqfJsnS)
 
-[MAke](https://www.gnu.org/software/make/) first start a private container registry to hold your container images by executing the `start-registry` rule, who will inturn execute the [./start_registry.sh](start_registry.sh) bash script, whose output will resemble
+[Make](https://www.gnu.org/software/make/) first start a private container registry to hold your container images by executing the `start-registry` rule, who will inturn execute the [./start_registry.sh](start_registry.sh) bash script, whose output will resemble
 
 ```
 ./start_registry.sh
@@ -1675,7 +1675,7 @@ kubectl cluster-info
 
 In the case above run, I had set an `VAULT_PASSWORD` environment variable to hold the password.
 
-[MAke](https://www.gnu.org/software/make/) will then move onto executing `patch-coredns` rule, descend into the [coredns](coredns) sub-folder and execute the [patch.sh](coredns/patch.sh) script.
+[Make](https://www.gnu.org/software/make/) will then move onto executing `patch-coredns` rule, descend into the [coredns](coredns) sub-folder and execute the [patch.sh](coredns/patch.sh) script.
 
 The output will resemble
 
@@ -2050,7 +2050,7 @@ A CMS must facilitate best practices, not limited to:
   - Utilizing branching to separate different lines of development, and
   - Standardizing on CMS workflows (e.g., GitHub Workflow),
 
-- [MAke](https://www.gnu.org/software/make/) builds be self-testing (i.e., ingrain testing) by including unit and integration test with the source code so that it can be executed by
+- [Make](https://www.gnu.org/software/make/) builds be self-testing (i.e., ingrain testing) by including unit and integration test with the source code so that it can be executed by
 
   - the build automation, and
   - the Continuous Integration service.
@@ -2374,7 +2374,7 @@ Track your progress in [Taiga](https://www.taiga.io/) as you work through each s
 2. Click on `Projects` in the upper left and select `Create blank project` (e.g., <https://gitlab.nemonik.com/projects/new#blank_project>).
 3. When the page load, enter `helloworld` for the `Project name`.
 4. Provide an optional `Project description`. Something descriptive, such as, `GoLang helloworld application for the hands-on DevOps class.`.
-5. [MAke](https://www.gnu.org/software/make/) the application `Public` to save yourself from entering your username and password when cloning.
+5. [Make](https://www.gnu.org/software/make/) the application `Public` to save yourself from entering your username and password when cloning.
 6. Click the blue `Create project` button on the lower left.
 
 The UI will refresh to show you a landing page for the project (e.g., <https://gitlab.nemonik.com/root/helloworld>)
@@ -2446,7 +2446,7 @@ golangci-lint.xml
 
 **NOTE**
 
-- [MAke](https://www.gnu.org/software/make/) sure you pre-pend that dot (`.`) at the start of `.gitignore`. In \*NIX Dot-files are hidden files.
+- [Make](https://www.gnu.org/software/make/) sure you pre-pend that dot (`.`) at the start of `.gitignore`. In \*NIX Dot-files are hidden files.
 - `.gitignore` will not show up if you simply list the file system via the `ls` command, but if you use `ls -a` or `ls --all` it will. Either arguments configures `ls` to not ignore entries starting with `.`.
 
 ## 11.4. Author the application
@@ -3520,7 +3520,7 @@ CGO_ENABLED=0 GOOS=linux go build -a -o helloworld-web .
 
 - `-a` parameter is used to force rebuilding package to ensure you have all the dependencies.
 
-We can update the project's [Makefile](<https://en.wikipedia.org/wiki/Make_(software)#Makefile> to do the same by modifying the `build` rule
+We can update the project's [Makefile](<https://en.wikipedia.org/wiki/Make_(software)#Makefile>) to do the same by modifying the `build` rule
 
 ```makefile
 build:
@@ -4656,9 +4656,9 @@ So, with the `k8s_cert` and `k8s_token` values above
 ### 12.19.3. Build, tag and push our `deploy` step container
 
 To deploy our helloworld-web application to our cluster we will use a container. [Sinlead](https://github.com/sinlead) provides a Drone plug (i.e., a container) to do this [sinlead
-/drone-kubectl](https://github.com/sinlead/drone-kubectl) that I've patched his plugin to to build from the latest [bitnami/kubectl:1.21.1]() container image and direct its initialization output to `/dev/null`, so that this unexpected output doesn't break the build.
+/drone-kubectl](https://github.com/sinlead/drone-kubectl) that I've patched his plugin to to build from the latest [bitnami/kubectl:1.21.1](https://hub.docker.com/layers/bitnami/kubectl/1.21.1/images/sha256-68feabfc5feff01d246de2298464eeca3a0f339434655715731ca4a0099817ef?context=explore) container image and direct its initialization output to `/dev/null`, so that this unexpected output doesn't break the build.
 
-So, let's retrieve my [fork](https://en.wikipedia.org/wiki/Fork_(software_development) (i.e., when a developer clones a project and starts independent development on it).
+So, let's retrieve my [fork](<https://en.wikipedia.org/wiki/Fork_(software_development)>) (i.e., when a developer clones a project and starts independent development on it).
 
 Let's changes directories in the shell
 
@@ -4693,7 +4693,7 @@ ENTRYPOINT ["kubectl"]
 CMD ["--help"]
 ```
 
-Sinlead wraps the [kubectl](https://kubernetes.io/docs/reference/kubectl/overview/) with a bash script so it can access the secrets we've set for our pipeline, so it also a good idea to review [init-kubectl](https://github.com/nemonik/drone-kubectl/blob/master/init-kubectl)and [kubectl](https://github.com/nemonik/drone-kubectl/blob/master/kubectl) copied into `/opt/sinlead/kubectl/bin/`.
+Sinlead wraps the [kubectl](https://kubernetes.io/docs/reference/kubectl/overview/) with a bash script so it can access the secrets we've set for our pipeline, so it also a good idea to review [init-kubectl](https://github.com/nemonik/drone-kubectl/blob/master/init-kubectl) and [kubectl](https://github.com/nemonik/drone-kubectl/blob/master/kubectl) copied into `/opt/sinlead/kubectl/bin/`.
 
 We're going to build this container
 
@@ -5212,7 +5212,7 @@ docker tag selenium/standalone-chrome:3.141 k3d-registry.nemonik.com:5000/seleni
 docker push k3d-registry.nemonik.com:5000/selenium/standalone-chrome:3.141
 ```
 
-If you're using th [fish](https://fishshell.com/)shell
+If you're using th [fish](https://fishshell.com/) shell
 
 ```fish
 set host_ip (cat /tmp/host_ip)
@@ -5469,7 +5469,7 @@ if __name__ == "__main__":
 
 Save the file and exit. Yep. All this code to execute an automated functional test for the return of the text _Hello world!_. They're note cheap. Top of the test pyramid expensive, so use them wisely.
 
-For now, if your using the [fish](https://fishshell.com/)shell let us run our test by entering into the command line
+For now, if your using the [fish](https://fishshell.com/) shell let us run our test by entering into the command line
 
 ```fish
 set -x SELENIUM_HOST localhost
@@ -5622,7 +5622,7 @@ volumes:
 
 But before you execute the pipeline it needs to be updates to be a trusted repository as the service will need access to `/var/run/docker.sock`.
 
-1. Open the `helloworld-web` repositorry in Drone CI](https://github.com/drone/drone) (e.g., <https://drone.nemonik.com/root/helloworld-web/settings>).
+1. Open the `helloworld-web` repositorry in [Drone CI](https://github.com/drone/drone) (e.g., <https://drone.nemonik.com/root/helloworld-web/settings>).
 2. Under `Project Settings` toggle `Trusted` so that is enabled (i.e., blue ) to enable privileged container settings.
 3. Click `SAVE CHANGES`.
 
@@ -5717,7 +5717,7 @@ docker tag owasp/zap2docker-stable:latest k3d-registry.nemonik.com:5000/owasp/za
 docker push k3d-registry.nemonik.com:5000/owasp/zap2docker-stable:2.8.0
 ```
 
-If you're using the [fish](https://fishshell.com/)shell
+If you're using the [fish](https://fishshell.com/) shell
 
 ```fish
 set host_ip (cat /tmp/host_ip)
@@ -5820,7 +5820,7 @@ git commit -m "added owasp-zap step to the pipeline"
 git push origin master
 ```
 
-Open your `root/helloworld-web` repository (e.g., <https://drone.nemonik.com/root/helloworld-web>) in [Drone CI](https://github.com/drone/drone)and monitor the progress of the build. The pipeline should execute in a few minutes.
+Open your `root/helloworld-web` repository (e.g., <https://drone.nemonik.com/root/helloworld-web>) in [Drone CI](https://github.com/drone/drone) and monitor the progress of the build. The pipeline should execute in a few minutes.
 
 Successful output for this stage resembles the prior output
 
