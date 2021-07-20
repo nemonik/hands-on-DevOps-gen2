@@ -28,7 +28,7 @@ gitlab:
     type: ClusterIP
     http:
       port: 80
-    ssh: 
+    ssh:
       port: 2022
 
   ingress:
@@ -49,9 +49,10 @@ gitlab:
 
   env:
     host: ${gitlab_fdqn}
+    rootPassword: "${gitlab_root_password}"
 
     signupEnabled: "false"
-    
+
     secrets:
        dbKeyBase: "${db_key_base}"
        secretKeyBase: "${secret_key_base}"

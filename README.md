@@ -1996,7 +1996,7 @@ The default username is
 
 whose password is
 
-`password`
+`password` (Shhhh. Our little secret.).
 
 **NOTE**
 
@@ -2095,7 +2095,9 @@ For the purposes of the class the
 
 account's password has been set to the uber-secure
 
-`5iveL!fe`
+`paswword`
+
+So, you will be asked to change it to your own 8-character password when using GitLab for the first time.
 
 ### 10.4.3. Drone CI, an example of CICD orchestrator
 
@@ -2202,7 +2204,7 @@ Once, stood up your instance of [Drone CI](https://github.com/drone/drone) will 
 
 <http://drone.nemonik.com>
 
-Drone will authenticate you off of [GitLab](https://gitlab.com/rluna-gitlab/gitlab-ce) with the default **root** account and **5iveL!fe** password.
+Drone will authenticate you off of [GitLab](https://gitlab.com/rluna-gitlab/gitlab-ce) with the default **root** account and whatever password you set in GitLab.
 
 ### 10.4.4. SonarQube, an example of a platform for the inspection of code quality
 
@@ -2237,7 +2239,7 @@ To login:
 1. Open [SonarQube](https://github.com/SonarSource/sonarqube/) (e.g., <http://sonar.nemonik.com>) in your browser.
 2. Click `Log in`.
 3. When the page refreshes, click `Log in with GitLab`.
-4. Provide your [GitLab](https://gitlab.com/rluna-gitlab/gitlab-ce) credentials if asked. The default admin account username and password is [GitLab](https://gitlab.com/rluna-gitlab/gitlab-ce)'s **root** account and **5iveL!fe** password.
+4. Provide your [GitLab](https://gitlab.com/rluna-gitlab/gitlab-ce) credentials if asked. The default admin account username and password is [GitLab](https://gitlab.com/rluna-gitlab/gitlab-ce)'s **root** account and the password you set.
 5. Then `Authorize` [SonarQube](https://github.com/SonarSource/sonarqube/) to use your account.
 6. You will be redirected into [SonarQube](https://github.com/SonarSource/sonarqube/), authenicated.
 
@@ -2370,7 +2372,7 @@ Track your progress in [Taiga](https://www.taiga.io/) as you work through each s
 
 ## 11.2. Create the project in GitLab
 
-1. In [GitLab](https://gitlab.com/rluna-gitlab/gitlab-ce) (e.g., <https://gitlab.nemonik.com>), if you need to login the default username is `root` and the password is `5iveL!fe`.
+1. In [GitLab](https://gitlab.com/rluna-gitlab/gitlab-ce) (e.g., <https://gitlab.nemonik.com>), if you need to login the default username is `root` and whatever password you set.
 2. Click on `Projects` in the upper left and select `Create blank project` (e.g., <https://gitlab.nemonik.com/projects/new#blank_project>).
 3. When the page load, enter `helloworld` for the `Project name`.
 4. Provide an optional `Project description`. Something descriptive, such as, `GoLang helloworld application for the hands-on DevOps class.`.
@@ -2772,7 +2774,7 @@ git push origin master
 **NOTE**
 
 - Since we have not registered an SSH key with [GitLab](https://gitlab.com/rluna-gitlab/gitlab-ce), during the push we will be prompted to enter a `Username` and `Password`.
-- By default your `Username` is `root` and your `Password` is `5iveL!fe` (Shhhh. Our little secret.).
+- By default your `Username` is `root` and your `Password` is whatever you set for GitLab.
 - The git command-line client will not display your password as you enter it.
 
 Immediately after you enter your [GitLab](https://gitlab.com/rluna-gitlab/gitlab-ce) username/password open Drone CI (e.g., <https://drone.nemonik.com/root/helloworld>) in your browser, if you re-use an existing tab to this page refresh the page.
