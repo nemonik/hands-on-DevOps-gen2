@@ -898,7 +898,7 @@ echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.bash_profile
 source ~/.bash_profile
 ```
 
-If your shell is [[Zsh](https://www.zsh.org/)]:
+If your shell is [Zsh](https://www.zsh.org/):
 
 ```bash
 echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.zshrc
