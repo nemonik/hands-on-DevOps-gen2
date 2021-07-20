@@ -49,7 +49,6 @@ gitlab:
 
   env:
     host: ${gitlab_fdqn}
-    rootPassword: "${gitlab_root_password}"
 
     signupEnabled: "false"
 
