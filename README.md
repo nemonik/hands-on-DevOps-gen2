@@ -2843,7 +2843,7 @@ That's it. This is essentially CI. Remember, CI stands for "Continuous Integrati
 
 The `helloworld` project can be viewed completed on GitHub at
 
-https://github.com/nemonik/helloworld
+<https://github.com/nemonik/helloworld-gen2>
 
 # 12. Golang `helloworld-web` project
 
@@ -2933,7 +2933,7 @@ golangci-lint.xml
 inspec_helloworld.json
 
 # binary
-helloworld-web
+./helloworld-web
 
 # sonar
 .scannerwork/
@@ -4487,10 +4487,12 @@ cd ~/go/src/github.com/nemonik/helloworld-web
 nvim Makefile
 ```
 
-Update the `.PHONY ` line to
+Update the `.PHONY ` and `all` rule to
 
 ```Makefile
 .PHONY: all clean fmt lint test sonar build run docker-build docker-push deploy
+
+all: sonar deploy
 ```
 
 Then add to the and of the `Makefile`
@@ -4632,29 +4634,16 @@ The value returned will resemble
 LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUJlRENDQVIyZ0F3SUJBZ0lCQURBS0JnZ3Foa2pPUFFRREFqQWpNU0V3SHdZRFZRUUREQmhyTTNNdGMyVnkKZG1WeUxXTmhRREUyTWpZek1URTFNRE13SGhjTk1qRXdOekUxTURFeE1UUXpXaGNOTXpFd056RXpNREV4TVRRegpXakFqTVNFd0h3WURWUVFEREJock0zTXRjMlZ5ZG1WeUxXTmhRREUyTWpZek1URTFNRE13V1RBVEJnY3Foa2pPClBRSUJCZ2dxaGtqT1BRTUJCd05DQUFRUWsyTGJiNkN3Y3FWZnZVTSswU1BxNDU5K1o2c1J2S1NJTFArbFk4S3IKUGhwYmtzaWU0cG5panhyNUlIeTdOQXVuc0hTZGVPbUpaQWRZbHpmRDgyZVdvMEl3UURBT0JnTlZIUThCQWY4RQpCQU1DQXFRd0R3WURWUjBUQVFIL0JBVXdBd0VCL3pBZEJnTlZIUTRFRmdRVUk3WnMzeThBM05XWnNiWkNOTnVQCjhvSG9hOXd3Q2dZSUtvWkl6ajBFQXdJRFNRQXdSZ0loQUtIZ3FvV1NGQU1UcmpZWlEycm00RW9mUDB6NjdwdXEKRGM2YWduRmhWTTlHQWlFQXZmUTFsTERiZ0RaOUZBUE1UWXlaOVRiVlZ5TGRNaVM5S0U5R0JodUhHWXM9Ci0tLS0tRU5EIENFUlRJRklDQVRFLS0tLS0K
 ```
 
-You can use the `k3d` command to retrieve [Kubernetes](https://kubernetes.io/docs/concepts/overview/what-is-kubernetes/) API server port in `http://[HOST:]HOSTPORT]` form for your `k8s_server` value
-
-```bash
-k3d kubeconfig get hands-on-devops-class | grep "server:" | sed -e 's/^.*server: //g'
-```
-
-The results will resemble
-
-```
-https://host.k3d.internal:6443
-```
-
-So, with the `k8s_server`, `k8s_cert` and `k8s_token` values above
+So, with the `k8s_cert` and `k8s_token` values above
 
 1. Open [Drone CI](https://github.com/drone/drone) and edit the secrets for `helloworld-web` (e.g., <https://drone.nemonik.com/root/helloworld-web/settings>).
 2. Click on `Secrets` on the left-hand side.
-3. Click `+ NEW SECRET` and in the `Create a New Secret` pop-up enter `k8s_server` and enter your value above for your [Kubernetes](https://kubernetes.io/docs/concepts/overview/what-is-kubernetes/) API server port. In the case above the value will be `https://host.k3d.internal:6443`.
-4. Click `+ NEW SECRET` and in the `Create a New Secret` pop-up enter `k8s_cert` and enter your value above. In the case above I would enter
+3. Click `+ NEW SECRET` and in the `Create a New Secret` pop-up enter `k8s_cert` and enter your value above. In the case above I would enter
    ```
    LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUJlRENDQVIyZ0F3SUJBZ0lCQURBS0JnZ3Foa2pPUFFRREFqQWpNU0V3SHdZRFZRUUREQmhyTTNNdGMyVnkKZG1WeUxXTmhRREUyTWpZek1URTFNRE13SGhjTk1qRXdOekUxTURFeE1UUXpXaGNOTXpFd056RXpNREV4TVRRegpXakFqTVNFd0h3WURWUVFEREJock0zTXRjMlZ5ZG1WeUxXTmhRREUyTWpZek1URTFNRE13V1RBVEJnY3Foa2pPClBRSUJCZ2dxaGtqT1BRTUJCd05DQUFRUWsyTGJiNkN3Y3FWZnZVTSswU1BxNDU5K1o2c1J2S1NJTFArbFk4S3IKUGhwYmtzaWU0cG5panhyNUlIeTdOQXVuc0hTZGVPbUpaQWRZbHpmRDgyZVdvMEl3UURBT0JnTlZIUThCQWY4RQpCQU1DQXFRd0R3WURWUjBUQVFIL0JBVXdBd0VCL3pBZEJnTlZIUTRFRmdRVUk3WnMzeThBM05XWnNiWkNOTnVQCjhvSG9hOXd3Q2dZSUtvWkl6ajBFQXdJRFNRQXdSZ0loQUtIZ3FvV1NGQU1UcmpZWlEycm00RW9mUDB6NjdwdXEKRGM2YWduRmhWTTlHQWlFQXZmUTFsTERiZ0RaOUZBUE1UWXlaOVRiVlZ5TGRNaVM5S0U5R0JodUhHWXM9Ci0tLS0tRU5EIENFUlRJRklDQVRFLS0tLS0K
    ```
    but your value will be different.
-5. Click `+ NEW SECRET` and in the `Create a New Secret` pop-up enter `k8s_token` and enter your value above. In the case above the I would enter
+4. Click `+ NEW SECRET` and in the `Create a New Secret` pop-up enter `k8s_token` and enter your value above. In the case above the I would enter
    ```
    eyJhbGciOiJSUzI1NiIsImtpZCI6Im8wX1JsMUZnSXNnUmY5X1lsSk5KcGh6TWN5S1MxTUJVVUsxNWI0VHgzaWMifQ.eyJpc3MiOiJrdWJlcm5ldGVzL3NlcnZpY2VhY2NvdW50Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9uYW1lc3BhY2UiOiJoZWxsb3dvcmxkLXdlYiIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VjcmV0Lm5hbWUiOiJoZWxsb3dvcmxkLXdlYi1zZXJ2aWNlLWFjY291bnQtdG9rZW4tOHN2enciLCJrdWJlcm5ldGVzLmlvL3NlcnZpY2VhY2NvdW50L3NlcnZpY2UtYWNjb3VudC5uYW1lIjoiaGVsbG93b3JsZC13ZWItc2VydmljZS1hY2NvdW50Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9zZXJ2aWNlLWFjY291bnQudWlkIjoiNzJhY2RjY2QtYmU1Yy00NWU3LTkxZGEtMWZjNzU2ZGUzYjcyIiwic3ViIjoic3lzdGVtOnNlcnZpY2VhY2NvdW50OmhlbGxvd29ybGQtd2ViOmhlbGxvd29ybGQtd2ViLXNlcnZpY2UtYWNjb3VudCJ9.GvyRkXOejhakwDF18ZuaTQt2lmwGvEPqDlJ0uubAov34d7XrCyAWujluPKtn1D4C-teQWuTuV52u2Xu3CyvYU3fU3ztz-k8rwA6rM77fPzdhk0yZ1tnkcZG6i_Kcv0p4_B0RAg9MQYz70S_XFYJhjp8-aqRjXuJ76-hfyWxECvghjehXX5tsT19kgPE9QXBotRQlfvWqOVEsE_hlOnjJUI3CKvm-T2faVCgiK00P6osDtjtVGbvHd4oAO1s9iK8aXOFBuxhcFOfTowRsESMcriMHT7enuTcpaaZ-TE55kJFz3LUnH4PCF0Nn4By77KcrJL1ngJTQr2wyMy-jhr0tAA
    ```
@@ -4667,7 +4656,7 @@ So, with the `k8s_server`, `k8s_cert` and `k8s_token` values above
 ### 12.19.3. Build, tag and push our `deploy` step container
 
 To deploy our helloworld-web application to our cluster we will use a container. [Sinlead](https://github.com/sinlead) provides a Drone plug (i.e., a container) to do this [sinlead
-/drone-kubectl](https://github.com/sinlead/drone-kubectl) that I've patched his plugin to to build from the latest [bitnami/kubectl:1.21.2](https://hub.docker.com/layers/bitnami/kubectl/1.21.2/images/sha256-b039c6e142d7c915cdafa664482efa7c4b2619baa0c05974020d9c5a0b419550?context=explore) container image and direct its initialization output to `/dev/null`, so that this unexpected output doesn't break the build.
+/drone-kubectl](https://github.com/sinlead/drone-kubectl) that I've patched his plugin to to build from the latest [bitnami/kubectl:1.21.1]() container image and direct its initialization output to `/dev/null`, so that this unexpected output doesn't break the build.
 
 So, let's retrieve my [fork](https://en.wikipedia.org/wiki/Fork_(software_development) (i.e., when a developer clones a project and starts independent development on it).
 
@@ -4688,7 +4677,7 @@ cat Dockerfile
 Whose output will resemble
 
 ```Dockerfile
-FROM bitnami/kubectl:1.21.2
+FROM bitnami/kubectl:1.21.1
 
 LABEL maintainer "Sinlead <opensource@sinlead.com>"
 
@@ -4708,27 +4697,7 @@ Sinlead wraps the [kubectl](https://kubernetes.io/docs/reference/kubectl/overvie
 We're going to build this container
 
 ```bash
-docker build -t nemonik/drone-kubectl:1.21.2 .
-```
-
-And the output will resemble
-
-```
-[+] Building 5.2s (8/8) FINISHED
- => [internal] load build definition from Dockerfile
- => => transferring dockerfile: 272B
- => [internal] load .dockerignore
- => => transferring context: 2B
- => [internal] load metadata for docker.io/bitnami/kubectl:1.21.2
- => [auth] bitnami/kubectl:pull token for registry-1.docker.io
- => [internal] load build context
- => => transferring context: 1.28kB
- => [1/2] FROM docker.io/bitnami/kubectl:1.21.2@sha256:b039c6e142d7c915cdafa664482efa7c4b2619baa0c05974020d9c5a0b419550
- => [2/2] COPY init-kubectl kubectl /opt/sinlead/kubectl/bin/
- => exporting to image
- => => exporting layers
- => => writing image sha256:a7946804081c9d134d87bd56c1d89613802e9ce3989c8c599490fac472f824a4
- => => naming to docker.io/sinlead/drone-kubectl:1.21.2
+docker build -t nemonik/drone-kubectl:1.21.1 .
 ```
 
 Then tag it and add it to our private container registry
@@ -4753,10 +4722,8 @@ And add the following step at the bottom
 
 ```yaml
 - name: deploy
-  image: k3d-registry.nemonik.com:5000/nemonik/drone-kubectl:1.21.2
+  image: k3d-registry.nemonik.com:5000/nemonik/drone-kubectl:1.21.1
   settings:
-    kubernetes_server:
-      from_secret: k8s_server
     kubernetes_cert:
       from_secret: k8s_cert
     kubernetes_token:
@@ -4764,7 +4731,6 @@ And add the following step at the bottom
   commands:
     - kubectl delete -f kubernetes/helloworld-web.yaml 2> /dev/null
     - kubectl apply -f kubernetes/helloworld-web.yaml
-    - kubectl wait --for=condition=ready pod -n helloworld-web -l app.kubernetes.io/component=helloworld-web --timeout=180s
 ```
 
 To execute your pipeline, push your changes to [GitLab](https://gitlab.com/rluna-gitlab/gitlab-ce)
@@ -4825,7 +4791,7 @@ So, now we have beginnings of a real CICD pipeline. There are no strings on me e
   Look for something like
 
   ```
-  time="2021-07-17T21:55:09Z" level=warning msg="Engine: Container start timeout" build.id=4 build.number=4 container=drone-1do79imnrgsthw59fm21 error="kubernetes error: container failed to start in timely manner: id=drone-1do79imnrgsthw59fm21" image="k3d-registry.nemonik.com:5000/nemonik/drone-kubectl:1.21.2" placeholder="drone/placeholder:1" pod=drone-l3ejd197yd9sghsaqxbp repo.id=1 repo.name=helloworld-web repo.namespace=root stage.id=4 stage.name=default stage.number=1 step=deploy step.name=deploy thread=54
+  time="2021-07-17T21:55:09Z" level=warning msg="Engine: Container start timeout" build.id=4 build.number=4 container=drone-1do79imnrgsthw59fm21 error="kubernetes error: container failed to start in timely manner: id=drone-1do79imnrgsthw59fm21" image="k3d-registry.nemonik.com:5000/nemonik/drone-kubectl:1.21.1" placeholder="drone/placeholder:1" pod=drone-l3ejd197yd9sghsaqxbp repo.id=1 repo.name=helloworld-web repo.namespace=root stage.id=4 stage.name=default stage.number=1 step=deploy step.name=deploy thread=54
   ```
 
   near the end as an indication.
@@ -4890,11 +4856,12 @@ Creating new profile at /Users/nemonik/go/src/github.com/nemonik/helloworld-web/
 Then complete following
 
 ```bash
-cd tests/inspec/controls
+cd tests/inspec/helloworld-web/controls/
 rm example.rb
+nvim helloworld-web.rb
 ```
 
-Then author a Ruby-based tests to verify the expected state of our deployment by creating `helloworld-web.rb` in an editor with this content:
+Then copy in the contents of the test below
 
 ```ruby
 # copyright: 2021, Michael Joseph Walsh
@@ -4983,11 +4950,6 @@ control "helloworld-web-deployment-4" do
   impact 1.0
   title "Validate helloworld-web deployment"
 
-  describe "Deployment ensure ready replicas is 1" do
-    subject { command("kubectl get deployment -n " + input('namespace') + " helloworld-web -o=jsonpath='{$.status.readyReplicas}'") }
-    its('stdout') { should cmp "1" }
-  end
-
   describe "Deployment ensure replica count is 1" do
     subject { command("kubectl get deployment -n " + input('namespace') + " helloworld-web -o=jsonpath='{$.status.replicas}'") }
     its('stdout') { should cmp "1" }
@@ -5000,7 +4962,7 @@ end
 We'll execute the [InSpec](https://github.com/inspec/inspec) test of the [Kubernetes](https://kubernetes.io/docs/concepts/overview/what-is-kubernetes/) deployment
 
 ```bash
-cd ~go/src/github.com/nemonik/helloworld-web/tests/inspec/helloworld-web
+cd ~/go/src/github.com/nemonik/helloworld-web/tests/inspec/helloworld-web/
 inspec exec .
 ```
 
@@ -5027,7 +4989,6 @@ Target:  local://
      ✔  Pod is running container whose port is named 'http' stdout is expected to cmp == "http"
      ✔  Pod is running container whose port is a TCP port stdout is expected to cmp == "TCP"
   ✔  helloworld-web-deployment-4: Validate helloworld-web deployment
-     ✔  Deployment ensure ready replicas is 1 stdout is expected to cmp == "1"
      ✔  Deployment ensure replica count is 1 stdout is expected to cmp == "1"
 
 
@@ -5039,18 +5000,25 @@ We check each resource ([Ingress](https://kubernetes.io/docs/concepts/services-n
 
 ### 12.20.3. Add an `inspec` rule to the Makefile
 
-Add the [InSpec](https://github.com/inspec/inspec) step to our `Makefile` with `nvim`
+Add the [InSpec](https://github.com/inspec/inspec) step to our `Makefile` with
 
-Update the `all` rule to depend on `inspec`
+```bash
+cd ~/go/src/github.com/nemonik/helloworld-web
+nvim Makefile
+```
+
+Update the `.PHONY` and `all` rule
 
 ```Makefile
-all: inspec
+.PHONY: all clean fmt lint test sonar build run docker-build docker-push deploy inspec
+
+all: sonar deploy inspec
 ```
 
 And then at the bottom add
 
 ```Makefile
-inspec: deploy
+inpsec:
 	inspec exec .tests/inspec/helloworld-web/. --chef-license=accept-silent
 ```
 
@@ -5084,7 +5052,7 @@ git init --initial-branch=master
 We'll create a `Dockerfile` in `nvim`
 
 ```Dockerfile
-FROM k3d-registry.nemonik.com:5000/nemonik/drone-kubectl:1.21.2
+FROM k3d-registry.nemonik.com:5000/nemonik/drone-kubectl:1.21.1
 
 LABEL maintainer "Michael Joseph Walsh <github.com@nemonik.com>"
 
@@ -5115,20 +5083,25 @@ Output will resemble
 
 #### 12.20.4.2. Add the compliance-as-code (`inspec`) step to the pipeline
 
-Head back into our `helloworld-web` project (i.e., `~/go/src/github.com/nemonik/helloworld-web/`) and edit `.drone.yml` in `nvim` to our `inspec` step.
+Head back into our `helloworld-web` project (i.e., `~/go/src/github.com/nemonik/helloworld-web/`)
+
+```bash
+cd ~/go/src/github.com/nemonik/helloworld-web/
+nvim .drone.yml
+```
+
+Add the `inspec` step at the bottom
 
 ```yaml
 - name: inspec
   image: k3d-registry.nemonik.com:5000/nemonik/drone-inspec:latest
   settings:
-    kubernetes_server:
-      from_secret: k8s_server
     kubernetes_cert:
       from_secret: k8s_cert
     kubernetes_token:
       from_secret: k8s_token
   commands:
-    - inspec exec ./inspec/helloworld-web/. --chef-license=accept-silent
+    - inspec exec tests/inspec/helloworld-web/. --chef-license=accept-silent
 ```
 
 To execute your pipeline, push your changes to [GitLab](https://gitlab.com/rluna-gitlab/gitlab-ce)
@@ -5167,7 +5140,6 @@ Target:  local://
 [38;5;41m     ✔  Pod is running container whose port is named 'http' stdout is expected to cmp == "http"[0m
 [38;5;41m     ✔  Pod is running container whose port is a TCP port stdout is expected to cmp == "TCP"[0m
 [38;5;41m  ✔  helloworld-web-deployment-4: Validate helloworld-web deployment[0m
-[38;5;41m     ✔  Deployment ensure ready replicas is 1 stdout is expected to cmp == "1"[0m
 [38;5;41m     ✔  Deployment ensure replica count is 1 stdout is expected to cmp == "1"[0m
 
 
@@ -5196,7 +5168,8 @@ Test Summary: [38;5;41m14 successful[0m, 0 failures, 0 skipped
 We'll use Heimdall 2 to view the results in security engineer friendly manner.
 
 ```bash
-inspec exec --chef-license=accept-silent helloworld --reporter json > tests/reports/inspec_helloworld.json
+cd  ~/go/src/github.com/nemonik/helloworld-web
+inspec exec --chef-license=accept-silent tests/inspec/helloworld-web/. --reporter json > tests/reports/inspec_helloworld.json
 ```
 
 Open Heimdall 2 Lite - (e.g., <http://heimdall.nemonik.com>). You will need to authenticate and will be presented with an upload pane. Make sure `LOCAL FILES`, click `Choose files to upload`, then browse to navigate to `inspec_helloworld.json` in the class project (`go/src/github.com/nemonik/helloworld-web/tests/reports/inspec_helloworld.json`) and upload to view the results.
@@ -5916,7 +5889,7 @@ Our application is relatively simple, so it was doubtful anything would be found
 
 The `helloworld-web` project can be viewed completed at
 
-<https://github.com/nemonik/helloworld-web>
+<https://github.com/nemonik/helloworld-web-gen2>
 
 # 13. Additional best practices to consider around securing containerized applications
 
