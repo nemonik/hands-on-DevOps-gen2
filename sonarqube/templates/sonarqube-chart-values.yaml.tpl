@@ -20,6 +20,9 @@ persistence:
 
 initContainers:
   image: ${registry_name}:${registry_port}/${busybox_image_name}:${busybox_image_tag}
+  
+initSysctl:
+  image: ${registry_name}:${registry_port}/${busybox_image_name}:${busybox_image_tag}
 
 env:
  - name: SONAR_CORE_SERVERBASEURL
