@@ -1,0 +1,11 @@
+mirrors:
+  k3d-registry.nemonik.com:5000:
+    endpoint:
+    - http://k3d-registry.nemonik.com:5000
+
+  docker.io:
+    endpoint:
+    - http://host.k3d.internal:5001
+
+iconfigs: {}
+auths: {}

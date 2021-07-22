@@ -145,6 +145,7 @@ autocmd BufEnter * if bufname('#') =~ 'NERD_tree_\d\+' && bufname('%') !~ 'NERD_
     \ let buf=bufnr() | buffer# | execute "normal! \<C-W>w" | execute 'buffer'.buf | endif
 
 let g:NERDTreeIgnore = ['^node_modules$']
+let NERDTreeShowHidden=1
 
 " -----------------------------------------------------------------------------
 " Xuyuanp/nerdtree-git-plugin settings

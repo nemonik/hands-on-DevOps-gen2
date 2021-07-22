@@ -5,7 +5,7 @@
   "python.linting.enabled": true,
   "python.formatting.provider": "black",
   "python.formatting.blackPath": "{{ BLACK_PATH }}",
-  "coc.preferences.formatOnType": true,
+  "coc.preferences.formatOnType": false,
   "python.linting.lintOnSave": true,
   "python.linting.pylintUseMinimalCheckers": false,
 

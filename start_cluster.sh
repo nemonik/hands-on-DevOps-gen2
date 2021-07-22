@@ -8,6 +8,9 @@
 # this file. If not, please email <mjwalsh@nemonik.com>
 
 set -a
+
+skip_encrypted_variables=true
+
 . .env
 
 if curl --silent -k "http://${registry_name}:${registry_port}/v2/_catalog" > /dev/null; then
@@ -30,11 +33,29 @@ if [ "$(echo $clusters_json | jq -r --arg k3d_cluster_name ${k3d_cluster_name} '
 
   notify "Cluster doesn't exist, so created it..."
 
-  k3d cluster create ${k3d_cluster_name} \
-    --api-port host.k3d.internal:6443 -p 80:80@loadbalancer -p 443:443@loadbalancer \
-    -p 9000:9000@loadbalancer -p 2022:2022@loadbalancer --k3s-server-arg "--no-deploy=traefik" \
+  images_into_registry k3d_images
+
+  cmd="k3d cluster create ${k3d_cluster_name} \
+    --api-port 6443 -p 80:80@loadbalancer -p 443:443@loadbalancer \
+    -p 9000:9000@loadbalancer -p 2022:2022@loadbalancer --k3s-server-arg \"--no-deploy=traefik\" \
     --registry-use ${registry_name}:${registry_port} \
-    --servers ${k3d_server_count} --agents ${k3d_agent_count}
+    --image ${registry_name}:${registry_port}/${k3s_image_name}:${k3s_image_tag} \
+    --servers ${k3d_server_count} --agents ${k3d_agent_count}"
+
+  if [ $( docker ps -a | grep ${pullthrough_registry_name} | wc -l ) -gt 0 ]; then
+
+    notify "Pullthrough registry is running.  Configuring cluster to use."
+
+    cmd="${cmd} --registry-config ./pullthrough-registry/registries.yaml"
+
+  else
+
+    notify "**No** pull through registry detected,so nt configuring to use."
+  fi
+
+  echo $cmd
+
+  eval "${cmd}"
 
 else
 

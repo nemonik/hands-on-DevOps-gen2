@@ -22,3 +22,5 @@ taiga/taiga-chart-values.yaml
 taiga/createsuperuser.sh
 
 ansible/package.json
+
+container_cache/*
