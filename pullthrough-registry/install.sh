@@ -37,7 +37,7 @@ if [ "${pullthrough_registry_enabled}" = "true" ]; then
   echo
   notify "Ensure your docker daemon configure file contains:"
   echo
-  notify "  \"registry-mirrors\": [\"http://localhost:${pullthrough_registry_port}\"],"
+  notify "  \"registry-mirrors\": [\"http://host.k3d.internal:${pullthrough_registry_port}\"],"
   echo
   notify "to use use your pullthrough registry."
 else
