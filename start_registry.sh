@@ -17,6 +17,10 @@ notify "Creating registry ${registry_name}:${registry_port}"
 
 k3d registry create ${registry_name/k3d-/} -p ${registry_port}
 
+if [ "${?}" = "1" ]; then
+  notify "Ignore the Fail notice. This is okay."
+fi
+
 notify "Waiting til ${registry_name}:${registry_port} is running..."
 
 until [ "`docker inspect -f {{.State.Running}} ${registry_name}`"=="true" ]; do

@@ -23,4 +23,4 @@ taiga/createsuperuser.sh
 
 ansible/package.json
 
-container_cache/*
+image_cache/*.tar
