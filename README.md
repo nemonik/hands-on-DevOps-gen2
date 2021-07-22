@@ -3522,24 +3522,32 @@ CGO_ENABLED=0 GOOS=linux go build -a -o helloworld-web .
 
 - `-a` parameter is used to force rebuilding package to ensure you have all the dependencies.
 
-We can update the project's [Makefile](<https://en.wikipedia.org/wiki/Make_(software)#Makefile>) to do the same by modifying the `build` rule
+We can update the project's [Makefile](<https://en.wikipedia.org/wiki/Make_(software)#Makefile>) to do the same by
+
+```bash
+nvim Makefile
+```
+
+Update the top of the Makefile to be
+
+```makefile
+.PHONY: all clean fmt lint test sonar build run docker-build
+
+all: sonar docker-build
+```
+
+Then modifying the `build` rule
 
 ```makefile
 build:
 	CGO_ENABLED=0 GOOS=linux go build -o $(BINARY_NAME) -v
 ```
 
-While we are at it add a `docker-build` target to the end of the `Dockerfile`
+And add the `docker-build` target to the end
 
 ```makefile
 docker-build: build
 	docker build --no-cache -t nemonik/helloworld-web .
-```
-
-And also, replace `build` with `docker-build` in the `all` target line like so:
-
-```makefile
-all: sonar docker-push
 ```
 
 Remember to use `tab` characters vice `space` characters.
@@ -3671,13 +3679,19 @@ latest: digest: sha256:4306742c9211c49fc7363ba859ec921ff29292aca4678aa15b2fe7f67
 
 Update the project's `Makefile`
 
-Replace `docker-build` with `docker-push` in the `all` target line like so:
-
-```makefile
-all: docker-push
+```bash
+nvim Makefile
 ```
 
-Below `docker-push` insert `docker-push` rule
+Update `.PHONY` and replace `docker-build` with `docker-push` in the `all` target line like so:
+
+```makefile
+.PHONY: all clean fmt lint test sonar build run docker-build docker-push
+
+all: sonar docker-push
+```
+
+Below `docker-build` insert `docker-push` rule
 
 ```makefile
 docker-push: docker-build
@@ -3764,6 +3778,8 @@ curl -s -X GET curl -X GET http://k3d-registry.nemonik.com:5000/v2/_catalog | np
 }
 ```
 
+`npx` will auto install `prettier` for you.
+
 Quite a bit of container images we got there.
 
 To list container images the private registry holds for the `helloworld-web` container image enter
@@ -3793,7 +3809,7 @@ As you did for the purpose of CI (Continuous Integration) of the prior applicati
 
 Complete the following:
 
-1. Open [Drone CI](https://github.com/drone/drone) (.e.g., <http://drone.nemonik.com/>) in your browser and authenticate through [GitLab](https://gitlab.com/rluna-gitlab/gitlab-ce) on into Drone, if you need to.
+1. Open [Drone CI](https://github.com/drone/drone) (.e.g., <http://drone.nemonik.com/>) in your browser and authenticate thr:Wqough [GitLab](https://gitlab.com/rluna-gitlab/gitlab-ce) on into Drone, if you need to.
 2. Then select `SYNC` and watch as the arrows chase each other for a bit before the `root/helloworld-web` repository shows up.
 3. Then click `root/helloworld-web` repo and `ACTIVATE REPOSITORY` to enable Drone orchestration for the project.
 4. Then click the Drone logo in the upper left of the page to return home.
