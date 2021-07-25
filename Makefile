@@ -5,15 +5,15 @@
 # You should have received a copy of the license with
 # this file. If not, please email <mjwalsh@nemonik.com>
 
-.PHONY: all install-dependencies pull-class-images start install start-registry delete-registry install-pullthrough stop-pullthrough uninstall-pullthrough start-cluster delete-cluster patch-coredns install-traefik uninstall-traefik install-gitlab uninstall-gitlab install-drone uninstall-drone install-taiga uninstall-taiga install-sonarqube uninstall-sonarqube install-heimdall uninstall-heimdall install-plantuml uninstall-plantuml decrypt-vault encrypt-vault load-cached-images
+.PHONY: all install-dependencies pull-class-images install-k3s-air-gap-image start install start-registry delete-registry start-pullthrough stop-pullthrough uninstall-pullthrough start-cluster delete-cluster patch-coredns install-traefik uninstall-traefik install-gitlab uninstall-gitlab install-drone uninstall-drone install-taiga uninstall-taiga install-sonarqube uninstall-sonarqube install-heimdall uninstall-heimdall install-plantuml uninstall-plantuml decrypt-vault encrypt-vault load-cached-images
 
-all: start install
-start: start-registry pull-class-images start-cluster patch-coredns
+all: install-dependencies start install
+start: start-pullthrough start-registry install-k3s-air-gap-image pull-class-images start-cluster patch-coredns
 install: install-traefik install-gitlab install-drone install-taiga install-sonarqube install-heimdall install-plantuml
 uninstall: delete-cluster
 install-dependencies:
 	./install_dependencies.sh
-install-pullthrough:
+start-pullthrough:
 	cd pullthrough-registry && ./install.sh
 stop-pullthrough:
 	cd pullthrough-registry && ./stop.sh
@@ -23,6 +23,10 @@ start-registry:
 	./start_registry.sh
 delete-registry:
 	./delete_registry.sh
+pull-class-images:
+	./pull_class_images.sh
+install-k3s-air-gap-image:
+	cd k3s-air-gap-image && ./install.sh
 start-cluster:
 	./start_cluster.sh
 delete-cluster:
@@ -57,8 +61,6 @@ install-plantuml:
 	cd plantuml-server && ./install.sh
 uninstall-plantuml:
 	cd plantuml-server && ./uninstall.sh
-pull-class-images:
-	./pull_class_images.sh
 load-cached-images:
 	./load_cached_containers.sh
 decrypt-vault:

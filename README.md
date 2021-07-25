@@ -150,12 +150,13 @@ What you should bring:
         - [10.2.4. On Arch Linux, enable nerd fonts in the Gnome Terminal](#1024-on-arch-linux-enable-nerd-fonts-in-the-gnome-terminal)
         - [10.2.5. Change your shell to fish](#1025-change-your-shell-to-fish)
         - [10.2.6. Finish conifiguring fish](#1026-finish-conifiguring-fish)
-        - [10.2.6. Finish configuring neovim](#1026-finish-configuring-neovim)
+        - [10.2.7. Finish configuring neovim](#1027-finish-configuring-neovim)
     - [10.3. Spin up the Factory](#103-spin-up-the-factory)
         - [10.3.1. The `Makefile`](#1031-the-makefile)
-        - [10.3.2. Starting a container registry, the K3s cluster and patching CoreDNS](#1032-starting-a-container-registry-the-k3s-cluster-and-patching-coredns)
-        - [10.3.3. Verifying the cluster is up and running](#1033-verifying-the-cluster-is-up-and-running)
-        - [10.3.4. Starting the factory tools](#1034-starting-the-factory-tools)
+        - [10.3.2. Pull through registry](#1032-pull-through-registry)
+        - [10.3.3. Starting a container registry, the K3s cluster and patching CoreDNS](#1033-starting-a-container-registry-the-k3s-cluster-and-patching-coredns)
+        - [10.3.4. Verifying the cluster is up and running](#1034-verifying-the-cluster-is-up-and-running)
+        - [10.3.5. Starting the factory tools](#1035-starting-the-factory-tools)
     - [10.4. The long-running tools](#104-the-long-running-tools)
         - [10.4.1. Taiga, an example of Agile project management software](#1041-taiga-an-example-of-agile-project-management-software)
             - [10.4.1.1. Documentation, source, container image](#10411-documentation-source-container-image)
@@ -1368,7 +1369,7 @@ tide configure
 
 - A shout out to [@IlanCosman](https://github.com/IlanCosman) for helping me figure out my fish path issue.
 
-### 10.2.6. Finish configuring neovim
+### 10.2.7. Finish configuring neovim
 
 The class automation will attempt to configure [neovim](https://github.com/neovim/neovim) (nvim) installing [junegunn/vim-plug](https://github.com/junegunn/vim-plug) a plugin manager, a number of additional plugins to include a language server.
 
@@ -1454,7 +1455,7 @@ First let's inspect the [Makefile](./Makefile) in piecemeal
 The above is the copyright. The BSD 3-clause license allows you nearly almost unlimited freedom with the course material so long as you include the BSD copyright and license notice. I can not be held responsible if you damage you host for example. You may also not use my name in the endorsement of derived products.
 
 ```
-.PHONY: all install-dependencies start install start-registry delete-registry start-cluster delete-cluster patch-coredns install-traefik uninstall-traefik install-gitlab uninstall-gitlab install-drone uninstall-drone install-taiga uninstall-taiga install-sonarqube uninstall-sonarqube install-heimdall uninstall-heimdall install-plantuml uninstall-plantuml decrypt-vault encrypt-vault
+.PHONY: all install-dependencies pull-class-images install-k3s-air-gap-image start install start-registry delete-registry start-pullthrough stop-pullthrough uninstall-pullthrough start-cluster delete-cluster patch-coredns install-traefik uninstall-traefik install-gitlab uninstall-gitlab install-drone uninstall-drone install-taiga uninstall-taiga install-sonarqube uninstall-sonarqube install-heimdall uninstall-heimdall install-plantuml uninstall-plantuml decrypt-vault encrypt-vault load-cached-images
 ```
 
 Generally, a [Makefile](<https://en.wikipedia.org/wiki/Make_(software)#Makefile>) is comprised of rules that look like this
@@ -1470,16 +1471,26 @@ Each rule begins with a line that defines usually one sometimes more than one ta
 What follows next are the makefile's rules
 
 ```
-all: start install
-start: start-registry start-cluster patch-coredns
+all: install-dependencies start install
+start: start-pullthrough start-registry install-k3s-air-gap-image pull-class-images start-cluster patch-coredns
 install: install-traefik install-gitlab install-drone install-taiga install-sonarqube install-heimdall install-plantuml
 uninstall: delete-cluster
 install-dependencies:
 	./install_dependencies.sh
+start-pullthrough:
+	cd pullthrough-registry && ./install.sh
+stop-pullthrough:
+	cd pullthrough-registry && ./stop.sh
+uninstall-pullthrough:
+	cd pullthrough-registry && ./uninstall.sh
 start-registry:
 	./start_registry.sh
 delete-registry:
 	./delete_registry.sh
+pull-class-images:
+	./pull_class_images.sh
+install-k3s-air-gap-image:
+	cd k3s-air-gap-image && ./install.sh
 start-cluster:
 	./start_cluster.sh
 delete-cluster:
@@ -1514,6 +1525,8 @@ install-plantuml:
 	cd plantuml-server && ./install.sh
 uninstall-plantuml:
 	cd plantuml-server && ./uninstall.sh
+load-cached-images:
+	./load_cached_containers.sh
 decrypt-vault:
 	./decrypt-vault.sh
 encrypt-vault:
@@ -1536,10 +1549,82 @@ In the shell, if you were to enter `make all` make would execute the `all` targe
   - then the `install-sonarqube` target to descend into the [sonarqube](sonarqube) sub-folder and execute the [install.sh](sonarqube/install.sh) script
   - then the `install-heimdall` target to descend into the [heimdall](heimdall) sub-folder and execute the [install.sh](heimdall/install.sh) script
   - and finally, the `install-plantuml` target to descend into the [plantuml-server](plantuml-server) sub-folder and execute the [install.sh](plantuml-server/install.sh) script
+<>
 
-### 10.3.2. Starting a container registry, the K3s cluster and patching CoreDNS
+### 10.3.2. Pull through registry
 
-Edit your `/etc/host` with `nvim` like so
+The factory will pull a great number of images. Docker permits free user, those without a paid account, a limited number of container image requests.
+
+If you encounter errors where you cannot pull the necessary images. Consider paying the 7 dollars for a Pro account <https://www.docker.com/pricing>  It is $7 if you pay monthly or $5/month if pay $60 for a year up front.
+
+The class can be configured to make use of a pull through registry to mitigate the need, but really nothing can be done if you're image requests are from a private network with othters doing the same.  A pull through registry will cache the image you request, so the next time you request the same image it will pull the image from the cache vice docker.io.
+
+To enable the pull through registry, edit the [./.env](./.env) file at the root of the project and enable the pull through registry via
+
+```bash
+nvim ./..env
+```
+
+And edit
+
+```
+## pullthrough egistry container registry
+pullthrough_registry_enabled=true
+```
+
+setting `pullthrough_registry_enabled` to `true`.
+
+You will then need to configure Docker daemon to use it.
+
+1. Open the Docker Desktop dashboard
+2. Select `Settings` (The geer icon on the upper-right)
+3. Select `Docker Engine`
+4. In the box under `Configure the Docker daemon by typing a json Docker daemon configuration file.`
+
+   ```
+   {
+     "registry-mirrors": [
+       "http://localhost:5001"
+     ],
+     "builder": {
+       "gc": {
+         "defaultKeepStorage": "20GB",
+         "enabled": true
+       }
+     },
+     "debug": true,
+     "experimental": false
+   }
+   ```
+
+   And add the lines
+
+   ```
+     "registry-mirrors": [
+       "http://localhost:5001"
+     ],
+   ```
+
+If you are using Arch linux, edit `/etc/docker/daemon.json` and add the line.  I'll update the Ansible at a later date to do this for you.
+
+The class will also cache all its images into [./image_cache](./image_cache) folder that is empty when you clone the class.  You can re-install these images into you local Docker cache via
+
+```bash
+~/Development/workspace/hands-on-DevOps-gen2/load_cached_images.sh
+```
+
+K3s will pull the images it needs to run directly from docker.io when using the canoncial container image.  I've provided a Dockerfile in [./k3s-air-gap-image](./k3s-air-gap-image) that will build in the containers.  The K3s project provides all these images as tar-ball.
+
+### 10.3.3. Starting a container registry, the K3s cluster and patching CoreDNS
+
+We will utilize a container registry for our [Kubernetes](https://kubernetes.io/docs/concepts/overview/what-is-kubernetes/) cluster. We do this for two reasons
+
+1. So, that K3s pulls from this registry vice going directly to docker.io even for our custom container images.  If you've enabled and configured your Docker to use pull through registry it pull through this registry before making requests of the docker.io registry.
+2. To hold our private container images.
+
+For our factory to access the registry it will need to be able to resolve it.  We can utilize entries in our host's `hosts` file.  Both OSX and Linux operating systems have this file located at `/etc/hosts`.
+
+Edit your `/etc/hosts` with `nvim` like so
 
 ```bash
 sudo nvim /etc/hosts
@@ -1551,6 +1636,8 @@ and add to the end the following, so these domains can be resolved
 127.0.0.1 host.k3d.internal
 127.0.0.1 k3d-registry.nemonik.com
 ```
+
+`127.0.0.1` is your host's [loopback address](https://en.wikipedia.org/wiki/Localhost).  The first entry, `host.k3d.internal` is the name the cluster refers to the host as, and `k3d-registry.nemonik.com` is entry for the private container reigstry.  You will be making additional edits to this file so that your browser can resolve the fully qualified domains of the factory's long running tools.
 
 To use this class I will have provided you the password to decrypt the [vault](./vault) file containing Let's Encrypt cert and private key for the wildcard nemonik.com domain (`*.nemonik.com`) issued certificate or you will need to own a domain for which you can generate a wildcard SSL certificate for using Let's Encrypt/Certbot and then place the full certidicate chain and key into the vault file as I did.
 
@@ -1573,9 +1660,39 @@ make start
 
 The output will resemble
 
-[![asciicast](https://asciinema.org/a/I6DUWex7m79MrnkwCXCqfJsnS.svg)](https://asciinema.org/a/I6DUWex7m79MrnkwCXCqfJsnS)
+![asciicast](https://asciinema.org/a/HOHOqza78Ttaabx7IqpzCM9Wx.svg)](https://asciinema.org/a/HOHOqza78Ttaabx7IqpzCM9Wx)
 
-[Make](https://www.gnu.org/software/make/) first start a private container registry to hold your container images by executing the `start-registry` rule, who will inturn execute the [./start_registry.sh](start_registry.sh) bash script, whose output will resemble
+In this instance I enabled the pull through registry and so [Make](https://www.gnu.org/software/make/) created it, whose output resembled
+
+```
+cd pullthrough-registry && ./install.sh
+Setting unsecured variables into current context...
+pullthrough registry already exists.
+Now running...
+
+Ensure your docker daemon configure file contains:
+
+  {...
+  "registry-mirrors": ["http://host.k3d.internal:5001"],
+  ...}
+
+to use use your pullthrough registry.
+./start_registry.sh
+Setting unsecured variables into current context...
+Creating registry k3d-registry.nemonik.com:5000
+FATA[0000] Failed to create registry: A registry node with that name already exists
+Ignore the Fail notice. This is okay.
+Waiting til k3d-registry.nemonik.com:5000 is running...
+Now running.
+```
+
+The [Bash](https://www.gnu.org/software/bash/) scripts will make use of color for informational purposes.
+
+- Yellow is used to notify
+- Red is used to warn
+- Blue is use to clue you in that the script expects user input
+
+The private container registry will be started in this case the registry all ready existed and just needed to be restarted, but if it hadn't it would of been created.  Output to create the registry would resemble the following
 
 ```
 ./start_registry.sh
@@ -1602,13 +1719,40 @@ Waiting til k3d-registry.nemonik.com:5000 is running...
 Now running.
 ```
 
-The [Bash](https://www.gnu.org/software/bash/) scripts make use of color for informational purpose.
-
-- Yellow is used to notify
-- Red is used to warn
-- Blue is use to clue you in that the script expects user input
-
 If the [registry](https://hub.docker.com/_/registry) container is already running or needs to be restart this will be handled as well.
+
+Folllowing the private registry, [Make](https://www.gnu.org/software/make/) will build a private K3s container with the air gapped container images, whose out output will resemble
+
+```
+cd k3s-air-gap-image && ./install.sh
+Setting unsecured variables into current context...
+Using the templates/Dockerfile.tpl template to generate the Dockerfile:
+Using existing k3s air gap file found at /Users/mjwalsh/Development/workspace/hands-on-DevOps-gen2/k3s-air-gap-image/k3s-airgap-images-amd64.tar.gz
+[+] Building 0.7s (8/8) FINISHED
+ => [internal] load build definition from Dockerfile
+ => => transferring dockerfile: 293B
+ => [internal] load .dockerignore
+ => => transferring context: 2B
+ => [internal] load metadata for docker.io/rancher/k3s:v1.21.2-k3s1
+ => [1/3] FROM docker.io/rancher/k3s:v1.21.2-k3s1@sha256:a467df2b1b49040d18fdd4925a25d36efb891c96fbf682154a55aed3157ea66f
+ => [internal] load build context
+ => => transferring context: 52B
+ => CACHED [2/3] RUN mkdir -p /var/lib/rancher/k3s/agent/images/
+ => CACHED [3/3] COPY ./k3s-airgap-images-amd64.tar.gz /var/lib/rancher/k3s/agent/images/k3s-airgap-images-amd64.tar.gz
+ => exporting to image
+ => => exporting
+ => => writing image sha256:e5d9b1b86e5889b33141a726415230d0dfa1e0d6fdef951f512167f39fb9112b
+ => => naming to docker.io/nemonik/k3s:v1.21.2-k3s1
+The push refers to repository [k3d-registry.nemonik.com:5000/nemonik/k3s]
+28ff70a2d474: Layer already exists
+0675b5e9d601: Layer already exists
+1efd6240933e: Layer already exists
+39f7b4c6fb81: Layer already exists
+7f52e5437a9f: Layer already exists
+v1.21.2-k3s1: digest: sha256:3ce05be5df2e24dcbe3630c7b4bcb27390f5b8e784a0c1f936de8513223d6e90 size: 1356
+```
+
+Then the class images will be pulled from their remote registries, tagged and pushed into the private registry. In this case I already had many of the images in Docker's cache and so I did not need to rerieve them.  There is a lot of redundent output in this [Make](https://www.gnu.org/software/make/) rule not worth copying here.
 
 [Make](https://www.gnu.org/software/make/) then moves on to executing the `start-cluster` rule, where the [./start_cluster.sh](start_cluster.sh) script will pause
 
@@ -1644,11 +1788,43 @@ Why are these needed? Well, the cluster's HTTP reverse Proxy service,[Traefik](h
 Back to `make start-cluster` if you entered the password or had set it in an environmental variable the output will resemble
 
 ```
-Attempting to load secrets from /Users/nemonik/Development/workspace/hands-on-DevOps-gen2/vault...
-Using VAULT_PASSWORD env variable to access secured variables contained in the /Users/nemonik/Development/workspace/hands-on-DevOps-gen2/vault...
+./start_cluster.sh
 Setting unsecured variables into current context...
 Using existing container registry: http://k3d-registry.nemonik.com:5000
 Cluster doesn't exist, so created it...
+Pulling images and placing into k3d-registry...
+Pulling, tagging and pushing nemonik/k3s:v1.21.2-k3s1 into k3d-registry.nemonik.com: container image repository...
+All ready have nemonik/k3s:v1.21.2-k3s1 in docker cache.
+Error response from daemon: manifest for nemonik/k3s:v1.21.2-k3s1 not found: manifest unknown: manifest unknown
+The push refers to repository [k3d-registry.nemonik.com:5000/nemonik/k3s]
+28ff70a2d474: Layer already exists
+0675b5e9d601: Layer already exists
+1efd6240933e: Layer already exists
+39f7b4c6fb81: Layer already exists
+7f52e5437a9f: Layer already exists
+v1.21.2-k3s1: digest: sha256:3ce05be5df2e24dcbe3630c7b4bcb27390f5b8e784a0c1f936de8513223d6e90 size: 1356
+nemonik/k3s:v1.21.2-k3s1 already cached in /Users/mjwalsh/Development/workspace/hands-on-DevOps-gen2/image_cache/
+Pulling, tagging and pushing rancher/k3d-proxy:v4.4.7 into k3d-registry.nemonik.com: container image repository...
+All ready have rancher/k3d-proxy:v4.4.7 in docker cache.
+v4.4.7: Pulling from rancher/k3d-proxy
+Digest: sha256:025e2a9cbc78b1c7fa40297bbe25e71fad0fc7d7ec9ae8c95c2b21db24648369
+Status: Image is up to date for rancher/k3d-proxy:v4.4.7
+docker.io/rancher/k3d-proxy:v4.4.7
+The push refers to repository [k3d-registry.nemonik.com:5000/rancher/k3d-proxy]
+527e006fdb09: Layer already exists
+690e52cafac9: Layer already exists
+6f47ae38de6a: Layer already exists
+c10f66aae549: Layer already exists
+4689e8eca613: Layer already exists
+3480549413ea: Layer already exists
+3c369314e003: Layer already exists
+4531e200ac8d: Layer already exists
+ed3fe3f2b59f: Layer already exists
+b2d5eeeaba3a: Layer already exists
+v4.4.7: digest: sha256:bccaf03a96505a74d556751bdf19af959533c984638aa808d7a95dfbb65cf8ce size: 2401
+rancher/k3d-proxy:v4.4.7 already cached in /Users/mjwalsh/Development/workspace/hands-on-DevOps-gen2/image_cache/
+Pullthrough registry is running.  Configuring cluster to use.
+k3d cluster create hands-on-devops-class --api-port 6443 -p 80:80@loadbalancer -p 443:443@loadbalancer -p 9000:9000@loadbalancer -p 2022:2022@loadbalancer --k3s-server-arg "--no-deploy=traefik" --registry-use k3d-registry.nemonik.com:5000 --image k3d-registry.nemonik.com:5000/nemonik/k3s:v1.21.2-k3s1 --servers 1 --agents 1 --registry-config ./pullthrough-registry/registries.yaml
 INFO[0000] Prep: Network
 INFO[0000] Re-using existing network 'k3d-hands-on-devops-class' (9b7412270c50e411603066b8f5c5ae7326879e802ade1879613387475576678c)
 INFO[0000] Created volume 'k3d-hands-on-devops-class-images'
@@ -1659,18 +1835,17 @@ INFO[0001] Creating LoadBalancer 'k3d-hands-on-devops-class-serverlb'
 INFO[0001] Starting cluster 'hands-on-devops-class'
 INFO[0001] Starting servers...
 INFO[0001] Starting Node 'k3d-hands-on-devops-class-server-0'
-INFO[0009] Starting agents...
-INFO[0009] Starting Node 'k3d-hands-on-devops-class-agent-0'
-INFO[0019] Starting helpers...
-INFO[0019] Starting Node 'k3d-hands-on-devops-class-serverlb'
-INFO[0022] (Optional) Trying to get IP of the docker host and inject it into the cluster as 'host.k3d.internal' for easy access
-INFO[0023] Successfully added host record to /etc/hosts in 3/3 nodes and to the CoreDNS ConfigMap
-INFO[0024] Cluster 'hands-on-devops-class' created successfully!
-INFO[0024] --kubeconfig-update-default=false --> sets --kubeconfig-switch-context=false
-INFO[0024] You can now use it like this:
+INFO[0008] Starting agents...
+INFO[0008] Starting Node 'k3d-hands-on-devops-class-agent-0'
+INFO[0018] Starting helpers...
+INFO[0018] Starting Node 'k3d-hands-on-devops-class-serverlb'
+INFO[0019] (Optional) Trying to get IP of the docker host and inject it into the cluster as 'host.k3d.internal' for easy access
+INFO[0021] Successfully added host record to /etc/hosts in 3/3 nodes and to the CoreDNS ConfigMap
+INFO[0022] Cluster 'hands-on-devops-class' created successfully!
+INFO[0022] --kubeconfig-update-default=false --> sets --kubeconfig-switch-context=false
+INFO[0022] You can now use it like this:
 kubectl config use-context k3d-hands-on-devops-class
 kubectl cluster-info
-
 ```
 
 In the case above run, I had set an `VAULT_PASSWORD` environment variable to hold the password.
@@ -1684,6 +1859,7 @@ cd coredns && ./patch.sh
 Setting unsecured variables into current context...
 Pulling images and placing into k3d-registry...
 Pulling, tagging and pushing traefik:2.2.8 into k3d-registry.nemonik.com: container image repository...
+All ready have traefik:2.2.8 in docker cache.
 2.2.8: Pulling from library/traefik
 Digest: sha256:f5af5a5ce17fc3e353b507e8acce65d7f28126408a8c92dc3cac246d023dc9e8
 Status: Image is up to date for traefik:2.2.8
@@ -1694,30 +1870,32 @@ a35039a172cc: Layer already exists
 4dca0fb1912d: Layer already exists
 3e207b409db3: Layer already exists
 2.2.8: digest: sha256:2468d73cafe08a8973ac3d4e7d0163c1e86c36c8b1bc1f212fdf88999a799fb5 size: 1157
+traefik:2.2.8 already cached in /Users/mjwalsh/Development/workspace/hands-on-DevOps-gen2/image_cache/
 Get host ip...
 pod/get-host-ip created
 pod/get-host-ip condition met
 Block waiting for CoreDNS to start responding...
 PING host.k3d.internal (192.168.65.2): 56 data bytes
-64 bytes from 192.168.65.2: seq=0 ttl=36 time=0.281 ms
+64 bytes from 192.168.65.2: seq=0 ttl=36 time=0.286 ms
 
 --- host.k3d.internal ping statistics ---
 1 packets transmitted, 1 packets received, 0% packet loss
-round-trip min/avg/max = 0.281/0.281/0.281 ms
+round-trip min/avg/max = 0.286/0.286/0.286 ms
 found
 pod "get-host-ip" deleted
 Patching DNS in the cluster to resolve application FDQNs using 192.168.65.2 ip...
-kubectl patch cm coredns -n kube-system -p='{"data": {"NodeHosts":"172.18.0.4 k3d-hands-on-devops-class-agent-0\n172.18.0.3 k3d-hands-on-devops-class-server-0\n192.168.65.2 host.k3d.internal\n192.168.65.2 gitlab.nemonik.com\n192.168.65.2 drone.nemonik.com\n192.168.65.2 taiga.nemonik.com\n192.168.65.2 sonar.nemonik.com\n192.168.65.2 plantuml.nemonik.com\n192.168.65.2 heimdall.nemonik.com "}}'
+kubectl patch cm coredns -n kube-system -p='{"data": {"NodeHosts":"172.18.0.3 k3d-hands-on-devops-class-server-0\n172.18.0.4 k3d-hands-on-devops-class-agent-0\n192.168.65.2 host.k3d.internal\n192.168.65.2 gitlab.nemonik.com\n192.168.65.2 drone.nemonik.com\n192.168.65.2 taiga.nemonik.com\n192.168.65.2 sonar.nemonik.com\n192.168.65.2 plantuml.nemonik.com\n192.168.65.2 heimdall.nemonik.com\n192.168.65.2 k3d-registry.nemonik.com\n192.168.65.2 helloworld.nemonik.com "}}'
 configmap/coredns patched
 Forcing retart of coredns so that the tests can run immediately...
 deployment.apps/coredns restarted
 Waiting for deployment "coredns" rollout to finish: 0 of 1 updated replicas are available...
 deployment "coredns" successfully rolled out
-error: there is no need to specify a resource type as a separate argument when passing arguments in resource/name form (e.g. 'kubectl get resource/<resource_name>' instead of 'kubectl get resource resource/<resource_name>'
+pod/coredns-98b49d8b8-5gx8m condition met
 Setting unsecured variables into current context...
 Using k3d-registry.nemonik.com:5000/traefik:2.2.8 container to query coreDNS for entries...
 Pulling images and placing into k3d-registry...
 Pulling, tagging and pushing traefik:2.2.8 into k3d-registry.nemonik.com: container image repository...
+All ready have traefik:2.2.8 in docker cache.
 2.2.8: Pulling from library/traefik
 Digest: sha256:f5af5a5ce17fc3e353b507e8acce65d7f28126408a8c92dc3cac246d023dc9e8
 Status: Image is up to date for traefik:2.2.8
@@ -1728,16 +1906,17 @@ a35039a172cc: Layer already exists
 4dca0fb1912d: Layer already exists
 3e207b409db3: Layer already exists
 2.2.8: digest: sha256:2468d73cafe08a8973ac3d4e7d0163c1e86c36c8b1bc1f212fdf88999a799fb5 size: 1157
+traefik:2.2.8 already cached in /Users/mjwalsh/Development/workspace/hands-on-DevOps-gen2/image_cache/
 pod/test-coredns created
 pod/test-coredns condition met
 Block waiting for CoreDNS to start responding...
 This may go forever.
 PING host.k3d.internal (192.168.65.2): 56 data bytes
-64 bytes from 192.168.65.2: seq=0 ttl=36 time=0.437 ms
+64 bytes from 192.168.65.2: seq=0 ttl=36 time=0.313 ms
 
 --- host.k3d.internal ping statistics ---
 1 packets transmitted, 1 packets received, 0% packet loss
-round-trip min/avg/max = 0.437/0.437/0.437 ms
+round-trip min/avg/max = 0.313/0.313/0.313 ms
 found
 Query the DNS server for the FDQNs added...
 Server:		10.43.0.10
@@ -1750,16 +1929,16 @@ Address: 192.168.65.2
 Server:		10.43.0.10
 Address:	10.43.0.10:53
 
-
 Name:	drone.nemonik.com
 Address: 192.168.65.2
+
 
 Server:		10.43.0.10
 Address:	10.43.0.10:53
 
+
 Name:	taiga.nemonik.com
 Address: 192.168.65.2
-
 
 Server:		10.43.0.10
 Address:	10.43.0.10:53
@@ -1782,6 +1961,20 @@ Address:	10.43.0.10:53
 Name:	heimdall.nemonik.com
 Address: 192.168.65.2
 
+Server:		10.43.0.10
+Address:	10.43.0.10:53
+
+
+Name:	k3d-registry.nemonik.com
+Address: 192.168.65.2
+
+Server:		10.43.0.10
+Address:	10.43.0.10:53
+
+
+Name:	helloworld.nemonik.com
+Address: 192.168.65.2
+
 pod "test-coredns" deleted
 
 =======================================================
@@ -1793,6 +1986,7 @@ Writing 192.168.65.2 into /tmp/host_ip
 Ensure the following lines are in your /etc/hosts file:
 =======================================================
 
+127.0.0.1 host.k3d.internal
 127.0.0.1 gitlab.nemonik.com
 127.0.0.1 drone.nemonik.com
 127.0.0.1 taiga.nemonik.com
@@ -1826,7 +2020,7 @@ You do this via running nvim as root (i.e., `sudo nvim /etc/hosts`) to edit the 
 
 - If you are using your own domain then `nemonik.com` will b:e replaced with whatever you've provided the `domain` variable in the [.env](./.env) file.
 
-### 10.3.3. Verifying the cluster is up and running
+### 10.3.4. Verifying the cluster is up and running
 
 The [k3s](https://github.com/k3s-io/k3s) cluster should now be up and running. Let's verify this by entering into your shell
 
@@ -1865,7 +2059,18 @@ You'll see the coredns service whose data we patched.
 
 The `-A` option tells `kubectl` to list the pods across all namespaces. The `-o wide` option again returns additional information. The `-o` option can also return output in `yaml`, `json`, etc. If you leave `-o wide` off, you'll just get the first 6 columns of output.
 
-### 10.3.4. Starting the factory tools
+`docker ps` will be show these containers runnning
+
+```
+CONTAINER ID   IMAGE                                                    COMMAND                  CREATED          STATUS          PORTS                                                                                                                                                                                    NAMES
+7111e5c82139   rancher/k3d-proxy:v4.4.7                                 "/bin/sh -c nginx-pr…"   9 minutes ago    Up 9 minutes    0.0.0.0:80->80/tcp, :::80->80/tcp, 0.0.0.0:443->443/tcp, :::443->443/tcp, 0.0.0.0:2022->2022/tcp, 0.0.0.0:6443->6443/tcp, :::2022->2022/tcp, 0.0.0.0:9000->9000/tcp, :::9000->9000/tcp   k3d-hands-on-devops-class-serverlb
+0c69199d68fc   k3d-registry.nemonik.com:5000/nemonik/k3s:v1.21.2-k3s1   "/bin/k3s agent"         9 minutes ago    Up 9 minutes                                                                                                                                                                                             k3d-hands-on-devops-class-agent-0
+373cea67cdb9   k3d-registry.nemonik.com:5000/nemonik/k3s:v1.21.2-k3s1   "/bin/k3s server --n…"   9 minutes ago    Up 9 minutes                                                                                                                                                                                             k3d-hands-on-devops-class-server-0
+33efc4954421   registry:2                                               "/entrypoint.sh /etc…"   47 minutes ago   Up 47 minutes   0.0.0.0:5000->5000/tcp                                                                                                                                                                   k3d-registry.nemonik.com
+d3b94140c2a7   registry:2                                               "/entrypoint.sh /etc…"   47 minutes ago   Up 47 minutes   0.0.0.0:5001->5000/tcp, :::5001->5000/tcp                                                                                                                                                hands-on-devops-pullthrough-registry
+```
+
+### 10.3.5. Starting the factory tools
 
 Now that we have a cluster up and running we can install all the long running factory tools ([Taiga](https://www.taiga.io/), [GitLab](https://gitlab.com/rluna-gitlab/gitlab-ce), [Drone CI](https://github.com/drone/drone), etc) upon it.
 
@@ -1911,9 +2116,9 @@ watch -n 15 kubectl get pods -A
 
 Whose output will resemble.
 
-[![asciicast](https://asciinema.org/a/FOOwDvztqoLrAwXvpRYY3b603.svg)](https://asciinema.org/a/FOOwDvztqoLrAwXvpRYY3b603)
+[![asciicast](https://asciinema.org/a/DWOM2COUJtzmRZ06gCKIjzj81.svg)](https://asciinema.org/a/DWOM2COUJtzmRZ06gCKIjzj81)
 
-Pop some corn it will be a while.
+Pop some corn it will be a while. Faster than the video as all the container images where cached.
 
 ## 10.4. The long-running tools
 

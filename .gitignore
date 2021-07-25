@@ -23,4 +23,5 @@ taiga/createsuperuser.sh
 
 ansible/package.json
 
+k3s-air-gap-image/*.tar*
 image_cache/*.tar

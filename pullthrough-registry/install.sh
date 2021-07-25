@@ -19,7 +19,7 @@ if [ "${pullthrough_registry_enabled}" = "true" ]; then
 
     notify "pullthrough registry already exists."
 
-    docker start ${pullthrough_registry_container_name} >/dev/null 2>&1
+    docker start ${pullthrough_registry_name} >/dev/null 2>&1
 
   else
 
@@ -37,7 +37,9 @@ if [ "${pullthrough_registry_enabled}" = "true" ]; then
   echo
   notify "Ensure your docker daemon configure file contains:"
   echo
+  notify "  {..."
   notify "  \"registry-mirrors\": [\"http://host.k3d.internal:${pullthrough_registry_port}\"],"
+  notify "  ...}"
   echo
   notify "to use use your pullthrough registry."
 else
