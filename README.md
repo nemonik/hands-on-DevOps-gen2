@@ -1538,26 +1538,29 @@ Earlier we entered `make install-dependencies` in our shell to install all the d
 In the shell, if you were to enter `make all` make would execute the `all` target, who will in turn
 
 - execute the `start` target, who in turn will call
-  - the `start-registry` target, who will execute the [./start_registry.sh](start_registry.sh) [Bash](https://www.gnu.org/software/bash/) script
-  - then the `start-cluster` target will be called execute the [./start_cluster.sh](start_cluster.sh) script
-  - then the `patch-coredns` target will be called, descend into the [coredns](coredns) sub-folder and execute the [patch.sh](coredns/patch.sh) script
+  - the `start-pullthrough` target, who will descend into the [./pullthrough-registry](./pullthrough-registry) sub-folder and execute [install.sh](./pullthrough-registry/install.sh) [Bash](https://www.gnu.org/software/bash/) script
+  - tehe `start-registry` target, who will execute the [./start_registry.sh](start_registry.sh) [Bash](https://www.gnu.org/software/bash/) script
+  - the `pull-class-images` target, who will execute the [./pull_class_images.sh](./pull_class_images.sh) [Bash](https://www.gnu.org/software/bash/) script
+  - the `install-k3s-air-gap-image`, who who will descend into the [./k3s-air-gap-image](./k3s-air-gap-image) sub-folder and execute [install.sh](./k3s-air-gap-image/install.sh) [Bash](https://www.gnu.org/software/bash/) script
+  - the `pull-class-images` target, who will execute the [./pull_class_images.sh](./pull_class_images.sh) [Bash](https://www.gnu.org/software/bash/) script
+  - the `start-cluster` target will be called execute the [./start_cluster.sh](start_cluster.sh) script
+  - and then finally the `patch-coredns` target will be called, descend into the [./coredns](./coredns) sub-folder and execute the [patch.sh](./coredns/patch.sh) script
 - then execute the `install` target, who will call
-  - the `install-traefik` target, descend into the [traefik](traefik) sub-folder and execute the [install.sh](traefik/install.sh) script
-  - then the `install-gitlab` target to descend into the [gitlab](gitlab) sub-folder and execute the [install.sh](gitlab/install.sh) script
-  - then the `install-drone` target to descend into the [drone](drone) sub-folder and execute the [install.sh](drone/install.sh) script
-  - then the `install-taiga` target to descend into the [taiga](taiga) sub-folder and execute the [install.sh](taiga/install.sh) script
-  - then the `install-sonarqube` target to descend into the [sonarqube](sonarqube) sub-folder and execute the [install.sh](sonarqube/install.sh) script
-  - then the `install-heimdall` target to descend into the [heimdall](heimdall) sub-folder and execute the [install.sh](heimdall/install.sh) script
-  - and finally, the `install-plantuml` target to descend into the [plantuml-server](plantuml-server) sub-folder and execute the [install.sh](plantuml-server/install.sh) script
-<>
+  - the `install-traefik` target, descend into the [./traefik](./traefik) sub-folder and execute the [install.sh](./traefik/install.sh) script
+  - then the `install-gitlab` target to descend into the [./gitlab](./gitlab) sub-folder and execute the [install.sh](./gitlab/install.sh) script
+  - then the `install-drone` target to descend into the [./drone](./drone) sub-folder and execute the [install.sh](./drone/install.sh) script
+  - then the `install-taiga` target to descend into the [./taiga](./taiga) sub-folder and execute the [install.sh](./taiga/install.sh) script
+  - then the `install-sonarqube` target to descend into the [./sonarqube](./sonarqube) sub-folder and execute the [install.sh](./sonarqube/install.sh) script
+  - then the `install-heimdall` target to descend into the [./heimdall](./heimdall) sub-folder and execute the [install.sh](./heimdall/install.sh) script
+  - and finally, the `install-plantuml` target to descend into the [./plantuml-server](./plantuml-server) sub-folder and executes the [install.sh](./plantuml-server/install.sh) script
 
-### 10.3.2. Pull through registry
+### 10.3.2. Configuring the pull through container registry
 
-The factory will pull a great number of images. Docker permits free user, those without a paid account, a limited number of container image requests.
+The factory will pull a great number of images. Docker permits anonymous free users the ability to pull 100 on the docker.io container registry per six hours and authenticated free users a total of 200 pulls per six hours.
 
-If you encounter errors where you cannot pull the necessary images. Consider paying the 7 dollars for a Pro account <https://www.docker.com/pricing>  It is $7 if you pay monthly or $5/month if pay $60 for a year up front.
+If you encounter errors where you cannot pull the necessary images. Consider paying the 7 dollars for a Pro account <https://www.docker.com/pricing>  It is 7 dollars if you pay monthly or 5 dollars/month if pay 60 dollars for a year up front.  With the Pro account you can make 5000 pulls on docker.io's container registry per day.
 
-The class can be configured to make use of a pull through registry to mitigate the need, but really nothing can be done if you're image requests are from a private network with othters doing the same.  A pull through registry will cache the image you request, so the next time you request the same image it will pull the image from the cache vice docker.io.
+The class can be configured to make use of a pull through registry to mitigate the need, but really nothing can be done if you're anonympus image requests are from a private network with others anonymous users doing the same.  A pull through registry will cache the image you request, so the next time you request the same image the registry will pull the image from the cache vice docker.io.
 
 To enable the pull through registry, edit the [./.env](./.env) file at the root of the project and enable the pull through registry via
 
@@ -1565,14 +1568,14 @@ To enable the pull through registry, edit the [./.env](./.env) file at the root 
 nvim ./..env
 ```
 
-And edit
+then scrolling to you see
 
 ```
 ## pullthrough egistry container registry
-pullthrough_registry_enabled=true
+pullthrough_registry_enabled=false
 ```
 
-setting `pullthrough_registry_enabled` to `true`.
+and setting `pullthrough_registry_enabled` equal to `true`.
 
 You will then need to configure Docker daemon to use it.
 
@@ -1615,7 +1618,7 @@ The class will also cache all its images into [./image_cache](./image_cache) fol
 
 K3s will pull the images it needs to run directly from docker.io when using the canoncial container image.  I've provided a Dockerfile in [./k3s-air-gap-image](./k3s-air-gap-image) that will build in the containers.  The K3s project provides all these images as tar-ball.
 
-### 10.3.3. Starting a container registry, the K3s cluster and patching CoreDNS
+### 10.3.3. Starting the cluster
 
 We will utilize a container registry for our [Kubernetes](https://kubernetes.io/docs/concepts/overview/what-is-kubernetes/) cluster. We do this for two reasons
 
@@ -1660,9 +1663,9 @@ make start
 
 The output will resemble
 
-![asciicast](https://asciinema.org/a/HOHOqza78Ttaabx7IqpzCM9Wx.svg)](https://asciinema.org/a/HOHOqza78Ttaabx7IqpzCM9Wx)
+[![asciicast](https://asciinema.org/a/HOHOqza78Ttaabx7IqpzCM9Wx.svg)](https://asciinema.org/a/HOHOqza78Ttaabx7IqpzCM9Wx)
 
-In this instance I enabled the pull through registry and so [Make](https://www.gnu.org/software/make/) created it, whose output resembled
+In this instance I also enabled the pull through container registry and so [Make](https://www.gnu.org/software/make/) created it, whose output resembled
 
 ```
 cd pullthrough-registry && ./install.sh
