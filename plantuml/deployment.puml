@@ -1,89 +1,104 @@
 @startuml
+
 skinparam shadowing false
-
-skinparam actor {
-  BorderColor #0B5C92
-  BackgroundColor none
-  FontStyle "Thin"
-  FontSize 18
-}
-
-skinparam node {
-  BorderColor #0B5C92
-  BackgroundColor #ffffff
-  FontStyle "Thin"
-  FontSize 15
-}
-
-skinparam rectangle {
-  roundCorner 25
-  BorderColor #0B5C92
-  BackgroundColor #ffffff
-  FontStyle "Thin"
-  FontSize 15
-}
-
-skinparam component {
-  BorderColor #0B5C92
-  BackgroundColor #e0e59a
-  FontStyle "Thin"
-  FontSize 15
-}
-
-skinparam agent {
-  BorderColor #0B5C92
-  BackgroundColor #e0e59a
-  FontStyle "Thin"
-  FontSize 15
-}
-
-
-skinparam note {
-  BorderColor #0B5C92
-  BackgroundColor #FEFECE
-  FontStyle "Thin"
-  FontSize 15
-}
-
-skinparam database {
-  BorderColor #0B5C92
-  BackgroundColor #e0e59a
-  FontStyle "Thin"
-  FontSize 15
-}
 
 actor "You" as you
 
+
+cloud  "Internet" as internet {
+
+  () "HTTPS" as docker_io_registry_http
+  database "docker.io\nregistry" as docker_io_registry
+
+}
+
 rectangle "Host (e.g., your laptop, desktop)" as host {
 
-  rectangle "Docker (containerd)" {
+  rectangle "containerd" as containerd {
+
+    () "HTTPS" as k3s_api
 
     rectangle "K3s Cluster\n(actually, a master and agent container)" as k3s {
-      component "Traefik" as traefik
-      component "Taiga" as taiga
-      component "GitLab" as gitlab
-      component "Drone CI" as drone
-      component "SonarQube" as sonarqube
-      component "PlantUML Server" as plantuml_server
-      component "Heimdall 2" as heimdall2
+
+
+      () "HTTPS" as traefik_https
+      [Traefik] as traefik
+
+      () "HTTP" as taiga_http
+      [Taiga] as taiga
+
+      () "HTTP" as gitlab_http
+      [GitLab] as gitlab
+
+      () "HTTP" as drone_http
+      [Drone CI] as drone
+
+      () "HTTP" as sonar_http
+      [SonarQube] as sonar
+
+      () "HTTP" as plantuml_http
+      [PlantUML Server] as plantuml
+
+      () "HTTP" as heimdall_http
+      [Heimdall 2] as heimdall
 
     }
 
-    component "Private\nContainer Registry" as private_registry
-  }
+    () "HTTP" as private_registry_http
+    database "Private\nContainer\nRegistry" as private_registry
+
+    () "HTTP" as pullthrough_registry_http
+    database "Pull through\nContainer\nRegistry" as pullthrough_registry
+    note bottom
+     optional
+    end note
 }
 
-traefik <.[#0B5C92]d.> gitlab : http
-traefik <.[#0B5C92]d.> drone : http
-traefik <.[#0B5C92]d.> taiga : http
-traefik <.[#0B5C92]d.> plantuml_server : http
-traefik <.[#0B5C92]d.> drone : http
-traefik <.[#0B5C92]d.> sonarqube : http
-traefik <.[#0B5C92]d.> heimdall2 : http
+  [Docker Engine] as docker_engine
 
-k3s <.[#0B5C92]d.> private_registry : http
+  [Docker cli] as docker
+  [kubectl] as kubectl
+}
 
-you <-[#0B5C92]d-> private_registry : https
-you <-[#0B5C92]d-> traefik : https
+
+you --> traefik_https
+
+traefik_https -- traefik
+traefik --> taiga_http
+traefik --> gitlab_http
+traefik --> drone_http
+traefik --> sonar_http
+traefik --> plantuml_http
+traefik --> heimdall_http
+
+taiga_http -- taiga
+gitlab_http -- gitlab
+drone_http -- drone
+sonar_http -- sonar
+plantuml_http -- plantuml
+heimdall_http -- heimdall
+
+docker_io_registry_http -- docker_io_registry
+
+private_registry_http -- private_registry
+pullthrough_registry_http -- pullthrough_registry
+
+private_registry -left-> docker_io_registry_http
+pullthrough_registry -left-> docker_io_registry_http
+
+k3s --> private_registry_http
+k3s --> pullthrough_registry_http
+
+you -------> docker
+you -------> kubectl
+
+k3s_api <-- kubectl
+
+docker --> private_registry_http
+docker --> pullthrough_registry_http
+docker -- docker_engine
+docker_engine -- containerd
+
+k3s -- k3s_api
 
 @enduml
