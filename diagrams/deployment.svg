@@ -1,113 +1,164 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentScriptType="application/ecmascript" contentStyleType="text/css" height="937px" preserveAspectRatio="none" style="width:959px;height:937px;" version="1.1" viewBox="0 0 959 937" width="959px" zoomAndPan="magnify"><defs/><g><!--MD5=[c8375d0abf05781a4d00ac7db9cff037]
-cluster host--><rect fill="#FFFFFF" height="780" rx="12.5" ry="12.5" style="stroke: #0B5C92; stroke-width: 1.5;" width="934" x="14" y="146"/><text fill="#000000" font-family="sans-serif" font-size="15" lengthAdjust="spacingAndGlyphs" textLength="239" x="361.5" y="161.9233">Host (e.g., your laptop, desktop)</text><!--MD5=[2ae7e4735d846b7a52565541d65559c9]
-cluster Docker (containerd)--><rect fill="#FFFFFF" height="744" rx="12.5" ry="12.5" style="stroke: #0B5C92; stroke-width: 1.5;" width="918" x="22" y="174"/><text fill="#000000" font-family="sans-serif" font-size="15" lengthAdjust="spacingAndGlyphs" textLength="145" x="408.5" y="189.9233">Docker (containerd)</text><!--MD5=[33e7178e164195903ad9362b3f6f3945]
-cluster k3s--><rect fill="#FFFFFF" height="708" rx="12.5" ry="12.5" style="stroke: #0B5C92; stroke-width: 1.5;" width="740" x="30" y="202"/><text fill="#000000" font-family="sans-serif" font-size="15" lengthAdjust="spacingAndGlyphs" textLength="84" x="358" y="217.9233">K3s Cluster</text><text fill="#000000" font-family="sans-serif" font-size="15" lengthAdjust="spacingAndGlyphs" textLength="296" x="252" y="235.3843">(actually, a master and agent container)</text><!--MD5=[07bb54a82a792e3633d19f9b3934520f]
-entity private_registry--><rect fill="#E0E59A" height="54.9219" style="stroke: #0B5C92; stroke-width: 1.5;" width="154" x="778" y="563"/><rect fill="#E0E59A" height="5" style="stroke: #0B5C92; stroke-width: 1.5;" width="10" x="773" y="568"/><rect fill="#E0E59A" height="5" style="stroke: #0B5C92; stroke-width: 1.5;" width="10" x="773" y="607.9219"/><text fill="#000000" font-family="sans-serif" font-size="15" lengthAdjust="spacingAndGlyphs" textLength="50" x="788" y="586.9233">Private</text><text fill="#000000" font-family="sans-serif" font-size="15" lengthAdjust="spacingAndGlyphs" textLength="134" x="788" y="604.3843">Container Registry</text><!--MD5=[ea19deeb053b6d935524ddb2281a69ee]
-entity traefik--><rect fill="#E0E59A" height="37.4609" style="stroke: #0B5C92; stroke-width: 1.5;" width="69" x="381.5" y="247"/><rect fill="#E0E59A" height="5" style="stroke: #0B5C92; stroke-width: 1.5;" width="10" x="376.5" y="252"/><rect fill="#E0E59A" height="5" style="stroke: #0B5C92; stroke-width: 1.5;" width="10" x="376.5" y="274.4609"/><text fill="#000000" font-family="sans-serif" font-size="15" lengthAdjust="spacingAndGlyphs" textLength="49" x="391.5" y="270.9233">Traefik</text><!--MD5=[4d75d79b92da33bc2d29332283d47d73]
-entity taiga--><rect fill="#E0E59A" height="37.4609" style="stroke: #0B5C92; stroke-width: 1.5;" width="59" x="38.5" y="865"/><rect fill="#E0E59A" height="5" style="stroke: #0B5C92; stroke-width: 1.5;" width="10" x="33.5" y="870"/><rect fill="#E0E59A" height="5" style="stroke: #0B5C92; stroke-width: 1.5;" width="10" x="33.5" y="892.4609"/><text fill="#000000" font-family="sans-serif" font-size="15" lengthAdjust="spacingAndGlyphs" textLength="39" x="48.5" y="888.9233">Taiga</text><!--MD5=[670ed58fbcfa18955cb1914f9e6929f5]
-entity gitlab--><rect fill="#E0E59A" height="37.4609" style="stroke: #0B5C92; stroke-width: 1.5;" width="67" x="132.5" y="865"/><rect fill="#E0E59A" height="5" style="stroke: #0B5C92; stroke-width: 1.5;" width="10" x="127.5" y="870"/><rect fill="#E0E59A" height="5" style="stroke: #0B5C92; stroke-width: 1.5;" width="10" x="127.5" y="892.4609"/><text fill="#000000" font-family="sans-serif" font-size="15" lengthAdjust="spacingAndGlyphs" textLength="47" x="142.5" y="888.9233">GitLab</text><!--MD5=[1e9850f9cfe07ce8e5f3f8dc0c4ecb50]
-entity drone--><rect fill="#E0E59A" height="37.4609" style="stroke: #0B5C92; stroke-width: 1.5;" width="82" x="235" y="865"/><rect fill="#E0E59A" height="5" style="stroke: #0B5C92; stroke-width: 1.5;" width="10" x="230" y="870"/><rect fill="#E0E59A" height="5" style="stroke: #0B5C92; stroke-width: 1.5;" width="10" x="230" y="892.4609"/><text fill="#000000" font-family="sans-serif" font-size="15" lengthAdjust="spacingAndGlyphs" textLength="62" x="245" y="888.9233">Drone CI</text><!--MD5=[e847a74e70eb890cacdcf5c5829348e8]
-entity sonarqube--><rect fill="#E0E59A" height="37.4609" style="stroke: #0B5C92; stroke-width: 1.5;" width="102" x="352" y="865"/><rect fill="#E0E59A" height="5" style="stroke: #0B5C92; stroke-width: 1.5;" width="10" x="347" y="870"/><rect fill="#E0E59A" height="5" style="stroke: #0B5C92; stroke-width: 1.5;" width="10" x="347" y="892.4609"/><text fill="#000000" font-family="sans-serif" font-size="15" lengthAdjust="spacingAndGlyphs" textLength="82" x="362" y="888.9233">SonarQube</text><!--MD5=[524ab8556cbb665269a12109d7bc13a8]
-entity plantuml_server--><rect fill="#E0E59A" height="37.4609" style="stroke: #0B5C92; stroke-width: 1.5;" width="141" x="489.5" y="865"/><rect fill="#E0E59A" height="5" style="stroke: #0B5C92; stroke-width: 1.5;" width="10" x="484.5" y="870"/><rect fill="#E0E59A" height="5" style="stroke: #0B5C92; stroke-width: 1.5;" width="10" x="484.5" y="892.4609"/><text fill="#000000" font-family="sans-serif" font-size="15" lengthAdjust="spacingAndGlyphs" textLength="121" x="499.5" y="888.9233">PlantUML Server</text><!--MD5=[6cba453d2efd31cc8bdf24f5f05e0794]
-entity heimdall2--><rect fill="#E0E59A" height="37.4609" style="stroke: #0B5C92; stroke-width: 1.5;" width="97" x="665.5" y="865"/><rect fill="#E0E59A" height="5" style="stroke: #0B5C92; stroke-width: 1.5;" width="10" x="660.5" y="870"/><rect fill="#E0E59A" height="5" style="stroke: #0B5C92; stroke-width: 1.5;" width="10" x="660.5" y="892.4609"/><text fill="#000000" font-family="sans-serif" font-size="15" lengthAdjust="spacingAndGlyphs" textLength="77" x="675.5" y="888.9233">Heimdall 2</text><!--MD5=[5f66382a65af237d8b1cbd7b4edbed42]
-entity you--><ellipse cx="660" cy="17.5" fill="#FFFFFF" rx="8" ry="8" style="stroke: #0B5C92; stroke-width: 1.5;"/><path d="M660,25.5 L660,52.5 M647,33.5 L673,33.5 M660,52.5 L647,67.5 M660,52.5 L673,67.5 " fill="none" style="stroke: #0B5C92; stroke-width: 1.5;"/><text fill="#000000" font-family="sans-serif" font-size="18" lengthAdjust="spacingAndGlyphs" textLength="34" x="643" y="86.708">You</text><!--MD5=[4a0bffc4f18946e47f53278c3dcc1383]
-link traefik to gitlab--><path d="M376.1307,270.1561 C306.7191,279.3823 171,302.8724 171,345.5 C171,345.5 171,345.5 171,803.5 C171,822.379 169.5958,843.7153 168.2757,859.6027 " fill="none" id="traefik-gitlab" style="stroke: #0B5C92; stroke-width: 1.0; stroke-dasharray: 7.0,7.0;"/><polygon fill="#0B5C92" points="167.8334,864.7702,172.5864,856.1441,168.2598,859.7884,164.6156,855.4618,167.8334,864.7702" style="stroke: #0B5C92; stroke-width: 1.0;"/><polygon fill="#0B5C92" points="381.4171,269.4639,371.974,266.6662,376.4594,270.113,373.0126,274.5985,381.4171,269.4639" style="stroke: #0B5C92; stroke-width: 1.0;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="26" x="172" y="595.0669">http</text><!--MD5=[e9470e8992ed424a011afbbc46ce35fb]
-link traefik to drone--><path d="M376.2242,269.9897 C332.6894,277.3726 269,296.54 269,345.5 C269,345.5 269,345.5 269,803.5 C269,822.4142 270.9658,843.7484 272.814,859.626 " fill="none" id="traefik-drone" style="stroke: #0B5C92; stroke-width: 1.0; stroke-dasharray: 7.0,7.0;"/><polygon fill="#0B5C92" points="273.4332,864.79,276.333,855.3777,272.8378,859.8256,268.3899,856.3304,273.4332,864.79" style="stroke: #0B5C92; stroke-width: 1.0;"/><polygon fill="#0B5C92" points="381.1631,269.1876,371.6382,266.6824,376.2278,269.9893,372.9209,274.5789,381.1631,269.1876" style="stroke: #0B5C92; stroke-width: 1.0;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="26" x="270" y="595.0669">http</text><!--MD5=[e9470e8992ed424a011afbbc46ce35fb]
-link traefik to drone--><path d="M392.8027,288.311 C380.1342,303.2351 367,323.9132 367,345.5 C367,345.5 367,345.5 367,803.5 C367,830.3204 344.4274,850.2692 321.7666,863.5384 " fill="none" id="traefik-drone-1" style="stroke: #0B5C92; stroke-width: 1.0; stroke-dasharray: 7.0,7.0;"/><polygon fill="#0B5C92" points="317.2399,866.1032,327.0422,865.1467,321.5901,863.6384,323.0985,858.1863,317.2399,866.1032" style="stroke: #0B5C92; stroke-width: 1.0;"/><polygon fill="#0B5C92" points="396.3522,284.2583,387.4134,288.3932,393.0579,288.0196,393.4315,293.6641,396.3522,284.2583" style="stroke: #0B5C92; stroke-width: 1.0;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="26" x="368" y="595.0669">http</text><!--MD5=[b8653e110259213fb41efeb2525d0a73]
-link traefik to taiga--><path d="M375.9638,266.4579 C285.4738,269.7082 73,283.8987 73,345.5 C73,345.5 73,345.5 73,803.5 C73,822.379 71.5958,843.7153 70.2757,859.6027 " fill="none" id="traefik-taiga" style="stroke: #0B5C92; stroke-width: 1.0; stroke-dasharray: 7.0,7.0;"/><polygon fill="#0B5C92" points="69.8334,864.7702,74.5864,856.1441,70.2598,859.7884,66.6156,855.4618,69.8334,864.7702" style="stroke: #0B5C92; stroke-width: 1.0;"/><polygon fill="#0B5C92" points="381.2237,266.2764,372.091,262.5894,376.2267,266.449,372.3671,270.5846,381.2237,266.2764" style="stroke: #0B5C92; stroke-width: 1.0;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="26" x="74" y="595.0669">http</text><!--MD5=[f30901609fb42a36aa8c7f1cc6eb235a]
-link traefik to plantuml_server--><path d="M455.7758,269.9897 C499.3106,277.3726 563,296.54 563,345.5 C563,345.5 563,345.5 563,803.5 C563,822.3555 562.1575,843.6932 561.3654,859.5871 " fill="none" id="traefik-plantuml_server" style="stroke: #0B5C92; stroke-width: 1.0; stroke-dasharray: 7.0,7.0;"/><polygon fill="#0B5C92" points="561.1001,864.757,565.5564,855.974,561.3565,859.7636,557.5669,855.5637,561.1001,864.757" style="stroke: #0B5C92; stroke-width: 1.0;"/><polygon fill="#0B5C92" points="450.8369,269.1876,459.0791,274.5789,455.7722,269.9893,460.3618,266.6824,450.8369,269.1876" style="stroke: #0B5C92; stroke-width: 1.0;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="26" x="564" y="595.0669">http</text><!--MD5=[9fd76121e9899f6d78173f7e5a67c62f]
-link traefik to sonarqube--><path d="M439.1973,288.311 C451.8658,303.2351 465,323.9132 465,345.5 C465,345.5 465,345.5 465,803.5 C465,826.5024 448.7882,846.8986 432.9444,861.3393 " fill="none" id="traefik-sonarqube" style="stroke: #0B5C92; stroke-width: 1.0; stroke-dasharray: 7.0,7.0;"/><polygon fill="#0B5C92" points="428.9343,864.8804,438.3282,861.9216,432.6822,861.5709,433.033,855.9249,428.9343,864.8804" style="stroke: #0B5C92; stroke-width: 1.0;"/><polygon fill="#0B5C92" points="435.6478,284.2583,438.5685,293.6641,438.9421,288.0196,444.5866,288.3932,435.6478,284.2583" style="stroke: #0B5C92; stroke-width: 1.0;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="26" x="466" y="595.0669">http</text><!--MD5=[19255fa76e8324a5bbe22b8095946230]
-link traefik to heimdall2--><path d="M455.6342,269.3865 C528.4199,277.6287 676,299.9561 676,345.5 C676,345.5 676,345.5 676,803.5 C676,824.301 686.6116,845.4578 696.6195,860.7857 " fill="none" id="traefik-heimdall2" style="stroke: #0B5C92; stroke-width: 1.0; stroke-dasharray: 7.0,7.0;"/><polygon fill="#0B5C92" points="699.4169,864.9493,697.718,855.2481,696.6285,860.799,691.0775,859.7096,699.4169,864.9493" style="stroke: #0B5C92; stroke-width: 1.0;"/><polygon fill="#0B5C92" points="450.526,268.8173,459.0275,273.7896,455.4952,269.3712,459.9137,265.8388,450.526,268.8173" style="stroke: #0B5C92; stroke-width: 1.0;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="26" x="677" y="595.0669">http</text><!--MD5=[f05574999751145ba2892489da421d09]
-link k3s to private_registry--><path d="M770.0467,524.2798 C770.0833,524.3613 770.1201,524.4427 770.1571,524.524 C770.4528,525.1748 770.7598,525.8212 771.0774,526.4633 C772.3481,529.0315 773.7906,531.5299 775.3784,533.9571 C781.7293,543.6657 790.4038,552.2349 799.6978,559.5772 " fill="none" id="k3s-private_registry" style="stroke: #0B5C92; stroke-width: 1.0; stroke-dasharray: 7.0,7.0;"/><polygon fill="#0B5C92" points="803.9519,562.8245,799.225,554.1841,799.9775,559.7907,794.3709,560.5431,803.9519,562.8245" style="stroke: #0B5C92; stroke-width: 1.0;"/><polygon fill="#0B5C92" points="770.0467,524.2798,770.0878,534.1286,772.0964,528.8403,777.3846,530.849,770.0467,524.2798" style="stroke: #0B5C92; stroke-width: 1.0;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="26" x="766" y="436.0669">http</text><!--MD5=[43eccda0398717c6db732b8f368fa79c]
-link you to private_registry--><path d="M681.6749,60.5586 C731.9016,87.905 852,163.9147 852,265.5 C852,265.5 852,265.5 852,501.5 C852,520.1343 852.665,540.9508 853.3689,557.7639 " fill="none" id="you-private_registry" style="stroke: #0B5C92; stroke-width: 1.0;"/><polygon fill="#0B5C92" points="853.5878,562.8463,857.1966,553.6824,853.3725,557.8509,849.204,554.0269,853.5878,562.8463" style="stroke: #0B5C92; stroke-width: 1.0;"/><polygon fill="#0B5C92" points="677.0387,58.0649,683.07,65.851,681.4421,60.4335,686.8597,58.8056,677.0387,58.0649" style="stroke: #0B5C92; stroke-width: 1.0;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="33" x="853" y="389.0669">https</text><!--MD5=[61daf8cf8e0c5533f846d3e0ff8b2ec9]
-link you to traefik--><path d="M638.8399,68.2319 C593.9534,107.9675 489.3677,200.5516 441.1586,243.2284 " fill="none" id="you-traefik" style="stroke: #0B5C92; stroke-width: 1.0;"/><polygon fill="#0B5C92" points="437.2291,246.7071,446.6193,243.7365,440.9729,243.3929,441.3165,237.7465,437.2291,246.7071" style="stroke: #0B5C92; stroke-width: 1.0;"/><polygon fill="#0B5C92" points="642.8424,64.6887,633.4521,67.6591,639.0985,68.0028,638.7548,73.6492,642.8424,64.6887" style="stroke: #0B5C92; stroke-width: 1.0;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="33" x="575" y="134.0669">https</text><!--MD5=[114e4c4b641d691fd2cf29a4a25ac954]
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentScriptType="application/ecmascript" contentStyleType="text/css" height="1122px" preserveAspectRatio="none" style="width:1261px;height:1122px;" version="1.1" viewBox="0 0 1261 1122" width="1261px" zoomAndPan="magnify"><defs/><g><!--MD5=[bda1a16375a29484a87084063898b60a]
+cluster internet--><path d="M23.1843,908.0052 C27.385,901.9035 33.4956,903.4599 36.5485,909.2908 C40.4802,902.1254 46.2578,900.4664 51.6274,907.7949 C55.738,900.3385 61.3674,899.8118 66.4902,906.7498 C70.7977,900.6464 76.015,899.6052 80.3181,906.7544 C83.4965,900.7816 89.1452,900.8348 92.099,906.9727 C98.958,900.9344 103.8183,902.1319 107.5158,910.3836 C113.8449,915.1355 113.5749,919.2604 107.3635,923.8707 C112.4956,927.2308 113.9253,932.5723 107.3736,935.9422 C114.9335,939.1964 114.84,945.5021 108.2944,949.7003 C114.5079,954.3794 115.205,958.7363 109.1637,964.1525 C114.2346,966.8925 116.3222,971.737 110.3869,975.6481 C118.0887,980.028 116.8034,987.0947 110.2387,991.3398 C116.7635,993.1195 118.7952,998.7778 113.0708,1003.4274 C118.5788,1009.3704 117.7494,1013.8982 110.2948,1017.2352 C116.527,1021.5698 116.8467,1026.8665 109.6896,1030.5944 C116.7867,1034.2582 116.6369,1038.7421 110.3966,1043.1565 C117.2579,1048.3254 118.0007,1052.9549 110.127,1057.8536 C115.7276,1062.742 116.1811,1068.9949 108.1474,1071.9714 C114.3891,1076.8367 114.6551,1081.3905 107.8042,1085.9339 C113.4626,1088.6181 113.2654,1093.9635 108.2638,1097.087 C105.2411,1104.5168 99.5267,1104.6227 94.5273,1099.1995 C91.2698,1107.0694 85.5843,1108.1366 79.7987,1101.8253 C76.2627,1109.2909 69.1339,1110.1778 64.064,1103.5362 C58.6187,1108.8018 54.3155,1107.519 52.5464,1100.1776 C47.4037,1108.5367 41.411,1106.8544 36.7899,1099.6495 C33.0758,1105.3319 27.2351,1105.8899 23.9605,1099.194 C17.3025,1095.2587 16.4721,1090.3446 22.7782,1085.3057 C16.4228,1081.7319 14.562,1074.398 22.1008,1070.2011 C16.2493,1067.7361 16.0131,1062.4195 20.9326,1058.8464 C13.4983,1054.4241 13.9157,1050.109 20.3009,1045.0538 C13.8368,1040.2126 13.2735,1034.9901 20.1304,1029.9981 C14.3739,1027.0476 14.0808,1022.3893 18.4799,1018.0374 C11.9085,1014.7144 9.9428,1008.5359 16.2568,1003.2729 C10.9352,997.5992 12.8899,992.9589 19.3304,990.0113 C13.7342,986.2653 13.7968,981.1528 19.0071,977.1355 C12.8982,972.7079 13.374,965.9025 20.8184,963.2419 C14.1518,958.327 15.366,954.0605 21.7401,950.0572 C16.5135,946.2366 15.4406,940.8338 22.1408,937.3905 C15.9145,932.3401 15.6525,927.1458 22.9185,922.8153 C14.9597,918.2694 16.8582,912.2948 23.1843,908.0052 " fill="#FFFFFF" style="stroke: #000000; stroke-width: 1.5;"/><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="63" x="32.5" y="925.9951">Internet</text><!--MD5=[c8375d0abf05781a4d00ac7db9cff037]
+cluster host--><rect fill="#FFFFFF" height="684" style="stroke: #000000; stroke-width: 1.5;" width="1128" x="122" y="424"/><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="257" x="557.5" y="438.9951">Host (e.g., your laptop, desktop)</text><!--MD5=[6ffd801a3c54decb425e1ddb0b35ecd0]
+cluster containerd--><rect fill="#FFFFFF" height="509" style="stroke: #000000; stroke-width: 1.5;" width="1032" x="130" y="591"/><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="85" x="603.5" y="605.9951">containerd</text><!--MD5=[33e7178e164195903ad9362b3f6f3945]
+cluster k3s--><rect fill="#FFFFFF" height="474" style="stroke: #000000; stroke-width: 1.5;" width="712" x="372" y="618"/><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="92" x="682" y="632.9951">K3s Cluster</text><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="315" x="570.5" y="649.292">(actually, a master and agent container)</text><!--MD5=[f263ae7220b720cf95cc9ce7df584592]
+entity docker_io_registry_http--><ellipse cx="94" cy="936" fill="#FEFECE" rx="8" ry="8" style="stroke: #A80036; stroke-width: 2.0;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="46" x="71" y="965.9951">HTTPS</text><!--MD5=[8915b9d874d54d3a0a509a50bfa3ad0e]
+entity docker_io_registry--><path d="M22,1045 C22,1035 64,1035 64,1035 C64,1035 106,1035 106,1045 L106,1086.5938 C106,1096.5938 64,1096.5938 64,1096.5938 C64,1096.5938 22,1096.5938 22,1086.5938 L22,1045 " fill="#FEFECE" style="stroke: #000000; stroke-width: 1.5;"/><path d="M22,1045 C22,1055 64,1055 64,1055 C64,1055 106,1055 106,1045 " fill="none" style="stroke: #000000; stroke-width: 1.5;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="64" x="32" y="1071.9951">docker.io</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="51" x="32" y="1088.292">registry</text><!--MD5=[0bea933e4ef35c9c6fa5e94fb176b7aa]
+entity docker_engine--><rect fill="#FEFECE" height="36.2969" style="stroke: #A80036; stroke-width: 1.5;" width="122" x="330" y="547"/><rect fill="#FEFECE" height="5" style="stroke: #A80036; stroke-width: 1.5;" width="10" x="325" y="552"/><rect fill="#FEFECE" height="5" style="stroke: #A80036; stroke-width: 1.5;" width="10" x="325" y="573.2969"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="102" x="340" y="569.9951">Docker Engine</text><!--MD5=[7c0f197cad09c4d86c8b8989e1030b9e]
+entity docker--><rect fill="#FEFECE" height="36.2969" style="stroke: #A80036; stroke-width: 1.5;" width="88" x="299" y="451"/><rect fill="#FEFECE" height="5" style="stroke: #A80036; stroke-width: 1.5;" width="10" x="294" y="456"/><rect fill="#FEFECE" height="5" style="stroke: #A80036; stroke-width: 1.5;" width="10" x="294" y="477.2969"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="68" x="309" y="473.9951">Docker cli</text><!--MD5=[dfb8dbbb4c0ea643f45bcc30639117f0]
+entity kubectl--><rect fill="#FEFECE" height="36.2969" style="stroke: #A80036; stroke-width: 1.5;" width="71" x="1170.5" y="918"/><rect fill="#FEFECE" height="5" style="stroke: #A80036; stroke-width: 1.5;" width="10" x="1165.5" y="923"/><rect fill="#FEFECE" height="5" style="stroke: #A80036; stroke-width: 1.5;" width="10" x="1165.5" y="944.2969"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="51" x="1180.5" y="940.9951">kubectl</text><!--MD5=[8c90e8094937965d372c54ac0646376c]
+entity k3s_api--><ellipse cx="1123" cy="808" fill="#FEFECE" rx="8" ry="8" style="stroke: #A80036; stroke-width: 2.0;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="46" x="1100" y="837.9951">HTTPS</text><!--MD5=[7896d4fcdd6cffa27adfea5b7af40b07]
+entity private_registry_http--><ellipse cx="235" cy="808" fill="#FEFECE" rx="8" ry="8" style="stroke: #A80036; stroke-width: 2.0;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="37" x="216.5" y="837.9951">HTTP</text><!--MD5=[07bb54a82a792e3633d19f9b3934520f]
+entity private_registry--><path d="M138.5,907 C138.5,897 182,897 182,897 C182,897 225.5,897 225.5,907 L225.5,964.8906 C225.5,974.8906 182,974.8906 182,974.8906 C182,974.8906 138.5,974.8906 138.5,964.8906 L138.5,907 " fill="#FEFECE" style="stroke: #000000; stroke-width: 1.5;"/><path d="M138.5,907 C138.5,917 182,917 182,917 C182,917 225.5,917 225.5,907 " fill="none" style="stroke: #000000; stroke-width: 1.5;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="46" x="148.5" y="933.9951">Private</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="67" x="148.5" y="950.292">Container</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="56" x="148.5" y="966.5889">Registry</text><!--MD5=[34492e3feef1096acbaf045ccb6347fa]
+entity pullthrough_registry_http--><ellipse cx="324" cy="808" fill="#FEFECE" rx="8" ry="8" style="stroke: #A80036; stroke-width: 2.0;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="37" x="305.5" y="837.9951">HTTP</text><!--MD5=[ca406d88dab1350c1966cce119bd6f28]
+entity pullthrough_registry--><path d="M260.5,907 C260.5,897 312,897 312,897 C312,897 363.5,897 363.5,907 L363.5,964.8906 C363.5,974.8906 312,974.8906 312,974.8906 C312,974.8906 260.5,974.8906 260.5,964.8906 L260.5,907 " fill="#FEFECE" style="stroke: #000000; stroke-width: 1.5;"/><path d="M260.5,907 C260.5,917 312,917 312,917 C312,917 363.5,917 363.5,907 " fill="none" style="stroke: #000000; stroke-width: 1.5;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="83" x="270.5" y="933.9951">Pull through</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="67" x="270.5" y="950.292">Container</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="56" x="270.5" y="966.5889">Registry</text><path d="M273,1053.5 L273,1078.6328 A0,0 0 0 0 273,1078.6328 L345,1078.6328 A0,0 0 0 0 345,1078.6328 L345,1063.5 L335,1053.5 L313.2949,1053.5 L311.0999,975.0043 L305.2949,1053.5 L273,1053.5 A0,0 0 0 0 273,1053.5 " fill="#FBFB77" style="stroke: #A80036; stroke-width: 1.0;"/><path d="M335,1053.5 L335,1063.5 L345,1063.5 L335,1053.5 " fill="#FBFB77" style="stroke: #A80036; stroke-width: 1.0;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="51" x="279" y="1070.5669">optional</text><!--MD5=[2a5d82662c0977c6269f98e6154e232e]
+entity traefik_https--><ellipse cx="760" cy="690" fill="#FEFECE" rx="8" ry="8" style="stroke: #A80036; stroke-width: 2.0;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="46" x="737" y="719.9951">HTTPS</text><!--MD5=[ea19deeb053b6d935524ddb2281a69ee]
+entity traefik--><rect fill="#FEFECE" height="36.2969" style="stroke: #A80036; stroke-width: 1.5;" width="66" x="727" y="790"/><rect fill="#FEFECE" height="5" style="stroke: #A80036; stroke-width: 1.5;" width="10" x="722" y="795"/><rect fill="#FEFECE" height="5" style="stroke: #A80036; stroke-width: 1.5;" width="10" x="722" y="816.2969"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="46" x="737" y="812.9951">Traefik</text><!--MD5=[36bf2f0dbe5b0cc80922f024c7edf63d]
+entity taiga_http--><ellipse cx="932" cy="936" fill="#FEFECE" rx="8" ry="8" style="stroke: #A80036; stroke-width: 2.0;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="37" x="913.5" y="965.9951">HTTP</text><!--MD5=[4d75d79b92da33bc2d29332283d47d73]
+entity taiga--><rect fill="#FEFECE" height="36.2969" style="stroke: #A80036; stroke-width: 1.5;" width="57" x="920.5" y="1048"/><rect fill="#FEFECE" height="5" style="stroke: #A80036; stroke-width: 1.5;" width="10" x="915.5" y="1053"/><rect fill="#FEFECE" height="5" style="stroke: #A80036; stroke-width: 1.5;" width="10" x="915.5" y="1074.2969"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="37" x="930.5" y="1070.9951">Taiga</text><!--MD5=[03f151cbb84c958294bc67dcbd6ccc58]
+entity gitlab_http--><ellipse cx="1036" cy="936" fill="#FEFECE" rx="8" ry="8" style="stroke: #A80036; stroke-width: 2.0;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="37" x="1017.5" y="965.9951">HTTP</text><!--MD5=[670ed58fbcfa18955cb1914f9e6929f5]
+entity gitlab--><rect fill="#FEFECE" height="36.2969" style="stroke: #A80036; stroke-width: 1.5;" width="63" x="1012.5" y="1048"/><rect fill="#FEFECE" height="5" style="stroke: #A80036; stroke-width: 1.5;" width="10" x="1007.5" y="1053"/><rect fill="#FEFECE" height="5" style="stroke: #A80036; stroke-width: 1.5;" width="10" x="1007.5" y="1074.2969"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="43" x="1022.5" y="1070.9951">GitLab</text><!--MD5=[10303b3e8f20d6ad32f942ec2cfc386d]
+entity drone_http--><ellipse cx="457" cy="936" fill="#FEFECE" rx="8" ry="8" style="stroke: #A80036; stroke-width: 2.0;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="37" x="438.5" y="965.9951">HTTP</text><!--MD5=[1e9850f9cfe07ce8e5f3f8dc0c4ecb50]
+entity drone--><rect fill="#FEFECE" height="36.2969" style="stroke: #A80036; stroke-width: 1.5;" width="80" x="380" y="1048"/><rect fill="#FEFECE" height="5" style="stroke: #A80036; stroke-width: 1.5;" width="10" x="375" y="1053"/><rect fill="#FEFECE" height="5" style="stroke: #A80036; stroke-width: 1.5;" width="10" x="375" y="1074.2969"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="60" x="390" y="1070.9951">Drone CI</text><!--MD5=[131cf41a3852d1abf2055f415da2408c]
+entity sonar_http--><ellipse cx="591" cy="936" fill="#FEFECE" rx="8" ry="8" style="stroke: #A80036; stroke-width: 2.0;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="37" x="572.5" y="965.9951">HTTP</text><!--MD5=[366e93d3c35875231b4848f55fde2f0f]
+entity sonar--><rect fill="#FEFECE" height="36.2969" style="stroke: #A80036; stroke-width: 1.5;" width="98" x="495" y="1048"/><rect fill="#FEFECE" height="5" style="stroke: #A80036; stroke-width: 1.5;" width="10" x="490" y="1053"/><rect fill="#FEFECE" height="5" style="stroke: #A80036; stroke-width: 1.5;" width="10" x="490" y="1074.2969"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="78" x="505" y="1070.9951">SonarQube</text><!--MD5=[db354feba35c4567a6090666817a7089]
+entity plantuml_http--><ellipse cx="702" cy="936" fill="#FEFECE" rx="8" ry="8" style="stroke: #A80036; stroke-width: 2.0;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="37" x="683.5" y="965.9951">HTTP</text><!--MD5=[f34abdc907f3da33f3fd0e2cc8b4f06b]
+entity plantuml--><rect fill="#FEFECE" height="36.2969" style="stroke: #A80036; stroke-width: 1.5;" width="131" x="628.5" y="1048"/><rect fill="#FEFECE" height="5" style="stroke: #A80036; stroke-width: 1.5;" width="10" x="623.5" y="1053"/><rect fill="#FEFECE" height="5" style="stroke: #A80036; stroke-width: 1.5;" width="10" x="623.5" y="1074.2969"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="111" x="638.5" y="1070.9951">PlantUML Server</text><!--MD5=[b6a77bda4f1c2fb993e6134591b07bdb]
+entity heimdall_http--><ellipse cx="819" cy="936" fill="#FEFECE" rx="8" ry="8" style="stroke: #A80036; stroke-width: 2.0;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="37" x="800.5" y="965.9951">HTTP</text><!--MD5=[154f218e4ca54165c52d9ad4723089fb]
+entity heimdall--><rect fill="#FEFECE" height="36.2969" style="stroke: #A80036; stroke-width: 1.5;" width="91" x="794.5" y="1048"/><rect fill="#FEFECE" height="5" style="stroke: #A80036; stroke-width: 1.5;" width="10" x="789.5" y="1053"/><rect fill="#FEFECE" height="5" style="stroke: #A80036; stroke-width: 1.5;" width="10" x="789.5" y="1074.2969"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="71" x="804.5" y="1070.9951">Heimdall 2</text><!--MD5=[5f66382a65af237d8b1cbd7b4edbed42]
+entity you--><ellipse cx="760" cy="17.5" fill="#FEFECE" rx="8" ry="8" style="stroke: #A80036; stroke-width: 1.5;"/><path d="M760,25.5 L760,52.5 M747,33.5 L773,33.5 M760,52.5 L747,67.5 M760,52.5 L773,67.5 " fill="none" style="stroke: #A80036; stroke-width: 1.5;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="27" x="746.5" y="82.9951">You</text><!--MD5=[490779dfae9150cba8f467bc778fe227]
+link you to traefik_https--><path d="M760,86.2465 C760,118.7414 760,166.1211 760,207.5 C760,207.5 760,207.5 760,469 C760,546.9381 760,640.337 760,675.5891 " fill="none" id="you-&gt;traefik_https" style="stroke: #A80036; stroke-width: 1.0;"/><polygon fill="#A80036" points="760,680.7364,764,671.7364,760,675.7364,756,671.7364,760,680.7364" style="stroke: #A80036; stroke-width: 1.0;"/><!--MD5=[cf95cb0bd83341cdc1aca8d0ffd18cda]
+link traefik_https to traefik--><path d="M760,699.2593 C760,718.7097 760,764.124 760,789.6839 " fill="none" id="traefik_https-traefik" style="stroke: #A80036; stroke-width: 1.0;"/><!--MD5=[2e672fe0fae5756cec42ee1eadb73733]
+link traefik to taiga_http--><path d="M783.0041,826.2143 C787.6184,829.8157 792.4476,833.5481 797,837 C841.0406,870.3939 894.1442,908.8035 918.5449,926.3507 " fill="none" id="traefik-&gt;taiga_http" style="stroke: #A80036; stroke-width: 1.0;"/><polygon fill="#A80036" points="922.7584,929.3784,917.7838,920.8782,918.698,926.4607,913.1155,927.3749,922.7584,929.3784" style="stroke: #A80036; stroke-width: 1.0;"/><!--MD5=[cf6182383d2e28777e34f6cf4e523237]
+link traefik to gitlab_http--><path d="M780.656,826.192 C785.7677,830.116 791.3929,833.9857 797,837 C871.275,876.9292 901.1749,860.0992 977,897 C993.5696,905.0637 1010.9887,917.0764 1022.5667,925.6366 " fill="none" id="traefik-&gt;gitlab_http" style="stroke: #A80036; stroke-width: 1.0;"/><polygon fill="#A80036" points="1026.8529,928.8457,1022.0459,920.2496,1022.8504,925.849,1017.2511,926.6535,1026.8529,928.8457" style="stroke: #A80036; stroke-width: 1.0;"/><!--MD5=[6c32901457524d1e71ab0637629e12cd]
+link traefik to drone_http--><path d="M739.3291,826.1644 C734.218,830.0895 728.5969,833.9666 723,837 C650.3424,876.3789 624.088,867.2129 547,897 C519.5585,907.6035 488.1678,921.6565 470.6549,929.6744 " fill="none" id="traefik-&gt;drone_http" style="stroke: #A80036; stroke-width: 1.0;"/><polygon fill="#A80036" points="466.0982,931.7679,475.9463,931.6453,470.6416,929.6805,472.6064,924.3758,466.0982,931.7679" style="stroke: #A80036; stroke-width: 1.0;"/><!--MD5=[7b2e754c43c52fcf0ade350708335df9]
+link traefik to sonar_http--><path d="M736.9664,826.1756 C732.3545,829.7803 727.5338,833.5237 723,837 C679.7708,870.1461 627.9286,908.6761 604.1229,926.3015 " fill="none" id="traefik-&gt;sonar_http" style="stroke: #A80036; stroke-width: 1.0;"/><polygon fill="#A80036" points="600.0125,929.3433,609.6264,927.2049,604.0317,926.369,604.8675,920.7743,600.0125,929.3433" style="stroke: #A80036; stroke-width: 1.0;"/><!--MD5=[a76fd9b205a0abcc21f663555110677b]
+link traefik to plantuml_http--><path d="M751.813,826.0678 C740.0937,851.931 718.7901,898.946 708.25,922.2068 " fill="none" id="traefik-&gt;plantuml_http" style="stroke: #A80036; stroke-width: 1.0;"/><polygon fill="#A80036" points="706.1716,926.7938,713.5297,920.2471,708.2353,922.2396,706.2429,916.9452,706.1716,926.7938" style="stroke: #A80036; stroke-width: 1.0;"/><!--MD5=[eb5d1468a2f77707a7758e62c5ec92c1]
+link traefik to heimdall_http--><path d="M768.3281,826.0678 C780.2495,851.931 801.9204,898.946 812.6422,922.2068 " fill="none" id="traefik-&gt;heimdall_http" style="stroke: #A80036; stroke-width: 1.0;"/><polygon fill="#A80036" points="814.7565,926.7938,814.6215,916.9459,812.6634,922.253,807.3563,920.2949,814.7565,926.7938" style="stroke: #A80036; stroke-width: 1.0;"/><!--MD5=[59296f42045cccd7ddcf53ed51904d28]
+link taiga_http to taiga--><path d="M933.2226,945.3493 C936.0242,966.7737 942.9492,1019.7288 946.6228,1047.8214 " fill="none" id="taiga_http-taiga" style="stroke: #A80036; stroke-width: 1.0;"/><!--MD5=[be25b0ce875819d310314b6512f96046]
+link gitlab_http to gitlab--><path d="M1036.5753,945.3493 C1037.8938,966.7737 1041.1525,1019.7288 1042.8813,1047.8214 " fill="none" id="gitlab_http-gitlab" style="stroke: #A80036; stroke-width: 1.0;"/><!--MD5=[911dcfb6579de390c59fc06029e75c89]
+link drone_http to drone--><path d="M454.3391,945.3493 C448.2413,966.7737 433.1695,1019.7288 425.1739,1047.8214 " fill="none" id="drone_http-drone" style="stroke: #A80036; stroke-width: 1.0;"/><!--MD5=[fc3a8d7f5e7d49c9e0ff98d1bca26a19]
+link sonar_http to sonar--><path d="M587.6199,945.3493 C579.8741,966.7737 560.7288,1019.7288 550.5723,1047.8214 " fill="none" id="sonar_http-sonar" style="stroke: #A80036; stroke-width: 1.0;"/><!--MD5=[969d9da83547ceef8d13d756f665dd12]
+link plantuml_http to plantuml--><path d="M701.4247,945.3493 C700.1062,966.7737 696.8475,1019.7288 695.1187,1047.8214 " fill="none" id="plantuml_http-plantuml" style="stroke: #A80036; stroke-width: 1.0;"/><!--MD5=[53e46b8c0689592f393924feee3cf895]
+link heimdall_http to heimdall--><path d="M820.5103,945.3493 C823.9711,966.7737 832.5254,1019.7288 837.0635,1047.8214 " fill="none" id="heimdall_http-heimdall" style="stroke: #A80036; stroke-width: 1.0;"/><!--MD5=[ddd19aa53e0308e587570a568453cdee]
+link docker_io_registry_http to docker_io_registry--><path d="M91.8425,945.3493 C87.5836,963.8045 77.9254,1005.6566 71.1863,1034.8592 " fill="none" id="docker_io_registry_http-docker_io_registry" style="stroke: #A80036; stroke-width: 1.0;"/><!--MD5=[6eddf75f4adef525f8a9f74bb828b58b]
+link private_registry_http to private_registry--><path d="M231.1884,817.2054 C224.3764,833.6571 209.7456,868.9917 198.2021,896.8703 " fill="none" id="private_registry_http-private_registry" style="stroke: #A80036; stroke-width: 1.0;"/><!--MD5=[6d7fc3cf3fa622ac333b8aeab2508b53]
+link pullthrough_registry_http to pullthrough_registry--><path d="M323.137,817.2054 C321.5946,833.6571 318.282,868.9917 315.6684,896.8703 " fill="none" id="pullthrough_registry_http-pullthrough_registry" style="stroke: #A80036; stroke-width: 1.0;"/><!--MD5=[8811fe3b1aa4de621e94c49b6427d5e3]
+reverse link docker_io_registry_http to private_registry--><path d="M108.4846,936 C118.435,936 128.3853,936 138.3357,936 " fill="none" id="docker_io_registry_http&lt;-private_registry" style="stroke: #A80036; stroke-width: 1.0;"/><polygon fill="#A80036" points="103.2813,936,112.2813,940,108.2813,936,112.2813,932,103.2813,936" style="stroke: #A80036; stroke-width: 1.0;"/><!--MD5=[21121951714523e7b91556921279fbac]
+reverse link docker_io_registry_http to pullthrough_registry--><path d="M98.6411,921.896 C104.9474,905.315 117.9744,878.5899 139.5,867 C173.1541,848.8798 189.4235,854.3736 225.5,867 C243.2689,873.2189 260.1097,884.7881 274.1289,896.6999 " fill="none" id="docker_io_registry_http&lt;-pullthrough_registry" style="stroke: #A80036; stroke-width: 1.0;"/><polygon fill="#A80036" points="96.8978,926.6881,103.7337,919.598,98.6072,921.9894,96.2158,916.8629,96.8978,926.6881" style="stroke: #A80036; stroke-width: 1.0;"/><!--MD5=[be9e92c37e54812bce38c2b87adbd75e]
+link k3s to private_registry_http--><path d="M371.9692,735.873 C371.8488,735.9885 371.7284,736.1033 371.6079,736.2175 C370.6443,737.1309 369.6788,738.0025 368.7111,738.8354 C366.7756,740.5012 364.831,742.012 362.8728,743.3924 C355.0401,748.9139 346.9908,752.348 338.446,755.2604 C321.3564,761.0852 302.2848,764.8232 279,779 C268.7143,785.2624 257.3737,792.7515 248.7822,798.5503 " fill="none" id="k3s-&gt;private_registry_http" style="stroke: #A80036; stroke-width: 1.0;"/><polygon fill="#A80036" points="244.316,801.5795,254.0097,799.838,248.454,798.7729,249.5191,793.2172,244.316,801.5795" style="stroke: #A80036; stroke-width: 1.0;"/><!--MD5=[851ae54a815a82e0f147d50313f7a4ad]
+link k3s to pullthrough_registry_http--><path d="M371.8939,747.0256 C371.8266,747.1371 371.7591,747.2485 371.6916,747.3599 C371.5565,747.5826 371.4212,747.805 371.2855,748.0272 C371.0141,748.4715 370.7415,748.9147 370.4678,749.3567 C369.9203,750.2408 369.3682,751.1201 368.8122,751.9943 C366.5882,755.4912 364.3014,758.9062 361.9935,762.214 C352.7619,775.4451 343.1941,786.9605 335.9692,795.1332 " fill="none" id="k3s-&gt;pullthrough_registry_http" style="stroke: #A80036; stroke-width: 1.0;"/><polygon fill="#A80036" points="332.5105,798.9929,341.4957,794.9598,335.8473,795.2692,335.5378,789.6209,332.5105,798.9929" style="stroke: #A80036; stroke-width: 1.0;"/><!--MD5=[d8743bc234e93b5103fc5ce1c2830f45]
+link you to docker--><path d="M745.4971,50.4173 C697.8262,62.597 549,108.5455 549,207.5 C549,207.5 549,207.5 549,329.5 C549,404.9108 453.1847,442.346 392.246,458.529 " fill="none" id="you-&gt;docker" style="stroke: #A80036; stroke-width: 1.0;"/><polygon fill="#A80036" points="387.1922,459.8438,396.9094,461.4488,392.0311,458.5848,394.895,453.7065,387.1922,459.8438" style="stroke: #A80036; stroke-width: 1.0;"/><!--MD5=[ee5c886d247d54a08a07180cab55fe9f]
+link you to kubectl--><path d="M774.8725,48.9666 C852.4338,59.6271 1207,113.5012 1207,207.5 C1207,207.5 1207,207.5 1207,690 C1207,771.8756 1206.4392,869.0782 1206.1575,912.7378 " fill="none" id="you-&gt;kubectl" style="stroke: #A80036; stroke-width: 1.0;"/><polygon fill="#A80036" points="1206.1246,917.7921,1210.1834,908.8185,1206.1573,912.7922,1202.1836,908.7661,1206.1246,917.7921" style="stroke: #A80036; stroke-width: 1.0;"/><!--MD5=[a70f861b1405680a6e8ec75777c0d2c6]
+reverse link k3s_api to kubectl--><path d="M1131.7447,821.4858 C1146.7025,844.5533 1177.2163,891.6107 1194.0998,917.648 " fill="none" id="k3s_api&lt;-kubectl" style="stroke: #A80036; stroke-width: 1.0;"/><polygon fill="#A80036" points="1128.9692,817.2054,1130.5097,826.933,1131.6896,821.4006,1137.222,822.5804,1128.9692,817.2054" style="stroke: #A80036; stroke-width: 1.0;"/><!--MD5=[5a5017828d6e559065c5c5c9cd1118e9]
+link docker to private_registry_http--><path d="M331.1545,487.2478 C321.6023,502.6477 308.4164,525.5523 300,547 C264.5564,637.3213 243.8281,752.9634 237.2771,793.3225 " fill="none" id="docker-&gt;private_registry_http" style="stroke: #A80036; stroke-width: 1.0;"/><polygon fill="#A80036" points="236.4133,798.7188,241.7855,790.4642,237.2036,793.7817,233.8861,789.1997,236.4133,798.7188" style="stroke: #A80036; stroke-width: 1.0;"/><!--MD5=[71bd4dc577357db7875d327273bb12ec]
+link docker to pullthrough_registry_http--><path d="M333.5706,487.0023 C326.0464,502.4426 316.1098,525.5319 312,547 C294.2789,639.5694 313.2295,753.8103 320.9971,793.5617 " fill="none" id="docker-&gt;pullthrough_registry_http" style="stroke: #A80036; stroke-width: 1.0;"/><polygon fill="#A80036" points="322.0563,798.8748,324.2195,789.2664,321.0787,793.9713,316.3739,790.8305,322.0563,798.8748" style="stroke: #A80036; stroke-width: 1.0;"/><!--MD5=[b61908ad0a72310e6cf3d8ac59068287]
+link docker to docker_engine--><path d="M352.0284,487.0569 C360.5558,504.1115 373.2815,529.5631 381.8489,546.6977 " fill="none" id="docker-docker_engine" style="stroke: #A80036; stroke-width: 1.0;"/><!--MD5=[2790910257acd9252e57570112907508]
+link docker_engine to containerd--><path d="M369.1962,583.0369 C368.1822,584.2788 367.2246,585.5673 366.3497,586.8964 C365.9123,587.561 365.4956,588.2357 365.1028,588.9199 C364.9065,589.262 364.7161,589.6064 364.5322,589.9531 C364.4402,590.1265 364.3498,590.3004 364.2611,590.4749 C364.2168,590.5621 364.1728,590.6495 364.1293,590.737 C364.1075,590.7808 364.0859,590.8246 364.0643,590.8684 C364.0536,590.8903 364.0428,590.9123 364.0321,590.9342 C364.0267,590.9451 364.0214,590.9561 364.016,590.9671 " fill="none" id="docker_engine-containerd" style="stroke: #A80036; stroke-width: 1.0;"/><!--MD5=[562d6f5190bfe8a7dbf7e62d2be771eb]
+link k3s to k3s_api--><path d="M1084.3012,777.5454 C1085.6625,778.0364 1086.8968,778.5214 1088,779 C1098.4244,783.523 1108.1955,792.1334 1114.75,798.8018 " fill="none" id="k3s-k3s_api" style="stroke: #A80036; stroke-width: 1.0;"/><!--MD5=[6de03999163074d29f4580e78d6f600c]
 @startuml
+
 skinparam shadowing false
-
-skinparam actor {
-  BorderColor #0B5C92
-  BackgroundColor none
-  FontStyle "Thin"
-  FontSize 18
-}
-
-skinparam node {
-  BorderColor #0B5C92
-  BackgroundColor #ffffff
-  FontStyle "Thin"
-  FontSize 15
-}
-
-skinparam rectangle {
-  roundCorner 25
-  BorderColor #0B5C92
-  BackgroundColor #ffffff
-  FontStyle "Thin"
-  FontSize 15
-}
-
-skinparam component {
-  BorderColor #0B5C92
-  BackgroundColor #e0e59a
-  FontStyle "Thin"
-  FontSize 15
-}
-
-skinparam agent {
-  BorderColor #0B5C92
-  BackgroundColor #e0e59a
-  FontStyle "Thin"
-  FontSize 15
-}
-
-
-skinparam note {
-  BorderColor #0B5C92
-  BackgroundColor #FEFECE
-  FontStyle "Thin"
-  FontSize 15
-}
-
-skinparam database {
-  BorderColor #0B5C92
-  BackgroundColor #e0e59a
-  FontStyle "Thin"
-  FontSize 15
-}
 
 actor "You" as you
 
+
+cloud  "Internet" as internet {
+
+  () "HTTPS" as docker_io_registry_http
+  database "docker.io\nregistry" as docker_io_registry
+
+}
+
 rectangle "Host (e.g., your laptop, desktop)" as host {
 
-  rectangle "Docker (containerd)" {
+  rectangle "containerd" as containerd {
+
+    () "HTTPS" as k3s_api
 
     rectangle "K3s Cluster\n(actually, a master and agent container)" as k3s {
-      component "Traefik" as traefik
-      component "Taiga" as taiga
-      component "GitLab" as gitlab
-      component "Drone CI" as drone
-      component "SonarQube" as sonarqube
-      component "PlantUML Server" as plantuml_server
-      component "Heimdall 2" as heimdall2
+
+
+      () "HTTPS" as traefik_https
+      [Traefik] as traefik
+
+      () "HTTP" as taiga_http
+      [Taiga] as taiga
+
+      () "HTTP" as gitlab_http
+      [GitLab] as gitlab
+
+      () "HTTP" as drone_http
+      [Drone CI] as drone
+
+      () "HTTP" as sonar_http
+      [SonarQube] as sonar
+
+      () "HTTP" as plantuml_http
+      [PlantUML Server] as plantuml
+
+      () "HTTP" as heimdall_http
+      [Heimdall 2] as heimdall
 
     }
 
-    component "Private\nContainer Registry" as private_registry
-  }
+    () "HTTP" as private_registry_http
+    database "Private\nContainer\nRegistry" as private_registry
+
+    () "HTTP" as pullthrough_registry_http
+    database "Pull through\nContainer\nRegistry" as pullthrough_registry
+    note bottom
+     optional
+    end note
 }
 
-traefik <.[#0B5C92]d.> gitlab : http
-traefik <.[#0B5C92]d.> drone : http
-traefik <.[#0B5C92]d.> taiga : http
-traefik <.[#0B5C92]d.> plantuml_server : http
-traefik <.[#0B5C92]d.> drone : http
-traefik <.[#0B5C92]d.> sonarqube : http
-traefik <.[#0B5C92]d.> heimdall2 : http
+  [Docker Engine] as docker_engine
 
-k3s <.[#0B5C92]d.> private_registry : http
+  [Docker cli] as docker
+  [kubectl] as kubectl
+}
 
-you <-[#0B5C92]d-> private_registry : https
-you <-[#0B5C92]d-> traefik : https
+
+you - -> traefik_https
+
+traefik_https - - traefik
+traefik - -> taiga_http
+traefik - -> gitlab_http
+traefik - -> drone_http
+traefik - -> sonar_http
+traefik - -> plantuml_http
+traefik - -> heimdall_http
+
+taiga_http - - taiga
+gitlab_http - - gitlab
+drone_http - - drone
+sonar_http - - sonar
+plantuml_http - - plantuml
+heimdall_http - - heimdall
+
+docker_io_registry_http - - docker_io_registry
+
+private_registry_http - - private_registry
+pullthrough_registry_http - - pullthrough_registry
+
+private_registry -left-> docker_io_registry_http
+pullthrough_registry -left-> docker_io_registry_http
+
+k3s - -> private_registry_http
+k3s - -> pullthrough_registry_http
+
+you - - - - - - -> docker
+you - - - - - - -> kubectl
+
+k3s_api <- - kubectl
+
+docker - -> private_registry_http
+docker - -> pullthrough_registry_http
+docker - - docker_engine
+docker_engine - - containerd
+
+k3s - - k3s_api
 
 @enduml
 
