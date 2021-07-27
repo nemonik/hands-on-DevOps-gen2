@@ -3,7 +3,7 @@ export HOMEBREW_PREFIX="{{ HOMEBREW_PREFIX }}"
 
 if [ -f $HOMEBREW_PREFIX/etc/bash_completion ]; then . $HOMEBREW_PREFIX/etc/bash_completion; fi
 {% elif ansible_distribution == 'Archlinux' %}
-source /usr/share/bash-completion/bash_completion"
+source /usr/share/bash-completion/bash_completion
 {% endif %}
 
 source <(k3d completion bash)
