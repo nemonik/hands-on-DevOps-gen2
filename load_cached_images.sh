@@ -9,7 +9,7 @@
 
 set -a
 
-skip_encrypted_variables
+skip_encrypted_variables=true
 
 . .env
 
