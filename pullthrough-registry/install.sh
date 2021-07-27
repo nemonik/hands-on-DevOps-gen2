@@ -15,7 +15,7 @@ skip_encrypted_variables=true
 
 if [ "${pullthrough_registry_enabled}" = "true" ]; then 
 
-  if [ $( docker ps -a | grep ${pullthrough_registry_name} | wc -l ) -gt 0 ]; then
+  if [ $( docker ps | grep ${pullthrough_registry_name} | wc -l ) -gt 0 ]; then
 
     notify "pullthrough registry already exists."
 
