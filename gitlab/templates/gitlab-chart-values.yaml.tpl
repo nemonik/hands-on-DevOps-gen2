@@ -52,6 +52,8 @@ gitlab:
 
     signupEnabled: "false"
 
+    rootPassword: ${gitlab_root_password}
+
     secrets:
        dbKeyBase: "${db_key_base}"
        secretKeyBase: "${secret_key_base}"

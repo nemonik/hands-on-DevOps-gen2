@@ -35,7 +35,7 @@ After this course, you will
    3. code configuration in git and [GitLab](https://gitlab.com/rluna-gitlab/gitlab-ce);
    4. authoring code in Go;
    5. using style checkers and linters;
-   6. authoring a [Makefile](https://en.wikipedia.org/wiki/Make_(software)#Makefile);
+   6. authoring a [Makefile](<https://en.wikipedia.org/wiki/Make_(software)#Makefile>);
    7. various commands in [Docker](https://docker.io) (e.g., building a container image, pushing a container into a registry, creating and running a container);
    8. authoring a pipeline for [Drone CI](https://github.com/drone/drone);
    9. using Sonar Scanner CLI to perform static analysis;
@@ -77,164 +77,170 @@ What you should bring:
 - [5. What you should bring](#5-what-you-should-bring)
 - [6. Table of Contents](#6-table-of-contents)
 - [7. DevOps unpacked](#7-devops-unpacked)
-    - [7.1. What is DevOps?](#71-what-is-devops)
-    - [7.2. What DevOps is not](#72-what-devops-is-not)
-    - [7.3. The tool exist to](#73-the-tool-exist-to)
-    - [7.4. To succeed at DevOps you must](#74-to-succeed-at-devops-you-must)
-    - [7.5. If your effort doesn't](#75-if-your-effort-doesnt)
-    - [7.6. Conway's Law states](#76-conways-law-states)
-    - [7.7. DevOps is really about](#77-devops-is-really-about)
-    - [7.8. What is DevOps culture?](#78-what-is-devops-culture)
-        - [7.8.1. We were taught the requisite skills as children](#781-we-were-taught-the-requisite-skills-as-children)
-        - [7.8.2. Maintaining relationships is your most important skill](#782-maintaining-relationships-is-your-most-important-skill)
-        - [7.8.3. Be quick... Be slow to...](#783-be-quick-be-slow-to)
-        - [7.8.4. The pressures of social media](#784-the-pressures-of-social-media)
-    - [7.9. How is DevOps related to the Agile?](#79-how-is-devops-related-to-the-agile)
-    - [7.10. How do they differ?](#710-how-do-they-differ)
-    - [7.11. Why?](#711-why)
-    - [7.12. What are the principles of DevOps?](#712-what-are-the-principles-of-devops)
-    - [7.13. Much of this is achieved](#713-much-of-this-is-achieved)
-    - [7.14. What is Continuous Integration (CI)?](#714-what-is-continuous-integration-ci)
-    - [7.15. How?](#715-how)
-    - [7.16. CI best practices](#716-ci-best-practices)
-        - [7.16.1. Utilize a Configuration Management System](#7161-utilize-a-configuration-management-system)
-        - [7.16.2. Automate the build](#7162-automate-the-build)
-        - [7.16.3. Employ one or more CI services/orchestrators](#7163-employ-one-or-more-ci-servicesorchestrators)
-        - [7.16.4. Make builds self-testing](#7164-make-builds-self-testing)
-        - [7.16.5. Never commit broken](#7165-never-commit-broken)
-        - [7.16.6. Stakeholders are expected to pre-flight new code](#7166-stakeholders-are-expected-to-pre-flight-new-code)
-        - [7.16.7. The CI service/orchestrator provides feedback](#7167-the-ci-serviceorchestrator-provides-feedback)
-    - [7.17. What is Continuous Delivery?](#717-what-is-continuous-delivery)
-        - [7.17.1. Extending Continuous Integration (CI)](#7171-extending-continuous-integration-ci)
-        - [7.17.2. Consistency](#7172-consistency)
-    - [7.18. But wait. What's a pipeline?](#718-but-wait-whats-a-pipeline)
-    - [7.19. How is a pipeline manifested?](#719-how-is-a-pipeline-manifested)
-    - [7.20. What underlines all of this?](#720-what-underlines-all-of-this)
-    - [7.21. But really why do we automate err. code?](#721-but-really-why-do-we-automate-err-code)
-        - [7.21.1. Why do I mention Larry Wall?](#7211-why-do-i-mention-larry-wall)
-        - [7.21.2. Laziness](#7212-laziness)
-        - [7.21.3. Impatience](#7213-impatience)
-        - [7.21.4. Hubris](#7214-hubris)
-        - [7.21.5. We automate for](#7215-we-automate-for)
-    - [7.22. Monitoring](#722-monitoring)
-        - [7.22.1. The _primary_ metric](#7221-the-_primary_-metric)
-        - [7.22.2. An understanding of performance](#7222-an-understanding-of-performance)
-        - [7.22.3. Establish a baseline performance](#7223-establish-a-baseline-performance)
-        - [7.22.4. Set reaction thresholds](#7224-set-reaction-thresholds)
-        - [7.22.5. Reacting](#7225-reacting)
-        - [7.22.6. Gaps in CICD](#7226-gaps-in-cicd)
-        - [7.22.7. Eliminating waste](#7227-eliminating-waste)
-    - [7.23. Crawl, walk, run](#723-crawl-walk-run)
-        - [7.23.1. Ultimately, DevOps is Goal](#7231-ultimately-devops-is-goal)
+  - [7.1. What is DevOps?](#71-what-is-devops)
+  - [7.2. What DevOps is not](#72-what-devops-is-not)
+  - [7.3. The tool exist to](#73-the-tool-exist-to)
+  - [7.4. To succeed at DevOps you must](#74-to-succeed-at-devops-you-must)
+  - [7.5. If your effort doesn't](#75-if-your-effort-doesnt)
+  - [7.6. Conway's Law states](#76-conways-law-states)
+  - [7.7. DevOps is really about](#77-devops-is-really-about)
+  - [7.8. What is DevOps culture?](#78-what-is-devops-culture)
+    - [7.8.1. We were taught the requisite skills as children](#781-we-were-taught-the-requisite-skills-as-children)
+    - [7.8.2. Maintaining relationships is your most important skill](#782-maintaining-relationships-is-your-most-important-skill)
+    - [7.8.3. Be quick... Be slow to...](#783-be-quick-be-slow-to)
+    - [7.8.4. The pressures of social media](#784-the-pressures-of-social-media)
+  - [7.9. How is DevOps related to the Agile?](#79-how-is-devops-related-to-the-agile)
+  - [7.10. How do they differ?](#710-how-do-they-differ)
+  - [7.11. Why?](#711-why)
+  - [7.12. What are the principles of DevOps?](#712-what-are-the-principles-of-devops)
+  - [7.13. Much of this is achieved](#713-much-of-this-is-achieved)
+  - [7.14. What is Continuous Integration (CI)?](#714-what-is-continuous-integration-ci)
+  - [7.15. How?](#715-how)
+  - [7.16. CI best practices](#716-ci-best-practices)
+    - [7.16.1. Utilize a Configuration Management System](#7161-utilize-a-configuration-management-system)
+    - [7.16.2. Automate the build](#7162-automate-the-build)
+    - [7.16.3. Employ one or more CI services/orchestrators](#7163-employ-one-or-more-ci-servicesorchestrators)
+    - [7.16.4. Make builds self-testing](#7164-make-builds-self-testing)
+    - [7.16.5. Never commit broken](#7165-never-commit-broken)
+    - [7.16.6. Stakeholders are expected to pre-flight new code](#7166-stakeholders-are-expected-to-pre-flight-new-code)
+    - [7.16.7. The CI service/orchestrator provides feedback](#7167-the-ci-serviceorchestrator-provides-feedback)
+  - [7.17. What is Continuous Delivery?](#717-what-is-continuous-delivery)
+    - [7.17.1. Extending Continuous Integration (CI)](#7171-extending-continuous-integration-ci)
+    - [7.17.2. Consistency](#7172-consistency)
+  - [7.18. But wait. What's a pipeline?](#718-but-wait-whats-a-pipeline)
+  - [7.19. How is a pipeline manifested?](#719-how-is-a-pipeline-manifested)
+  - [7.20. What underlines all of this?](#720-what-underlines-all-of-this)
+  - [7.21. But really why do we automate err. code?](#721-but-really-why-do-we-automate-err-code)
+    - [7.21.1. Why do I mention Larry Wall?](#7211-why-do-i-mention-larry-wall)
+    - [7.21.2. Laziness](#7212-laziness)
+    - [7.21.3. Impatience](#7213-impatience)
+    - [7.21.4. Hubris](#7214-hubris)
+    - [7.21.5. We automate for](#7215-we-automate-for)
+  - [7.22. Monitoring](#722-monitoring)
+    - [7.22.1. The _primary_ metric](#7221-the-_primary_-metric)
+    - [7.22.2. An understanding of performance](#7222-an-understanding-of-performance)
+    - [7.22.3. Establish a baseline performance](#7223-establish-a-baseline-performance)
+    - [7.22.4. Set reaction thresholds](#7224-set-reaction-thresholds)
+    - [7.22.5. Reacting](#7225-reacting)
+    - [7.22.6. Gaps in CICD](#7226-gaps-in-cicd)
+    - [7.22.7. Eliminating waste](#7227-eliminating-waste)
+  - [7.23. Crawl, walk, run](#723-crawl-walk-run)
+    - [7.23.1. Ultimately, DevOps is Goal](#7231-ultimately-devops-is-goal)
 - [8. Reading list](#8-reading-list)
 - [9. Prerequisites](#9-prerequisites)
-    - [9.1. Manual inspection](#91-manual-inspection)
-    - [9.2. Shell configuration](#92-shell-configuration)
-    - [9.3. Installing upfront dependencies](#93-installing-upfront-dependencies)
-    - [9.4. On OS X or Windows 11, install Docker Desktop](#94-on-os-x-or-windows-11-install-docker-desktop)
-            - [9.4.0.1. On OSX, install Docker Desktop](#9401-on-osx-install-docker-desktop)
-            - [9.4.0.2. On Windows, install Docker Desktop](#9402-on-windows-install-docker-desktop)
-        - [9.4.1. On Arch Linux, installing Docker](#941-on-arch-linux-installing-docker)
-    - [9.5. On OSX, install iTerm2](#95-on-osx-install-iterm2)
+  - [9.1. Manual inspection](#91-manual-inspection)
+  - [9.2. Shell configuration](#92-shell-configuration)
+  - [9.3. Installing upfront dependencies](#93-installing-upfront-dependencies)
+  - [9.4. On OS X or Windows 11, install Docker Desktop](#94-on-os-x-or-windows-11-install-docker-desktop) - [9.4.0.1. On OSX, install Docker Desktop](#9401-on-osx-install-docker-desktop) - [9.4.0.2. On Windows, install Docker Desktop](#9402-on-windows-install-docker-desktop)
+    - [9.4.1. On Arch Linux, installing Docker](#941-on-arch-linux-installing-docker)
+  - [9.5. On OSX, install iTerm2](#95-on-osx-install-iterm2)
 - [10. Installing the software factory](#10-installing-the-software-factory)
-    - [10.1. Ansible](#101-ansible)
-        - [10.1.1. Installing Ansible](#1011-installing-ansible)
-        - [10.1.2. On OSX, install the Xcode Command Line tools](#1012-on-osx-install-the-xcode-command-line-tools)
-        - [10.1.3. On OSX, install HomeBrew](#1013-on-osx-install-homebrew)
-        - [10.1.4. On Arch Linux, ensure Python3 and pip are installed](#1014-on-arch-linux-ensure-python3-and-pip-are-installed)
-        - [10.1.5. Install Ansible](#1015-install-ansible)
-    - [10.2. Run the Ansible playbook](#102-run-the-ansible-playbook)
-        - [10.2.1. Reviewing the Ansible playbooks](#1021-reviewing-the-ansible-playbooks)
-        - [10.2.2. Install dependencies](#1022-install-dependencies)
-        - [10.2.3. On OSX, enable nerd fonts in XTerm2](#1023-on-osx-enable-nerd-fonts-in-xterm2)
-        - [10.2.4. On Arch Linux, enable nerd fonts in the Gnome Terminal](#1024-on-arch-linux-enable-nerd-fonts-in-the-gnome-terminal)
-        - [10.2.5. Change your shell to fish](#1025-change-your-shell-to-fish)
-        - [10.2.6. Finish conifiguring fish](#1026-finish-conifiguring-fish)
-        - [10.2.7. Finish configuring neovim](#1027-finish-configuring-neovim)
-    - [10.3. Spin up the Factory](#103-spin-up-the-factory)
-        - [10.3.1. The `Makefile`](#1031-the-makefile)
-        - [10.3.2. Pull through registry](#1032-pull-through-registry)
-        - [10.3.3. Starting a container registry, the K3s cluster and patching CoreDNS](#1033-starting-a-container-registry-the-k3s-cluster-and-patching-coredns)
-        - [10.3.4. Verifying the cluster is up and running](#1034-verifying-the-cluster-is-up-and-running)
-        - [10.3.5. Starting the factory tools](#1035-starting-the-factory-tools)
-    - [10.4. The long-running tools](#104-the-long-running-tools)
-        - [10.4.1. Taiga, an example of Agile project management software](#1041-taiga-an-example-of-agile-project-management-software)
-            - [10.4.1.1. Documentation, source, container image](#10411-documentation-source-container-image)
-            - [10.4.1.2. URL, username and password](#10412-url-username-and-password)
-        - [10.4.2. GitLab CE, an example of configuration management software](#1042-gitlab-ce-an-example-of-configuration-management-software)
-            - [10.4.2.1. Documentation, source, container image](#10421-documentation-source-container-image)
-            - [10.4.2.2. URL, username and password](#10422-url-username-and-password)
-        - [10.4.3. Drone CI, an example of CICD orchestrator](#1043-drone-ci-an-example-of-cicd-orchestrator)
-            - [10.4.3.1. Documentation, source, container image](#10431-documentation-source-container-image)
-            - [10.4.3.2. URL, username and password](#10432-url-username-and-password)
-        - [10.4.4. SonarQube, an example of a platform for the inspection of code quality](#1044-sonarqube-an-example-of-a-platform-for-the-inspection-of-code-quality)
-            - [10.4.4.1. Documentation, source, container image](#10441-documentation-source-container-image)
-            - [10.4.4.2. URL, username and password](#10442-url-username-and-password)
-        - [10.4.5. PlantUML Server, an example of light-weight documentation](#1045-plantuml-server-an-example-of-light-weight-documentation)
-            - [10.4.5.1. Documentation, source, container image](#10451-documentation-source-container-image)
-            - [10.4.5.2. URL](#10452-url)
-        - [10.4.6. Heimdall 2](#1046-heimdall-2)
-            - [10.4.6.1. Documentation, source, container image](#10461-documentation-source-container-image)
-            - [10.4.6.2. URL, username and password](#10462-url-username-and-password)
+  - [10.1. Ansible](#101-ansible)
+    - [10.1.1. Installing Ansible](#1011-installing-ansible)
+    - [10.1.2. On OSX, install the Xcode Command Line tools](#1012-on-osx-install-the-xcode-command-line-tools)
+    - [10.1.3. On OSX, install HomeBrew](#1013-on-osx-install-homebrew)
+    - [10.1.4. On Arch Linux, ensure Python3 and pip are installed](#1014-on-arch-linux-ensure-python3-and-pip-are-installed)
+    - [10.1.5. Install Ansible](#1015-install-ansible)
+  - [10.2. Run the Ansible playbook](#102-run-the-ansible-playbook)
+    - [10.2.1. Reviewing the Ansible playbooks](#1021-reviewing-the-ansible-playbooks)
+    - [10.2.2. Install dependencies](#1022-install-dependencies)
+    - [10.2.3. On OSX, enable nerd fonts in XTerm2](#1023-on-osx-enable-nerd-fonts-in-xterm2)
+    - [10.2.4. On Arch Linux, enable nerd fonts in the Gnome Terminal](#1024-on-arch-linux-enable-nerd-fonts-in-the-gnome-terminal)
+    - [10.2.5. Change your shell to fish](#1025-change-your-shell-to-fish)
+    - [10.2.6. Finish conifiguring fish](#1026-finish-conifiguring-fish)
+    - [10.2.7. Finish configuring neovim](#1027-finish-configuring-neovim)
+  - [10.3. Spin up the Factory](#103-spin-up-the-factory)
+    - [10.3.1. The `Makefile`](#1031-the-makefile)
+      - [10.3.1.1. The copyright](#10311-the-copyright)
+      - [10.3.1.2. The Makefile rules](#10312-the-makefile-rules)
+      - [10.3.1.3. Explaining `make all`](#10313-explaining-make-all)
+    - [10.3.2. Configuring the pull through container registry](#1032-configuring-the-pull-through-container-registry)
+    - [10.3.3. Starting the cluster](#1033-starting-the-cluster)
+      - [10.3.3.1. The `start-pullthrough` rule](#10331-the-start-pullthrough-rule)
+      - [10.3.3.2. The `start-registry` rule](#10332-the-start-registry-rule)
+      - [10.3.3.3. The `install-k3s-air-gap-image` rule](#10333-the-install-k3s-air-gap-image-rule)
+      - [10.3.3.4. The `pull-class-images` rule](#10334-the-pull-class-images-rule)
+      - [10.3.3.5. The `patch-coredns` rule](#10335-the-patch-coredns-rule)
+    - [10.3.4. Verifying the cluster is up and running](#1034-verifying-the-cluster-is-up-and-running)
+    - [10.3.5. Starting the factory tools](#1035-starting-the-factory-tools)
+  - [10.4. The long-running tools](#104-the-long-running-tools)
+    - [10.4.1. Taiga, an example of Agile project management software](#1041-taiga-an-example-of-agile-project-management-software)
+      - [10.4.1.1. Documentation, source, container image](#10411-documentation-source-container-image)
+      - [10.4.1.2. URL, username and password](#10412-url-username-and-password)
+    - [10.4.2. GitLab CE, an example of configuration management software](#1042-gitlab-ce-an-example-of-configuration-management-software)
+      - [10.4.2.1. Documentation, source, container image](#10421-documentation-source-container-image)
+      - [10.4.2.2. URL, username and password](#10422-url-username-and-password)
+    - [10.4.3. Drone CI, an example of CICD orchestrator](#1043-drone-ci-an-example-of-cicd-orchestrator)
+      - [10.4.3.1. Documentation, source, container image](#10431-documentation-source-container-image)
+      - [10.4.3.2. URL, username and password](#10432-url-username-and-password)
+    - [10.4.4. SonarQube, an example of a platform for the inspection of code quality](#1044-sonarqube-an-example-of-a-platform-for-the-inspection-of-code-quality)
+      - [10.4.4.1. Documentation, source, container image](#10441-documentation-source-container-image)
+      - [10.4.4.2. URL, username and password](#10442-url-username-and-password)
+    - [10.4.5. PlantUML Server, an example of light-weight documentation](#1045-plantuml-server-an-example-of-light-weight-documentation)
+      - [10.4.5.1. Documentation, source, container image](#10451-documentation-source-container-image)
+      - [10.4.5.2. URL](#10452-url)
+    - [10.4.6. Heimdall 2](#1046-heimdall-2)
+      - [10.4.6.1. Documentation, source, container image](#10461-documentation-source-container-image)
+      - [10.4.6.2. URL, username and password](#10462-url-username-and-password)
 - [11. Golang `helloworld` project](#11-golang-helloworld-project)
-    - [11.1. Create the project's backlog](#111-create-the-projects-backlog)
-    - [11.2. Create the project in GitLab](#112-create-the-project-in-gitlab)
-    - [11.3. Setup the project](#113-setup-the-project)
-    - [11.4. Author the application](#114-author-the-application)
-    - [11.5. Align source code with Go coding standards](#115-align-source-code-with-go-coding-standards)
-    - [11.6. Lint your code](#116-lint-your-code)
-    - [11.7. Build the application](#117-build-the-application)
-    - [11.8. Run your application](#118-run-your-application)
-    - [11.9. Author the unit tests](#119-author-the-unit-tests)
-    - [11.10. Automate the build (i.e., write the `Makefile`)](#1110-automate-the-build-ie-write-the-makefile)
-    - [11.11. Author Drone-based Continuous Integration](#1111-author-drone-based-continuous-integration)
-        - [11.11.1. Configure Drone to execute your pipeline](#11111-configure-drone-to-execute-your-pipeline)
-        - [11.11.2. Trigger the build](#11112-trigger-the-build)
-    - [11.12. The completed source for `helloworld`](#1112-the-completed-source-for-helloworld)
+  - [11.1. Create the project's backlog](#111-create-the-projects-backlog)
+  - [11.2. Create the project in GitLab](#112-create-the-project-in-gitlab)
+  - [11.3. Setup the project](#113-setup-the-project)
+  - [11.4. Author the application](#114-author-the-application)
+  - [11.5. Align source code with Go coding standards](#115-align-source-code-with-go-coding-standards)
+  - [11.6. Lint your code](#116-lint-your-code)
+  - [11.7. Build the application](#117-build-the-application)
+  - [11.8. Run your application](#118-run-your-application)
+  - [11.9. Author the unit tests](#119-author-the-unit-tests)
+  - [11.10. Automate the build (i.e., write the `Makefile`)](#1110-automate-the-build-ie-write-the-makefile)
+  - [11.11. Author Drone-based Continuous Integration](#1111-author-drone-based-continuous-integration)
+    - [11.11.1. Configure Drone to execute your pipeline](#11111-configure-drone-to-execute-your-pipeline)
+    - [11.11.2. Trigger the build](#11112-trigger-the-build)
+  - [11.12. The completed source for `helloworld`](#1112-the-completed-source-for-helloworld)
 - [12. Golang `helloworld-web` project](#12-golang-helloworld-web-project)
-    - [12.1. Create the project's backlog](#121-create-the-projects-backlog)
-    - [12.2. Create the project in GitLab](#122-create-the-project-in-gitlab)
-    - [12.3. Setup the project](#123-setup-the-project)
-    - [12.4. Author the `helloworld-web` application](#124-author-the-helloworld-web-application)
-    - [12.5. Build and run the `helloworld-web` application](#125-build-and-run-the-helloworld-web-application)
-    - [12.6. Run golangci-lint on the `helloworld-web` application](#126-run-golangci-lint-on-the-helloworld-web-application)
-        - [12.6.1. Fixing the problem](#1261-fixing-the-problem)
-    - [12.7. Author the unit tests](#127-author-the-unit-tests)
-    - [12.8. Perform static analysis (i.e., sonar-scanner) on the command line](#128-perform-static-analysis-ie-sonar-scanner-on-the-command-line)
-        - [12.8.1. Perform static analysis on the command line](#1281-perform-static-analysis-on-the-command-line)
-    - [12.9. Automate the build (i.e., write the Makefile)](#129-automate-the-build-ie-write-the-makefile)
-    - [12.10. Containerize the application](#1210-containerize-the-application)
-    - [12.11. Run the container](#1211-run-the-container)
-        - [12.11.1. Option 1](#12111-option-1)
-        - [12.11.2. Option 2](#12112-option-2)
-    - [12.12. Push the container image to the private registry](#1212-push-the-container-image-to-the-private-registry)
-    - [12.13. Configure Drone to execute your CICD pipeline](#1213-configure-drone-to-execute-your-cicd-pipeline)
-    - [12.14. Add Static Analysis (`sonar`) step to your CICD pipeline](#1214-add-static-analysis-sonar-step-to-your-cicd-pipeline)
-    - [12.15. Add the `build` step to the pipeline](#1215-add-the-build-step-to-the-pipeline)
-    - [12.16. Add the `nemonik\helloworld-web:latest` container image `publish` step to pipeline](#1216-add-the-nemonik\helloworld-weblatest-container-image-publish-step-to-pipeline)
-    - [12.17. Deploy `helloworld-web` application to the Kubernetes cluster](#1217-deploy-helloworld-web-application-to-the-kubernetes-cluster)
-    - [12.18. Add a `deploy` rule to the Makefile](#1218-add-a-deploy-rule-to-the-makefile)
-    - [12.19. Add a `deploy` step to the pipeline](#1219-add-a-deploy-step-to-the-pipeline)
-        - [12.19.1. Add a Kubernetes service account for the automation](#12191-add-a-kubernetes-service-account-for-the-automation)
-        - [12.19.2. Add secrets to our `helloworld-web` Drone CI repistory](#12192-add-secrets-to-our-helloworld-web-drone-ci-repistory)
-        - [12.19.3. Build, tag and push our `deploy` step container](#12193-build-tag-and-push-our-deploy-step-container)
-        - [12.19.4. Add the `deploy` step to our pipeline](#12194-add-the-deploy-step-to-our-pipeline)
-    - [12.20. Add compliance-as-code (`inspec`) test to the pipeline](#1220-add-compliance-as-code-inspec-test-to-the-pipeline)
-        - [12.20.1. Author our InSpec tests](#12201-author-our-inspec-tests)
-        - [12.20.2. Execute the InSpec tests on your `helloworld-web` deployment](#12202-execute-the-inspec-tests-on-your-helloworld-web-deployment)
-        - [12.20.3. Add an `inspec` rule to the Makefile](#12203-add-an-inspec-rule-to-the-makefile)
-        - [12.20.4. Add a `inspec` step to the pipeline](#12204-add-a-inspec-step-to-the-pipeline)
-            - [12.20.4.1. Build, tag, and push our `inspec` step container](#122041-build-tag-and-push-our-inspec-step-container)
-            - [12.20.4.2. Add the compliance-as-code (`inspec`) step to the pipeline](#122042-add-the-compliance-as-code-inspec-step-to-the-pipeline)
-        - [12.20.5. Viewing the `inspec` results in Heimdall 2 Lite](#12205-viewing-the-inspec-results-in-heimdall-2-lite)
-            - [12.20.5.1. Supplemental InSpec output for viewing in Heimdall 2 Lite](#122051-supplemental-inspec-output-for-viewing-in-heimdall-2-lite)
-        - [12.20.6. Add an automated functional test (`selenium`) step to the pipeline](#12206-add-an-automated-functional-test-selenium-step-to-the-pipeline)
-            - [12.20.6.1. Pull and run the Selenium Chrome Standalone browser](#122061-pull-and-run-the-selenium-chrome-standalone-browser)
-            - [12.20.6.2. Create our functional test automation](#122062-create-our-functional-test-automation)
-            - [12.20.6.3. Build, tag, and push the `selenium` step container](#122063-build-tag-and-push-the-selenium-step-container)
-            - [12.20.6.4. Add the `selenium` step to the pipeline](#122064-add-the-selenium-step-to-the-pipeline)
-    - [12.21. Add the DAST (`owasp-zap`) step to the pipeline](#1221-add-the-dast-owasp-zap-step-to-the-pipeline)
-    - [12.22. All the source for `helloworld-web`](#1222-all-the-source-for-helloworld-web)
+  - [12.1. Create the project's backlog](#121-create-the-projects-backlog)
+  - [12.2. Create the project in GitLab](#122-create-the-project-in-gitlab)
+  - [12.3. Setup the project](#123-setup-the-project)
+  - [12.4. Author the `helloworld-web` application](#124-author-the-helloworld-web-application)
+  - [12.5. Build and run the `helloworld-web` application](#125-build-and-run-the-helloworld-web-application)
+  - [12.6. Run golangci-lint on the `helloworld-web` application](#126-run-golangci-lint-on-the-helloworld-web-application)
+    - [12.6.1. Fixing the problem](#1261-fixing-the-problem)
+  - [12.7. Author the unit tests](#127-author-the-unit-tests)
+  - [12.8. Perform static analysis (i.e., sonar-scanner) on the command line](#128-perform-static-analysis-ie-sonar-scanner-on-the-command-line)
+    - [12.8.1. Perform static analysis on the command line](#1281-perform-static-analysis-on-the-command-line)
+  - [12.9. Automate the build (i.e., write the Makefile)](#129-automate-the-build-ie-write-the-makefile)
+  - [12.10. Containerize the application](#1210-containerize-the-application)
+  - [12.11. Run the container](#1211-run-the-container)
+    - [12.11.1. Option 1](#12111-option-1)
+    - [12.11.2. Option 2](#12112-option-2)
+  - [12.12. Push the container image to the private registry](#1212-push-the-container-image-to-the-private-registry)
+  - [12.13. Configure Drone to execute your CICD pipeline](#1213-configure-drone-to-execute-your-cicd-pipeline)
+  - [12.14. Add Static Analysis (`sonar`) step to your CICD pipeline](#1214-add-static-analysis-sonar-step-to-your-cicd-pipeline)
+  - [12.15. Add the `build` step to the pipeline](#1215-add-the-build-step-to-the-pipeline)
+  - [12.16. Add the `nemonik\helloworld-web:latest` container image `publish` step to pipeline](#1216-add-the-nemonik\helloworld-weblatest-container-image-publish-step-to-pipeline)
+  - [12.17. Deploy `helloworld-web` application to the Kubernetes cluster](#1217-deploy-helloworld-web-application-to-the-kubernetes-cluster)
+  - [12.18. Add a `deploy` rule to the Makefile](#1218-add-a-deploy-rule-to-the-makefile)
+  - [12.19. Add a `deploy` step to the pipeline](#1219-add-a-deploy-step-to-the-pipeline)
+    - [12.19.1. Add a Kubernetes service account for the automation](#12191-add-a-kubernetes-service-account-for-the-automation)
+    - [12.19.2. Add secrets to our `helloworld-web` Drone CI repository](#12192-add-secrets-to-our-helloworld-web-drone-ci-repository)
+    - [12.19.3. Build, tag and push our `deploy` step container](#12193-build-tag-and-push-our-deploy-step-container)
+    - [12.19.4. Add the `deploy` step to our pipeline](#12194-add-the-deploy-step-to-our-pipeline)
+  - [12.20. Add compliance-as-code (`inspec`) test to the pipeline](#1220-add-compliance-as-code-inspec-test-to-the-pipeline)
+    - [12.20.1. Author our InSpec tests](#12201-author-our-inspec-tests)
+    - [12.20.2. Execute the InSpec tests on your `helloworld-web` deployment](#12202-execute-the-inspec-tests-on-your-helloworld-web-deployment)
+    - [12.20.3. Add an `inspec` rule to the Makefile](#12203-add-an-inspec-rule-to-the-makefile)
+    - [12.20.4. Add a `inspec` step to the pipeline](#12204-add-a-inspec-step-to-the-pipeline)
+      - [12.20.4.1. Build, tag, and push our `inspec` step container](#122041-build-tag-and-push-our-inspec-step-container)
+      - [12.20.4.2. Add the compliance-as-code (`inspec`) step to the pipeline](#122042-add-the-compliance-as-code-inspec-step-to-the-pipeline)
+    - [12.20.5. Viewing the `inspec` results in Heimdall 2 Lite](#12205-viewing-the-inspec-results-in-heimdall-2-lite)
+      - [12.20.5.1. Supplemental InSpec output for viewing in Heimdall 2 Lite](#122051-supplemental-inspec-output-for-viewing-in-heimdall-2-lite)
+    - [12.20.6. Add an automated functional test (`selenium`) step to the pipeline](#12206-add-an-automated-functional-test-selenium-step-to-the-pipeline)
+      - [12.20.6.1. Pull and run the Selenium Chrome Standalone browser](#122061-pull-and-run-the-selenium-chrome-standalone-browser)
+      - [12.20.6.2. Create our functional test automation](#122062-create-our-functional-test-automation)
+      - [12.20.6.3. Build, tag, and push the `selenium` step container](#122063-build-tag-and-push-the-selenium-step-container)
+      - [12.20.6.4. Add the `selenium` step to the pipeline](#122064-add-the-selenium-step-to-the-pipeline)
+  - [12.21. Add the DAST (`owasp-zap`) step to the pipeline](#1221-add-the-dast-owasp-zap-step-to-the-pipeline)
+  - [12.22. All the source for `helloworld-web`](#1222-all-the-source-for-helloworld-web)
 - [13. Additional best practices to consider around securing containerized applications](#13-additional-best-practices-to-consider-around-securing-containerized-applications)
 
 <!-- /TOC -->
@@ -650,7 +656,7 @@ If you're on an OSX host perform the following:
 7. In the `docker` window that opens, select the gear icon in the upper-right portion of the window.
 8. Under `General` make sure `Start Docker Desktop when you log in` is checked off otherwise you will need to start docker everytime you restart your host.
 9. Then select `Resources` on the left-hand side of the window.
-10. As [Docker](https://docker.io) runs its containers in a virtual machine (VM), you will need to give this VM more processing power and host memory to run heavier container load. What you give the Docker Desktop](https://www.docker.com/products/docker-desktop) VM is dependent on two factors the resources your host can spare and the load the class containers will place on your host. I'd advise trying 8 CPUs and 12 GBs of memory and scale as you see fit.
+10. As [Docker](https://docker.io) runs its containers in a virtual machine (VM), you will need to give this VM more processing power and host memory to run heavier container load. What you give the Docker Desktop](https://www.docker.com/products/docker-desktop) VM is dependent on two factors the resources your host can spare and the load the class containers will place on your host. I'd advise trying 8 CPUs and 12 GBs of memory and scale as you see fit. Also, the class brings in a good number of container images. Give you yourself a `Disk image size` of 60 GB or larger. Pay attention to how much of your disk image is being used.
 11. Click `Apply and Restart` to restart the Docker Desktop VM. The VM will take some amount of time to restart. The containers on the back of the whale icon (Moby Dock) will cycle the Apple menu bar will cycle until Docker is ready.
 
 #### 9.4.0.2. On Windows, install Docker Desktop
@@ -1288,8 +1294,8 @@ make install-dependencies
 - Pay attention to the playbook's run as it may stop to ask you for your password.
 - The password asked for out of the gate is needed, so that [Ansible](https://github.com/ansible/ansible) can become the root and install system-wide packages and software.
 - You may be asked again when installing fonts, so keep an eye out for this.
-- The first line runs only if you re on OSX to install a [Bash](https://www.gnu.org/software/bash/) 5.  OSX ship with [Bash](https://www.gnu.org/software/bash/) 3.2.57(1)-release.
-- Some tasks are long running.  I've put debug statements prior to these tasks.  Look for them if you think [Ansible](https://github.com/ansible/ansible) has froze.  It likely has not.
+- The first line runs only if you re on OSX to install a [Bash](https://www.gnu.org/software/bash/) 5. OSX ship with [Bash](https://www.gnu.org/software/bash/) 3.2.57(1)-release.
+- Some tasks are long running. I've put debug statements prior to these tasks. Look for them if you think [Ansible](https://github.com/ansible/ansible) has froze. It likely has not.
 - How long this takes to run is dependent on the speed of your Internet connection.
 
 The output should resemble
@@ -1406,7 +1412,7 @@ When you first start `nvim` on the command-line you will be greated with a numbe
 
 You must now install them while in visual mode. Just press the `esc` to get past the error messages and then type `:PlugInstall` and `junegunn/vim-plug` will install the plugins described above. `coc` language server should then take over and install its own extensions, but you may have to close the status window type `:q!` and then restart `nvim` for langauge server to install its extensions. Pressing `:q!` will close Coc's status window.
 
-I would really love to teach you about `vi`, `vim` and `nvim`, but doing so is really outside the scope of this class. I've really been an avid [nano](https://www.nano-editor.org/) user, but capable of using `vi` in a pinch as it almost always garunteed to be installed in [Unix](https://en.wikipedia.org/wiki/Unix)-like operating system. Neovim pushed me over the cliff to use it fill time.  And I'm focused to learn `nvim`. This is is why `nano` is aliased to `nvim`, so if you enter `nano` into the the shell it will start instead `nvim`. You can override this by typing nano's full path, `/usr/local/bin/nano` on OSX and `/usr/bin` on Arch. You can strip the alias out of your shell initialization file or for a session map it back the the `alias` command.
+I would really love to teach you about `vi`, `vim` and `nvim`, but doing so is really outside the scope of this class. I've really been an avid [nano](https://www.nano-editor.org/) user, but capable of using `vi` in a pinch as it almost always garunteed to be installed in [Unix](https://en.wikipedia.org/wiki/Unix)-like operating system. Neovim pushed me over the cliff to use it fill time. And I'm focused to learn `nvim`. This is is why `nano` is aliased to `nvim`, so if you enter `nano` into the the shell it will start instead `nvim`. You can override this by typing nano's full path, `/usr/local/bin/nano` on OSX and `/usr/bin` on Arch. You can strip the alias out of your shell initialization file or for a session map it back the the `alias` command.
 
 `vi`, `vim` and `nvim` pointers:
 
@@ -1441,7 +1447,9 @@ The official documentation can be found here
 
 I've chosen to author the automation for spinning up the factory in [GNU Make](https://www.gnu.org/software/make/). [GNU Make](https://www.gnu.org/software/make/) bills itself as "a tool which controls the generation of executables and other non-source files of a program from the program's source files." Created by, [Stuart Feldman](https://en.wikipedia.org/wiki/Stuart_Feldman) Make introduced in PWB/UNIX has been around since 1976. Yep, over 45 years ago. Initially, its purpose was to automate software builds. Yeah, automation one of the core methods of DevOps has been around quite a long time. I've chosen to use [Make](https://www.gnu.org/software/make/) since the inception of my class to drive this point home. There's alway a few "grey beards" in my class that perk up and smile after hearing it mentioned. [Make](https://www.gnu.org/software/make/) lends itself well to the task of spinning up the cluster, the tools, etc as a makefile is essentially a collection of rules. An individual rule in the makefile tells [Make](https://www.gnu.org/software/make/) how to execute a series of commands. The [./Makefile](./Makefile) is found at the root of the repository. As I stated earlier, typically [Make](https://www.gnu.org/software/make/) is utilized for building code, but because of its ubiquity across Linux and OSX it is often used for a wide variety of tasks. We're going to use it stand up a [Kubernetes](https://kubernetes.io/docs/concepts/overview/what-is-kubernetes/) cluster and a top that entire DevOps factory. Maybe this was a wrong decision. Only time will tell.
 
-First let's inspect the [Makefile](./Makefile) in piecemeal
+First let's inspect the [Makefile](./Makefile) in piecemeal.
+
+#### 10.3.1.1. The copyright
 
 ```
 # Copyright (C) 2021 Michael Joseph Walsh - All Rights Reserved
@@ -1453,6 +1461,8 @@ First let's inspect the [Makefile](./Makefile) in piecemeal
 ```
 
 The above is the copyright. The BSD 3-clause license allows you nearly almost unlimited freedom with the course material so long as you include the BSD copyright and license notice. I can not be held responsible if you damage you host for example. You may also not use my name in the endorsement of derived products.
+
+#### 10.3.1.2. The Makefile rules
 
 ```
 .PHONY: all install-dependencies pull-class-images install-k3s-air-gap-image start install start-registry delete-registry start-pullthrough stop-pullthrough uninstall-pullthrough start-cluster delete-cluster patch-coredns install-traefik uninstall-traefik install-gitlab uninstall-gitlab install-drone uninstall-drone install-taiga uninstall-taiga install-sonarqube uninstall-sonarqube install-heimdall uninstall-heimdall install-plantuml uninstall-plantuml decrypt-vault encrypt-vault load-cached-images
@@ -1535,6 +1545,8 @@ encrypt-vault:
 
 Earlier we entered `make install-dependencies` in our shell to install all the dependencies via [Ansible](https://github.com/ansible/ansible). Well, we can see above the `install-dependencies` target executes a [./install_dependencies.sh](install_dependencies.sh) shell script.
 
+#### 10.3.1.3. Explaining `make all`
+
 In the shell, if you were to enter `make all` make would execute the `all` target, who will in turn
 
 - execute the `start` target, who in turn will call
@@ -1556,11 +1568,19 @@ In the shell, if you were to enter `make all` make would execute the `all` targe
 
 ### 10.3.2. Configuring the pull through container registry
 
-The factory will pull a great number of images. Docker permits anonymous free users the ability to pull 100 on the docker.io container registry per six hours and authenticated free users a total of 200 pulls per six hours.
+The factory will pull a great number of images. Docker permits anonymous free users the ability to pull 100 on the docker.io container registry per six hours and authenticated free users a total of 200 pulls per six hours. You can sign up for a free authenticated account at <https://hub.docker.com/signup>.
 
-If you encounter errors where you cannot pull the necessary images. Consider paying the 7 dollars for a Pro account <https://www.docker.com/pricing>  It is 7 dollars if you pay monthly or 5 dollars/month if pay 60 dollars for a year up front.  With the Pro account you can make 5000 pulls on docker.io's container registry per day.
+Back in your shell you can login you use the docker cli to login. The apropos is `docker login [OPTIONS] [SERVER]`. If you don't provide a `[SERVER]` it is assumed your intention is to log into Docker's public registry located at <https://registry-1.docker.io/> by default.
 
-The class can be configured to make use of a pull through registry to mitigate the need, but really nothing can be done if you're anonympus image requests are from a private network with others anonymous users doing the same.  A pull through registry will cache the image you request, so the next time you request the same image the registry will pull the image from the cache vice docker.io.
+```bash
+docker login -u <your username>
+```
+
+In the above example you are providing your username out of the gate.
+
+If during the class you encounter errors where you cannot pull the necessary images. Consider paying the 7 dollars for a Pro account <https://www.docker.com/pricing> It is 7 dollars if you pay monthly or 5 dollars/month if pay 60 dollars for a year up front. With the Pro account you can make 5000 pulls on docker.io's container registry per day.
+
+The class can be configured to make use of a pull through registry to mitigate the need, but really nothing can be done if you're anonympus image requests are from a private network with others anonymous users doing the same. A pull through registry will cache the image you request, so the next time you request the same image the registry will pull the image from the cache vice docker.io.
 
 To enable the pull through registry, edit the [./.env](./.env) file at the root of the project and enable the pull through registry via
 
@@ -1608,24 +1628,26 @@ You will then need to configure Docker daemon to use it.
      ],
    ```
 
-If you are using Arch linux, edit `/etc/docker/daemon.json` and add the line.  I'll update the Ansible at a later date to do this for you.
+If you are using Arch linux, edit `/etc/docker/daemon.json` and add the line. I'll update the Ansible at a later date to do this for you.
 
-The class will also cache all its images into [./image_cache](./image_cache) folder that is empty when you clone the class.  You can re-install these images into you local Docker cache via
+The class will also cache all its images into [./image_cache](./image_cache) folder that is empty when you clone the class. You can re-install these images into you local Docker cache via
 
 ```bash
 ~/Development/workspace/hands-on-DevOps-gen2/load_cached_images.sh
 ```
 
-K3s will pull the images it needs to run directly from docker.io when using the canoncial container image.  I've provided a Dockerfile in [./k3s-air-gap-image](./k3s-air-gap-image) that will build in the containers.  The K3s project provides all these images as tar-ball.
+K3s will pull the images it needs to run directly from docker.io when using the canoncial container image. I've provided a Dockerfile in [./k3s-air-gap-image](./k3s-air-gap-image) that will build in the containers. The K3s project provides all these images as tar-ball.
 
 ### 10.3.3. Starting the cluster
 
-We will utilize a container registry for our [Kubernetes](https://kubernetes.io/docs/concepts/overview/what-is-kubernetes/) cluster. We do this for two reasons
+Starting the cluster involves a number [Make](https://www.gnu.org/software/make/) rules as decribed earlier.
 
-1. So, that K3s pulls from this registry vice going directly to docker.io even for our custom container images.  If you've enabled and configured your Docker to use pull through registry it pull through this registry before making requests of the docker.io registry.
+We will utilize at least one container registry for our [Kubernetes](https://kubernetes.io/docs/concepts/overview/what-is-kubernetes/) cluster, a private registry and optionally a pull through registry. We utilize these registries for essentially two reasons
+
+1. So, that K3s pulls from this registry vice going directly to docker.io even for our custom container images. If you've enabled and configured your Docker to use pull through registry it pull through this registry before making requests of the docker.io registry.
 2. To hold our private container images.
 
-For our factory to access the registry it will need to be able to resolve it.  We can utilize entries in our host's `hosts` file.  Both OSX and Linux operating systems have this file located at `/etc/hosts`.
+For our factory to access either registry it will need to be able to resolve the fully qualified domain name of the registry. For our host to do this we will utilize entries in our host's `hosts` file. Both OSX and Linux operating systems have this file located at `/etc/hosts`.
 
 Edit your `/etc/hosts` with `nvim` like so
 
@@ -1640,7 +1662,7 @@ and add to the end the following, so these domains can be resolved
 127.0.0.1 k3d-registry.nemonik.com
 ```
 
-`127.0.0.1` is your host's [loopback address](https://en.wikipedia.org/wiki/Localhost).  The first entry, `host.k3d.internal` is the name the cluster refers to the host as, and `k3d-registry.nemonik.com` is entry for the private container reigstry.  You will be making additional edits to this file so that your browser can resolve the fully qualified domains of the factory's long running tools.
+`127.0.0.1` is your host's [loopback address](https://en.wikipedia.org/wiki/Localhost). The first entry, `host.k3d.internal` is the name the cluster refers to the host as, and `k3d-registry.nemonik.com` is entry for the private container reigstry. You will be making additional edits to this file so that your browser can resolve the fully qualified domains of the factory's long running tools.
 
 To use this class I will have provided you the password to decrypt the [vault](./vault) file containing Let's Encrypt cert and private key for the wildcard nemonik.com domain (`*.nemonik.com`) issued certificate or you will need to own a domain for which you can generate a wildcard SSL certificate for using Let's Encrypt/Certbot and then place the full certidicate chain and key into the vault file as I did.
 
@@ -1652,7 +1674,7 @@ You can move forward by entering the [vault](./vault) file password, but you'll 
  export VAULT_PASSWORD=super-secret-password
 ```
 
-If you put a `space board` character before `export` the environment variable `VAULT_PASSWORD`and its value wont be entered into your shell's history thereby protecting its value from being plucked.
+If you put a `space bar` character before `export` the environment variable `VAULT_PASSWORD`and its value wont be entered into your shell's history thereby protecting its value from being plucked.
 
 Then execute the makefile `start` rule
 
@@ -1665,7 +1687,9 @@ The output will resemble
 
 [![asciicast](https://asciinema.org/a/HOHOqza78Ttaabx7IqpzCM9Wx.svg)](https://asciinema.org/a/HOHOqza78Ttaabx7IqpzCM9Wx)
 
-In this instance I also enabled the pull through container registry and so [Make](https://www.gnu.org/software/make/) created it, whose output resembled
+#### 10.3.3.1. The `start-pullthrough` rule
+
+In this particular instance I also enabled the pull through container registry and so [Make](https://www.gnu.org/software/make/) created it, whose output resembled
 
 ```
 cd pullthrough-registry && ./install.sh
@@ -1689,13 +1713,16 @@ Waiting til k3d-registry.nemonik.com:5000 is running...
 Now running.
 ```
 
-The [Bash](https://www.gnu.org/software/bash/) scripts will make use of color for informational purposes.
+**NOTES**
 
-- Yellow is used to notify
-- Red is used to warn
-- Blue is use to clue you in that the script expects user input
+- The [Bash](https://www.gnu.org/software/bash/) scripts will make use of color for informational purposes.
+  - Yellow is used to notify
+  - Red is used to warn
+  - Blue is use to clue you in that the script expects user input
 
-The private container registry will be started in this case the registry all ready existed and just needed to be restarted, but if it hadn't it would of been created.  Output to create the registry would resemble the following
+#### 10.3.3.2. The `start-registry` rule
+
+The private container registry will be started in this case the registry all ready existed and just needed to be restarted, but if it hadn't it would of been created. Output to create the registry would resemble the following
 
 ```
 ./start_registry.sh
@@ -1755,7 +1782,13 @@ The push refers to repository [k3d-registry.nemonik.com:5000/nemonik/k3s]
 v1.21.2-k3s1: digest: sha256:3ce05be5df2e24dcbe3630c7b4bcb27390f5b8e784a0c1f936de8513223d6e90 size: 1356
 ```
 
-Then the class images will be pulled from their remote registries, tagged and pushed into the private registry. In this case I already had many of the images in Docker's cache and so I did not need to rerieve them.  There is a lot of redundent output in this [Make](https://www.gnu.org/software/make/) rule not worth copying here.
+#### 10.3.3.3. The `install-k3s-air-gap-image` rule
+
+K3s' canonical container image will pull a number of container images directly from the docker.io registry. The K3s project provides guidance on how to configure K3s when executing K3s directly on a host in air gap environment, the instructions apply to when K3s is containerized. The `install-k3s-air-gap-image` rule will retrieve a [tarball](<https://en.wikipedia.org/wiki/Tar_(computing)#File_format>) of the container images K3s needs to run and will build a new container image including the [tarball](<https://en.wikipedia.org/wiki/Tar_(computing)#File_format>), so as to remove the need to for the nodes of the cluster to retrieve these container images on start up.
+
+#### 10.3.3.4. The `pull-class-images` rule
+
+Then the class images will be pulled from their remote registries, tagged and pushed into the private registry. In this case I already had many of the images in Docker's cache and so I did not need to rerieve them. There is a lot of redundent output in this [Make](https://www.gnu.org/software/make/) rule not worth copying here.
 
 [Make](https://www.gnu.org/software/make/) then moves on to executing the `start-cluster` rule, where the [./start_cluster.sh](start_cluster.sh) script will pause
 
@@ -1852,6 +1885,8 @@ kubectl cluster-info
 ```
 
 In the case above run, I had set an `VAULT_PASSWORD` environment variable to hold the password.
+
+#### 10.3.3.5. The `patch-coredns` rule
 
 [Make](https://www.gnu.org/software/make/) will then move onto executing `patch-coredns` rule, descend into the [coredns](coredns) sub-folder and execute the [patch.sh](coredns/patch.sh) script.
 
@@ -2000,7 +2035,7 @@ Ensure the following lines are in your /etc/hosts file:
 127.0.0.1 helloworld.nemonik.com
 ```
 
-The purpose of the rule is to add DNS entries for the factory tools into [Kubernetes](https://kubernetes.io/docs/concepts/overview/what-is-kubernetes/), so the tools can resolve each other. Without this for example when you you attempt to authenticate into [Drone CI](https://github.com/drone/drone), and it OpenAuths off of [GitLab](https://gitlab.com/rluna-gitlab/gitlab-ce), [GitLab](https://gitlab.com/rluna-gitlab/gitlab-ce) won't be able to resolve Drone in DNS.
+The purpose of the rule is to add DNS entries for the factory tools into [Kubernetes](https://kubernetes.io/docs/concepts/overview/what-is-kubernetes/), so the tools can resolve each other. Without this for example when you you attempt to authenticate into [Drone CI](https://github.com/drone/drone), and it OpenAuths off of [GitLab](https://gitlab.com/rluna-gitlab/gitlab-ce), [GitLab](https://gitlab.com/rluna-gitlab/gitlab-ce) won't be able to resolve Drone in DNS. None of this would be necessary if we had control of an external DNS server.
 
 The script ends reminding you to add the following lines to your `/etc/hosts` file
 
@@ -2085,7 +2120,7 @@ make install
 **NOTE**
 
 - To save yourself from enterinng the `VAULT_PASSWORD` repeatedly set it as an environment variable, ` export VAULT_PASSWORD=super-secret-password` then execute the `make install`.
-- If the GitLab install appears stuck doing the following for like ever.  It is normal for it to loop doing this for a bit, but not forever.
+- If the GitLab install appears stuck doing the following for like ever. It is normal for it to loop doing this for a bit, but not forever.
 
   ```
   Still waiting for GitLab to respond to https requests...
@@ -2105,7 +2140,6 @@ make install
   ```
 
   And add the entries it tells you to as covered in the prior section and then re-run the `make install`.
-
 
 This is a long running process as each install rule will be execute triggering a tool's install script. Each install script retrieves the container images related to the factory tool being installed and then executes one or more Helm charts and applies zero or more [Kubernetes](https://kubernetes.io/docs/concepts/overview/what-is-kubernetes/) resource files followed by possibly additional steps to ensure the desired state of the tool is on the cluster
 
@@ -4087,19 +4121,19 @@ type: kubernetes
 name: default
 
 steps:
-- name: sonarqube
-  image: k3d-registry.nemonik.com:5000/nemonik/golang-sonarqube-scanner:latest
-  commands:
-  - export DRONESRC=`pwd`
-  - export GOBIN=$GOPATH/bin
-  - export PATH="$GOBIN:$PATH"
-  - mkdir -p $GOPATH/src/github.com/nemonik
-  - cd $GOPATH/src/github.com/nemonik
-  - ln -s $DRONESRC helloworld-web
-  - cd helloworld-web
-  - golangci-lint run --out-format checkstyle > tests/reports/golangci-lint.xml || true
-  - go test -v ./... -coverprofile=tests/reports/coverage.out || true
-  - sonar-scanner || true
+  - name: sonarqube
+    image: k3d-registry.nemonik.com:5000/nemonik/golang-sonarqube-scanner:latest
+    commands:
+      - export DRONESRC=`pwd`
+      - export GOBIN=$GOPATH/bin
+      - export PATH="$GOBIN:$PATH"
+      - mkdir -p $GOPATH/src/github.com/nemonik
+      - cd $GOPATH/src/github.com/nemonik
+      - ln -s $DRONESRC helloworld-web
+      - cd helloworld-web
+      - golangci-lint run --out-format checkstyle > tests/reports/golangci-lint.xml || true
+      - go test -v ./... -coverprofile=tests/reports/coverage.out || true
+      - sonar-scanner || true
 ```
 
 Things to note in the above
@@ -4257,7 +4291,7 @@ Add a build step to our `.drone.yml`
 - name: build
   image: k3d-registry.nemonik.com:5000/golang:1.16.5
   commands:
-  - make build
+    - make build
 ```
 
 To execute your pipeline, push your changes to [GitLab](https://gitlab.com/rluna-gitlab/gitlab-ce)
@@ -4562,7 +4596,7 @@ In your shell
 cd ~/go/src/github.com/nemonik/helloworld-web`
 mkdir kubernetes
 cd kubernetes
-nvim helloworld-web-namespace.yaml
+nvim helloworld-web-namespace.yml
 ```
 
 and add the following [YAML](https://yaml.org/content) content
@@ -4575,7 +4609,7 @@ metadata:
   name: helloworld-web
 ```
 
-And another file, `helloworld-web.yaml` with this content
+And another file, `helloworld-web.yml` with this content
 
 ```yaml
 ---
@@ -4669,12 +4703,16 @@ The two [YAML](https://yaml.org/) files describes the `Namespace`, `Service`, `D
 - [`Deployment`](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/) deploys your [Pods](https://kubernetes.io/docs/concepts/workloads/pods/) declaratively.
 - [`Ingress`](https://kubernetes.io/docs/concepts/services-networking/ingress/) is an API object the controls external access to the Service.
 
+**NOTES**
+
+- [YAML](https://yaml.org/) files typically usually follow a naming convention where they end in either `.yaml` or `.yml`. Pay close attention to what you type. The class utilizes `.yml` where I find myself favoring through muscle memory to type `.yaml`.
+
 Executing
 
 ```bash
-kubectl apply -f helloworld-web-namespace.yaml 2> /dev/null
-kubectl delete -f helloworld-web.yaml 2> /dev/null
-kubectl apply -f helloworld-web.yaml
+kubectl apply -f helloworld-web-namespace.yml 2> /dev/null
+kubectl delete -f helloworld-web.yml 2> /dev/null
+kubectl apply -f helloworld-web.yml
 kubectl wait --for=condition=ready pod -n helloworld-web -l app.kubernetes.io/component=helloworld-web
 ```
 
@@ -4725,9 +4763,9 @@ Then add to the and of the `Makefile`
 
 ```makefile
 deploy: docker-push
-	kubectl apply -f kubernetes/helloworld-web-namespace.yaml 2> /dev/null
-	kubectl delete -f kubernetes/helloworld-web.yaml 2> /dev/null
-	kubectl apply -f kubernetes/helloworld-web.yaml
+	kubectl apply -f kubernetes/helloworld-web-namespace.yml 2> /dev/null
+	kubectl delete -f kubernetes/helloworld-web.yml 2> /dev/null
+	kubectl apply -f kubernetes/helloworld-web.yml
 	kubectl wait --for=condition=ready pod -n helloworld-web -l app.kubernetes.io/component=helloworld-web --timeout=180s
 ```
 
@@ -4813,7 +4851,7 @@ Then apply the the [Kubernetes](https://kubernetes.io/docs/concepts/overview/wha
  kubectl apply -f helloworld-web-service-account.yml
 ```
 
-Success is rather anticlimatic, but will resemble
+Success is rather anticlimactic, but will resemble
 
 ```
 serviceaccount/helloworld-web-service-account created
@@ -4824,7 +4862,11 @@ rolebinding.rbac.authorization.k8s.io/helloworld-web-rolebinding created
 
 But we're not done. More still to do...
 
-### 12.19.2. Add secrets to our `helloworld-web` Drone CI repistory
+**NOTE**
+
+- In this case we created out service account in the namespace of our application. If you delete this namespace, you delete the service account... And invalidate the secrets you create in [Drone CI](https://github.com/drone/drone) in the following step.
+
+### 12.19.2. Add secrets to our `helloworld-web` Drone CI repository
 
 In order to deploy from our pipeline we will need to add a few secrets to our pipeline to utilize our service account.
 
@@ -4877,7 +4919,8 @@ So, with the `k8s_cert` and `k8s_token` values above
 
 **NOTES**
 
-- When copying these values out of your [fish](https://fishshell.com/)shell be mindful not to copy the last character (⏎).
+- When copying these values out of your [fish](https://fishshell.com/) shell be mindful not to copy the last character (⏎).
+- And don't copy the token into the `k8s_cert` secret and vice versa.
 
 ### 12.19.3. Build, tag and push our `deploy` step container
 
@@ -4919,7 +4962,7 @@ ENTRYPOINT ["kubectl"]
 CMD ["--help"]
 ```
 
-Sinlead wraps the [kubectl](https://kubernetes.io/docs/reference/kubectl/overview/) with a bash script so it can access the secrets we've set for our pipeline, so it also a good idea to review [init-kubectl](https://github.com/nemonik/drone-kubectl/blob/master/init-kubectl) and [kubectl](https://github.com/nemonik/drone-kubectl/blob/master/kubectl) copied into `/opt/sinlead/kubectl/bin/`.
+Sinlead wraps the [kubectl](https://kubernetes.io/docs/reference/kubectl/overview/) with a bash script so it can access the secrets we've set for our pipeline, so it also a good idea to review [init-kubectl](https://github.com/nemonik/drone-kubectl/blob/master/init-kubectl) and [kubectl](https://github.com/nemonik/drone-kubectl/blob/master/kubectl) copied into `/opt/sinlead/kubectl/bin/`. I've made some slight changes in my fork his work.
 
 We're going to build this container
 
@@ -4956,8 +4999,8 @@ And add the following step at the bottom
     kubernetes_token:
       from_secret: k8s_token
   commands:
-    - kubectl delete -f kubernetes/helloworld-web.yaml 2> /dev/null
-    - kubectl apply -f kubernetes/helloworld-web.yaml
+    - kubectl delete -f kubernetes/helloworld-web.yml 2> /dev/null
+    - kubectl apply -f kubernetes/helloworld-web.yml
 ```
 
 To execute your pipeline, push your changes to [GitLab](https://gitlab.com/rluna-gitlab/gitlab-ce)
@@ -4975,11 +5018,11 @@ The pipeline should complete in a few minutes.
 The `deployment` step output will resemble
 
 ```
-+ kubectl delete -f kubernetes/helloworld-web.yaml 2> /dev/null
++ kubectl delete -f kubernetes/helloworld-web.yml 2> /dev/null
 service "helloworld-web" deleted
 deployment.apps "helloworld-web" deleted
 ingress.networking.k8s.io "helloworld-web" deleted
-+ kubectl apply -f kubernetes/helloworld-web.yaml
++ kubectl apply -f kubernetes/helloworld-web.yml
 service/helloworld-web created
 deployment.apps/helloworld-web created
 ingress.networking.k8s.io/helloworld-web created
@@ -5022,6 +5065,8 @@ So, now we have beginnings of a real CICD pipeline. There are no strings on me e
   ```
 
   near the end as an indication.
+
+- You can also rerun your pipeline in debug. In your build you click on the hamburger (three dots in vertical row) found in the upper right-side of the page, click and select `Debug` from the drop down. Your pipeline will re-run up to it fails and then pause until you open shell into the running container to debug by clicking `OPEN REMOTE SESSION` on the lower-right side of the page. You may have to add executables to your PATH, etc, but you can debug the step to your heart's content.
 
 ## 12.20. Add compliance-as-code (`inspec`) test to the pipeline
 
@@ -5068,7 +5113,7 @@ If asked, accept the product license by entering
 yes
 ```
 
-And the output from inpec will resemble
+And the output from [InSpec](https://github.com/inspec/inspec) will resemble
 
 ```
  ─────────────────────────── InSpec Code Generator ───────────────────────────
@@ -6031,7 +6076,7 @@ Great, now lets add another step to our pipeline after the `selenium` step, but 
 - name: owasp-zap
   image: k3d-registry.nemonik.com:5000/owasp/zap2docker-stable:2.8.0
   commands:
-    - zap-baseline.py -t http://helloworld.nemonik.com
+    - zap-baseline.py -t http://helloworld.nemonik.com || true
 ```
 
 **NOTE**
@@ -6133,4 +6178,3 @@ Wth that, here's some best practices for containerized application development a
 7. Doing item-6 will require you to make use of a [notary](https://github.com/theupdateframework/notary) and private container registry (e.g., <https://hub.docker.com/_/registry>, <https://hub.docker.com/r/sonatype/nexus3>). I’ve written [Ansible](https://github.com/ansible/ansible) IaC to deploy Notary and it was a real pain in the butt to figure it out and took my countless hours, because the documentation is to put it plainly, "Sh!t." It would seem, they (i.e., whoever owns Docker Enterprise now) wants you to use Docker Enterprise vice getting Notary up and running with Docker.
 8. Put your application development through a CICD pipeline like this class of the following that applies: code format enforcement, linting, static analysis, build automation, unit testing, compliance-as-code for the container image, automated functional test, and dynamic analysis.
 9. Consider adding to your CICD pipelines the exeuction of vulnerability scanning tools, such as, [Clair](https://coreos.com/clair/docs/latest/), [Docker Bench for Security](https://github.com/docker/docker-bench-security), [OpenSCAP Workbench](https://github.com/OpenSCAP/scap-workbench/releases), [Anchore](https://anchore.com/opensource/), et cetera. There will be overlap between these and other similar tools. Pick the ones that work the best for you, ones with frequent updates and having the largest vibrant community around.
-
