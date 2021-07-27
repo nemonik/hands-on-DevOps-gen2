@@ -97,6 +97,7 @@
               - tree
               - htop
               - kubectl
+              - dnsutils
             state: latest
           retries: "{{ default_retries }}"
           delay: "{{ default_delay }}"
