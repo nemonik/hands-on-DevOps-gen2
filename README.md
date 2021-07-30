@@ -1570,7 +1570,7 @@ In the shell, if you were to enter `make all` make would execute the `all` targe
 
 The factory will pull a great number of images. Docker permits anonymous free users the ability to pull 100 on the docker.io container registry per six hours and authenticated free users a total of 200 pulls per six hours. You can sign up for a free authenticated account at <https://hub.docker.com/signup>.
 
-Back in your shell you can login you use the docker cli to login. The apropos is `docker login [OPTIONS] [SERVER]`. If you don't provide a `[SERVER]` it is assumed your intention is to log into Docker's public registry located at <https://registry-1.docker.io/> by default.
+Back in your shell you can login you use the docker cli to login. The apropos is `docker login [OPTIONS] [SERVER]`. If you don't provide a `[SERVER]` it is assumed your intention is to log into Docker's public registry by default.
 
 ```bash
 docker login -u <your username>
@@ -1580,7 +1580,7 @@ In the above example you are providing your username out of the gate.
 
 If during the class you encounter errors where you cannot pull the necessary images. Consider paying the 7 dollars for a Pro account <https://www.docker.com/pricing> It is 7 dollars if you pay monthly or 5 dollars/month if pay 60 dollars for a year up front. With the Pro account you can make 5000 pulls on docker.io's container registry per day.
 
-The class can be configured to make use of a pull through registry to mitigate the need, but really nothing can be done if you're anonympus image requests are from a private network with others anonymous users doing the same. A pull through registry will cache the image you request, so the next time you request the same image the registry will pull the image from the cache vice docker.io.
+The class can be configured to make use of a pull through registry to mitigate the need, but really nothing can be done if you're anonymous image requests are from a private network with others anonymous users doing the same. A pull through registry will cache the image you request, so the next time you request the same image the registry will pull the image from the cache vice docker.io.
 
 To enable the pull through registry, edit the [./.env](./.env) file at the root of the project and enable the pull through registry via
 
@@ -1600,7 +1600,7 @@ and setting `pullthrough_registry_enabled` equal to `true`.
 You will then need to configure Docker daemon to use it.
 
 1. Open the Docker Desktop dashboard
-2. Select `Settings` (The geer icon on the upper-right)
+2. Select `Settings` (The gear icon on the upper-right)
 3. Select `Docker Engine`
 4. In the box under `Configure the Docker daemon by typing a json Docker daemon configuration file.`
 
@@ -1662,7 +1662,7 @@ and add to the end the following, so these domains can be resolved
 127.0.0.1 k3d-registry.nemonik.com
 ```
 
-`127.0.0.1` is your host's [loopback address](https://en.wikipedia.org/wiki/Localhost). The first entry, `host.k3d.internal` is the name the cluster refers to the host as, and `k3d-registry.nemonik.com` is entry for the private container reigstry. You will be making additional edits to this file so that your browser can resolve the fully qualified domains of the factory's long running tools.
+`127.0.0.1` is your host's [loopback address](https://en.wikipedia.org/wiki/Localhost). The first entry, `host.k3d.internal` is the name the cluster refers to the host as, and `k3d-registry.nemonik.com` is entry for the private container registry. You will be making additional edits to this file so that your browser can resolve the fully qualified domains of the factory's long running tools.
 
 To use this class I will have provided you the password to decrypt the [vault](./vault) file containing Let's Encrypt cert and private key for the wildcard nemonik.com domain (`*.nemonik.com`) issued certificate or you will need to own a domain for which you can generate a wildcard SSL certificate for using Let's Encrypt/Certbot and then place the full certificate chain and key into the vault file as I did.
 
@@ -1788,7 +1788,7 @@ K3s' canonical container image will pull a number of container images directly f
 
 #### 10.3.3.4. The `pull-class-images` rule
 
-Then the class images will be pulled from their remote registries, tagged and pushed into the private registry. In this case I already had many of the images in Docker's cache and so I did not need to rerieve them. There is a lot of redundent output in this [Make](https://www.gnu.org/software/make/) rule not worth copying here.
+Then the class images will be pulled from their remote registries, tagged and pushed into the private registry. In this case I already had many of the images in Docker's cache and so I did not need to retrieve them. There is a lot of redundant output in this [Make](https://www.gnu.org/software/make/) rule not worth copying here.
 
 [Make](https://www.gnu.org/software/make/) then moves on to executing the `start-cluster` rule, where the [./start_cluster.sh](start_cluster.sh) script will pause
 
@@ -1817,7 +1817,7 @@ read -d '' traefik_tls_key << EOF
 EOF
 ```
 
-The `traefik_tls_crt` variable holds the Lets Encrypt certifacte chain for wildcard dns entry (\*.nemonik.com) and `traefik_tls_key` holds the private key.
+The `traefik_tls_crt` variable holds the Lets Encrypt certificate chain for wildcard dns entry (\*.nemonik.com) and `traefik_tls_key` holds the private key.
 
 Why are these needed? Well, the cluster's HTTP reverse Proxy service,[Traefik](https://github.com/traefik/traefik) will respond to requests recieved. Each factory tool will register a fully qualified domain name with [Traefik](https://github.com/traefik/traefik), for example [GitLab](https://gitlab.com/rluna-gitlab/gitlab-ce) will register `gitlab.nemonik.com` and since most modern browsers force the use of HTTPS a wildcard cert must be configure in [Traefik](https://github.com/traefik/traefik) so that proper certificate are presented to the browser in response otherwise the browser will choke and warn that it doesn't trust Traefiks default self-signed certificate.
 
