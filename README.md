@@ -234,8 +234,8 @@ What you should bring:
         - [12.20.4. Add a `inspec` step to the pipeline](#12204-add-a-inspec-step-to-the-pipeline)
             - [12.20.4.1. Build, tag, and push our `inspec` step container](#122041-build-tag-and-push-our-inspec-step-container)
             - [12.20.4.2. Add the compliance-as-code (`inspec`) step to the pipeline](#122042-add-the-compliance-as-code-inspec-step-to-the-pipeline)
-        - [12.20.5. Viewing the `inspec` results in Heimdall 2 Lite](#12205-viewing-the-inspec-results-in-heimdall-2-lite)
-            - [12.20.5.1. Supplemental InSpec output for viewing in Heimdall 2 Lite](#122051-supplemental-inspec-output-for-viewing-in-heimdall-2-lite)
+        - [12.20.5. Viewing the `inspec` results in Heimdall 2](#12205-viewing-the-inspec-results-in-heimdall-2)
+            - [12.20.5.1. Supplemental InSpec output for viewing in Heimdall 2](#122051-supplemental-inspec-output-for-viewing-in-heimdall-2)
         - [12.20.6. Add an automated functional test (`selenium`) step to the pipeline](#12206-add-an-automated-functional-test-selenium-step-to-the-pipeline)
             - [12.20.6.1. Pull and run the Selenium Chrome Standalone browser](#122061-pull-and-run-the-selenium-chrome-standalone-browser)
             - [12.20.6.2. Create our functional test automation](#122062-create-our-functional-test-automation)
@@ -436,7 +436,7 @@ Each delivery pipeline is manifested as **Pipeline as Code** (i.e., software aut
 
 I and the community of practice argue DevOps will struggle without ubiquitous access to shared pools of software configurable system resources and higher-level services that can be rapidly provisioned (i.e., cloud).
 
-Although, it is actually possible to [DevOps on mainframes](https://www.youtube.com/watch?v=eMS97X5ZTGc) The video is in the contect of continuous delivery, but read between the lines.
+Although, it is actually possible to [DevOps on mainframes](https://www.youtube.com/watch?v=eMS97X5ZTGc) The video is in the context of continuous delivery, but read between the lines.
 
 ## 7.21. But really why do we automate err. code?
 
@@ -735,7 +735,7 @@ ansible
 └── yay.yaml
 ```
 
-Each playbook is responsible for a unit of configuration. [ansible/files/](./ansible/files/) contains a number of files copied into the userspace to configure the [neovim](https://github.com/neovim/neovim) editor.
+Each playbook is responsible for a unit of configuration. [ansible/files/](./ansible/files/) contains a number of files copied into the user space to configure the [neovim](https://github.com/neovim/neovim) editor.
 
 It also possible to collect these tasks into a collection referred to as a `role`. This class presently doesn't make use of roles.
 
@@ -753,7 +753,7 @@ If your host is running
 
 I prefer to install the Xcode Command Line tools myself, but you could skip this step and have HomeBrew install it for you.
 
-1. In iTerm2 enter the following into the commmand line.
+1. In iTerm2 enter the following into the command line.
 
    ```bash
    xcode-select --install
@@ -932,7 +932,6 @@ ansible-playbook --version
 Output will resemble
 
 ```
-⋊> ~ ansible-playbook --version
 ansible-playbook [core 2.11.2]
   config file = None
   configured module search path = ['/home/nemonik/.ansible/plugins/modules', '/usr/share/ansible/plugins/modules']
@@ -973,7 +972,6 @@ ansible-galaxy collection install community.general
 Successful output should resemble
 
 ```
-⋊> ~ ansible-galaxy collection install community.general
 Starting galaxy collection install process
 Process install dependency map
 Starting collection install process
@@ -1638,11 +1636,11 @@ The class will also cache all its images into [./image_cache](./image_cache) fol
 ~/Development/workspace/hands-on-DevOps-gen2/load_cached_images.sh
 ```
 
-K3s will pull the images it needs to run directly from docker.io when using the canoncial container image. I've provided a Dockerfile in [./k3s-air-gap-image](./k3s-air-gap-image) that will build in the containers. The K3s project provides all these images as tar-ball.
+K3s will pull the images it needs to run directly from docker.io when using the canonical container image. I've provided a Dockerfile in [./k3s-air-gap-image](./k3s-air-gap-image) that will build in the containers. The K3s project provides all these images as tar-ball.
 
 ### 10.3.3. Starting the cluster
 
-Starting the cluster involves a number [Make](https://www.gnu.org/software/make/) rules as decribed earlier.
+Starting the cluster involves a number [Make](https://www.gnu.org/software/make/) rules as described earlier.
 
 We will utilize at least one container registry for our [Kubernetes](https://kubernetes.io/docs/concepts/overview/what-is-kubernetes/) cluster, a private registry and optionally a pull through registry. We utilize these registries for essentially two reasons
 
@@ -1666,7 +1664,7 @@ and add to the end the following, so these domains can be resolved
 
 `127.0.0.1` is your host's [loopback address](https://en.wikipedia.org/wiki/Localhost). The first entry, `host.k3d.internal` is the name the cluster refers to the host as, and `k3d-registry.nemonik.com` is entry for the private container reigstry. You will be making additional edits to this file so that your browser can resolve the fully qualified domains of the factory's long running tools.
 
-To use this class I will have provided you the password to decrypt the [vault](./vault) file containing Let's Encrypt cert and private key for the wildcard nemonik.com domain (`*.nemonik.com`) issued certificate or you will need to own a domain for which you can generate a wildcard SSL certificate for using Let's Encrypt/Certbot and then place the full certidicate chain and key into the vault file as I did.
+To use this class I will have provided you the password to decrypt the [vault](./vault) file containing Let's Encrypt cert and private key for the wildcard nemonik.com domain (`*.nemonik.com`) issued certificate or you will need to own a domain for which you can generate a wildcard SSL certificate for using Let's Encrypt/Certbot and then place the full certificate chain and key into the vault file as I did.
 
 **TODO**: Provide documentation for generating a wildcard SSL certificate using Let’s Encrypt/Certbot.
 
@@ -2134,7 +2132,7 @@ make install
 
   You didn't update your `/etc/hosts` file with the values provided by the [./coredns/patch.sh](./coredns/patch.sh) script.
 
-  To fix this do perfom the following.
+  To fix this perform the following.
 
   ```bash
   cd $HOME/Development/workspace/hands-on-DevOps-gen2
@@ -2499,9 +2497,9 @@ For me, I don't need to see the diagrams rendered to follow them. The code alone
 
 PlantUML supports a number of UML diagrams: Sequence, Use Case, Class diagram, Activity diagram, Component, State, Object, Deployment, and Timing. The DSL also supports a number of other non-UML diagrams: Wireframe graphical interface, Specification and Description Language (SDL), Ditaa diagram...
 
-This class makes use of just two types: Activity and Deployment diagrams. The diagrams are especially helpful to visual learners. Each PlantUML diagram's source file exist in [plantuml folder](plantuml) in the root of the project and is rendered by a [GitHub workflow](.github/workflows/main.yml) into scalable vector graphic (SVG) that is pushed to the [diagrams folder](diagrams) upon changes commited to each diagram's source file.
+This class makes use of just two types: Activity and Deployment diagrams. The diagrams are especially helpful to visual learners. Each PlantUML diagram's source file exist in [plantuml folder](plantuml) in the root of the project and is rendered by a [GitHub workflow](.github/workflows/main.yml) into scalable vector graphic (SVG) that is pushed to the [diagrams folder](diagrams) upon changes committed to each diagram's source file.
 
-The PlantUML effort also provides server for rendering diagrams in PNG, SVG or LaTeX formats. Plugins for Microsoft Code, Atom, and other editors have been authored to assist in auhoring in the PlantUML DSL.
+The PlantUML effort also provides server for rendering diagrams in PNG, SVG or LaTeX formats. Plugins for Microsoft Code, Atom, and other editors have been authored to assist in authoring in the PlantUML DSL.
 
 #### 10.4.5.1. Documentation, source, container image
 
@@ -5437,29 +5435,29 @@ Test Summary: [38;5;41m14 successful[0m, 0 failures, 0 skipped
 
   near the end as an indication.
 
-### 12.20.5. Viewing the `inspec` results in Heimdall 2 Lite
+### 12.20.5. Viewing the `inspec` results in Heimdall 2
 
-We'll use Heimdall 2 to view the results in security engineer friendly manner.
+We'll use [Heimdall 2](https://github.com/mitre/heimdall2) to view the results in security engineer friendly manner.
 
 ```bash
 cd  ~/go/src/github.com/nemonik/helloworld-web
 inspec exec --chef-license=accept-silent tests/inspec/helloworld-web/. --reporter json > tests/reports/inspec_helloworld.json
 ```
 
-Open Heimdall 2 Lite - (e.g., <http://heimdall.nemonik.com>). You will need to authenticate and will be presented with an upload pane. Make sure `LOCAL FILES`, click `Choose files to upload`, then browse to navigate to `inspec_helloworld.json` in the class project (`go/src/github.com/nemonik/helloworld-web/tests/reports/inspec_helloworld.json`) and upload to view the results.
+Open [Heimdall 2](https://github.com/mitre/heimdall2) - (e.g., <http://heimdall.nemonik.com>). You will need to authenticate and will be presented with an upload pane. Make sure `LOCAL FILES`, click `Choose files to upload`, then browse to navigate to `inspec_helloworld.json` in the class project (`go/src/github.com/nemonik/helloworld-web/tests/reports/inspec_helloworld.json`) and upload to view the results.
 
-#### 12.20.5.1. Supplemental InSpec output for viewing in Heimdall 2 Lite
+#### 12.20.5.1. Supplemental InSpec output for viewing in Heimdall 2
 
 The [./supplemental](./supplemental) folder holds
 
 - [./supplemental/k3s-server-sample.json](./supplemental/k3s-server-sample.json) - a compliance scan against a K3S Cluster as per the K8s STIG.
 - [./supplemental/RHEL7-STIG-scan-sample.json](./supplemental/RHEL7-STIG-scan-sample.json) - a compliance scan against a Centos7 VM as per the RHEL7 STIG.
 
-the results of two other InSpec tests that show off the power of Heimdall. Give uploading these into Heimdall a try.
+the results of two other InSpec tests that show off the power of [Heimdall 2](https://github.com/mitre/heimdall2). Give uploading these into [Heimdall 2](https://github.com/mitre/heimdall2) a try.
 
 **NOTES**
 
-- If we were using the Heimdall Enterprise Server 2 edition we would have a REST API available to upload the results from our pipeline. Maybe in a future version of my class.
+- As we are using the [Heimdall Enterprise Server 2 edition](https://github.com/mitre/heimdall2) we have a REST API available to upload the results from our pipeline. Maybe in a future version of my class, I'll add.
 
 ### 12.20.6. Add an automated functional test (`selenium`) step to the pipeline
 
@@ -5485,7 +5483,7 @@ docker tag selenium/standalone-chrome:3.141 k3d-registry.nemonik.com:5000/seleni
 docker push k3d-registry.nemonik.com:5000/selenium/standalone-chrome:3.141
 ```
 
-If you're using th [fish](https://fishshell.com/) shell
+If you're using the [fish](https://fishshell.com/) shell
 
 ```fish
 set host_ip (cat /tmp/host_ip)
@@ -5895,7 +5893,7 @@ volumes:
 
 But before you execute the pipeline it needs to be updates to be a trusted repository as the service will need access to `/var/run/docker.sock`.
 
-1. Open the `helloworld-web` repositorry in [Drone CI](https://github.com/drone/drone) (e.g., <https://drone.nemonik.com/root/helloworld-web/settings>).
+1. Open the `helloworld-web` repository in [Drone CI](https://github.com/drone/drone) (e.g., <https://drone.nemonik.com/root/helloworld-web/settings>).
 2. Under `Project Settings` toggle `Trusted` so that is enabled (i.e., blue ) to enable privileged container settings.
 3. Click `SAVE CHANGES`.
 
@@ -6152,7 +6150,7 @@ PASS: Session ID in URL Rewrite [3]
 PASS: Script Passive Scan Rules [50001]
 PASS: Insecure JSF ViewState [90001]
 PASS: Charset Mismatch [90011]
-PASS: Application Error Disclosure [90022]
+PASS: Application Error Discosure [90022]
 PASS: Loosely Scoped Cookie [90033]
 FAIL-NEW: 0	FAIL-INPROG: 0	WARN-NEW: 0	WARN-INPROG: 0	INFO: 0	IGNORE: 0	PASS: 51
 ```
@@ -6167,9 +6165,9 @@ The `helloworld-web` project can be viewed completed at
 
 # 13. Additional best practices to consider around securing containerized applications
 
-This class doesn't cover a number of container application development best practices. A topic out of scope of the original intention of this course; especially, as I'm already cramming in several days of course material into a one-day course when taught in person, but perhaps subsequent course updates I'll cover a few of the following not already covered in the course material as additional topics. The biggest reason why relates with the followin sections. Agile and DevOps both exist to deliver features into the hands of users. We're not doing DevOps to do DevOps. If all anyone talks about is DevOps in the absense of the application life cycle you have a problem. Also, DevOps is very much intertwined with modern cloud-native development.
+This class doesn't cover a number of container application development best practices. A topic out of scope of the original intention of this course; especially, as I'm already cramming in several days of course material into a one-day course when taught in person, but perhaps subsequent course updates I'll cover a few of the following not already covered in the course material as additional topics. The biggest reason why relates with the following sections. Agile and DevOps both exist to deliver features into the hands of users. We're not doing DevOps to do DevOps. If all anyone talks about is DevOps in the absence of the application life cycle you have a problem. Also, DevOps is very much intertwined with modern cloud-native development.
 
-Wth that, here's some best practices for containerized application development and operation:
+Withh that, here's some best practices for containerized application development and operation:
 
 1. Follow https://docs.docker.com/develop/develop-images/dockerfile_best-practices/ and http://www.projectatomic.io/docs/docker-image-author-guidance/ guidance.
 2. Re-use existing upstream images from trusted sources.
@@ -6179,4 +6177,4 @@ Wth that, here's some best practices for containerized application development a
 6. Harden your Docker configuration as per an [InSpec](https://github.com/inspec/inspec) compliance profile, such as https://github.com/mitre/docker-ce-cis-baseline and https://github.com/dev-sec/cis-docker-benchmark or if you are using another container runtime either find one for the runtime or write your own compliance profile.
 7. Doing item-6 will require you to make use of a [notary](https://github.com/theupdateframework/notary) and private container registry (e.g., <https://hub.docker.com/_/registry>, <https://hub.docker.com/r/sonatype/nexus3>). I’ve written [Ansible](https://github.com/ansible/ansible) IaC to deploy Notary and it was a real pain in the butt to figure it out and took my countless hours, because the documentation is to put it plainly, "Sh!t." It would seem, they (i.e., whoever owns Docker Enterprise now) wants you to use Docker Enterprise vice getting Notary up and running with Docker.
 8. Put your application development through a CICD pipeline like this class of the following that applies: code format enforcement, linting, static analysis, build automation, unit testing, compliance-as-code for the container image, automated functional test, and dynamic analysis.
-9. Consider adding to your CICD pipelines the exeuction of vulnerability scanning tools, such as, [Clair](https://coreos.com/clair/docs/latest/), [Docker Bench for Security](https://github.com/docker/docker-bench-security), [OpenSCAP Workbench](https://github.com/OpenSCAP/scap-workbench/releases), [Anchore](https://anchore.com/opensource/), et cetera. There will be overlap between these and other similar tools. Pick the ones that work the best for you, ones with frequent updates and having the largest vibrant community around.
+9. Consider adding to your CICD pipelines the execution of vulnerability scanning tools, such as, [Clair](https://coreos.com/clair/docs/latest/), [Docker Bench for Security](https://github.com/docker/docker-bench-security), [OpenSCAP Workbench](https://github.com/OpenSCAP/scap-workbench/releases), [Anchore](https://anchore.com/opensource/), et cetera. There will be overlap between these and other similar tools. Pick the ones that work the best for you, ones with frequent updates and having the largest vibrant community around.
