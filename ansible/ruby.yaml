@@ -3,10 +3,6 @@
   hosts: factory
 
   tasks:
-    - name: Set fact for $HOME
-      ansible.builtin.set_fact:
-        HOME: "{{ lookup('env', 'HOME') }}"
-
     - name: When macOSX ensure needed HomeBrew packages are installed to download and build Ruby via rvm
       block:
         - name: Install rvm dependencies

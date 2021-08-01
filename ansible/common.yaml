@@ -3,10 +3,6 @@
   hosts: factory
 
   tasks:
-    - name: Set fact for $HOME
-      ansible.builtin.set_fact:
-        HOME: "{{ lookup('env', 'HOME') }}"
-
     - name: When MacOSX ensure Homebrew packages are installed
       block:
         - name: Update homebrew and upgrade all packages
@@ -156,7 +152,7 @@
             name: nerd-fonts-complete
             state: latest
             executable: yay
-      when: ansible_distribution == 'Archlinux'
+      when: ansible_distribution == 'Archlinux' and vagrant_enabled==false
 
     - name: Ensure Powerlevel10k theme is installed for Zsh
       block:

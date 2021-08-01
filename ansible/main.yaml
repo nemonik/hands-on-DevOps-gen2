@@ -11,9 +11,17 @@
         msg: "{{ ansible_distribution }} - {{ ansible_distribution_release }} is not MacOSX or ArchLinux"
       when: ansible_distribution not in supported_host_os
 
-        #    - name: Set fact for $vagrant
-        #      ansible.builtin.set_fact:
-        #      vagrant_enabled: "{{ lookup('env', 'vagrant_enabled') }}"
+    - name: Set fact for $HOME
+      ansible.builtin.set_fact:
+        HOME: "{{ lookup('env', 'HOME') }}"
+
+    - name: Set fact for $USER
+      ansible.builtin.set_fact:
+        USER: "{{ lookup('env', 'USER') }}"
+
+    - name: Set fact for $vagrant
+      ansible.builtin.set_fact:
+        vagrant_enabled: "{{ lookup('env', 'vagrant_enabled') }}"
 
 - name: When ArchLinux ensure Docker is installed
   ansible.builtin.import_playbook: docker.yaml

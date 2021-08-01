@@ -3,10 +3,6 @@
   hosts: factory
 
   tasks:
-    - name: Set fact for $HOME
-      ansible.builtin.set_fact:
-        HOME: "{{ lookup('env', 'HOME') }}"
-
     - name: When Archlinux ensure yay AUR helper is installed
       block:
         - name: Update pacman and upgrade all packages

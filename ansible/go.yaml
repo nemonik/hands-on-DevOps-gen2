@@ -3,10 +3,6 @@
   hosts: factory
 
   tasks:
-    - name: Set fact for $HOME
-      ansible.builtin.set_fact:
-        HOME: "{{ lookup('env', 'HOME') }}"
-
     - name: When MacOSX ensure Go is installed
       community.general.homebrew:
         name:
