@@ -1,0 +1,49 @@
+---
+- name: Ensure Vagrant dependencies are installed, when vagrant is true
+  hosts: factory
+
+  tasks:
+    - name: Set fact for $HOME
+      ansible.builtin.set_fact:
+        HOME: "{{ lookup('env', 'HOME') }}"
+
+    - name: When MacOSX ensure Homebrew packages are installed
+      block:
+        - name: Update homebrew and upgrade all packages
+          community.general.homebrew:
+            update_homebrew: yes
+            upgrade_all: yes
+
+        - name: Ensure HomeBrew cask are installed
+          community.general.homebrew_cask:
+            name: 
+              - vagrant
+              - virtualbox
+            state: latest
+              #          retries: "{{ default_retries }}"
+              #          delay: "{{ default_delay }}"
+              #          register: result
+              #         until: result is succeeded
+
+      when: ( ansible_distribution == 'MacOSX' ) 
+
+    - name: When Archlinux ensure pacman packages are installed
+      block:
+        - name: Update pacman and upgrade all packages
+          community.general.pacman:
+            update_cache: yes
+            upgrade: yes
+          become: yes
+
+        - name: Ensure pacman packages are installed
+          community.general.pacman:
+            name:
+              - vagrant 
+              - virtualbox
+            state: latest
+          retries: "{{ default_retries }}"
+          delay: "{{ default_delay }}"
+          register: result
+          until: result is succeeded
+          become: yes
+      when: ( ansible_distribution == 'Archlinux' ) 

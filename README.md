@@ -863,7 +863,7 @@ In the command line perform the following task:
 Type the following
 
 ```bash
-python3 -m pip install --user ansible --no-cache-dir
+python3 -m pip install --user ansible
 ```
 
 This will install the [Ansible](https://github.com/ansible/ansible) module into the Python user install directory for your platform. Typically this results in the [Ansible](https://github.com/ansible/ansible) binaries being installed into the `.local/bin` sub-folder in the user's home directory (i.e., `$HOME/.local/bin`)
@@ -875,7 +875,7 @@ Output will resemble
 In order to use the paramiko connection plugin or modules that require paramiko, install paramiko
 
 ```bash
-python3 -m pip install --user paramiko --no-cache-dir
+python3 -m pip install --user paramiko
 ```
 
 Output will resemble

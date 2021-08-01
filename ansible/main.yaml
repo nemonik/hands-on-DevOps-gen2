@@ -11,14 +11,21 @@
         msg: "{{ ansible_distribution }} - {{ ansible_distribution_release }} is not MacOSX or ArchLinux"
       when: ansible_distribution not in supported_host_os
 
+        #    - name: Set fact for $vagrant
+        #      ansible.builtin.set_fact:
+        #      vagrant_enabled: "{{ lookup('env', 'vagrant_enabled') }}"
+
 - name: When ArchLinux ensure Docker is installed
   ansible.builtin.import_playbook: docker.yaml
 
-- name: When ArchLinuc ensure yay AUR helper is installed
+- name: When ArchLinux ensure yay AUR helper is installed
   ansible.builtin.import_playbook: yay.yaml
 
 - name: Ensure common dependencies are installed
   ansible.builtin.import_playbook: common.yaml
+
+- name: Ensure vagrant dependencies are installed
+  ansible.builtin.import_playbook: vagrant.yaml
 
 - name: Ensure pyenv is installed and configured
   ansible.builtin.import_playbook: pyenv.yaml
@@ -40,3 +47,4 @@
 
 - name: Template in shell configs 
   ansible.builtin.import_playbook: template-shell-configs.yaml
+  when: not vagrant_enabled    

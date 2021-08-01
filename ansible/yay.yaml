@@ -40,7 +40,7 @@
                 dest: '{{ HOME }}/yay'
 
             - name: Install yay
-              ansible.builtin.shell: makepkg -si  
+              ansible.builtin.shell: makepkg -si --noconfirm
               when: not stat_result.stat.exists
 
       when: ( ansible_distribution == 'Archlinux' )
