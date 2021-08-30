@@ -84,4 +84,5 @@ while : ; do
 
   notify "Still waiting for GitLab to respond to ${gitlab_protocol} requests..."
   sleep 15
+  ((loop += 1))
 done
