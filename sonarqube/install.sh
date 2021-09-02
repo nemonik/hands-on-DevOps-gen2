@@ -28,11 +28,7 @@ notify "Integrate SonarQube into GitLab..."
 
 notify "Creating a GitLab token for the following automation..."
 
-token=`pwgen -Bsv1 20`
-
-gitlab_pod_name=`kubectl get pod -n gitlab -l "app.kubernetes.io/component=gitlab" -o json | jq -r '.items | .[] | .metadata.name'`
-
-kubectl exec -it pod/${gitlab_pod_name} -n ${gitlab_namespace} -- /bin/bash -c "bundle exec rails runner -e production \"user = User.find_by_username('root'); token = user.personal_access_tokens.create(scopes: [:api], name: 'Automation_token'); token.set_token('$token'); token.save\""
+read gitlab_pod_name gitlab_token < <(create_automation_token)
 
 notify "Delete the prior SonarQube application integration from GitLab, if it exists..."
 
@@ -49,8 +45,7 @@ application_values=`curl --silent --request POST --header "PRIVATE-TOKEN: ${toke
 sonar_auth_gitlab_applicationid=`echo "${application_values}" | jq '.application_id'`
 sonar_auth_gitlab_secret=`echo "${application_values}" | jq ".secret"`
 
-notify "Revoking the token used to perform the prior automation..."
-kubectl exec -it pod/gitlab-0 -n ${gitlab_namespace} -- /bin/bash -c "bundle exec rails runner -e production \"PersonalAccessToken.find_by_token('$token').revoke!\""
+revoke_automation_token $gitlab_pod_name $gitlab_token
 
 template_file ./templates/sonarqube-chart-values.yaml.tpl sonarqube-chart-values.yaml
 

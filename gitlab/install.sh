@@ -40,7 +40,9 @@ helm repo add nemonik https://nemonik.github.io/helm-charts/
 
 helm repo update
 
-helm install gitlab nemonik/gitlab --namespace ${gitlab_namespace} --create-namespace -f gitlab-chart-values.yaml
+create_namespace ${gitlab_namespace}
+
+helm install gitlab nemonik/gitlab --namespace ${gitlab_namespace} -f gitlab-chart-values.yaml
 
 kubectl apply -f gitlab-IngressTcpRoute.yaml
 
@@ -48,40 +50,31 @@ gitlab_pod_name=`kubectl get pod -n ${gitlab_namespace} -l "app.kubernetes.io/co
 
 notify "Waiting for pod/${gitlab_pod_name} -n ${gitlab_namespace} to become ready..."
 
-kubectl wait --for=condition=Ready pod/${gitlab_pod_name} -n ${gitlab_namespace} --timeout 360s
+kubectl wait --for=condition=Ready pod/${gitlab_pod_name} -n ${gitlab_namespace} --timeout 600s
 
 notify "Waiting til GitLab is responding to https requests..."
-
-token=`pwgen -Bsv1 20`
 
 loop=0
 while : ; do
 
-  if [ $loop -eq 4 ]; then
+  if [ $loop -eq 15 ]; then
     error "Failed post step."
     break
   fi
 
   if curl --silent ${gitlab_protocol}://${gitlab_fdqn} | grep -q "sign_in"; then
-    notify "Performing post ready configuration setup..."
-    kubectl exec -it pod/${gitlab_pod_name} -n ${gitlab_namespace} -- /bin/bash -c "bundle exec rails runner -e production \"user = User.find_by_username('root'); token = user.personal_access_tokens.create(scopes: [:api], name: 'Automation_token'); token.set_token('$token'); token.save\""
 
-    # it takes time for the token to stick, so try and try again...
-    declare -i tries=0
-    until curl --silent --request PUT --header "PRIVATE-TOKEN: $token" "${gitlab_protocol}://${gitlab_fdqn}/api/v4/application/settings?signup_enabled=false&allow_local_requests_from_hooks_and_services=true&auto_devops_enabled=false&send_user_confirmation_email=false&allow_local_requests_from_hooks_and_services=true" | jq '.'; do
-      sleep 5
-      tries=tries+1
-      if [ $tries -eq 10 ]; then
-        warn "Giving up."
-        exit 1
-      fi
-    done
+    read gitlab_pod_name gitlab_token < <(create_automation_token)
 
-    kubectl exec -it pod/${gitlab_pod_name} -n ${gitlab_namespace} -- /bin/bash -c "bundle exec rails runner -e production \"PersonalAccessToken.find_by_token('$token').revoke!\""
+    curl --silent --request PUT --header "PRIVATE-TOKEN: $gitlab_token" "${gitlab_protocol}://${gitlab_fdqn}/api/v4/application/settings?${gitlab_settings}" | jq '.'
+
+    revoke_automation_token $gitlab_pod_name $gitlab_token
+
     notify "Completed post step."
     break
   fi
 
   notify "Still waiting for GitLab to respond to ${gitlab_protocol} requests..."
-  sleep 15
+  ((loop ++))
+  sleep 60
 done

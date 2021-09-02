@@ -27,11 +27,7 @@ images_into_registry drone_images
 
 notify "Creating a GitLab token to integrate Drone with GitLab through the following automation..."
 
-token=`pwgen -Bsv1 20`
-
-gitlab_pod_name=`kubectl get pod -n ${gitlab_namespace} -l "app.kubernetes.io/component=gitlab" -o json | jq -r '.items | .[] | .metadata.name'`
-
-kubectl exec -it pod/${gitlab_pod_name} -n ${gitlab_namespace} -- /bin/bash -c "bundle exec rails runner -e production \"user = User.find_by_username('root'); token = user.personal_access_tokens.create(scopes: [:api], name: 'Automation_token'); token.set_token('${token}'); token.save\""
+read gitlab_pod_name gitlab_token < <(create_automation_token)
 
 notify "Delete the prior Drone CI application integration from GitLab, if it exists..."
 
@@ -48,9 +44,7 @@ application_values=`curl --silent --request POST --header "PRIVATE-TOKEN: ${toke
 drone_gitlab_client_id=`echo "${application_values}" | jq '.application_id'`
 drone_gitlab_client_secret=`echo "${application_values}" | jq ".secret"`
 
-notify "Revoking the token used to perform the prior automation..."
-
-kubectl exec -it pod/${gitlab_pod_name} -n ${gitlab_namespace} -- /bin/bash -c "bundle exec rails runner -e production \"PersonalAccessToken.find_by_token('$token').revoke!\""
+revoke_automation_token $gitlab_pod_name $gitlab_token
 
 template_file ./templates/drone-chart-values.yaml.tpl drone-chart-values.yaml
 
@@ -66,10 +60,12 @@ helm repo add drone https://charts.drone.io
 
 helm repo update
 
-helm install drone -f drone-chart-values.yaml --namespace ${drone_namespace} --create-namespace drone/drone
+create_namespace $drone_namespace
+
+helm install drone -f drone-chart-values.yaml --namespace ${drone_namespace} drone/drone
 
 kubectl apply -f drone-ingress.yaml
 
-helm install drone-kubernetes-secrets -f drone-kubernetes-secrets-chart-values.yaml --namespace ${drone_namespace} --create-namespace drone/drone-kubernetes-secrets
+helm install drone-kubernetes-secrets -f drone-kubernetes-secrets-chart-values.yaml --namespace ${drone_namespace} drone/drone-kubernetes-secrets
 
-helm install drone-runner-kube -f drone-runner-kube-chart-values.yaml --namespace ${drone_namespace} --create-namespace drone/drone-runner-kube
+helm install drone-runner-kube -f drone-runner-kube-chart-values.yaml --namespace ${drone_namespace} drone/drone-runner-kube

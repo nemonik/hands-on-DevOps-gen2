@@ -25,7 +25,9 @@ helm repo add traefik https://helm.traefik.io/traefik
 
 helm repo update
 
-helm install traefik traefik/traefik --namespace ${traefik_namespace} --create-namespace --values traefik-chart-values.yaml
+create_namespace $traefik_namespace
+
+helm install traefik traefik/traefik --namespace ${traefik_namespace} --values traefik-chart-values.yaml
 
 kubectl apply -f traefik-cert-secrets.yaml
 

@@ -411,3 +411,7 @@ let g:airline_powerline_fonts = 1
 " -----------------------------------------------------------------------------
 set rtp+=$GOPATH/src/github.com/golang/lint/misc/vim
 
+" show tabs
+"
+set list
+set listchars=tab:>-
