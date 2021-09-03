@@ -19,7 +19,7 @@ if [ "${pullthrough_registry_enabled}" = "true" ]; then
 
     notify "pullthrough registry is already running."
 
-  elif [ $( docker ps  --filter "status=exited" | grep ${pullthrough_registry_name} | wc -l ) -gt 0 ]; then
+  elif [ $( docker ps --filter "status=exited" | grep ${pullthrough_registry_name} | wc -l ) -gt 0 ]; then
 
     notify "pullthrough registry already exists, but is stopped.  Restarting..."
 
