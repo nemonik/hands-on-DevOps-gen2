@@ -15,9 +15,13 @@ skip_encrypted_variables=true
 
 if [ "${pullthrough_registry_enabled}" = "true" ]; then 
 
-  if [ $( docker ps -a | grep ${pullthrough_registry_name} | wc -l ) -gt 0 ]; then
+  if [ $( docker ps | grep ${pullthrough_registry_name} | wc -l ) -gt 0 ]; then
 
-    notify "pullthrough registry already exists."
+    notify "pullthrough registry is already running."
+
+  elif [ $( docker ps  --filter "status=exited" | grep ${pullthrough_registry_name} | wc -l ) -gt 0 ]; then
+
+    notify "pullthrough registry already exists, but is stopped.  Restarting..."
 
     docker start ${pullthrough_registry_name} >/dev/null 2>&1
 
@@ -31,9 +35,10 @@ if [ "${pullthrough_registry_enabled}" = "true" ]; then
 
     echo $cmd
     eval "${cmd}"
+
+    notify "Now running..."
   fi
 
-  notify "Now running..."
   echo
   notify "Ensure your docker daemon configure file contains:"
   echo
