@@ -47,6 +47,7 @@
               - python-black
               - mypy
               - python-pylint
+              - python-poetry
             state: latest
           retries: "{{ default_retries }}"
           delay: "{{ default_delay }}"
@@ -59,7 +60,6 @@
             name:
               - fzf
               - watchman-bin
-              - python-poetry-git
               - python-black
             state: latest
             executable: yay
