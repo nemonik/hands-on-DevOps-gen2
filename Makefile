@@ -12,7 +12,7 @@ start: start-pullthrough start-registry install-k3s-air-gap-image pull-class-ima
 install: install-traefik install-gitlab install-drone install-taiga install-sonarqube install-heimdall install-plantuml
 uninstall: delete-cluster
 install-dependencies:
-	./install_dependencies.sh
+	./install-dependencies.sh
 start-pullthrough:
 	cd pullthrough-registry && ./install.sh
 stop-pullthrough:
@@ -20,17 +20,17 @@ stop-pullthrough:
 uninstall-pullthrough:
 	cd pullthrough-registry && ./uninstall.sh
 start-registry:
-	./start_registry.sh
+	./start-registry.sh
 delete-registry:
-	./delete_registry.sh
+	./delete-registry.sh
 pull-class-images:
 	./pull_class_images.sh
 install-k3s-air-gap-image:
 	cd k3s-air-gap-image && ./install.sh
 start-cluster:
-	./start_cluster.sh
+	./start-cluster.sh
 delete-cluster:
-	./delete_cluster.sh
+	./delete-cluster.sh
 patch-coredns:
 	cd coredns && ./patch.sh
 install-traefik:
@@ -62,7 +62,7 @@ install-plantuml:
 uninstall-plantuml:
 	cd plantuml-server && ./uninstall.sh
 load-cached-images:
-	./load_cached_containers.sh
+	./load-cached-containers.sh
 decrypt-vault:
 	./decrypt-vault.sh
 encrypt-vault:
