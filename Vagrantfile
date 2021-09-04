@@ -6,11 +6,20 @@
 # terms of the the license.
 #
 # You should have received a copy of the license with
-# this file. If not, please email <mjwalsh@nemonik.com>
+# this file. If not, please email <github.com@nemonik.com>
 
 $VERBOSE = nil
 
-# This class uses VirtualBox and therefor expects Windows HyperV to be disabled.
+## Set the values in the dotenv (.env) file at the root of this project
+##
+def get_value_from_dotenv(var)
+  line=open('./.env') { |f| f.lines.find { |line| line.include?(var) } }
+  line=line.chomp
+  return line.split("=").last.split(' ').first.tr('"','')
+end
+
+## This class uses VirtualBox and therefor expects Windows HyperV to be disabled.
+##
 if Vagrant::Util::Platform.windows? and Vagrant::Util::Platform.windows_hyperv_enabled?
   puts "Windows HyperV is expected to be disabled."
   exit(false)
@@ -19,7 +28,8 @@ end
 uninstall_plugins = %w( vagrant-cachier vagrant-alpine )
 required_plugins = %w( vagrant-vbguest vagrant-share vagrant-timezone vagrant-disksize vagrant-reload ) 
 
-# Uninstall the following plugins
+## Uninstall the following plugins
+##
 plugin_uninstalled = false
 uninstall_plugins.each do |plugin|
   if Vagrant.has_plugin?(plugin)
@@ -28,7 +38,8 @@ uninstall_plugins.each do |plugin|
   end
 end
 
-# Require the following plugins
+## Require the following plugins
+##
 plugin_installed = false
 required_plugins.each do |plugin|
   unless Vagrant.has_plugin?(plugin)
@@ -39,7 +50,8 @@ end
 
 system "vagrant plugin update"
 
-# if plugins were installed, restart
+## if plugins were installed, restart
+##
 if plugin_installed || plugin_uninstalled
   puts "restarting"
   exec "vagrant #{ARGV.join' '}"
@@ -65,14 +77,14 @@ Vagrant.configure("2") do |config|
     virtualbox.customize [ "guestproperty", "set", :id, "/VirtualBox/GuestAdd/VBoxService/--timesync-set-start", 1 ]
     virtualbox.customize [ "guestproperty", "set", :id, "/VirtualBox/GuestAdd/VBoxService/--timesync-set-threshold", 1000 ]
 
-    virtualbox.memory = 32768
-    virtualbox.cpus = 4
+    virtualbox.memory = get_value_from_dotenv("vagrant_memory").to_i
+    virtualbox.cpus = get_value_from_dotenv("vagrant_cpus").to_i
 
   end
 
   config.vm.synced_folder ".", "/vagrant"
 
-  config.vm.box = "archlinux/archlinux"
+  config.vm.box = get_value_from_dotenv("vagrant_box")
 
   config.vm.box_check_update = true
 
@@ -80,14 +92,20 @@ Vagrant.configure("2") do |config|
 
   config.vm.synced_folder ".", "/vagrant_data"
 
-  config.disksize.size = '200GB' 
+  config.disksize.size = get_value_from_dotenv("vagrant_disksize")
 
   config.vm.hostname = "k3d-cluster"
 
   config.vm.provision "shell", inline: <<-SCRIPT
-  sudo pacman -Syu --noconfirm base-devel docker make git 
-  sudo systemctl enable docker
-  sudo systemctl start docker
+  sudo pacman -Syu --noconfirm 
+  SCRIPT
+
+  config.vm.provision :reload
+
+  config.vm.provision "shell", inline: <<-SCRIPT
+  sudo pacman -S --noconfirm docker
+  sudo systemctl enable docker 
+  sudo systemctl start docker 
   sudo usermod -aG docker vagrant
   SCRIPT
 
