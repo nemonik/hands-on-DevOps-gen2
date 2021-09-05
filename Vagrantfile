@@ -25,36 +25,38 @@ if Vagrant::Util::Platform.windows? and Vagrant::Util::Platform.windows_hyperv_e
   exit(false)
 end
 
-uninstall_plugins = %w( vagrant-cachier vagrant-alpine )
-required_plugins = %w( vagrant-vbguest vagrant-share vagrant-timezone vagrant-disksize vagrant-reload ) 
+if ( ARGV.include? 'up' )
+  uninstall_plugins = %w( vagrant-cachier vagrant-alpine )
+  required_plugins = %w( vagrant-vbguest vagrant-share vagrant-timezone vagrant-disksize vagrant-reload ) 
 
-## Uninstall the following plugins
-##
-plugin_uninstalled = false
-uninstall_plugins.each do |plugin|
-  if Vagrant.has_plugin?(plugin)
-    system "vagrant plugin uninstall #{plugin}"
-    plugin_uninstalled = true
+  ## Uninstall the following plugins
+  ##
+  plugin_uninstalled = false
+  uninstall_plugins.each do |plugin|
+    if Vagrant.has_plugin?(plugin)
+      system "vagrant plugin uninstall #{plugin}"
+      plugin_uninstalled = true
+    end
   end
-end
 
-## Require the following plugins
-##
-plugin_installed = false
-required_plugins.each do |plugin|
-  unless Vagrant.has_plugin?(plugin)
-    system "vagrant plugin install #{plugin}"
-    plugin_installed = true
+  ## Require the following plugins
+  ##
+  plugin_installed = false
+  required_plugins.each do |plugin|
+    unless Vagrant.has_plugin?(plugin)
+      system "vagrant plugin install #{plugin}"
+      plugin_installed = true
+    end
   end
-end
 
-system "vagrant plugin update"
+  system "vagrant plugin update"
 
-## if plugins were installed, restart
-##
-if plugin_installed || plugin_uninstalled
-  puts "restarting"
-  exec "vagrant #{ARGV.join' '}"
+  ## if plugins were installed, restart
+  ##
+  if plugin_installed || plugin_uninstalled
+    puts "restarting"
+    exec "vagrant #{ARGV.join' '}"
+  end
 end
 
 Vagrant.configure("2") do |config|
@@ -84,7 +86,9 @@ Vagrant.configure("2") do |config|
 
   config.vm.synced_folder ".", "/vagrant"
 
-  config.vm.box = get_value_from_dotenv("vagrant_box")
+  vagrant_box = get_value_from_dotenv("vagrant_box")
+
+  config.vm.box = vagrant_box
 
   config.vm.box_check_update = true
 
@@ -96,19 +100,35 @@ Vagrant.configure("2") do |config|
 
   config.vm.hostname = "k3d-cluster"
 
-  config.vm.provision "shell", inline: <<-SCRIPT
-  sudo pacman -Syu --noconfirm 
-  SCRIPT
+  if (vagrant_box == "generic/archlinux") 
+    config.vm.provision "shell", inline: <<-SCRIPT
+    sudo pacman -Syu --noconfirm 
+    SCRIPT
 
-  config.vm.provision :reload
+    config.vm.provision :reload
 
-  config.vm.provision "shell", inline: <<-SCRIPT
-  sudo pacman -S --noconfirm docker
-  sudo systemctl enable docker 
-  sudo systemctl start docker 
-  sudo usermod -aG docker vagrant
-  SCRIPT
+    config.vm.provision "shell", inline: <<-SCRIPT
+    sudo pacman -S --noconfirm docker
+    sudo systemctl enable docker 
+    sudo systemctl start docker 
+    sudo usermod -aG docker vagrant
+    SCRIPT
 
-  config.vm.provision :reload
+    config.vm.provision :reload
+
+  elsif (vagrant_box == "generic/rocky8")
+
+    config.vm.provision "shell", inline: <<-SCRIPT
+    sudo dnf config-manager --add-repo=https://download.docker.com/linux/centos/docker-ce.repo
+    sudo dnf update
+    sudo dnf install -y docker-ce docker-ce-cli containerd.io
+    sudo systemctl enable docker
+    sudo systemctl start docker
+    sudo usermod -aG docker vagrant
+    SCRIPT
+
+    config.vm.provision :reload 
+
+  end  
 
 end

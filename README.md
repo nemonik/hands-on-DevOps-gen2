@@ -157,14 +157,18 @@ What you should bring:
             - [10.3.1.2. The Makefile rules](#10312-the-makefile-rules)
             - [10.3.1.3. Explaining `make all`](#10313-explaining-make-all)
         - [10.3.2. Configuring the pull through container registry](#1032-configuring-the-pull-through-container-registry)
-        - [10.3.3. Starting the cluster](#1033-starting-the-cluster)
-            - [10.3.3.1. The `start-pullthrough` rule](#10331-the-start-pullthrough-rule)
-            - [10.3.3.2. The `start-registry` rule](#10332-the-start-registry-rule)
-            - [10.3.3.3. The `install-k3s-air-gap-image` rule](#10333-the-install-k3s-air-gap-image-rule)
-            - [10.3.3.4. The `pull-class-images` rule](#10334-the-pull-class-images-rule)
-            - [10.3.3.5. The `patch-coredns` rule](#10335-the-patch-coredns-rule)
-        - [10.3.4. Verifying the cluster is up and running](#1034-verifying-the-cluster-is-up-and-running)
-        - [10.3.5. Starting the factory tools](#1035-starting-the-factory-tools)
+        - [10.3.3. Creating and using your own Let's Encrypt wildcard SSL certificate](#1033-creating-and-using-your-own-lets-encrypt-wildcard-ssl-certificate)
+            - [10.3.3.1. Edit `domain` in the dotenv file](#10331-edit-domain-in-the-dotenv-file)
+            - [10.3.3.2. Creating your wildcard certificate](#10332-creating-your-wildcard-certificate)
+        - [10.3.4. Starting the cluster](#1034-starting-the-cluster)
+        - [10.3.5. Creating and using your own Let's Encrypt wildcard SSL certificate](#1035-creating-and-using-your-own-lets-encrypt-wildcard-ssl-certificate)
+            - [10.3.5.1. The `start-pullthrough` rule](#10351-the-start-pullthrough-rule)
+            - [10.3.5.2. The `start-registry` rule](#10352-the-start-registry-rule)
+            - [10.3.5.3. The `install-k3s-air-gap-image` rule](#10353-the-install-k3s-air-gap-image-rule)
+            - [10.3.5.4. The `pull-class-images` rule](#10354-the-pull-class-images-rule)
+            - [10.3.5.5. The `patch-coredns` rule](#10355-the-patch-coredns-rule)
+        - [10.3.6. Verifying the cluster is up and running](#1036-verifying-the-cluster-is-up-and-running)
+        - [10.3.7. Starting the factory tools](#1037-starting-the-factory-tools)
     - [10.4. The long-running tools](#104-the-long-running-tools)
         - [10.4.1. Taiga, an example of Agile project management software](#1041-taiga-an-example-of-agile-project-management-software)
             - [10.4.1.1. Documentation, source, container image](#10411-documentation-source-container-image)
@@ -742,12 +746,6 @@ It also possible to collect these tasks into a collection referred to as a `role
 ### 10.1.1. Installing Ansible
 
 The following sub-sections detail how to install [Ansible](https://github.com/ansible/ansible). Skip to the section that applies to your host.
-
-If your host is running
-
-- OSX drop to [Installing Xcode Command Line Tools.
-- Windows drop to (TODO: complete.)
-- Linux drop to (TODO: complete.)
 
 ### 10.1.2. On OSX, install the Xcode Command Line tools
 
@@ -1638,7 +1636,240 @@ The class will also cache all its images into [./image_cache](./image_cache) fol
 
 K3s will pull the images it needs to run directly from docker.io when using the canonical container image. I've provided a Dockerfile in [./k3s-air-gap-image](./k3s-air-gap-image) that will build in the containers. The K3s project provides all these images as tar-ball.
 
-### 10.3.3. Starting the cluster
+### 10.3.3. Creating and using your own Let's Encrypt wildcard SSL certificate
+
+To use this class:
+
+1. I will have provided you the password to decrypt the [vault](./vault) file containing [Let's Encrypt](https://letsencrypt.org/) wildcard SSL certificate and private key for the nemonik.com domaini, or
+2. You will need to own a domain for which you can register a certificate for and then place the full certificate chain and key into the vault file as I did.
+
+You likely will fall into the later catagory as I don't typically handout this password and will need to perform the following. If I'm teaching you this class in person I likely will provide the [vault](./vault) password and so you can skip to followig section on starting the cluster.
+
+If you have your own domain, you can generate a [Let's Encrypt](https://letsencrypt.org/) wildcard SSL certficate for free using [Certbot](https://certbot.eff.org/) provided by the [Electronic Frontier Foundation (EFF)](https://www.eff.org/). If you don't have a domain, how to register a domain is outside the scope of this class. Might I suggest you use [dynadot.com](https://dynadot.com). My Refer-a-friend code is `06U759R6b8a9D9H`, you can enter this code upon registering your domain for a $5 account credit.
+
+I've used the term wildcard SSL certificate a couple times now. What is it? Well, a wildcard certificate is a certificate with a wildcard character (\*) in the domain name filed to permit the certificate to secure multiple sub domains of a base domain. For example, all the tools of the factory are configure by default to exist as subdomains of nemonik.com. GitLab exists at https://gitlab.nemonik.com, Taiga exists at https://taiga.nemonik.com, etc. Access to these applications are reverse proxied by [Traefik](https://github.com/traefik/traefik). [Traefik](https://github.com/traefik/traefik) also handles encrypting the HTTP traffic to these tools. Arguably we could create self-signed certificates, but self-signed certificates can be problematic resulting in your Web browser, curl and wget thowing certificate errors. [Let's Encrypt](https://letsencrypt.org/) SSL certificates are commonly used in practice, so I figured I might as well cover their creation and use in this class.
+
+#### 10.3.3.1. Edit `domain` in the dotenv file
+
+First open the dotenv file ([./.env](./.env)) in the neovim editor and edit the following line
+
+```bash
+domain="nemonik.com"
+```
+
+replacing `nemonik.com` with your domain.
+
+#### 10.3.3.2. Creating your wildcard certificate
+
+The [Electronic Frontier Foundation (EFF)](https://www.eff.org/) provides instructions for how to use [Certbot](https://certbot.eff.org/) at <https://certbot.eff.org/instructions> for many operating systems.
+
+The following is not meant to replace these instuctions.
+
+If you are using Archlinux ensure the `certbot` package is installed
+
+```bash
+sudo pacman -S certbot
+```
+
+If you are using OS X ensure the brew package is installed
+
+```bash
+brew install certbot
+```
+
+`certbot` will be installed by Ansible [./ansible/common.yaml](./ansible/common.yaml) playbook in the future.
+
+The following commands can be used to both create and renew [Let's Encrypt](https://letsencrypt.org/) SSL certificates.
+
+```bash
+ sudo certbot -d "*.nemonik.com" --server https://acme-v02.api.letsencrypt.org/directory --manual --preferred-challenges dns certonly
+```
+
+replacing `nemonik.com` with your domain.
+
+[Certbot](https://certbot.eff.org/) will produced the following output:
+
+```
+Please deploy a DNS TXT record under the name
+_acme-challenge.nemonik.com with the following value:
+
+a random-string-of-characters
+
+Before continuing, verify the record is deployed.
+(This must be set up in addition to the previous challenges; do not remove,
+replace, or undo the previous challenge tasks yet. Note that you might be
+asked to create multiple distinct TXT records with the same name. This is
+permitted by DNS standards.)
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Press Enter to Continue
+```
+
+You will now need to add a TXT record containing the `random-string-of-characters` for the `_acme-challenge` sub-domain with your domain registrar.
+
+Registrars have various ways of doing this. [dynadot.com](https://dynadot.com) documents how to do this at <[dynadot.com](https://dynadot.com)>. [GoDaddy](https://godaddy.com) documents how to do this for their service at <https://www.godaddy.com/help/add-a-txt-record-19232>. Just use your registrar's search or web search for your registrar's name plus `create a txt record` to learn how to do the same for your registrar.
+
+You can move things along by setting a short time to live.
+
+Do not immediately press `Enter` to continue in [Certbot](https://certbot.eff.org/) as it takes time for your new DNS entry to propoagate across the Internet.
+
+The best way I found to be sure your change has propogated is to use <https://www.whatsmydns.net/#TXT/_acme-challenge.nemonik.com> replacing `_acme-challenge.nemonik.com` with fully qualified domain name for your your TXT record. You can refresh your browser to watch as the TXT record is propogate across the Internet.
+
+You also can use either the `dig` or `host` command to check on the propoagation of the your TXT record like so
+
+```bash
+dig -t txt _acme-challenge.nemonik.com
+```
+
+will output
+
+```
+; <<>> DiG 9.16.20 <<>> -t txt _acme-challenge.nemonik.com
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 28925
+;; flags: qr rd ra; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 1
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 512
+;; QUESTION SECTION:
+;_acme-challenge.nemonik.com.	IN	TXT
+
+;; ANSWER SECTION:
+_acme-challenge.nemonik.com. 3590 IN	TXT	"ozbMVFpscNW6p0RpnDJUP9_mWAiXC-IyNDdfEnoKGMA"
+
+;; Query time: 39 msec
+;; SERVER: 192.168.86.1#53(192.168.86.1)
+;; WHEN: Sun Sep 05 16:30:47 EDT 2021
+;; MSG SIZE  rcvd: 112
+```
+
+when the TXT record has propogated.
+
+`host` executed like so
+
+```bash
+host -t txt _acme-challenge.nemonik.com
+```
+
+will return rather simply
+
+```
+_acme-challenge.nemonik.com descriptive text "ozbMVFpscNW6p0RpnDJUP9_mWAiXC-IyNDdfEnoKGMA
+```
+
+If you press `Enter` and [Certbot](https://certbot.eff.org/) fails you will have update your TXT record and try again.
+
+The TXT record is no longer needed once you pres Enter and [Certbot](https://certbot.eff.org/) creates your certificate chain and key.
+
+The certifate chain and key wil placed into `/etc/letsencrypt/live`. The README file will explain what the file are. I'd encourage you to read it. You will not be able to access the contents of this directory unless your are the root user.
+
+```bash
+sudo su
+cd /etc/letsencrypt/live/
+```
+
+`cd` into the path that starts with your domain. In my case this is `nemonik.com-0002`, so I would
+
+```bash
+cd nemonik.com-0002
+```
+
+This path also contains a README. I'd encourage you to read it. Its contents are
+
+```
+This directory contains your keys and certificates.
+
+`privkey.pem`  : the private key for your certificate.
+`fullchain.pem`: the certificate file used in most server software.
+`chain.pem`    : used for OCSP stapling in Nginx >=1.3.7.
+`cert.pem`     : will break many server configurations, and should not be used
+                 without reading further documentation (see link below).
+
+WARNING: DO NOT MOVE OR RENAME THESE FILES!
+         Certbot expects these files to remain in this location in order
+         to function properly!
+
+We recommend not moving these files. For more information, see the Certbot
+User Guide at https://certbot.eff.org/docs/using.html#where-are-my-certificates.
+```
+
+You will need the `fullchain.pem` and `privkey.pem` file.
+
+You willl need to base64 encode each of these files like so
+
+```bash
+cat fullchain.pem | base64 > fullchain.pem.base64
+cat privkey.pem | base64 > privkey.pem.base64
+```
+
+Doing so will create two new files that contain the contents of the original base64 encoded.
+
+In another shell in the root of the project create a new vault file like software
+
+```bash
+mv vault vault.origin
+nvim vault
+```
+
+Start the fill with the following content
+
+```bash
+#!/usr/bin/env bash
+read -d '' traefik_tls_crt << EOF
+```
+
+Copy the base64 encoded contents of `fullchain.pem.base64` directly following indenting each line 3 characters like software
+
+```bash
+#!/usr/bin/env bash
+read -d '' traefik_tls_crt << EOF
+   LS0t...
+
+   several lines each indented
+                            ...LS0t
+   Cg==
+```
+
+In your editor add on a new line the following
+
+```bash
+EOF
+```
+
+In your editor add another line with the contents `read -d '' traefik_tls_key << EOF` then copy the base64 contents of `privkey.pem.base64` followed by a new line containing `EOF`, so the file now looks like
+
+```bash
+#!/usr/bin/env bash
+read -d '' traefik_tls_crt << EOF
+   LS0t...
+
+   several lines each indented
+                            ...LS0t
+   Cg==
+EOF
+read -d '' traefik_tls_key << EOF
+   LS0t...
+
+   several lines each indented
+                            ...LS0tLS0K
+EOF
+```
+
+You can opt not to encrypt the [./vault](./vault) file, but I'd encurage you to encrypt it like so
+
+```bash
+ export VAULT_PASSWORD=`pwgen -Bsv1 20`
+echo $VAULT_PASSWORD
+```
+
+Copy the value of `VAULT_PASSWORD` to your Keychain, BitVault or some other password manager so as to not forget it.
+
+The contents of [./vault](./vault) file are retrieved by the Traefik automation to create `traefik-cert` Secret Kubernetes resource on the cluster in the `traefik` namespace, so that Traefik can SSL encrypt the traffic to the factory tools.
+
+You can now proceed to the following section. Note, you wil not be accessing the tools on the nemonik.com domain though. You will need to use your domain to access the tools (e.g., <https://gitlab.YOUR-DOMAIN>, <https://traefik.YOUR-DOMAIN>).
+
+### 10.3.4. Starting the cluster
 
 Starting the cluster involves a number [Make](https://www.gnu.org/software/make/) rules as described earlier.
 
@@ -1664,10 +1895,6 @@ and add to the end the following, so these domains can be resolved
 
 `127.0.0.1` is your host's [loopback address](https://en.wikipedia.org/wiki/Localhost). The first entry, `host.k3d.internal` is the name the cluster refers to the host as, and `k3d-registry.nemonik.com` is entry for the private container registry. You will be making additional edits to this file so that your browser can resolve the fully qualified domains of the factory's long running tools.
 
-To use this class I will have provided you the password to decrypt the [vault](./vault) file containing Let's Encrypt cert and private key for the wildcard nemonik.com domain (`*.nemonik.com`) issued certificate or you will need to own a domain for which you can generate a wildcard SSL certificate for using Let's Encrypt/Certbot and then place the full certificate chain and key into the vault file as I did.
-
-**TODO**: Provide documentation for generating a wildcard SSL certificate using Let’s Encrypt/Certbot.
-
 You can move forward by entering the [vault](./vault) file password, but you'll be asked repeatedly for it, I would suggest setting an environment variable to hold the value
 
 ```bash
@@ -1687,7 +1914,69 @@ The output will resemble
 
 [![asciicast](https://asciinema.org/a/HOHOqza78Ttaabx7IqpzCM9Wx.svg)](https://asciinema.org/a/HOHOqza78Ttaabx7IqpzCM9Wx)
 
-#### 10.3.3.1. The `start-pullthrough` rule
+### 10.3.5. Creating and using your own Let's Encrypt wildcard SSL certificate
+
+To use this class I will have provided you the password to decrypt the [vault](./vault) file containing Let's Encrypt cert and private key for the wildcard nemonik.com domain (`*.nemonik.com`) issued certificate or you will need to own a domain for which you can generate a wildcard SSL certificate for using Let's Encrypt/Certbot and then place the full certificate chain and key into the vault file as I did.
+
+If you have your own domain, you can generate a wildcard SSL certficate for free using [Certbot](https://certbot.eff.org/) provided by the [Electronic Frontier Foundation (EFF)](https://www.eff.org/) to generate a [Let's Encrypt](https://letsencrypt.org/) SSL certificate.
+
+First open the dotenv file ([./.env](./.env)) in neovim and edit the following line
+
+```bash
+domain="nemonik.com"
+```
+
+replacing `nemonik.com` with your domain.
+
+EFF provides instrctions for how to use [Certbot](https://certbot.eff.org/) at <https://certbot.eff.org/instructions>.
+
+The following is not meant to replace these instuctions.
+
+If you are using Archlinux ensure the `certbot` package is installed
+
+```bash
+sudo pacman -S certbot
+```
+
+If you are using OS X ensure the brew package is installed
+
+```bash
+brew install certbot
+```
+
+`certbot` will be installed by Ansible [./ansible/common.yaml](./ansible/common.yaml) playbook in the future.
+
+Once installed perform the following to either request or renew a [Let's Encrypt](https://letsencrypt.org/) wildcard SSL certificate. A wildcard certificate is a certificate with a wildcard character (\*) in the domain name field thereby permitting the certificate to secure multiple sub domains of a base domain. For example, all the tools of the factory are configure by default exist as subdomains of nemonik.com. GitLab exists at https://gitlab.nemonik.com, Taiga exists at https://taiga.nemonik.com. Access to these applications are reverse proxied by [Traefik](https://github.com/traefik/traefik).
+
+First open the dotenv file ([./.env](./.env)) in neovim and edit the following line
+
+```bash
+domain="nemonik.com"
+```
+
+replacing `nemonik.com` with your domain.
+
+You can move forward by entering the [vault](./vault) file password, but you'll be asked repeatedly for it, I would suggest setting an environment variable to hold the value
+
+```bash
+
+ export VAULT_PASSWORD=super-secret-password
+```
+
+If you put a `space bar` character before `export` the environment variable `VAULT_PASSWORD`and its value wont be entered into your shell's history thereby protecting its value from being plucked.
+
+Then execute the makefile `start` rule
+
+```bash
+cd $HOME/Development/workspace/hands-on-DevOps-gen2
+make start
+```
+
+The output will resemble
+
+[![asciicast](https://asciinema.org/a/HOHOqza78Ttaabx7IqpzCM9Wx.svg)](https://asciinema.org/a/HOHOqza78Ttaabx7IqpzCM9Wx)
+
+#### 10.3.5.1. The `start-pullthrough` rule
 
 In this particular instance I also enabled the pull through container registry and so [Make](https://www.gnu.org/software/make/) created it, whose output resembled
 
@@ -1720,7 +2009,7 @@ Now running.
   - Red is used to warn
   - Blue is use to clue you in that the script expects user input
 
-#### 10.3.3.2. The `start-registry` rule
+#### 10.3.5.2. The `start-registry` rule
 
 The private container registry will be started in this case the registry all ready existed and just needed to be restarted, but if it hadn't it would of been created. Output to create the registry would resemble the following
 
@@ -1782,11 +2071,11 @@ The push refers to repository [k3d-registry.nemonik.com:5000/nemonik/k3s]
 v1.21.2-k3s1: digest: sha256:3ce05be5df2e24dcbe3630c7b4bcb27390f5b8e784a0c1f936de8513223d6e90 size: 1356
 ```
 
-#### 10.3.3.3. The `install-k3s-air-gap-image` rule
+#### 10.3.5.3. The `install-k3s-air-gap-image` rule
 
 K3s' canonical container image will pull a number of container images directly from the docker.io registry. The K3s project provides guidance on how to configure K3s when executing K3s directly on a host in air gap environment, the instructions apply to when K3s is containerized. The `install-k3s-air-gap-image` rule will retrieve a [tarball](<https://en.wikipedia.org/wiki/Tar_(computing)#File_format>) of the container images K3s needs to run and will build a new container image including the [tarball](<https://en.wikipedia.org/wiki/Tar_(computing)#File_format>), so as to remove the need to for the nodes of the cluster to retrieve these container images on start up.
 
-#### 10.3.3.4. The `pull-class-images` rule
+#### 10.3.5.4. The `pull-class-images` rule
 
 Then the class images will be pulled from their remote registries, tagged and pushed into the private registry. In this case I already had many of the images in Docker's cache and so I did not need to retrieve them. There is a lot of redundant output in this [Make](https://www.gnu.org/software/make/) rule not worth copying here.
 
@@ -1886,7 +2175,7 @@ kubectl cluster-info
 
 In the case above run, I had set an `VAULT_PASSWORD` environment variable to hold the password.
 
-#### 10.3.3.5. The `patch-coredns` rule
+#### 10.3.5.5. The `patch-coredns` rule
 
 [Make](https://www.gnu.org/software/make/) will then move onto executing `patch-coredns` rule, descend into the [coredns](coredns) sub-folder and execute the [patch.sh](coredns/patch.sh) script.
 
@@ -2058,7 +2347,7 @@ You do this via running nvim as root (i.e., `sudo nvim /etc/hosts`) to edit the 
 
 - If you are using your own domain then `nemonik.com` will b:e replaced with whatever you've provided the `domain` variable in the [.env](./.env) file.
 
-### 10.3.4. Verifying the cluster is up and running
+### 10.3.6. Verifying the cluster is up and running
 
 The [k3s](https://github.com/k3s-io/k3s) cluster should now be up and running. Let's verify this by entering into your shell
 
@@ -2108,7 +2397,7 @@ CONTAINER ID   IMAGE                                                    COMMAND 
 d3b94140c2a7   registry:2                                               "/entrypoint.sh /etc…"   47 minutes ago   Up 47 minutes   0.0.0.0:5001->5000/tcp, :::5001->5000/tcp                                                                                                                                                hands-on-devops-pullthrough-registry
 ```
 
-### 10.3.5. Starting the factory tools
+### 10.3.7. Starting the factory tools
 
 Now that we have a cluster up and running we can install all the long running factory tools ([Taiga](https://www.taiga.io/), [GitLab](https://gitlab.com/rluna-gitlab/gitlab-ce), [Drone CI](https://github.com/drone/drone), etc) upon it.
 
