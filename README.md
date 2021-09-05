@@ -6482,4 +6482,4 @@ make uninstall-registry
 
 And this ends my class. 
 
-This is class is a labor of love (i.e., I'm not getting paid to author and maintain it). Please, consider buying me a coffee <a href="https://www.buymeacoffee.com/nemonik" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-orange.png" alt="Buy Me A Coffee" height="40" width="170"></a>.
+This is class is a labor of love (i.e., I'm not getting paid to author and maintain it). Please, consider buying me a coffee <a href="https://www.buymeacoffee.com/nemonik" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-orange.png" alt="Buy Me A Coffee" height="20" width="85"></a>.
