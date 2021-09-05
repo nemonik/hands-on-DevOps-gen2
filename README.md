@@ -2,7 +2,7 @@
 [![GitHub Forks](https://img.shields.io/github/forks/nemonik/hands-on-DevOps-gen2?style=social)](https://github.com/nemonik/hands-on-DevOps-gen2/network/members)
 [![Github Stars](https://img.shields.io/github/stars/nemonik/hands-on-DevOps-gen2?style=social)](https://github.com/nemonik/hands-on-DevOps-gen2/stargazers)
 [![Twitter](https://img.shields.io/twitter/url?style=social&url=https%3A%2F%2Fgithub.com%2Fnemonik%2Fhands-on-DevOps-gen2)](https://twitter.com/intent/tweet?text=I%27ve%20found%20a%20nifty%20hands-on%20DevOps%20course%20developed%20by%20%40nemonik%20at%20https%3A%2F%2Fgithub.com%2Fnemonik%2Fhands-on-DevOps-gen2)
-<a href="https://www.buymeacoffee.com/nemonik" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-orange.png" alt="Buy Me A Coffee" height="41" width="174"></a>
+<a href="https://www.buymeacoffee.com/nemonik" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-orange.png" alt="Buy Me A Coffee" height="20" width="85"></a>
 
 # 1. Preface
 
