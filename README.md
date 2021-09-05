@@ -1642,7 +1642,7 @@ K3s will pull the images it needs to run directly from docker.io when using the 
 
 To use this class:
 
-1. I will have provided you the password to decrypt the [vault](./vault) file containing [Let's Encrypt](https://letsencrypt.org/) wildcard SSL certificate and private key for the nemonik.com domaini, or
+1. I will have provided you the password to decrypt the [vault](./vault) file containing [Let's Encrypt](https://letsencrypt.org/) wildcard SSL certificate and private key for the nemonik.com domain, or
 2. You will need to own a domain for which you can register a certificate for and then place the full certificate chain and key into the vault file as I did.
 
 You likely will fall into the later catagory as I don't typically handout this password and will need to perform the following. If I'm teaching you this class in person I likely will provide the [vault](./vault) password and so you can skip to followig section on starting the cluster.
