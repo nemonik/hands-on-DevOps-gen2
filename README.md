@@ -1715,7 +1715,7 @@ You can move things along by setting a short time to live.
 
 Do not immediately press `Enter` to continue in [Certbot](https://certbot.eff.org/) as it takes time for your new DNS entry to propoagate across the Internet.
 
-The best way I found to be sure your change has propogated is to use <https://www.whatsmydns.net/#TXT/_acme-challenge.nemonik.com> replacing `_acme-challenge.nemonik.com` with fully qualified domain name for your your TXT record. You can refresh your browser to watch as the TXT record is propogate across the Internet.
+The best way I found to be sure your change has propogated is to use <https://www.whatsmydns.net/#TXT/_acme-challenge.nemonik.com> replacing `_acme-challenge.nemonik.com` with the fully qualified domain name of your your TXT record. You can refresh your browser to watch as the TXT record is propogated across the Internet.
 
 You also can use either the `dig` or `host` command to check on the propoagation of the your TXT record like so
 
@@ -6482,4 +6482,4 @@ make uninstall-registry
 
 And this ends my class. 
 
-This is class is a labor of love (i.e., I'm not getting paid to author and maintain it). Please, consider buying me a coffee <a href="https://www.buymeacoffee.com/nemonik" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-orange.png" alt="Buy Me A Coffee" height="20" width="85"></a>.
+This is class is a labor of love (i.e., I'm not getting paid to author and maintain it). Please, consider buying me a coffee <a href="https://www.buymeacoffee.com/nemonik" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-orange.png" alt="Buy Me A Coffee" height="40" width="170"></a>.
