@@ -162,14 +162,13 @@ What you should bring:
             - [10.3.3.1. Edit `domain` in the dotenv file](#10331-edit-domain-in-the-dotenv-file)
             - [10.3.3.2. Creating your wildcard certificate](#10332-creating-your-wildcard-certificate)
         - [10.3.4. Starting the cluster](#1034-starting-the-cluster)
-        - [10.3.5. Creating and using your own Let's Encrypt wildcard SSL certificate](#1035-creating-and-using-your-own-lets-encrypt-wildcard-ssl-certificate)
-            - [10.3.5.1. The `start-pullthrough` rule](#10351-the-start-pullthrough-rule)
-            - [10.3.5.2. The `start-registry` rule](#10352-the-start-registry-rule)
-            - [10.3.5.3. The `install-k3s-air-gap-image` rule](#10353-the-install-k3s-air-gap-image-rule)
-            - [10.3.5.4. The `pull-class-images` rule](#10354-the-pull-class-images-rule)
-            - [10.3.5.5. The `patch-coredns` rule](#10355-the-patch-coredns-rule)
-        - [10.3.6. Verifying the cluster is up and running](#1036-verifying-the-cluster-is-up-and-running)
-        - [10.3.7. Starting the factory tools](#1037-starting-the-factory-tools)
+            - [10.3.4.1. The `start-pullthrough` rule](#10341-the-start-pullthrough-rule)
+            - [10.3.4.2. The `start-registry` rule](#10342-the-start-registry-rule)
+            - [10.3.4.3. The `install-k3s-air-gap-image` rule](#10343-the-install-k3s-air-gap-image-rule)
+            - [10.3.4.4. The `pull-class-images` rule](#10344-the-pull-class-images-rule)
+            - [10.3.4.5. The `patch-coredns` rule](#10345-the-patch-coredns-rule)
+        - [10.3.5. Verifying the cluster is up and running](#1035-verifying-the-cluster-is-up-and-running)
+        - [10.3.6. Starting the factory tools](#1036-starting-the-factory-tools)
     - [10.4. The long-running tools](#104-the-long-running-tools)
         - [10.4.1. Taiga, an example of Agile project management software](#1041-taiga-an-example-of-agile-project-management-software)
             - [10.4.1.1. Documentation, source, container image](#10411-documentation-source-container-image)
@@ -1916,69 +1915,7 @@ The output will resemble
 
 [![asciicast](https://asciinema.org/a/HOHOqza78Ttaabx7IqpzCM9Wx.svg)](https://asciinema.org/a/HOHOqza78Ttaabx7IqpzCM9Wx)
 
-### 10.3.5. Creating and using your own Let's Encrypt wildcard SSL certificate
-
-To use this class I will have provided you the password to decrypt the [vault](./vault) file containing Let's Encrypt cert and private key for the wildcard nemonik.com domain (`*.nemonik.com`) issued certificate or you will need to own a domain for which you can generate a wildcard SSL certificate for using Let's Encrypt/Certbot and then place the full certificate chain and key into the vault file as I did.
-
-If you have your own domain, you can generate a wildcard SSL certficate for free using [Certbot](https://certbot.eff.org/) provided by the [Electronic Frontier Foundation (EFF)](https://www.eff.org/) to generate a [Let's Encrypt](https://letsencrypt.org/) SSL certificate.
-
-First open the dotenv file ([./.env](./.env)) in neovim and edit the following line
-
-```bash
-domain="nemonik.com"
-```
-
-replacing `nemonik.com` with your domain.
-
-EFF provides instrctions for how to use [Certbot](https://certbot.eff.org/) at <https://certbot.eff.org/instructions>.
-
-The following is not meant to replace these instuctions.
-
-If you are using Archlinux ensure the `certbot` package is installed
-
-```bash
-sudo pacman -S certbot
-```
-
-If you are using OS X ensure the brew package is installed
-
-```bash
-brew install certbot
-```
-
-`certbot` will be installed by Ansible [./ansible/common.yaml](./ansible/common.yaml) playbook in the future.
-
-Once installed perform the following to either request or renew a [Let's Encrypt](https://letsencrypt.org/) wildcard SSL certificate. A wildcard certificate is a certificate with a wildcard character (\*) in the domain name field thereby permitting the certificate to secure multiple sub domains of a base domain. For example, all the tools of the factory are configure by default exist as subdomains of nemonik.com. GitLab exists at https://gitlab.nemonik.com, Taiga exists at https://taiga.nemonik.com. Access to these applications are reverse proxied by [Traefik](https://github.com/traefik/traefik).
-
-First open the dotenv file ([./.env](./.env)) in neovim and edit the following line
-
-```bash
-domain="nemonik.com"
-```
-
-replacing `nemonik.com` with your domain.
-
-You can move forward by entering the [vault](./vault) file password, but you'll be asked repeatedly for it, I would suggest setting an environment variable to hold the value
-
-```bash
-
- export VAULT_PASSWORD=super-secret-password
-```
-
-If you put a `space bar` character before `export` the environment variable `VAULT_PASSWORD`and its value wont be entered into your shell's history thereby protecting its value from being plucked.
-
-Then execute the makefile `start` rule
-
-```bash
-cd $HOME/Development/workspace/hands-on-DevOps-gen2
-make start
-```
-
-The output will resemble
-
-[![asciicast](https://asciinema.org/a/HOHOqza78Ttaabx7IqpzCM9Wx.svg)](https://asciinema.org/a/HOHOqza78Ttaabx7IqpzCM9Wx)
-
-#### 10.3.5.1. The `start-pullthrough` rule
+#### 10.3.4.1. The `start-pullthrough` rule
 
 In this particular instance I also enabled the pull through container registry and so [Make](https://www.gnu.org/software/make/) created it, whose output resembled
 
@@ -2011,7 +1948,7 @@ Now running.
   - Red is used to warn
   - Blue is use to clue you in that the script expects user input
 
-#### 10.3.5.2. The `start-registry` rule
+#### 10.3.4.2. The `start-registry` rule
 
 The private container registry will be started in this case the registry all ready existed and just needed to be restarted, but if it hadn't it would of been created. Output to create the registry would resemble the following
 
@@ -2073,11 +2010,11 @@ The push refers to repository [k3d-registry.nemonik.com:5000/nemonik/k3s]
 v1.21.2-k3s1: digest: sha256:3ce05be5df2e24dcbe3630c7b4bcb27390f5b8e784a0c1f936de8513223d6e90 size: 1356
 ```
 
-#### 10.3.5.3. The `install-k3s-air-gap-image` rule
+#### 10.3.4.3. The `install-k3s-air-gap-image` rule
 
 K3s' canonical container image will pull a number of container images directly from the docker.io registry. The K3s project provides guidance on how to configure K3s when executing K3s directly on a host in air gap environment, the instructions apply to when K3s is containerized. The `install-k3s-air-gap-image` rule will retrieve a [tarball](<https://en.wikipedia.org/wiki/Tar_(computing)#File_format>) of the container images K3s needs to run and will build a new container image including the [tarball](<https://en.wikipedia.org/wiki/Tar_(computing)#File_format>), so as to remove the need to for the nodes of the cluster to retrieve these container images on start up.
 
-#### 10.3.5.4. The `pull-class-images` rule
+#### 10.3.4.4. The `pull-class-images` rule
 
 Then the class images will be pulled from their remote registries, tagged and pushed into the private registry. In this case I already had many of the images in Docker's cache and so I did not need to retrieve them. There is a lot of redundant output in this [Make](https://www.gnu.org/software/make/) rule not worth copying here.
 
@@ -2177,7 +2114,7 @@ kubectl cluster-info
 
 In the case above run, I had set an `VAULT_PASSWORD` environment variable to hold the password.
 
-#### 10.3.5.5. The `patch-coredns` rule
+#### 10.3.4.5. The `patch-coredns` rule
 
 [Make](https://www.gnu.org/software/make/) will then move onto executing `patch-coredns` rule, descend into the [coredns](coredns) sub-folder and execute the [patch.sh](coredns/patch.sh) script.
 
@@ -2349,7 +2286,7 @@ You do this via running nvim as root (i.e., `sudo nvim /etc/hosts`) to edit the 
 
 - If you are using your own domain then `nemonik.com` will b:e replaced with whatever you've provided the `domain` variable in the [.env](./.env) file.
 
-### 10.3.6. Verifying the cluster is up and running
+### 10.3.5. Verifying the cluster is up and running
 
 The [k3s](https://github.com/k3s-io/k3s) cluster should now be up and running. Let's verify this by entering into your shell
 
@@ -2399,7 +2336,7 @@ CONTAINER ID   IMAGE                                                    COMMAND 
 d3b94140c2a7   registry:2                                               "/entrypoint.sh /etc…"   47 minutes ago   Up 47 minutes   0.0.0.0:5001->5000/tcp, :::5001->5000/tcp                                                                                                                                                hands-on-devops-pullthrough-registry
 ```
 
-### 10.3.7. Starting the factory tools
+### 10.3.6. Starting the factory tools
 
 Now that we have a cluster up and running we can install all the long running factory tools ([Taiga](https://www.taiga.io/), [GitLab](https://gitlab.com/rluna-gitlab/gitlab-ce), [Drone CI](https://github.com/drone/drone), etc) upon it.
 
