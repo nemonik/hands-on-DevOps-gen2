@@ -6457,7 +6457,7 @@ The `helloworld-web` project can be viewed completed at
 
 This class doesn't cover a number of container application development best practices. A topic out of scope of the original intention of this course; especially, as I'm already cramming in several days of course material into a one-day course when taught in person, but perhaps subsequent course updates I'll cover a few of the following not already covered in the course material as additional topics. The biggest reason why relates with the following sections. Agile and DevOps both exist to deliver features into the hands of users. We're not doing DevOps to do DevOps. If all anyone talks about is DevOps in the absence of the application life cycle you have a problem. Also, DevOps is very much intertwined with modern cloud-native development.
 
-Withh that, here's some best practices for containerized application development and operation:
+With that, here's some best practices for containerized application development and operation:
 
 1. Follow https://docs.docker.com/develop/develop-images/dockerfile_best-practices/ and http://www.projectatomic.io/docs/docker-image-author-guidance/ guidance.
 2. Re-use existing upstream images from trusted sources.
@@ -6468,3 +6468,17 @@ Withh that, here's some best practices for containerized application development
 7. Doing item-6 will require you to make use of a [notary](https://github.com/theupdateframework/notary) and private container registry (e.g., <https://hub.docker.com/_/registry>, <https://hub.docker.com/r/sonatype/nexus3>). I’ve written [Ansible](https://github.com/ansible/ansible) IaC to deploy Notary and it was a real pain in the butt to figure it out and took my countless hours, because the documentation is to put it plainly, "Sh!t." It would seem, they (i.e., whoever owns Docker Enterprise now) wants you to use Docker Enterprise vice getting Notary up and running with Docker.
 8. Put your application development through a CICD pipeline like this class of the following that applies: code format enforcement, linting, static analysis, build automation, unit testing, compliance-as-code for the container image, automated functional test, and dynamic analysis.
 9. Consider adding to your CICD pipelines the execution of vulnerability scanning tools, such as, [Clair](https://coreos.com/clair/docs/latest/), [Docker Bench for Security](https://github.com/docker/docker-bench-security), [OpenSCAP Workbench](https://github.com/OpenSCAP/scap-workbench/releases), [Anchore](https://anchore.com/opensource/), et cetera. There will be overlap between these and other similar tools. Pick the ones that work the best for you, ones with frequent updates and having the largest vibrant community around.
+
+# 14. That is all
+
+You can now uninstall the cluster and the registries.
+
+```bash
+make uninstall
+make uninstall-pullthrough
+make uninstall-registry
+```
+
+And this ends my class. 
+
+This is class is a labor of love (i.e., I'm not getting paid to author and maintain it). Please, consider buying me a coffee <a href="https://www.buymeacoffee.com/nemonik" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-orange.png" alt="Buy Me A Coffee" height="20" width="85"></a>.
