@@ -1,7 +1,7 @@
 mirrors:
-  k3d-registry.nemonik.com:5000:
+  k3d-registry.${domain}:5000:
     endpoint:
-    - http://k3d-registry.nemonik.com:5000
+    - http://k3d-registry.${domain}:5000
 
   docker.io:
     endpoint:
