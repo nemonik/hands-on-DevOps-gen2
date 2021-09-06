@@ -24,7 +24,7 @@ start-registry:
 delete-registry:
 	./delete-registry.sh
 pull-class-images:
-	./pull_class_images.sh
+	./pull-class-images.sh
 install-k3s-air-gap-image:
 	cd k3s-air-gap-image && ./install.sh
 start-cluster:
