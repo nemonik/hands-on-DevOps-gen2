@@ -5,7 +5,7 @@
 # You should have received a copy of the license with
 # this file. If not, please email <mjwalsh@nemonik.com>
 
-.PHONY: all install-dependencies pull-class-images install-k3s-air-gap-image start install start-registry delete-registry start-pullthrough stop-pullthrough uninstall-pullthrough start-cluster delete-cluster patch-coredns install-traefik uninstall-traefik install-gitlab uninstall-gitlab install-drone uninstall-drone install-taiga uninstall-taiga install-sonarqube uninstall-sonarqube install-heimdall uninstall-heimdall install-plantuml uninstall-plantuml decrypt-vault encrypt-vault load-cached-images
+.PHONY: all install-dependencies pull-class-images install-k3s-air-gap-image start install start-registry delete-registry uninstall-registry start-pullthrough stop-pullthrough uninstall-pullthrough start-cluster delete-cluster patch-coredns install-traefik uninstall-traefik install-gitlab uninstall-gitlab install-drone uninstall-drone install-taiga uninstall-taiga install-sonarqube uninstall-sonarqube install-heimdall uninstall-heimdall install-plantuml uninstall-plantuml decrypt-vault encrypt-vault load-cached-images
 
 all: install-dependencies start install
 start: start-pullthrough start-registry install-k3s-air-gap-image pull-class-images start-cluster patch-coredns
@@ -23,6 +23,7 @@ start-registry:
 	./start-registry.sh
 delete-registry:
 	./delete-registry.sh
+uninstall-registry: delete-registry
 pull-class-images:
 	./pull_class_images.sh
 install-k3s-air-gap-image:
