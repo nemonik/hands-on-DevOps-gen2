@@ -3,6 +3,10 @@
   hosts: factory
 
   tasks:
+    - name: Set PATH_SRC fact 
+      ansible.builtin.set_fact:
+        PATH_SRC: "PATH={{ lookup('env', 'PATH') }}"
+
     - name: When MacOSX ensure Go is installed
       community.general.homebrew:
         name:
@@ -48,7 +52,7 @@
 
         - name: Set PATH_SRC fact 
           ansible.builtin.set_fact:
-            PATH_SRC: "export PATH=/usr/local/bin/go/bin:$PATH"
+            PATH_SRC: "PATH=/usr/local/bin/go/bin:$PATH"
       when: ( ansible_distribution == 'Rocky' ) 
 
     - name: Ensure {{ HOME }}/go folders exists
@@ -64,9 +68,9 @@
     - name: Ensure golint is installed
       ansible.builtin.shell: |
         {{ PATH_SRC }}
-        export GOBIN="$HOME/go/bin"
-        export GOPATH="$HOME/go"
-        export PATH="$GOBIN:$PATH"
+        GOBIN="$HOME/go/bin"
+        GOPATH="$HOME/go"
+        PATH="$GOBIN:$PATH"
         go get -u golang.org/x/lint/golint
       args:
         executable: /bin/bash
@@ -78,7 +82,7 @@
     - name: Ensure golangci-lint is installed
       ansible.builtin.shell: |
         {{ PATH_SRC }}
-        export GOBIN="$HOME/go/bin"
-        export GOPATH="$HOME/go"
-        export PATH="$GOBIN:$PATH"
+        GOBIN="$HOME/go/bin"
+        GOPATH="$HOME/go"
+        PATH="$GOBIN:$PATH"
         curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v{{ lookup('env', 'golangci_lint_version') }}

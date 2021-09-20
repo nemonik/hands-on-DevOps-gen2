@@ -117,7 +117,7 @@ Vagrant.configure("2") do |config|
     config.vm.provision :reload
 
     config.vm.provision "shell", privileged: false, inline: <<-SCRIPT
-    sudo pacman -Syu python3 python-pip
+    sudo pacman -Syu --noconfirm python3 python-pip
     python3 -m pip install --user ansible
     python3 -m pip install paramiko
     if [[ "${PATH}" != *"/usr/local/bin"* ]]; then echo 'export PATH=/usr/local/bin:$PATH' >> ~/.bash_profile; fi
