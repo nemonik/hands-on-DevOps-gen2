@@ -13,4 +13,5 @@ all:
         supported_host_os:
           - MacOSX
           - Archlinux
+          - Rocky
     ungrouped: {}

@@ -26,6 +26,31 @@
       become: yes
       when: ( ansible_distribution == 'Archlinux' )
 
+    - name: When Rocky 8 ensure Go is installed
+      block:
+        - name: Check if /usr/local/bin/go exists
+          ansible.builtin.stat:
+            path: /usr/local/bin/go
+          register: st
+        
+        - name: Set GOLANG_VERSION fact
+          ansible.builtin.set_fact:
+            GOLANG_VERSION: "{{ lookup('env', 'golang_version') }}"
+
+        - name: Install Go {{ GOLANG_VERSION }}
+          ansible.builtin.shell: |
+            cd /tmp
+            wget https://golang.org/dl/go{{ GOLANG_VERSION }}.linux-amd64.tar.gz
+            tar -zxvf go{{ GOLANG_VERSION }}.linux-amd64.tar.gz -C /usr/local/bin
+            rm go{{ GOLANG_VERSION }}.linux-amd64.tar.gz
+          become: yes
+          when: not st.stat.exists
+
+        - name: Set PATH_SRC fact 
+          ansible.builtin.set_fact:
+            PATH_SRC: "export PATH=/usr/local/bin/go/bin:$PATH"
+      when: ( ansible_distribution == 'Rocky' ) 
+
     - name: Ensure {{ HOME }}/go folders exists
       ansible.builtin.file:
         path: "{{ HOME }}/go/{{ item }}"
@@ -37,12 +62,23 @@
         - src
 
     - name: Ensure golint is installed
-      command: /bin/bash -c 'export GOBIN="$HOME/go/bin"; export GOPATH="$HOME/go"; export PATH="$GOBIN:$PATH"; go get -u golang.org/x/lint/golint'
+      ansible.builtin.shell: |
+        {{ PATH_SRC }}
+        export GOBIN="$HOME/go/bin"
+        export GOPATH="$HOME/go"
+        export PATH="$GOBIN:$PATH"
+        go get -u golang.org/x/lint/golint
+      args:
+        executable: /bin/bash
       retries: "{{ default_retries }}"
       delay: "{{ default_delay }}"
       register: result
       until: result is succeeded
 
-    - name: When Archlinux ensure golangci-lint is installed
-      ansible.builtin.shell: export GOBIN="$HOME/go/bin"; export GOPATH="$HOME/go"; export PATH="$GOBIN:$PATH"; curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v1.41.1
-      when: ( ansible_distribution == 'Archlinux' )
+    - name: Ensure golangci-lint is installed
+      ansible.builtin.shell: |
+        {{ PATH_SRC }}
+        export GOBIN="$HOME/go/bin"
+        export GOPATH="$HOME/go"
+        export PATH="$GOBIN:$PATH"
+        curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v{{ lookup('env', 'golangci_lint_version') }}

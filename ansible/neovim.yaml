@@ -65,14 +65,174 @@
             executable: yay
       when: ( ansible_distribution == 'Archlinux' )
 
+    - name: When Rocky 8 ensure dnf packages are installed
+      block:
+        - name: Ensure dnf packages are installed
+          ansible.builtin.dnf:
+            name:
+              - curl
+              - fuse
+              - fuse-libs
+            state: latest
+            update_cache: yes  
+          retries: "{{ default_retries }}"
+          delay: "{{ default_delay }}"
+          register: result
+          until: result is succeeded
+          become: yes
+
+        - name: Ensure node is installed
+          block:
+            - name: Get stat for /usr/local/bin/node
+              ansible.builtin.stat:
+                path: /usr/local/bin/node
+              register: st
+        
+            - name: Install nodejs
+              block:
+                - name: Enable node.js yum repository provided by the Node.js official website
+                  ansible.builtin.shell: |
+                    curl -sL https://rpm.nodesource.com/setup_16.x | sudo -E bash -
+                  become: yes
+                - name: Install node.js dnf package
+                  ansible.builtin.dnf:
+                    name: nodejs
+                    state: latest
+                    update_cache: yes  
+                  retries: "{{ default_retries }}"
+                  delay: "{{ default_delay }}"
+                  register: result
+                  until: result is succeeded
+                  become: yes
+              when: not st.stat.exists
+
+        - name: Ensure neovim is installed
+          block:
+            - name: Get stat for /usr/local/bin/nvim
+              ansible.builtin.stat:
+                path: /usr/local/bin/nvim
+              register: st
+        
+            - name: Install neovim from appimage retrieved from GitHub
+              ansible.builtin.get_url:
+                url: https://github.com/neovim/neovim/releases/download/stable/nvim.appimage
+                dest: /usr/local/bin/nvim
+                mode: '755'
+              become: yes
+              when: not st.stat.exists
+
+        - name: Ensure yarn is installed
+          block:
+            - name: Get stat for /bin/yarn
+              ansible.builtin.stat:
+                path: /bin/yarn
+              register: st
+        
+            - name: Ensure yarn is installed
+              block:
+                - name: Add yarn repo
+                  ansible.builtin.shell: |
+                    curl --silent --location https://dl.yarnpkg.com/rpm/yarn.repo | sudo tee /etc/yum.repos.d/yarn.repo
+                    rpm --import https://dl.yarnpkg.com/rpm/pubkey.gpg
+                  become: yes
+
+                - name: Ensure yarn package is installed
+                  ansible.builtin.dnf:
+                    name: yarn
+                    state: latest
+                  retries: "{{ default_retries }}"
+                  delay: "{{ default_delay }}"
+                  register: result
+                  until: result is succeeded
+                  become: yes
+              when: not st.stat.exists
+
+        - name: ensure python modules are installed
+          pip:
+            name: 
+              - black
+              - mypy
+              - pylint
+              - poetry
+            extra_args: --user
+
+        - name: ensure fzf is installed
+          block:
+            - name: Get stat for /bin/fzf
+              ansible.builtin.stat:
+                path: /bin/fzf
+              register: st
+
+            - name: Ensure fzf is installed
+              block:
+                - name: Ensure pexect python module is installed
+                  pip:
+                    name: pexpect
+                  become: yes
+
+                - name: Install fzf from source
+                  ansible.builtin.git:
+                    repo: 'https://github.com/junegunn/fzf.git'
+                    dest: /tmp/fzf
+                    depth: 1
+                    clone: yes
+                    update: yes
+                  become: yes
+
+                - name: Generic question with multiple different responses
+                  ansible.builtin.expect:
+                    echo: yes
+                    chdir: /tmp/fzf
+                    command: ./install
+                    responses: { 
+                               'Do you want to enable fuzzy auto-completion(.*)': 'y',
+                               'Do you want to enable key bindings(.*)': 'y',
+                               'Do you want to update your shell configuration files(.*)': 'n'
+                               }
+                  become: yes
+
+                - name: Cleanup fzf install
+                  file:
+                    state: absent
+                    path: /tmp/fzf
+                  become: yes
+              when: not st.stat.exists
+
+        - name: ensure watchman is installed
+          ansible.builtin.shell: |
+            cd /tmp
+            wget https://github.com/facebook/watchman/archive/refs/tags/v2021.08.30.00.tar.gz
+            tar -zxf v2021.08.30.00.tar.gz
+            cd watchman*
+            mkdir -p /usr/local/{bin,lib} /usr/local/var/run/watchman
+            cp bin/* /usr/local/bin
+            cp lib/* /usr/local/lib
+            chmod 755 /usr/local/bin/watchman
+            chmod 2777 /usr/local/var/run/watchman
+          become: yes
+
+      when: ( ansible_distribution == 'Rocky' )
+
     - name: Ensure pynvim python module is installed for coc-pyright
-      ansible.builtin.shell: bash -c 'export PYENV_ROOT="$HOME/.pyenv"; export PATH="$PYENV_ROOT/bin:$PATH"; eval "$(pyenv init --path)"; eval "$(pyenv init -)"; python3 -m pip install --user --upgrade pynvim'
+      ansible.builtin.shell: |
+        export PYENV_ROOT="$HOME/.pyenv"
+        export PATH="$PYENV_ROOT/bin:$PATH"
+        eval "$(pyenv init --path)"
+        eval "$(pyenv init -)"
+        python3 -m pip install --user --upgrade pynvim
+      args:
+        executable: /bin/bash
 
     #- name: Ensure black python module is installed for coc-pyright to be able to call on black for formatting
     #  ansible.builtin.shell: bash -c "python3 -m pip install --user --upgrade black"
 
     - name: Ensure solargraph gem is installed for coc-solargraph
-      ansible.builtin.shell: bash -c '[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" && gem install solargraph'
+      ansible.builtin.shell: |
+        [[ -s "$HOME/.rvm/scripts/rvm" ]]
+        source "$HOME/.rvm/scripts/rvm" 
+        gem install solargraph
+      args:
+        executable: /bin/bash
 
     # See: https://prettier.io/docs/en/install.html
     #
@@ -143,10 +303,10 @@
         BLACK_PATH: /usr/local/bin
       when: ( ansible_distribution == 'MacOSX' )
 
-    - name: Setting BLACK_PATH when Archlinux
+    - name: Setting BLACK_PATH when Archlinux or Rocky 8
       set_fact:
         BLACK_PATH: /usr/local/bin
-      when: ( ansible_distribution == 'Archlinux' )
+      when: ( ansible_distribution == 'Archlinux' ) or ( ansible_distribution == 'Rocky' )
 
     - name: Template coc-settings.json configuration file into place
       ansible.builtin.template:
@@ -168,4 +328,6 @@
             force: yes
 
         - name: Install Powerline fonts
-          ansible.builtin.shell: sh -c "cd $HOME/.config/powerline && ./install.sh"
+          ansible.builtin.shell: |
+            cd $HOME/.config/powerline
+            ./install.sh

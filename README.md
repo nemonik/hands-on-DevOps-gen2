@@ -78,175 +78,173 @@ What you should bring:
 - [5. What you should bring](#5-what-you-should-bring)
 - [6. Table of Contents](#6-table-of-contents)
 - [7. DevOps unpacked](#7-devops-unpacked)
-    - [7.1. What is DevOps?](#71-what-is-devops)
-    - [7.2. What DevOps is not](#72-what-devops-is-not)
-    - [7.3. The tool exist to](#73-the-tool-exist-to)
-    - [7.4. To succeed at DevOps you must](#74-to-succeed-at-devops-you-must)
-    - [7.5. If your effort doesn't](#75-if-your-effort-doesnt)
-    - [7.6. Conway's Law states](#76-conways-law-states)
-    - [7.7. DevOps is really about](#77-devops-is-really-about)
-    - [7.8. What is DevOps culture?](#78-what-is-devops-culture)
-        - [7.8.1. We were taught the requisite skills as children](#781-we-were-taught-the-requisite-skills-as-children)
-        - [7.8.2. Maintaining relationships is your most important skill](#782-maintaining-relationships-is-your-most-important-skill)
-        - [7.8.3. Be quick... Be slow to...](#783-be-quick-be-slow-to)
-        - [7.8.4. The pressures of social media](#784-the-pressures-of-social-media)
-    - [7.9. How is DevOps related to the Agile?](#79-how-is-devops-related-to-the-agile)
-    - [7.10. How do they differ?](#710-how-do-they-differ)
-    - [7.11. Why?](#711-why)
-    - [7.12. What are the principles of DevOps?](#712-what-are-the-principles-of-devops)
-    - [7.13. Much of this is achieved](#713-much-of-this-is-achieved)
-    - [7.14. What is Continuous Integration (CI)?](#714-what-is-continuous-integration-ci)
-    - [7.15. How?](#715-how)
-    - [7.16. CI best practices](#716-ci-best-practices)
-        - [7.16.1. Utilize a Configuration Management System](#7161-utilize-a-configuration-management-system)
-        - [7.16.2. Automate the build](#7162-automate-the-build)
-        - [7.16.3. Employ one or more CI services/orchestrators](#7163-employ-one-or-more-ci-servicesorchestrators)
-        - [7.16.4. Make builds self-testing](#7164-make-builds-self-testing)
-        - [7.16.5. Never commit broken](#7165-never-commit-broken)
-        - [7.16.6. Stakeholders are expected to pre-flight new code](#7166-stakeholders-are-expected-to-pre-flight-new-code)
-        - [7.16.7. The CI service/orchestrator provides feedback](#7167-the-ci-serviceorchestrator-provides-feedback)
-    - [7.17. What is Continuous Delivery?](#717-what-is-continuous-delivery)
-        - [7.17.1. Extending Continuous Integration (CI)](#7171-extending-continuous-integration-ci)
-        - [7.17.2. Consistency](#7172-consistency)
-    - [7.18. But wait. What's a pipeline?](#718-but-wait-whats-a-pipeline)
-    - [7.19. How is a pipeline manifested?](#719-how-is-a-pipeline-manifested)
-    - [7.20. What underlines all of this?](#720-what-underlines-all-of-this)
-    - [7.21. But really why do we automate err. code?](#721-but-really-why-do-we-automate-err-code)
-        - [7.21.1. Why do I mention Larry Wall?](#7211-why-do-i-mention-larry-wall)
-        - [7.21.2. Laziness](#7212-laziness)
-        - [7.21.3. Impatience](#7213-impatience)
-        - [7.21.4. Hubris](#7214-hubris)
-        - [7.21.5. We automate for](#7215-we-automate-for)
-    - [7.22. Monitoring](#722-monitoring)
-        - [7.22.1. The _primary_ metric](#7221-the-_primary_-metric)
-        - [7.22.2. An understanding of performance](#7222-an-understanding-of-performance)
-        - [7.22.3. Establish a baseline performance](#7223-establish-a-baseline-performance)
-        - [7.22.4. Set reaction thresholds](#7224-set-reaction-thresholds)
-        - [7.22.5. Reacting](#7225-reacting)
-        - [7.22.6. Gaps in CICD](#7226-gaps-in-cicd)
-        - [7.22.7. Eliminating waste](#7227-eliminating-waste)
-    - [7.23. Crawl, walk, run](#723-crawl-walk-run)
-        - [7.23.1. Ultimately, DevOps is Goal](#7231-ultimately-devops-is-goal)
+  - [7.1. What is DevOps?](#71-what-is-devops)
+  - [7.2. What DevOps is not](#72-what-devops-is-not)
+  - [7.3. The tool exist to](#73-the-tool-exist-to)
+  - [7.4. To succeed at DevOps you must](#74-to-succeed-at-devops-you-must)
+  - [7.5. If your effort doesn't](#75-if-your-effort-doesnt)
+  - [7.6. Conway's Law states](#76-conways-law-states)
+  - [7.7. DevOps is really about](#77-devops-is-really-about)
+  - [7.8. What is DevOps culture?](#78-what-is-devops-culture)
+    - [7.8.1. We were taught the requisite skills as children](#781-we-were-taught-the-requisite-skills-as-children)
+    - [7.8.2. Maintaining relationships is your most important skill](#782-maintaining-relationships-is-your-most-important-skill)
+    - [7.8.3. Be quick... Be slow to...](#783-be-quick-be-slow-to)
+    - [7.8.4. The pressures of social media](#784-the-pressures-of-social-media)
+  - [7.9. How is DevOps related to the Agile?](#79-how-is-devops-related-to-the-agile)
+  - [7.10. How do they differ?](#710-how-do-they-differ)
+  - [7.11. Why?](#711-why)
+  - [7.12. What are the principles of DevOps?](#712-what-are-the-principles-of-devops)
+  - [7.13. Much of this is achieved](#713-much-of-this-is-achieved)
+  - [7.14. What is Continuous Integration (CI)?](#714-what-is-continuous-integration-ci)
+  - [7.15. How?](#715-how)
+  - [7.16. CI best practices](#716-ci-best-practices)
+    - [7.16.1. Utilize a Configuration Management System](#7161-utilize-a-configuration-management-system)
+    - [7.16.2. Automate the build](#7162-automate-the-build)
+    - [7.16.3. Employ one or more CI services/orchestrators](#7163-employ-one-or-more-ci-servicesorchestrators)
+    - [7.16.4. Make builds self-testing](#7164-make-builds-self-testing)
+    - [7.16.5. Never commit broken](#7165-never-commit-broken)
+    - [7.16.6. Stakeholders are expected to pre-flight new code](#7166-stakeholders-are-expected-to-pre-flight-new-code)
+    - [7.16.7. The CI service/orchestrator provides feedback](#7167-the-ci-serviceorchestrator-provides-feedback)
+  - [7.17. What is Continuous Delivery?](#717-what-is-continuous-delivery)
+    - [7.17.1. Extending Continuous Integration (CI)](#7171-extending-continuous-integration-ci)
+    - [7.17.2. Consistency](#7172-consistency)
+  - [7.18. But wait. What's a pipeline?](#718-but-wait-whats-a-pipeline)
+  - [7.19. How is a pipeline manifested?](#719-how-is-a-pipeline-manifested)
+  - [7.20. What underlines all of this?](#720-what-underlines-all-of-this)
+  - [7.21. But really why do we automate err. code?](#721-but-really-why-do-we-automate-err-code)
+    - [7.21.1. Why do I mention Larry Wall?](#7211-why-do-i-mention-larry-wall)
+    - [7.21.2. Laziness](#7212-laziness)
+    - [7.21.3. Impatience](#7213-impatience)
+    - [7.21.4. Hubris](#7214-hubris)
+    - [7.21.5. We automate for](#7215-we-automate-for)
+  - [7.22. Monitoring](#722-monitoring)
+    - [7.22.1. The _primary_ metric](#7221-the-_primary_-metric)
+    - [7.22.2. An understanding of performance](#7222-an-understanding-of-performance)
+    - [7.22.3. Establish a baseline performance](#7223-establish-a-baseline-performance)
+    - [7.22.4. Set reaction thresholds](#7224-set-reaction-thresholds)
+    - [7.22.5. Reacting](#7225-reacting)
+    - [7.22.6. Gaps in CICD](#7226-gaps-in-cicd)
+    - [7.22.7. Eliminating waste](#7227-eliminating-waste)
+  - [7.23. Crawl, walk, run](#723-crawl-walk-run)
+    - [7.23.1. Ultimately, DevOps is Goal](#7231-ultimately-devops-is-goal)
 - [8. Reading list](#8-reading-list)
 - [9. Prerequisites](#9-prerequisites)
-    - [9.1. Manual inspection](#91-manual-inspection)
-    - [9.2. Shell configuration](#92-shell-configuration)
-    - [9.3. Installing upfront dependencies](#93-installing-upfront-dependencies)
-    - [9.4. On OS X or Windows 11, install Docker Desktop](#94-on-os-x-or-windows-11-install-docker-desktop)
-            - [9.4.0.1. On OSX, install Docker Desktop](#9401-on-osx-install-docker-desktop)
-            - [9.4.0.2. On Windows, install Docker Desktop](#9402-on-windows-install-docker-desktop)
-        - [9.4.1. On Arch Linux, installing Docker](#941-on-arch-linux-installing-docker)
-    - [9.5. On OSX, install iTerm2](#95-on-osx-install-iterm2)
+  - [9.1. Manual inspection](#91-manual-inspection)
+  - [9.2. Shell configuration](#92-shell-configuration)
+  - [9.3. Installing upfront dependencies](#93-installing-upfront-dependencies)
+  - [9.4. On OS X or Windows 11, install Docker Desktop](#94-on-os-x-or-windows-11-install-docker-desktop) - [9.4.0.1. On OSX, install Docker Desktop](#9401-on-osx-install-docker-desktop) - [9.4.0.2. On Windows, install Docker Desktop](#9402-on-windows-install-docker-desktop)
+    - [9.4.1. On Arch Linux, installing Docker](#941-on-arch-linux-installing-docker)
+  - [9.5. On OSX, install iTerm2](#95-on-osx-install-iterm2)
 - [10. Installing the software factory](#10-installing-the-software-factory)
-    - [10.1. Ansible](#101-ansible)
-        - [10.1.1. Installing Ansible](#1011-installing-ansible)
-        - [10.1.2. On OSX, install the Xcode Command Line tools](#1012-on-osx-install-the-xcode-command-line-tools)
-        - [10.1.3. On OSX, install HomeBrew](#1013-on-osx-install-homebrew)
-        - [10.1.4. On Arch Linux, ensure Python3 and pip are installed](#1014-on-arch-linux-ensure-python3-and-pip-are-installed)
-        - [10.1.5. Install Ansible](#1015-install-ansible)
-    - [10.2. Run the Ansible playbook](#102-run-the-ansible-playbook)
-        - [10.2.1. Reviewing the Ansible playbooks](#1021-reviewing-the-ansible-playbooks)
-        - [10.2.2. Install dependencies](#1022-install-dependencies)
-        - [10.2.3. On OSX, enable nerd fonts in XTerm2](#1023-on-osx-enable-nerd-fonts-in-xterm2)
-        - [10.2.4. On Arch Linux, enable nerd fonts in the Gnome Terminal](#1024-on-arch-linux-enable-nerd-fonts-in-the-gnome-terminal)
-        - [10.2.5. Change your shell to fish](#1025-change-your-shell-to-fish)
-        - [10.2.6. Finish conifiguring fish](#1026-finish-conifiguring-fish)
-        - [10.2.7. Finish configuring neovim](#1027-finish-configuring-neovim)
-    - [10.3. Spin up the Factory](#103-spin-up-the-factory)
-        - [10.3.1. The `Makefile`](#1031-the-makefile)
-            - [10.3.1.1. The copyright](#10311-the-copyright)
-            - [10.3.1.2. The Makefile rules](#10312-the-makefile-rules)
-            - [10.3.1.3. Explaining `make all`](#10313-explaining-make-all)
-        - [10.3.2. Configuring the pull through container registry](#1032-configuring-the-pull-through-container-registry)
-        - [10.3.3. Creating and using your own Let's Encrypt wildcard SSL certificate](#1033-creating-and-using-your-own-lets-encrypt-wildcard-ssl-certificate)
-            - [10.3.3.1. Edit `domain` in the dotenv file](#10331-edit-domain-in-the-dotenv-file)
-            - [10.3.3.2. Creating your wildcard certificate](#10332-creating-your-wildcard-certificate)
-        - [10.3.4. Starting the cluster](#1034-starting-the-cluster)
-            - [10.3.4.1. The `start-pullthrough` rule](#10341-the-start-pullthrough-rule)
-            - [10.3.4.2. The `start-registry` rule](#10342-the-start-registry-rule)
-            - [10.3.4.3. The `install-k3s-air-gap-image` rule](#10343-the-install-k3s-air-gap-image-rule)
-            - [10.3.4.4. The `pull-class-images` rule](#10344-the-pull-class-images-rule)
-            - [10.3.4.5. The `patch-coredns` rule](#10345-the-patch-coredns-rule)
-        - [10.3.5. Verifying the cluster is up and running](#1035-verifying-the-cluster-is-up-and-running)
-        - [10.3.6. Starting the factory tools](#1036-starting-the-factory-tools)
-    - [10.4. The long-running tools](#104-the-long-running-tools)
-        - [10.4.1. Taiga, an example of Agile project management software](#1041-taiga-an-example-of-agile-project-management-software)
-            - [10.4.1.1. Documentation, source, container image](#10411-documentation-source-container-image)
-            - [10.4.1.2. URL, username and password](#10412-url-username-and-password)
-        - [10.4.2. GitLab CE, an example of configuration management software](#1042-gitlab-ce-an-example-of-configuration-management-software)
-            - [10.4.2.1. Documentation, source, container image](#10421-documentation-source-container-image)
-            - [10.4.2.2. URL, username and password](#10422-url-username-and-password)
-        - [10.4.3. Drone CI, an example of CICD orchestrator](#1043-drone-ci-an-example-of-cicd-orchestrator)
-            - [10.4.3.1. Documentation, source, container image](#10431-documentation-source-container-image)
-            - [10.4.3.2. URL, username and password](#10432-url-username-and-password)
-        - [10.4.4. SonarQube, an example of a platform for the inspection of code quality](#1044-sonarqube-an-example-of-a-platform-for-the-inspection-of-code-quality)
-            - [10.4.4.1. Documentation, source, container image](#10441-documentation-source-container-image)
-            - [10.4.4.2. URL, username and password](#10442-url-username-and-password)
-        - [10.4.5. PlantUML Server, an example of light-weight documentation](#1045-plantuml-server-an-example-of-light-weight-documentation)
-            - [10.4.5.1. Documentation, source, container image](#10451-documentation-source-container-image)
-            - [10.4.5.2. URL](#10452-url)
-        - [10.4.6. Heimdall 2](#1046-heimdall-2)
-            - [10.4.6.1. Documentation, source, container image](#10461-documentation-source-container-image)
-            - [10.4.6.2. URL, username and password](#10462-url-username-and-password)
+  - [10.1. Ansible](#101-ansible)
+    - [10.1.1. Installing Ansible](#1011-installing-ansible)
+    - [10.1.2. On OSX, install the Xcode Command Line tools](#1012-on-osx-install-the-xcode-command-line-tools)
+    - [10.1.3. On OSX, install HomeBrew](#1013-on-osx-install-homebrew)
+    - [10.1.4. On Arch Linux, ensure Python3 and pip are installed](#1014-on-arch-linux-ensure-python3-and-pip-are-installed)
+    - [10.1.5. Install Ansible](#1015-install-ansible)
+  - [10.2. Run the Ansible playbook](#102-run-the-ansible-playbook)
+    - [10.2.1. Reviewing the Ansible playbooks](#1021-reviewing-the-ansible-playbooks)
+    - [10.2.2. Install dependencies](#1022-install-dependencies)
+    - [10.2.3. On OSX, enable nerd fonts in XTerm2](#1023-on-osx-enable-nerd-fonts-in-xterm2)
+    - [10.2.4. On Arch Linux, enable nerd fonts in the Gnome Terminal](#1024-on-arch-linux-enable-nerd-fonts-in-the-gnome-terminal)
+    - [10.2.5. Change your shell to fish](#1025-change-your-shell-to-fish)
+    - [10.2.6. Finish conifiguring fish](#1026-finish-conifiguring-fish)
+    - [10.2.7. Finish configuring neovim](#1027-finish-configuring-neovim)
+  - [10.3. Spin up the Factory](#103-spin-up-the-factory)
+    - [10.3.1. The `Makefile`](#1031-the-makefile)
+      - [10.3.1.1. The copyright](#10311-the-copyright)
+      - [10.3.1.2. The Makefile rules](#10312-the-makefile-rules)
+      - [10.3.1.3. Explaining `make all`](#10313-explaining-make-all)
+    - [10.3.2. Configuring the pull through container registry](#1032-configuring-the-pull-through-container-registry)
+    - [10.3.3. Creating and using your own Let's Encrypt wildcard SSL certificate](#1033-creating-and-using-your-own-lets-encrypt-wildcard-ssl-certificate)
+      - [10.3.3.1. Edit `domain` in the dotenv file](#10331-edit-domain-in-the-dotenv-file)
+      - [10.3.3.2. Creating your wildcard certificate](#10332-creating-your-wildcard-certificate)
+    - [10.3.4. Starting the cluster](#1034-starting-the-cluster)
+      - [10.3.4.1. The `start-pullthrough` rule](#10341-the-start-pullthrough-rule)
+      - [10.3.4.2. The `start-registry` rule](#10342-the-start-registry-rule)
+      - [10.3.4.3. The `install-k3s-air-gap-image` rule](#10343-the-install-k3s-air-gap-image-rule)
+      - [10.3.4.4. The `pull-class-images` rule](#10344-the-pull-class-images-rule)
+      - [10.3.4.5. The `patch-coredns` rule](#10345-the-patch-coredns-rule)
+    - [10.3.5. Verifying the cluster is up and running](#1035-verifying-the-cluster-is-up-and-running)
+    - [10.3.6. Starting the factory tools](#1036-starting-the-factory-tools)
+  - [10.4. The long-running tools](#104-the-long-running-tools)
+    - [10.4.1. Taiga, an example of Agile project management software](#1041-taiga-an-example-of-agile-project-management-software)
+      - [10.4.1.1. Documentation, source, container image](#10411-documentation-source-container-image)
+      - [10.4.1.2. URL, username and password](#10412-url-username-and-password)
+    - [10.4.2. GitLab CE, an example of configuration management software](#1042-gitlab-ce-an-example-of-configuration-management-software)
+      - [10.4.2.1. Documentation, source, container image](#10421-documentation-source-container-image)
+      - [10.4.2.2. URL, username and password](#10422-url-username-and-password)
+    - [10.4.3. Drone CI, an example of CICD orchestrator](#1043-drone-ci-an-example-of-cicd-orchestrator)
+      - [10.4.3.1. Documentation, source, container image](#10431-documentation-source-container-image)
+      - [10.4.3.2. URL, username and password](#10432-url-username-and-password)
+    - [10.4.4. SonarQube, an example of a platform for the inspection of code quality](#1044-sonarqube-an-example-of-a-platform-for-the-inspection-of-code-quality)
+      - [10.4.4.1. Documentation, source, container image](#10441-documentation-source-container-image)
+      - [10.4.4.2. URL, username and password](#10442-url-username-and-password)
+    - [10.4.5. PlantUML Server, an example of light-weight documentation](#1045-plantuml-server-an-example-of-light-weight-documentation)
+      - [10.4.5.1. Documentation, source, container image](#10451-documentation-source-container-image)
+      - [10.4.5.2. URL](#10452-url)
+    - [10.4.6. Heimdall 2](#1046-heimdall-2)
+      - [10.4.6.1. Documentation, source, container image](#10461-documentation-source-container-image)
+      - [10.4.6.2. URL, username and password](#10462-url-username-and-password)
 - [11. Golang `helloworld` project](#11-golang-helloworld-project)
-    - [11.1. Create the project's backlog](#111-create-the-projects-backlog)
-    - [11.2. Create the project in GitLab](#112-create-the-project-in-gitlab)
-    - [11.3. Setup the project](#113-setup-the-project)
-    - [11.4. Author the application](#114-author-the-application)
-    - [11.5. Align source code with Go coding standards](#115-align-source-code-with-go-coding-standards)
-    - [11.6. Lint your code](#116-lint-your-code)
-    - [11.7. Build the application](#117-build-the-application)
-    - [11.8. Run your application](#118-run-your-application)
-    - [11.9. Author the unit tests](#119-author-the-unit-tests)
-    - [11.10. Automate the build (i.e., write the `Makefile`)](#1110-automate-the-build-ie-write-the-makefile)
-    - [11.11. Author Drone-based Continuous Integration](#1111-author-drone-based-continuous-integration)
-        - [11.11.1. Configure Drone to execute your pipeline](#11111-configure-drone-to-execute-your-pipeline)
-        - [11.11.2. Trigger the build](#11112-trigger-the-build)
-    - [11.12. The completed source for `helloworld`](#1112-the-completed-source-for-helloworld)
+  - [11.1. Create the project's backlog](#111-create-the-projects-backlog)
+  - [11.2. Create the project in GitLab](#112-create-the-project-in-gitlab)
+  - [11.3. Setup the project](#113-setup-the-project)
+  - [11.4. Author the application](#114-author-the-application)
+  - [11.5. Align source code with Go coding standards](#115-align-source-code-with-go-coding-standards)
+  - [11.6. Lint your code](#116-lint-your-code)
+  - [11.7. Build the application](#117-build-the-application)
+  - [11.8. Run your application](#118-run-your-application)
+  - [11.9. Author the unit tests](#119-author-the-unit-tests)
+  - [11.10. Automate the build (i.e., write the `Makefile`)](#1110-automate-the-build-ie-write-the-makefile)
+  - [11.11. Author Drone-based Continuous Integration](#1111-author-drone-based-continuous-integration)
+    - [11.11.1. Configure Drone to execute your pipeline](#11111-configure-drone-to-execute-your-pipeline)
+    - [11.11.2. Trigger the build](#11112-trigger-the-build)
+  - [11.12. The completed source for `helloworld`](#1112-the-completed-source-for-helloworld)
 - [12. Golang `helloworld-web` project](#12-golang-helloworld-web-project)
-    - [12.1. Create the project's backlog](#121-create-the-projects-backlog)
-    - [12.2. Create the project in GitLab](#122-create-the-project-in-gitlab)
-    - [12.3. Setup the project](#123-setup-the-project)
-    - [12.4. Author the `helloworld-web` application](#124-author-the-helloworld-web-application)
-    - [12.5. Build and run the `helloworld-web` application](#125-build-and-run-the-helloworld-web-application)
-    - [12.6. Run golangci-lint on the `helloworld-web` application](#126-run-golangci-lint-on-the-helloworld-web-application)
-        - [12.6.1. Fixing the problem](#1261-fixing-the-problem)
-    - [12.7. Author the unit tests](#127-author-the-unit-tests)
-    - [12.8. Perform static analysis (i.e., sonar-scanner) on the command line](#128-perform-static-analysis-ie-sonar-scanner-on-the-command-line)
-        - [12.8.1. Perform static analysis on the command line](#1281-perform-static-analysis-on-the-command-line)
-    - [12.9. Automate the build (i.e., write the Makefile)](#129-automate-the-build-ie-write-the-makefile)
-    - [12.10. Containerize the application](#1210-containerize-the-application)
-    - [12.11. Run the container](#1211-run-the-container)
-        - [12.11.1. Option 1](#12111-option-1)
-        - [12.11.2. Option 2](#12112-option-2)
-    - [12.12. Push the container image to the private registry](#1212-push-the-container-image-to-the-private-registry)
-    - [12.13. Configure Drone to execute your CICD pipeline](#1213-configure-drone-to-execute-your-cicd-pipeline)
-    - [12.14. Add Static Analysis (`sonar`) step to your CICD pipeline](#1214-add-static-analysis-sonar-step-to-your-cicd-pipeline)
-    - [12.15. Add the `build` step to the pipeline](#1215-add-the-build-step-to-the-pipeline)
-    - [12.16. Add the `nemonik\helloworld-web:latest` container image `publish` step to pipeline](#1216-add-the-nemonik\helloworld-weblatest-container-image-publish-step-to-pipeline)
-    - [12.17. Deploy `helloworld-web` application to the Kubernetes cluster](#1217-deploy-helloworld-web-application-to-the-kubernetes-cluster)
-    - [12.18. Add a `deploy` rule to the Makefile](#1218-add-a-deploy-rule-to-the-makefile)
-    - [12.19. Add a `deploy` step to the pipeline](#1219-add-a-deploy-step-to-the-pipeline)
-        - [12.19.1. Add a Kubernetes service account for the automation](#12191-add-a-kubernetes-service-account-for-the-automation)
-        - [12.19.2. Add secrets to our `helloworld-web` Drone CI repository](#12192-add-secrets-to-our-helloworld-web-drone-ci-repository)
-        - [12.19.3. Build, tag and push our `deploy` step container](#12193-build-tag-and-push-our-deploy-step-container)
-        - [12.19.4. Add the `deploy` step to our pipeline](#12194-add-the-deploy-step-to-our-pipeline)
-    - [12.20. Add compliance-as-code (`inspec`) test to the pipeline](#1220-add-compliance-as-code-inspec-test-to-the-pipeline)
-        - [12.20.1. Author our InSpec tests](#12201-author-our-inspec-tests)
-        - [12.20.2. Execute the InSpec tests on your `helloworld-web` deployment](#12202-execute-the-inspec-tests-on-your-helloworld-web-deployment)
-        - [12.20.3. Add an `inspec` rule to the Makefile](#12203-add-an-inspec-rule-to-the-makefile)
-        - [12.20.4. Add a `inspec` step to the pipeline](#12204-add-a-inspec-step-to-the-pipeline)
-            - [12.20.4.1. Build, tag, and push our `inspec` step container](#122041-build-tag-and-push-our-inspec-step-container)
-            - [12.20.4.2. Add the compliance-as-code (`inspec`) step to the pipeline](#122042-add-the-compliance-as-code-inspec-step-to-the-pipeline)
-        - [12.20.5. Viewing the `inspec` results in Heimdall 2](#12205-viewing-the-inspec-results-in-heimdall-2)
-            - [12.20.5.1. Supplemental InSpec output for viewing in Heimdall 2](#122051-supplemental-inspec-output-for-viewing-in-heimdall-2)
-        - [12.20.6. Add an automated functional test (`selenium`) step to the pipeline](#12206-add-an-automated-functional-test-selenium-step-to-the-pipeline)
-            - [12.20.6.1. Pull and run the Selenium Chrome Standalone browser](#122061-pull-and-run-the-selenium-chrome-standalone-browser)
-            - [12.20.6.2. Create our functional test automation](#122062-create-our-functional-test-automation)
-            - [12.20.6.3. Build, tag, and push the `selenium` step container](#122063-build-tag-and-push-the-selenium-step-container)
-            - [12.20.6.4. Add the `selenium` step to the pipeline](#122064-add-the-selenium-step-to-the-pipeline)
-    - [12.21. Add the DAST (`owasp-zap`) step to the pipeline](#1221-add-the-dast-owasp-zap-step-to-the-pipeline)
-    - [12.22. All the source for `helloworld-web`](#1222-all-the-source-for-helloworld-web)
+  - [12.1. Create the project's backlog](#121-create-the-projects-backlog)
+  - [12.2. Create the project in GitLab](#122-create-the-project-in-gitlab)
+  - [12.3. Setup the project](#123-setup-the-project)
+  - [12.4. Author the `helloworld-web` application](#124-author-the-helloworld-web-application)
+  - [12.5. Build and run the `helloworld-web` application](#125-build-and-run-the-helloworld-web-application)
+  - [12.6. Run golangci-lint on the `helloworld-web` application](#126-run-golangci-lint-on-the-helloworld-web-application)
+    - [12.6.1. Fixing the problem](#1261-fixing-the-problem)
+  - [12.7. Author the unit tests](#127-author-the-unit-tests)
+  - [12.8. Perform static analysis (i.e., sonar-scanner) on the command line](#128-perform-static-analysis-ie-sonar-scanner-on-the-command-line)
+    - [12.8.1. Perform static analysis on the command line](#1281-perform-static-analysis-on-the-command-line)
+  - [12.9. Automate the build (i.e., write the Makefile)](#129-automate-the-build-ie-write-the-makefile)
+  - [12.10. Containerize the application](#1210-containerize-the-application)
+  - [12.11. Run the container](#1211-run-the-container)
+    - [12.11.1. Option 1](#12111-option-1)
+    - [12.11.2. Option 2](#12112-option-2)
+  - [12.12. Push the container image to the private registry](#1212-push-the-container-image-to-the-private-registry)
+  - [12.13. Configure Drone to execute your CICD pipeline](#1213-configure-drone-to-execute-your-cicd-pipeline)
+  - [12.14. Add Static Analysis (`sonar`) step to your CICD pipeline](#1214-add-static-analysis-sonar-step-to-your-cicd-pipeline)
+  - [12.15. Add the `build` step to the pipeline](#1215-add-the-build-step-to-the-pipeline)
+  - [12.16. Add the `nemonik\helloworld-web:latest` container image `publish` step to pipeline](#1216-add-the-nemonik\helloworld-weblatest-container-image-publish-step-to-pipeline)
+  - [12.17. Deploy `helloworld-web` application to the Kubernetes cluster](#1217-deploy-helloworld-web-application-to-the-kubernetes-cluster)
+  - [12.18. Add a `deploy` rule to the Makefile](#1218-add-a-deploy-rule-to-the-makefile)
+  - [12.19. Add a `deploy` step to the pipeline](#1219-add-a-deploy-step-to-the-pipeline)
+    - [12.19.1. Add a Kubernetes service account for the automation](#12191-add-a-kubernetes-service-account-for-the-automation)
+    - [12.19.2. Add secrets to our `helloworld-web` Drone CI repository](#12192-add-secrets-to-our-helloworld-web-drone-ci-repository)
+    - [12.19.3. Build, tag and push our `deploy` step container](#12193-build-tag-and-push-our-deploy-step-container)
+    - [12.19.4. Add the `deploy` step to our pipeline](#12194-add-the-deploy-step-to-our-pipeline)
+  - [12.20. Add compliance-as-code (`inspec`) test to the pipeline](#1220-add-compliance-as-code-inspec-test-to-the-pipeline)
+    - [12.20.1. Author our InSpec tests](#12201-author-our-inspec-tests)
+    - [12.20.2. Execute the InSpec tests on your `helloworld-web` deployment](#12202-execute-the-inspec-tests-on-your-helloworld-web-deployment)
+    - [12.20.3. Add an `inspec` rule to the Makefile](#12203-add-an-inspec-rule-to-the-makefile)
+    - [12.20.4. Add a `inspec` step to the pipeline](#12204-add-a-inspec-step-to-the-pipeline)
+      - [12.20.4.1. Build, tag, and push our `inspec` step container](#122041-build-tag-and-push-our-inspec-step-container)
+      - [12.20.4.2. Add the compliance-as-code (`inspec`) step to the pipeline](#122042-add-the-compliance-as-code-inspec-step-to-the-pipeline)
+    - [12.20.5. Viewing the `inspec` results in Heimdall 2](#12205-viewing-the-inspec-results-in-heimdall-2)
+      - [12.20.5.1. Supplemental InSpec output for viewing in Heimdall 2](#122051-supplemental-inspec-output-for-viewing-in-heimdall-2)
+    - [12.20.6. Add an automated functional test (`selenium`) step to the pipeline](#12206-add-an-automated-functional-test-selenium-step-to-the-pipeline)
+      - [12.20.6.1. Pull and run the Selenium Chrome Standalone browser](#122061-pull-and-run-the-selenium-chrome-standalone-browser)
+      - [12.20.6.2. Create our functional test automation](#122062-create-our-functional-test-automation)
+      - [12.20.6.3. Build, tag, and push the `selenium` step container](#122063-build-tag-and-push-the-selenium-step-container)
+      - [12.20.6.4. Add the `selenium` step to the pipeline](#122064-add-the-selenium-step-to-the-pipeline)
+  - [12.21. Add the DAST (`owasp-zap`) step to the pipeline](#1221-add-the-dast-owasp-zap-step-to-the-pipeline)
+  - [12.22. All the source for `helloworld-web`](#1222-all-the-source-for-helloworld-web)
 - [13. Additional best practices to consider around securing containerized applications](#13-additional-best-practices-to-consider-around-securing-containerized-applications)
 - [14. That is all](#14-that-is-all)
 
@@ -746,7 +744,7 @@ It also possible to collect these tasks into a collection referred to as a `role
 
 ### 10.1.1. Installing Ansible
 
-The following sub-sections detail how to install [Ansible](https://github.com/ansible/ansible). Skip to the section that applies to your host.
+The following sub-sections detail how to install [Ansible](https://github.com/ansible/ansible). Skip to the section that applies for your supported host.
 
 ### 10.1.2. On OSX, install the Xcode Command Line tools
 
@@ -818,7 +816,7 @@ No analytics data has been sent yet (or will be during this `install` run).
 
 ### 10.1.4. On Arch Linux, ensure Python3 and pip are installed
 
-On Arch if we need to ensure you have Python 3 and pip installed by performing the following in the shell
+On Arch ensure you have Python 3 and pip installed by performing the following in the shell
 
 ```bash
 sudo pacman -Syu python3 python-pip
@@ -853,6 +851,112 @@ Net Upgrade Size:       0.00 MiB
 (1/1) Arming ConditionNeedsUpdate...
 ```
 
+### 10.1.4. On Rocky 8, ensure Python3 and pip are installed
+
+Rocky 8 will already include both Python 3 and pip installed, but Ansible will require Python 3.8 or newer on the controller starting with Ansible 2.12, so lets fix that
+
+```bash
+sudo dnf install python39 python39-pip -y
+```
+
+Output will resemble
+
+```
+Last metadata expiration check: 0:05:12 ago on Mon 06 Sep 2021 05:36:33 PM UTC.
+Dependencies resolved.
+========================================================================================================================================================================================================================================================================================
+ Package                                                                   Architecture                                           Version                                                                               Repository                                                 Size
+========================================================================================================================================================================================================================================================================================
+Installing:
+ python39                                                                  x86_64                                                 3.9.2-1.module+el8.4.0+574+843c4898                                                   appstream                                                  31 k
+ python39-pip                                                              noarch                                                 20.2.4-3.module+el8.4.0+574+843c4898                                                  appstream                                                 2.0 M
+Installing dependencies:
+ python39-libs                                                             x86_64                                                 3.9.2-1.module+el8.4.0+574+843c4898                                                   appstream                                                 8.1 M
+ python39-pip-wheel                                                        noarch                                                 20.2.4-3.module+el8.4.0+574+843c4898                                                  appstream                                                 1.3 M
+ python39-setuptools-wheel                                                 noarch                                                 50.3.2-3.module+el8.4.0+574+843c4898                                                  appstream                                                 496 k
+Installing weak dependencies:
+ python39-setuptools                                                       noarch                                                 50.3.2-3.module+el8.4.0+574+843c4898                                                  appstream                                                 870 k
+
+Transaction Summary
+========================================================================================================================================================================================================================================================================================
+Install  6 Packages
+
+Total download size: 13 M
+Installed size: 45 M
+Downloading Packages:
+(1/6): python39-3.9.2-1.module+el8.4.0+574+843c4898.x86_64.rpm                                                                                                                                                                                           63 kB/s |  31 kB     00:00
+(2/6): python39-pip-wheel-20.2.4-3.module+el8.4.0+574+843c4898.noarch.rpm                                                                                                                                                                               1.0 MB/s | 1.3 MB     00:01
+(3/6): python39-pip-20.2.4-3.module+el8.4.0+574+843c4898.noarch.rpm                                                                                                                                                                                     1.0 MB/s | 2.0 MB     00:01
+(4/6): python39-setuptools-50.3.2-3.module+el8.4.0+574+843c4898.noarch.rpm                                                                                                                                                                              1.0 MB/s | 870 kB     00:00
+(5/6): python39-setuptools-wheel-50.3.2-3.module+el8.4.0+574+843c4898.noarch.rpm                                                                                                                                                                        370 kB/s | 496 kB     00:01
+(6/6): python39-libs-3.9.2-1.module+el8.4.0+574+843c4898.x86_64.rpm                                                                                                                                                                                     1.7 MB/s | 8.1 MB     00:04
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Total                                                                                                                                                                                                                                                   2.6 MB/s |  13 MB     00:05
+Running transaction check
+Transaction check succeeded.
+Running transaction test
+Transaction test succeeded.
+Running transaction
+  Preparing        :                                                                                                                                                                                                                                                                1/1
+  Installing       : python39-setuptools-wheel-50.3.2-3.module+el8.4.0+574+843c4898.noarch                                                                                                                                                                                          1/6
+  Installing       : python39-pip-wheel-20.2.4-3.module+el8.4.0+574+843c4898.noarch                                                                                                                                                                                                 2/6
+  Installing       : python39-libs-3.9.2-1.module+el8.4.0+574+843c4898.x86_64                                                                                                                                                                                                       3/6
+  Installing       : python39-3.9.2-1.module+el8.4.0+574+843c4898.x86_64                                                                                                                                                                                                            4/6
+  Running scriptlet: python39-3.9.2-1.module+el8.4.0+574+843c4898.x86_64                                                                                                                                                                                                            4/6
+  Installing       : python39-setuptools-50.3.2-3.module+el8.4.0+574+843c4898.noarch                                                                                                                                                                                                5/6
+  Running scriptlet: python39-setuptools-50.3.2-3.module+el8.4.0+574+843c4898.noarch                                                                                                                                                                                                5/6
+  Installing       : python39-pip-20.2.4-3.module+el8.4.0+574+843c4898.noarch                                                                                                                                                                                                       6/6
+  Running scriptlet: python39-pip-20.2.4-3.module+el8.4.0+574+843c4898.noarch                                                                                                                                                                                                       6/6
+  Verifying        : python39-3.9.2-1.module+el8.4.0+574+843c4898.x86_64                                                                                                                                                                                                            1/6
+  Verifying        : python39-libs-3.9.2-1.module+el8.4.0+574+843c4898.x86_64                                                                                                                                                                                                       2/6
+  Verifying        : python39-pip-20.2.4-3.module+el8.4.0+574+843c4898.noarch                                                                                                                                                                                                       3/6
+  Verifying        : python39-pip-wheel-20.2.4-3.module+el8.4.0+574+843c4898.noarch                                                                                                                                                                                                 4/6
+  Verifying        : python39-setuptools-50.3.2-3.module+el8.4.0+574+843c4898.noarch                                                                                                                                                                                                5/6
+  Verifying        : python39-setuptools-wheel-50.3.2-3.module+el8.4.0+574+843c4898.noarch                                                                                                                                                                                          6/6
+
+Installed:
+  python39-3.9.2-1.module+el8.4.0+574+843c4898.x86_64                   python39-libs-3.9.2-1.module+el8.4.0+574+843c4898.x86_64                    python39-pip-20.2.4-3.module+el8.4.0+574+843c4898.noarch       python39-pip-wheel-20.2.4-3.module+el8.4.0+574+843c4898.noarch
+  python39-setuptools-50.3.2-3.module+el8.4.0+574+843c4898.noarch       python39-setuptools-wheel-50.3.2-3.module+el8.4.0+574+843c4898.noarch
+
+Complete!
+```
+
+As we have multiple Python versions installed we have to configure Rocky to default to version 3.9. We can do that be peforming the following
+
+```bash
+sudo update-alternatives --set python /usr/bin/python3.9
+sudo update-alternatives --set python3 /usr/bin/python3.9
+```
+
+We can verify
+
+```bash
+python --version
+python3 --version
+```
+
+Output will resemble for both
+
+```
+Python 3.9.2
+```
+
+Also, let's update pip
+
+```bash
+python -m pip install --upgrade pip --user
+```
+
+Output will resemble
+
+```
+Collecting pip
+  Downloading pip-21.2.4-py3-none-any.whl (1.6 MB)
+     |████████████████████████████████| 1.6 MB 484 kB/s
+Installing collected packages: pip
+Successfully installed pip-21.2.4
+```
+
 ### 10.1.5. Install Ansible
 
 [Ansible](https://github.com/ansible/ansible) is based on [Python](https://www.python.org/) ans distributed as a Python module that you can install by [pip](https://pip.pypa.io). Pip refers to itself as "the package installer for Python". There are [others](https://packaging.python.org/guides/tool-recommendations/), but most everyone uses pip.
@@ -874,7 +978,7 @@ Output will resemble
 In order to use the paramiko connection plugin or modules that require paramiko, install paramiko
 
 ```bash
-python3 -m pip install --user paramiko
+python3 -m pip install paramiko
 ```
 
 Output will resemble
@@ -902,14 +1006,16 @@ You are likely using the Bash shell at this point. To check type `echo $SHELL` i
 If your shell is [Bash](https://www.gnu.org/software/bash/):
 
 ```bash
-echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.bash_profile
+if [[ "${PATH}" != *"/usr/local/bin"* ]]; then echo 'export PATH=/usr/local/bin:$PATH' >> ~/.bash_profile; fi
+if [[ "${PATH}" != *"$HOME/.local/bin"* ]]; then echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.bash_profile; fi
 source ~/.bash_profile
 ```
 
 If your shell is [Zsh](https://www.zsh.org/):
 
-```bash
-echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.zshrc
+```zsh
+if [[ "${PATH}" != *"/usr/local/bin"* ]]; then echo 'export PATH=/usr/local/bin:$PATH' >> ~/.zshrc; fi
+if [[ "${PATH}" != *"$HOME/.local/bin"* ]]; then echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.zshrc; fi
 source ~/.zshrc
 ```
 
@@ -917,12 +1023,13 @@ If you're using [fish](https://fishshell.com/):
 
 ```bash
 echo 'set -U fish_user_paths $HOME/.local/bin $fish_user_paths' >> ~/.config/fish/config.fish
+echo 'set -U fish_user_paths /usr/local/bin $fish_user_paths' >> ~/.config/fish/config.fish
 source ~/.config/fish/config.fish
 ```
 
-to add the [Ansible](https://github.com/ansible/ansible) executables to your path. The `PATH` environment variable is a list of directories that your shell searches through when you enter a command.
+to add the [Ansible](https://github.com/ansible/ansible) executables and the binaries the Ansible automation may install to your path. The `PATH` environment variable is a list of directories that your shell searches through when you enter a command.
 
-Not that we updated our `PATH` and sourced our shell configuratiion thereby updating our present shell we can verify `ansible` has been installed via
+Note that we updated our `PATH` and sourced our shell configuratiion thereby updating our present shell we can verify `ansible` has been installed via
 
 ```bash
 ansible-playbook --version
@@ -931,13 +1038,13 @@ ansible-playbook --version
 Output will resemble
 
 ```
-ansible-playbook [core 2.11.2]
+ansible-playbook [core 2.11.4]
   config file = None
-  configured module search path = ['/home/nemonik/.ansible/plugins/modules', '/usr/share/ansible/plugins/modules']
-  ansible python module location = /home/nemonik/.local/lib/python3.9/site-packages/ansible
-  ansible collection location = /home/nemonik/.ansible/collections:/usr/share/ansible/collections
-  executable location = /home/mjwalnemonik/.local/bin/ansible-playbook
-  python version = 3.9.5 (default, Jul  5 2021, 10:39:40) [GCC 11.1.0]
+  configured module search path = ['/home/vagrant/.ansible/plugins/modules', '/usr/share/ansible/plugins/modules']
+  ansible python module location = /home/vagrant/.local/lib/python3.6/site-packages/ansible
+  ansible collection location = /home/vagrant/.ansible/collections:/usr/share/ansible/collections
+  executable location = /home/vagrant/.local/bin/ansible-playbook
+  python version = 3.6.8 (default, May 19 2021, 03:00:47) [GCC 8.4.1 20200928 (Red Hat 8.4.1-1)]
   jinja version = 3.0.1
   libyaml = True
 ```
@@ -6417,6 +6524,6 @@ make uninstall-pullthrough
 make uninstall-registry
 ```
 
-And this ends my class. 
+And this ends my class.
 
 This is class is a labor of love (i.e., I'm not getting paid to author and maintain it). Please, consider buying me a coffee <a href="https://www.buymeacoffee.com/nemonik" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-orange.png" alt="Buy Me A Coffee" height="20" width="85"></a>.

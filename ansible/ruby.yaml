@@ -47,6 +47,36 @@
             GPG_BINARY: "gpg2"
       when: ( ansible_distribution == 'Archlinux' )
 
+
+    - name: When Rocky 8 ensure rvm dependencies are installed via dnf
+      block:
+        - name: Install rvm dependencies
+          ansible.builtin.dnf:
+            name:
+              - '@Development tools' 
+              - wget
+              - patch
+              - bzip2 
+              - openssl-devel 
+              - libffi-devel 
+              - readline-devel 
+              - zlib-devel 
+              - gdbm-devel 
+              - ncurses-devel
+              - openssl-devel
+              - sqlite-devel
+              - gnupg
+            state: latest
+          retries: "{{ default_retries }}"
+          delay: "{{ default_delay }}"
+          register: result
+          until: result is succeeded
+          become: yes
+
+        - ansible.builtin.set_fact:
+            GPG_BINARY: "gpg2"
+      when: ( ansible_distribution == 'Rocky' )
+
     - name: Install rvm's keys
       ansible.builtin.shell: bash -c "curl -sSL https://rvm.io/mpapis.asc | {{ GPG_BINARY }} --import - && curl -sSL https://rvm.io/pkuczynski.asc | {{ GPG_BINARY }} --import -"
 

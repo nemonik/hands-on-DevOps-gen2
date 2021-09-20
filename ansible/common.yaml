@@ -110,9 +110,161 @@
             executable: yay
       when: ( ansible_distribution == 'Archlinux' )
 
+    - name: When Rocky 8 ensure dnf packages are installed
+      block:
+        - name: Update dnf and upgrade all packages
+          ansible.builtin.dnf:
+            update_cache: yes
+            name: '*'
+            state: latest
+          become: yes
+
+        - name: Ensure Development tools are installed
+          ansible.builtin.dnf:
+            name: '@Development tools'
+            state: present
+          become: yes
+
+        - name: "Ensure /usr/local/bin is included in PATH"
+          block:
+            - lineinfile:
+                dest: "{{ HOME }}/.bash_profile"
+                regexp: "^export PATH=/usr/local/bin:$PATH"
+                state: absent
+
+            - lineinfile:
+                dest: "{{ HOME }}/.bash_profile"
+                line: "export PATH=/usr/local/bin:$PATH"
+                insertafter: EOF
+          become: yes
+
+        - name: Ensure latest Bash is installed
+          block:
+            - name: Get stats for /usr/local/bin/bash
+              ansible.builtin.stat:
+                path: /usr/local/bin/bash
+              register: st
+
+            - name: Install bash-5.1.8 from source
+              ansible.builtin.shell: |
+                 cd /tmp
+                 wget https://ftp.gnu.org/gnu/bash/bash-5.1.8.tar.gz
+                 tar -zxvf bash-5.1.8.tar.gz 
+                 cd bash-5.1.8/
+                 ./configure
+                 make
+                 make install
+                 ln -sfn /usr/local/bin/bash /bin/bash
+                 cd /tmp
+                 rm -Rf bash-5.1.8.tar.gz bash-5.1.8
+              become: yes
+              when: not st.stat.exists
+
+        - name: Ensure Helm 3 is installed
+          block:
+            - name: Get stats for /usr/local/bin/helm
+              ansible.builtin.stat:
+                path: /usr/local/bin/helm
+              register: st
+
+            - name: Install helm via install script
+              ansible.builtin.shell: |
+                PATH=/usr/local/bin:$PATH
+                curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3
+                chmod 700 get_helm.sh
+                ./get_helm.sh
+                rm get_helm.sh
+              become: yes
+              when: not st.stat.exists
+
+        - name: Ensure kubectl is installed
+          block:
+            - name: Get stat for /usr/local/bin/kubectl
+              ansible.builtin.stat:
+                path: /usr/local/bin/kubectl
+              register: st
+
+            - name: Install latest stable kubectl via install script
+              ansible.builtin.shell: |
+                curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+                install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
+              become: yes
+              when: not st.stat.exists
+
+        - name: Ensure git-secrets is installed
+          block:
+            - name: Get stat for /usr/local/bin/kubectl
+              ansible.builtin.stat:
+                path: /usr/local/bin/git-secrets
+              register: st
+
+            - name: Install git-secrets from source
+              ansible.builtin.shell: |
+                cd /tmp
+                git clone --depth 1 https://github.com/awslabs/git-secrets.git
+                cd git-secrets/
+                sudo make install
+                cd /tmp
+                rm -Rf git-secrets
+              become: yes
+              when: not st.stat.exists
+
+        - name: Ensure dnf packages are installed
+          ansible.builtin.dnf:
+            name:
+              - zsh
+              - nano
+              - pwgen
+              - tmux
+              - yamllint
+              - jq
+              - tree
+              - htop
+              - bind-utils
+            state: latest
+          retries: "{{ default_retries }}"
+          delay: "{{ default_delay }}"
+          register: result
+          until: result is succeeded
+          become: yes
+
+        - name: Ensure fish is installed
+          block:
+            - name: Get stats for /bin/fish
+              ansible.builtin.stat:
+                path: /bin/fish
+              register: st
+
+            - name: Install fish via rpm from opensuse
+              ansible.builtin.shell: |
+                cd /etc/yum.repos.d/
+                wget https://download.opensuse.org/repositories/shells:fish:release:3/CentOS_8/shells:fish:release:3.repo
+                yum install -y fish
+              args:
+                executable: /bin/bash
+              become: yes
+              when: not st.stat.exists
+
+        - name: Ensure k3d is installed
+          block:
+            - name: Get stats for /usr/local/bin/k3d
+              ansible.builtin.stat:
+                path: /usr/local/bin/k3d
+              register: st
+
+            - name: Install k3d via install script
+              ansible.builtin.shell: |
+                PATH=/usr/local/bin:$PATH
+                curl -s https://raw.githubusercontent.com/rancher/k3d/main/install.sh | bash
+              args:
+                executable: /bin/bash
+              become: yes
+              when: not st.stat.exists
+      when: ( ansible_distribution == 'Rocky' )
+
     - name: Ensure Oh My Zsh is installed and configured
       block:
-        - name: Check if {{ HOME }}/.oh-my-zsh exists
+        - name: Get stat for {{ HOME }}/.oh-my-zsh
           ansible.builtin.stat:
             path: "{{ HOME }}/.oh-my-zsh"
           register: oh_my_zsh
@@ -147,12 +299,37 @@
         - debug:
             msg: "Installing nerd-fonts-complete to get all the fonts vice just nerd-fonts-meslo.  This may take a while..."
 
-        - name: Installing nerd-font-comlete via yay AUR helper
+        - name: Installing nerd-font-complete via yay AUR helper
           community.general.pacman:
             name: nerd-fonts-complete
             state: latest
             executable: yay
-      when: ansible_distribution == 'Archlinux' and vagrant_enabled==false
+      when: ansible_distribution == 'Archlinux' and not vagrant_enabled
+
+    - name: When Rocky 8 ensure Meslo Nerd Font is installed as it is used by both Powerlevel10k and Tide shell themes
+      block:
+        ## Only pull stat on font directory not contents this may cause issues...
+        - name: Get stat for /usr/local/share/fonts/NerdFonts
+          ansible.builtin.stat:
+            path: /usr/local/share/fonts/NerdFonts
+          register: st
+
+        - name: Ensure nerd fonts are installed
+          block:         
+            - debug:
+                msg: "Installing nerd-fonts-complete to get all the fonts vice just nerd-fonts-meslo.  This may take a while..."
+
+            - name: Installing nerd-font-complete via install script
+              ansible.builtin.shell: |
+                cd /tmp
+                git clone --depth 1 https://github.com/ryanoasis/nerd-fonts
+                cd nerd-fonts
+                ./install.sh -S
+                cd /tmp
+                rm -Rf nerd-fonts
+              become: yes
+          when: not st.stat.exists
+      when: ansible_distribution == 'Rocky' and not vagrant_enabled
 
     - name: Ensure Powerlevel10k theme is installed for Zsh
       block:
@@ -177,7 +354,7 @@
     #
     - name: Ensure Oh My Fish is installed
       block:
-        - name: Check if Oh My Fish is installed
+        - name: Get stat on {{ HOME }}/.local/share/omf
           ansible.builtin.stat:
             path: "{{ HOME }}/.local/share/omf"
           register: omf
@@ -212,7 +389,7 @@
             state: link
       when: ( ansible_distribution == 'MacOSX' )
 
-    - name: When Archlinux ensure bash completions exist for Docker
+    - name: When Archlinux or Rocky 8 ensure bash completions exist for Docker
       block:
         - ansible.builtin.file:
             path: /etc/bash_completion.d
@@ -223,7 +400,7 @@
             url: https://raw.githubusercontent.com/docker/docker-ce/master/components/cli/contrib/completion/bash/docker
             dest: /etc/bash_completion.d/docker
           become: yes
-      when: ( ansible_distribution == 'Archlinux' )
+      when: ( ansible_distribution == 'Archlinux' ) or ( ansible_distribution == 'Rocky' )
 
     # As per https://docs.docker.com/docker-for-mac/#zsh
     #
@@ -264,7 +441,7 @@
             state: link
       when: ( ansible_distribution == 'MacOSX' )
 
-    - name: When Archlinux ensure fish completions exist for Docker
+    - name: When Archlinux or Rocky 8 ensure fish completions exist for Docker
       block:
         - ansible.builtin.file:
             path: "{{ HOME }}/.config/fish/completions"
@@ -273,7 +450,7 @@
         - ansible.builtin.get_url:
             url: https://raw.githubusercontent.com/docker/docker-ce/master/components/cli/contrib/completion/fish/docker.fish
             dest: "{{ HOME }}/.config/fish/completions/docker.fish"
-      when: ( ansible_distribution == 'Archlinux' )
+      when: ( ansible_distribution == 'Archlinux' ) or ( ansible_distribution == 'Rocky' )
 
     - name: Ensure fish completions for k3d is configured
       block:
@@ -291,16 +468,20 @@
       ansible.builtin.shell: bash -c "kubectl completion bash > {{ HOMEBREW_PREFIX }}/etc/bash_completion.d/kubectl"
       when: ( ansible_distribution == 'MacOSX' )
 
-    - name: When Archlinux ensure bash completions for kubectl is configured
+    - name: When Archlinux or Rocky 8 ensure bash completions for kubectl is configured
       block:
         - ansible.builtin.file:
             path: /etc/bash_completion.d
             state: directory
           become: yes
 
-        - ansible.builtin.shell: bash -c "kubectl completion bash >/etc/bash_completion.d/kubectl"
+        - ansible.builtin.shell: |
+            PATH=/usr/local/bin:$PATH           
+            kubectl completion bash >/etc/bash_completion.d/kubectl
+          args:
+            executable: /bin/bash
           become: yes
-      when: ( ansible_distribution == 'Archlinux' )
+      when: ( ansible_distribution == 'Archlinux' ) or ( ansible_distribution == 'Rocky' )
 
     # There are no batteries included fish completions for kubectl, but @evanlucas maintains a project in regards.  Thank you @evanlucas.
     #
@@ -313,4 +494,3 @@
 
         - ansible.builtin.shell: 'fish -c "fisher install evanlucas/fish-kubectl-completions"'
           when: not fish_completions_kubectl.stat.exists
-

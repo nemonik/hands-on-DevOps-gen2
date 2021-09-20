@@ -11,6 +11,8 @@ status is-interactive; and pyenv init --path | source
 
 set -Ux SONAR_HOST_URL "{{ lookup('env', 'sonarqube_protocol') }}://{{ lookup('env', 'sonarqube_fdqn') }}:{{ lookup('env', 'sonarqube_port') }}"
 
+fish_add_path $HOME/.rvm/bin
+
 rvm default
 
 set -Ux EDITOR nvim

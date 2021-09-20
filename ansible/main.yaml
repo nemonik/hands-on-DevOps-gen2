@@ -2,13 +2,17 @@
 - name: Install factory dependencies
   hosts: factory
   tasks:
+    #    - name: List all known variables and facts
+    #      debug:
+    #        var: hostvars[inventory_hostname]
+
     - name: Echo ansible distribution
       ansible.builtin.debug:
         msg: "{{ inventory_hostname }} host is running {{ ansible_distribution }}:{{ ansible_distribution_release }} with an IP address if {{ ansible_default_ipv4.address }}"
 
-    - name: Fail if OS is not MacOSX or ArchLinux
+    - name: Fail if OS is not supported host OS
       ansible.builtin.fail:
-        msg: "{{ ansible_distribution }} - {{ ansible_distribution_release }} is not MacOSX or ArchLinux"
+        msg: "{{ ansible_distribution }} is not MacOSX or ArchLinux"
       when: ansible_distribution not in supported_host_os
 
     - name: Set fact for $HOME
@@ -23,7 +27,7 @@
       ansible.builtin.set_fact:
         vagrant_enabled: "{{ lookup('env', 'vagrant_enabled') }}"
 
-- name: When ArchLinux ensure Docker is installed
+- name: When ArchLinux or Rocky 8 ensure Docker is installed
   ansible.builtin.import_playbook: docker.yaml
 
 - name: When ArchLinux ensure yay AUR helper is installed

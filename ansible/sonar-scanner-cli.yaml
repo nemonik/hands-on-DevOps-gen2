@@ -19,3 +19,39 @@
         state: latest
         executable: yay
       when: ( ansible_distribution == 'Archlinux' )
+
+    - name: When Rocky 8 ensure sonar-scanner is installed      
+      block:
+        - name: Get stat for /usr/local/sonar-scanner
+          ansible.builtin.stat:
+            path: '/usr/local/sonar-scanner'
+          register: st
+
+        - name: Install sonar-scanner binary release
+          block:
+            - name: Unarchive https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.6.2.2472.zip to /usr/local         
+              unarchive:
+                src: "https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.6.2.2472.zip"
+                dest: /usr/local/
+                remote_src: yes
+              become: yes
+
+            - name: mv /usr/local/sonar-scanner-* to /usr/local/sonar-scanner
+              shell: |
+                mv /usr/local/sonar-scanner-* /usr/local/sonar-scanner
+              become: yes
+          when: not st.stat.exists
+
+        - name: "ensure /etc/profile PATH includes /usr/local/sonar-scanner/bin"
+          block:
+            - lineinfile:
+                dest: /etc/profile
+                regexp: "^export PATH=/usr/local/sonar-scanner/bin:$PATH"
+                state: absent
+
+            - lineinfile:
+                dest: /etc/profile
+                line: "export PATH=/usr/local/sonar-scanner/bin:$PATH"
+                insertafter: EOF
+          become: yes
+      when: ( ansible_distribution == 'Rocky' )

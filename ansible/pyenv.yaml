@@ -38,9 +38,36 @@
           become: yes
       when: ( ansible_distribution == 'Archlinux' )
 
+    - name: When Rocky 8 ensure pyenv is installed
+      block:
+        - name: Get stat for {{ HOME }}/.pyenv
+          ansible.builtin.stat:
+            path: "{{ HOME }}/.pyenv"
+          register: st
+
+        - name : Install pyenv via script 
+          ansible.builtin.shell: |
+            curl https://pyenv.run | bash
+          when: not st.stat.exists
+      when: ( ansible_distribution == 'Rocky' )
+
     - name: Install latest Python3 into user space
-      ansible.builtin.shell: bash -c 'export PYENV_ROOT="$HOME/.pyenv"; export PATH="$PYENV_ROOT/bin:$PATH"; eval "$(pyenv init --path)"; eval "$(pyenv init -)"; pyenv install --force $(pyenv install --list | grep -v - | grep -v b | tail -1); pyenv global $(pyenv install --list | grep -v - | grep -v b | tail -1)'
+      ansible.builtin.shell: |
+        export PYENV_ROOT="$HOME/.pyenv"; export PATH="$PYENV_ROOT/bin:$PATH"
+        eval "$(pyenv init --path)"
+        eval "$(pyenv init -)"
+        pyenv install --force $(pyenv install --list | grep -v - | grep -v b | tail -1)
+        pyenv global $(pyenv install --list | grep -v - | grep -v b | tail -1)
+      args:
+        executable: /bin/bash
 
     - name: Ensure pynvim python module is installed for coc-pyright
-      ansible.builtin.shell: bash -c "export PYENV_ROOT="$HOME/.pyenv"; export PATH="$PYENV_ROOT/bin:$PATH"; eval "$(pyenv init --path)"; eval "$(pyenv init -)"; python3 -m pip install --user --upgrade wheel"
+      ansible.builtin.shell: |
+        export PYENV_ROOT="$HOME/.pyenv"
+        export PATH="$PYENV_ROOT/bin:$PATH"
+        eval "$(pyenv init --path)"
+        eval "$(pyenv init -)"
+        python3 -m pip install --user --upgrade wheel
+      args:
+        executable: /bin/bash
       when: ( ansible_distribution == 'Archlinux' )

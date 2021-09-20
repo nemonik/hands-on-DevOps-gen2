@@ -4,7 +4,7 @@ image:
   pullPolicy: IfNotPresent
 
 ingress:
-  enabled: true
+  enabled: false
   hosts:
     - name: ${sonarqube_fdqn}
       path: /

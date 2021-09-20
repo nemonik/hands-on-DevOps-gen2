@@ -31,15 +31,15 @@ read gitlab_pod_name gitlab_token < <(create_automation_token)
 
 notify "Delete the prior Drone CI application integration from GitLab, if it exists..."
 
-application_id=`curl --silent --request GET --header "PRIVATE-TOKEN: $token" "${gitlab_protocol}://${gitlab_fdqn}:${gitlab_port}/api/v4/applications" | jq '. [] | select(.application_name=="Drone") | .id'`
+application_id=`curl --silent --request GET --header "PRIVATE-TOKEN: $gitlab_token" "${gitlab_protocol}://${gitlab_fdqn}:${gitlab_port}/api/v4/applications" | jq '. [] | select(.application_name=="Drone") | .id'`
 
 if [ -n "$application_id" ]; then
   ## Delete prior Drone CI application
-  curl --silent --request DELETE --header "PRIVATE-TOKEN: $token" "${gitlab_protocol}://${gitlab_fdqn}:${gitlab_port}/api/v4/applications/${application_id}"
+  curl --silent --request DELETE --header "PRIVATE-TOKEN: $gitlab_token" "${gitlab_protocol}://${gitlab_fdqn}:${gitlab_port}/api/v4/applications/${application_id}"
 fi
 
 notify "Adding the Drone CI application integration to GitLab..."
-application_values=`curl --silent --request POST --header "PRIVATE-TOKEN: ${token}" --data "name=Drone&redirect_uri=${drone_protocol}://${drone_fdqn}:${drone_port}/login&scopes=api+read_user" "${gitlab_protocol}://${gitlab_fdqn}:${gitlab_port}/api/v4/applications"`
+application_values=`curl --silent --request POST --header "PRIVATE-TOKEN: ${gitlab_token}" --data "name=Drone&redirect_uri=${drone_protocol}://${drone_fdqn}:${drone_port}/login&scopes=api+read_user" "${gitlab_protocol}://${gitlab_fdqn}:${gitlab_port}/api/v4/applications"`
 
 drone_gitlab_client_id=`echo "${application_values}" | jq '.application_id'`
 drone_gitlab_client_secret=`echo "${application_values}" | jq ".secret"`

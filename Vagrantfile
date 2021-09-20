@@ -100,14 +100,14 @@ Vagrant.configure("2") do |config|
 
   config.vm.hostname = "k3d-cluster"
 
-  if (vagrant_box == "generic/archlinux") 
-    config.vm.provision "shell", inline: <<-SCRIPT
+  if (vagrant_box == "generic/arch") 
+    config.vm.provision "shell", privileged: false, inline: <<-SCRIPT
     sudo pacman -Syu --noconfirm 
     SCRIPT
 
     config.vm.provision :reload
 
-    config.vm.provision "shell", inline: <<-SCRIPT
+    config.vm.provision "shell", privileged: false, inline: <<-SCRIPT
     sudo pacman -S --noconfirm docker
     sudo systemctl enable docker 
     sudo systemctl start docker 
@@ -116,9 +116,21 @@ Vagrant.configure("2") do |config|
 
     config.vm.provision :reload
 
+    config.vm.provision "shell", privileged: false, inline: <<-SCRIPT
+    sudo pacman -Syu python3 python-pip
+    python3 -m pip install --user ansible
+    python3 -m pip install paramiko
+    if [[ "${PATH}" != *"/usr/local/bin"* ]]; then echo 'export PATH=/usr/local/bin:$PATH' >> ~/.bash_profile; fi
+    if [[ "${PATH}" != *"$HOME/.local/bin"* ]]; then echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.bash_profile; fi
+    source ~/.bash_profile
+    ansible-galaxy collection install community.general
+    cd /vagrant
+    make install-dependencies
+    SCRIPT
+
   elsif (vagrant_box == "generic/rocky8")
 
-    config.vm.provision "shell", inline: <<-SCRIPT
+    config.vm.provision "shell",  privileged: false, inline: <<-SCRIPT
     sudo dnf config-manager --add-repo=https://download.docker.com/linux/centos/docker-ce.repo
     sudo dnf update
     sudo dnf install -y docker-ce docker-ce-cli containerd.io
@@ -128,6 +140,20 @@ Vagrant.configure("2") do |config|
     SCRIPT
 
     config.vm.provision :reload 
+
+    config.vm.provision "shell", privileged: false, inline: <<-SCRIPT
+    sudo dnf install python39 python39-pip -y
+    sudo update-alternatives --set python /usr/bin/python3.9
+    sudo update-alternatives --set python3 /usr/bin/python3.9
+    python3 -m pip install --user ansible
+    python3 -m pip install paramiko
+    if [[ "${PATH}" != *"/usr/local/bin"* ]]; then echo 'export PATH=/usr/local/bin:$PATH' >> ~/.bash_profile; fi
+    if [[ "${PATH}" != *"$HOME/.local/bin"* ]]; then echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.bash_profile; fi
+    source ~/.bash_profile
+    ansible-galaxy collection install community.general
+    cd /vagrant
+    make install-dependencies
+    SCRIPT
 
   end  
 

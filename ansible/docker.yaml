@@ -36,3 +36,42 @@
             append: yes
           become: yes
       when: ( ansible_distribution == 'Archlinux' )
+
+    - name: When Rocky 8 ensure Docker is installed
+      block:
+          ## I cannot find an ansible module that does this...
+          ##
+        - name: Add Docker repo
+          ansible.builtin.shell: |
+            dnf config-manager --add-repo=https://download.docker.com/linux/centos/docker-ce.repo
+          become: yes
+
+        - name: Ensure docker-ce dnf packages are installed
+          ansible.builtin.dnf:
+            update_cache: yes
+            name: 
+              - docker-ce
+              - docker-ce-cli
+              - containerd.io
+            state: latest
+          retries: "{{ default_retries }}"
+          delay: "{{ default_delay }}"
+          register: result
+          until: result is succeeded
+          become: yes
+
+        - name: Make sure Docker is enabled and started
+          ansible.builtin.systemd:
+            name: docker
+            enabled: yes 
+            state: started
+
+        ## After this logout and login again for changes to take effect.
+        ##
+        - name: Ensure {{ USER }} is in the docker group 
+          user:
+            name: "{{ USER }}"
+            groups: docker
+            append: yes
+          become: yes
+      when: ( ansible_distribution == 'Rocky' )
