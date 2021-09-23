@@ -5625,8 +5625,8 @@ all: sonar deploy inspec
 And then at the bottom add
 
 ```Makefile
-inpsec:
-	inspec exec .tests/inspec/helloworld-web/. --chef-license=accept-silent
+inspec:
+	inspec exec tests/inspec/helloworld-web/. --chef-license=accept-silent
 ```
 
 Executing
