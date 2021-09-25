@@ -22,6 +22,10 @@ else
     heimdall_tls="false"
 fi
 
+is_current_context_correct
+
+is_cluster_running
+
 images_into_registry heimdall_images
 
 template_file ./templates/heimdall-chart-values.yaml.tpl heimdall-chart-values.yaml
@@ -33,4 +37,3 @@ helm repo add nemonik https://nemonik.github.io/helm-charts/
 helm repo update
 
 helm install heimdall2 nemonik/heimdall --namespace ${heimdall_namespace} --create-namespace -f heimdall-chart-values.yaml
-

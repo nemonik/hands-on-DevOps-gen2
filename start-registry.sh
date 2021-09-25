@@ -15,7 +15,7 @@ skip_encrypted_variables=true
 
 notify "Creating registry ${registry_name}:${registry_port}"
 
-k3d registry create ${registry_name/k3d-/} -p ${registry_port}
+k3d registry create ${registry_name/k3d-/} -p ${registry_port} || true
 
 if [ "${?}" = "1" ]; then
   notify "Ignore the Fail notice. This is okay."

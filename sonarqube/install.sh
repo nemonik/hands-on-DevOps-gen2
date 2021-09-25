@@ -22,6 +22,10 @@ else
     sonarqube_tls="false"
 fi
 
+is_current_context_correct
+
+is_cluster_running
+
 images_into_registry sonarqube_images
 
 notify "Integrate SonarQube into GitLab..."

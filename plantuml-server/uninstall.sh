@@ -8,11 +8,14 @@
 # this file. If not, please email <mjwalsh@nemonik.com>
 
 # Uninstall PlantUML-Server
-
 set -a
 
 skip_encrypted_variables=true
 
 . ../.env
+
+is_current_context_correct
+
+is_cluster_running
 
 helm uninstall plantuml-server --namespace ${plantuml_server_namespace}

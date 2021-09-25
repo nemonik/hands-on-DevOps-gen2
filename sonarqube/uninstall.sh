@@ -13,6 +13,10 @@ skip_encrypted_variables=true
 
 . ../.env
 
+is_current_context_correct
+
+is_cluster_running
+
 notify "Uninstalling Sonarqube..."
 
 kubectl delete namespace ${sonarqube_namespace}

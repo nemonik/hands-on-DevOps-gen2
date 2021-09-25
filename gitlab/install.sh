@@ -7,6 +7,7 @@
 # You should have received a copy of the license with
 # this file. If not, please email <mjwalsh@nemonik.com>
 
+set -e
 set -a
 
 skip_encrypted_variables=true
@@ -27,6 +28,10 @@ fi
 db_key_base=`pwgen -Bsv1 64`
 secret_key_base=`pwgen -Bsv1 64`
 otp_key_base=`pwgen -Bsv1 64`
+
+is_current_context_correct
+
+is_cluster_running
 
 images_into_registry gitlab_images
 

@@ -8,6 +8,7 @@
 # this file. If not, please email <mjwalsh@nemonik.com>
 
 set -a
+
 . ../.env
 
 notify "Uninstalling Traefik..."

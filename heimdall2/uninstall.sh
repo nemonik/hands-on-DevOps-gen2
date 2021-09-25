@@ -15,4 +15,8 @@ skip_encrypted_variables=true
 
 . ../.env
 
+is_current_context_correct
+
+is_cluster_running
+
 helm uninstall heimdall2 --namespace ${heimdall_namespace}

@@ -26,6 +26,10 @@ fi
 
 taiga_secret_key=`pwgen -Bsv1 64`
 
+is_current_context_correct
+
+is_cluster_running
+
 images_into_registry taiga_images
 
 template_file ./templates/taiga-chart-values.yaml.tpl taiga-chart-values.yaml

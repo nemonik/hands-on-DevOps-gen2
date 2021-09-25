@@ -7,6 +7,7 @@
 # You should have received a copy of the license with
 # this file. If not, please email <mjwalsh@nemonik.com>
 
+set -e
 set -a
 
 skip_encrypted_variables=true
@@ -76,13 +77,25 @@ eval $patch_command
 
 notify "Forcing retart of coredns so that the tests can run immediately..."
 
+current_kube_dns_pod_name=`kubectl get pod -n kube-system -l "k8s-app=kube-dns" -o json | jq -r '.items | .[] | .metadata.name'`
+
 kubectl rollout restart deployment coredns -n kube-system
 
 kubectl rollout status deployment coredns -n kube-system
 
-kube_dns_pod_name=`kubectl get pod -n kube-system -l "k8s-app=kube-dns" -o json | jq -r '.items | .[] | .metadata.name'`
+while : ; do
 
-kubectl wait --for=condition=Ready pod/${kube_dns_pod_name} -n kube-system --timeout 360s
+  kube_dns_pod_name=`kubectl get pod -n kube-system -l "k8s-app=kube-dns" -o json | jq -r '.items | .[] | .metadata.name'`
+
+  if [[ "${kube_dns_pod_name}" == *"${current_kube_dns_pod_name}"* ]]; then
+    sleep 0.5
+  else
+   break
+  fi
+
+done
+
+kubectl wait --for=condition=Ready pod ${kube_dns_pod_name} -n kube-system --timeout 360s
 
 ## The test has a built in ping loop needed to block until coredns is responding.
 ##

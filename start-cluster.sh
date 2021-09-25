@@ -6,7 +6,7 @@
 #
 # You should have received a copy of the license with
 # this file. If not, please email <mjwalsh@nemonik.com>
-
+ 
 set -a
 
 skip_encrypted_variables=true
@@ -23,7 +23,7 @@ else
 
   IFS='-' read -ra parts <<< "${registry_name}"
 
-  k3d registry create ${parts[1]} -p ${registry_port}
+  k3d registry create ${parts[1]} -p ${registry_port} 
 
 fi
 
@@ -58,8 +58,8 @@ if [ "$(echo $clusters_json | jq -r --arg k3d_cluster_name ${k3d_cluster_name} '
 
   echo $cmd
 
-  eval "${cmd}"
-
+  eval "${cmd} || true"
+ 
 else
 
   notify "Cluster exists, so starting it instead..."

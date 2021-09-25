@@ -8,6 +8,7 @@
 # this file. If not, please email <mjwalsh@nemonik.com>
 
 set -a
+
 . ../.env
 
 drone_protocol="${drone_protocol,,}"
@@ -22,6 +23,10 @@ fi
 drone_database_secret=`openssl rand -hex 16`
 drone_rpc_secret=`openssl rand -hex 16`
 drone_secret_plugin_token=`openssl rand -hex 16`
+
+is_current_context_correct
+
+is_cluster_running
 
 images_into_registry drone_images
 

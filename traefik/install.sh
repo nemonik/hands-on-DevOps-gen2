@@ -11,6 +11,10 @@ set -a
 
 . ../.env
 
+is_current_context_correct
+
+is_cluster_running
+
 images_into_registry traefik_images
 
 template_file ./templates/traefik-chart-values.yaml.tpl traefik-chart-values.yaml
