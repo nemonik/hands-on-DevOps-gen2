@@ -10,5 +10,5 @@ spec:
   routes:
   - match: HostSNI(`*`) 
     services:
-    - name: gitlab-gitlab
+    - name: gitlab
       port: 2022
