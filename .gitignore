@@ -20,6 +20,7 @@ gitlab/gitlab-chart-values.yaml
 gitlab/gitlab-IngressTcpRoute.yaml
 taiga/taiga-chart-values.yaml
 taiga/createsuperuser.sh
+k3s-air-gap-image/Dockerfile
 
 ansible/package.json
 
