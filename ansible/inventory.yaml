@@ -10,6 +10,7 @@ all:
         default_delay: 10
         default_retries: 60
         ruby_version: 3.0.1
+        k3d_release_tag: v4.4.8
         supported_host_os:
           - MacOSX
           - Archlinux

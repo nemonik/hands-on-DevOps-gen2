@@ -19,6 +19,16 @@
           ansible.builtin.shell: brew unlink bash-completion
           when: bash_completion.stat.exists
 
+        - name: Ensure these HomeBrew packages are not installed
+          community.general.homebrew:
+            name:
+              - k3d
+            state: removed
+          retries: "{{ default_retries }}"
+          delay: "{{ default_delay }}"
+          register: result
+          until: result is succeeded
+
         - name: Ensure HomeBrew packages are installed
           community.general.homebrew:
             name:
@@ -33,7 +43,6 @@
               - openssl
               - watch
               - gettext
-              - k3d
               - helm
               - curl
               - wget
@@ -101,10 +110,16 @@
           until: result is succeeded
           become: yes
 
-        - name: Install packages from AUR using a yay AUR helper
+        - name: Ensure these packages from AUR are not installed using a yay AUR helper
           community.general.pacman:
             name:
               - rancher-k3d-bin
+            state: removed
+            executable: yay
+
+        - name: Install packages from AUR using a yay AUR helper
+          community.general.pacman:
+            name:
               - git-secrets
             state: latest
             executable: yay
@@ -245,22 +260,15 @@
               become: yes
               when: not st.stat.exists
 
-        - name: Ensure k3d is installed
-          block:
-            - name: Get stats for /usr/local/bin/k3d
-              ansible.builtin.stat:
-                path: /usr/local/bin/k3d
-              register: st
-
-            - name: Install k3d via install script
-              ansible.builtin.shell: |
-                PATH=/usr/local/bin:$PATH
-                curl -s https://raw.githubusercontent.com/rancher/k3d/main/install.sh | bash
-              args:
-                executable: /bin/bash
-              become: yes
-              when: not st.stat.exists
       when: ( ansible_distribution == 'Rocky' )
+
+    - name: Ensure k3d is installed
+      ansible.builtin.shell: |
+        PATH=/usr/local/bin:$PATH
+        curl -s https://raw.githubusercontent.com/rancher/k3d/main/install.sh | TAG={{ k3d_release_tag }} bash
+      args:
+        executable: /bin/bash
+      become: yes
 
     - name: Ensure Oh My Zsh is installed and configured
       block:

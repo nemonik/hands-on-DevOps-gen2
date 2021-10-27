@@ -37,7 +37,7 @@ if [ "$(echo $clusters_json | jq -r --arg k3d_cluster_name ${k3d_cluster_name} '
 
   cmd="k3d cluster create ${k3d_cluster_name} \
     --api-port 6443 -p 80:80@loadbalancer -p 443:443@loadbalancer \
-    -p 9000:9000@loadbalancer -p 2022:2022@loadbalancer --k3s-arg \"--disable=traefik@server:*\" \
+    -p 9000:9000@loadbalancer -p 2022:2022@loadbalancer --k3s-server-arg \"--no-deploy=traefik\" \
     --registry-use ${registry_name}:${registry_port} \
     --image ${registry_name}:${registry_port}/${k3s_image_name}:${k3s_image_tag} \
     --servers ${k3d_server_count} --agents ${k3d_agent_count}"

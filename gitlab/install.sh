@@ -107,7 +107,8 @@ while : ; do
   fi
 
   notify "  Still waiting for GitLab to respond to ${gitlab_protocol} requests..."
-  ((loop++))
+
+  ((loop=loop+1))
   sleep 60
 done
 
