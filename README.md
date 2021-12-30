@@ -1006,6 +1006,7 @@ You are likely using the Bash shell at this point. To check type `echo $SHELL` i
 If your shell is [Bash](https://www.gnu.org/software/bash/):
 
 ```bash
+if [[ "$OSTYPE" == "darwin"* ]] && [[ "${PATH}" != *"$HOME/Library/Python/3.8/bin"* ]]; then 'export PATH=$HOME/Library/Python/3.8/bin' >> ~/.bash_profile; fi
 if [[ "${PATH}" != *"/usr/local/bin"* ]]; then echo 'export PATH=/usr/local/bin:$PATH' >> ~/.bash_profile; fi
 if [[ "${PATH}" != *"$HOME/.local/bin"* ]]; then echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.bash_profile; fi
 source ~/.bash_profile
@@ -1014,6 +1015,7 @@ source ~/.bash_profile
 If your shell is [Zsh](https://www.zsh.org/):
 
 ```zsh
+if [[ "$OSTYPE" == "darwin"* ]] && [[ "${PATH}" != *"$HOME/Library/Python/3.8/bin"* ]]; then 'export PATH=$HOME/Library/Python/3.8/bin' >> ~/.bash_profile; fi
 if [[ "${PATH}" != *"/usr/local/bin"* ]]; then echo 'export PATH=/usr/local/bin:$PATH' >> ~/.zshrc; fi
 if [[ "${PATH}" != *"$HOME/.local/bin"* ]]; then echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.zshrc; fi
 source ~/.zshrc
@@ -1022,6 +1024,7 @@ source ~/.zshrc
 If you're using [fish](https://fishshell.com/):
 
 ```bash
+echo 'set -U fish_user_paths $HOME/Library/Python/3.8/bin $fish_user_paths' >> ~/.config/fish/config.fish
 echo 'set -U fish_user_paths $HOME/.local/bin $fish_user_paths' >> ~/.config/fish/config.fish
 echo 'set -U fish_user_paths /usr/local/bin $fish_user_paths' >> ~/.config/fish/config.fish
 source ~/.config/fish/config.fish

@@ -356,7 +356,7 @@
     # See: https://github.com/jorgebucaran/fisher
     #
     - name: Ensure Fisher is installed
-      ansible.builtin.shell: 'fish -c "curl -fsSL https://git.io/fisher | source && fisher install jorgebucaran/fisher"'
+      ansible.builtin.shell: 'fish -c "curl --insecure -fsSL https://git.io/fisher | source && fisher install jorgebucaran/fisher"'
 
     # See: https://github.com/oh-my-fish/oh-my-fish
     #
@@ -368,7 +368,7 @@
           register: omf
 
         - name: Install Oh My Fish, if not installed
-          ansible.builtin.shell: sh -c "curl -fsSL https://get.oh-my.fish > ~/omf_install && fish ~/omf_install --yes --noninteractive && rm ~/omf_install"
+          ansible.builtin.shell: sh -c "curl --insecure -fsSL https://get.oh-my.fish > ~/omf_install && fish ~/omf_install --yes --noninteractive && rm ~/omf_install"
           when: not omf.stat.exists
 
     - name: Ensure Tide theme for fish is installed

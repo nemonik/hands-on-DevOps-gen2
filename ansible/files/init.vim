@@ -186,6 +186,7 @@ let g:coc_global_extensions = [
   \ 'coc-html',
   \ 'coc-snippets',
   \ 'coc-prettier',
+  \ 'coc-marketplace',
   \ ]
 
 " Configure prettier as per https://github.com/neoclide/coc-prettier
