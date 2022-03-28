@@ -1700,7 +1700,7 @@ nvim ./..env
 then scrolling to you see
 
 ```
-## pullthrough egistry container registry
+## pullthrough container registry
 pullthrough_registry_enabled=false
 ```
 
